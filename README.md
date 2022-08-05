@@ -10,7 +10,7 @@ This system provides character sheet support for Actors and Items, mechanical su
 play games of 5th Edition, and compendium content for Monsters, Heroes, Items, Spells, Class Features, Monster 
 Features, and more!
 
-Data present under the `packs/` directory is taken from the [Systems Reference Document 5.1 (SRD5)](http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf) and used under the terms of the OGL v1.0a, see OGL.txt.
+Some Data present under the `packs/` directory is taken from the [Systems Reference Document 5.1 (SRD5)](http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf) and used under the terms of the OGL v1.0a, see OGL.txt.
 
 Images present under the `icons/` directory are distributed under various terms, please see the `icons/LICENSE` file for full details.
 
@@ -18,14 +18,14 @@ The software component of this system is distributed under the MIT license.
 
 ## Installation Instructions
 
-To install and use the DnD5e system for Foundry Virtual Tabletop, simply paste the following URL into the 
+To install and use the Magi-Knights system for Foundry Virtual Tabletop, simply paste the following URL into the 
 **Install System** dialog on the Setup menu of the application.
 
-https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json
+https://raw.githubusercontent.com/magi-knights-project/magi-knights/master/system.json
 
 If you wish to manually install the system, you must clone or extract it into the ``Data/systems/dnd5e`` folder. You
 may do this by cloning the repository or downloading a zip archive from the
-[Releases Page](https://github.com/foundryvtt/dnd5e/releases).
+[Releases Page](https://github.com/magi-knights-project/magi-knights/releases).
 
 ## Community Contribution
 
