@@ -854,7 +854,7 @@ export default class Actor5e extends Actor {
    */
   async rollSkill(skillId, options={}) {
     const skl = this.system.skills[skillId];
-    const ablID = this.getBestAbilityForSkill(skillId, true);
+    const ablID = this.getBestAbilityForSkill(skillId);
     const abl = this.system.abilities[ablID];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = ["@mod", "@abilityCheckBonus"];
