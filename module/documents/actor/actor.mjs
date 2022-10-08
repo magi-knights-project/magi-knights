@@ -239,6 +239,7 @@ export default class Actor5e extends Actor {
       if ( !skills[key] ) {
         skills[key] = foundry.utils.deepClone(game.system.template.Actor.templates.creature.skills.acr);
         skills[key].ability = skill.ability;
+        skills[key].abilitylist = skill.abilitylist;
         updates[`data.skills.${key}`] = foundry.utils.deepClone(skills[key]);
       }
     }
@@ -375,34 +376,34 @@ export default class Actor5e extends Actor {
 
   /**
    * MKEDIT: Retrieves the best ability from the list available for the given skill, based on its modifiers and bonuses.
-   * @param {object} skl      Skill data.
-   * @param {boolean} returnID  Returns ID instead if true.
+   * @param {object} id      Skill ID.
+   * @returns {string} Returns skill string ID.
    * @protected
    */
-  getBestAbilityForSkill(skl, returnID) {
-    abllist = skl.abilitylist;
-    abilityid = skl.ability;
-    ability = this.system.abilities[abilityid];
-    if(abllist.length > 1) //skip if it's only one ability
+  getBestAbilityForSkill(id) {
+    const skl = this.system.skills[id];
+    const abllist = CONFIG.DND5E.skills[id].abilitylist;
+    const abllistlen = abllist?.length;
+    let abilityid = skl.ability;
+    let ability = this.system.abilities[abilityid];
+    if (abllistlen > 1) // Skip if it's only one ability
     {
-      for (i = 0; i < abllist.length; ++i)
+      const bonusData = this.getRollData();
+      for (let i = 0; i < abllistlen; ++i)
       {
-        abl = abllist[i];
-        abltest = this.system.abilities[abl];
-        bonusTest1 = simplifyBonus(abltest?.bonuses?.check, bonusData);
-        bonusTest2 = simplifyBonus(ability?.bonuses?.check, bonusData);
-        if(abltest?.mod + bonusTest1 > ability.mod + bonusTest2)
+        const abl = abllist[i];
+        const abltest = this.system.abilities[abl];
+        const bonusTest1 = simplifyBonus(abltest?.bonuses?.check, bonusData);
+        const bonusTest2 = simplifyBonus(ability?.bonuses?.check, bonusData);
+        if (abltest.mod + bonusTest1 > ability.mod + bonusTest2)
         {
-            abilityid = abllist[i];
-            ability = abltest;
+          abilityid = abllist[i];
+          ability = abltest;
         }
       }
     }
 
-    if(returnID)
-      return abilityid;
-    else
-      return ability;
+    return abilityid;
   }
 
   /* -------------------------------------------- */
@@ -423,10 +424,11 @@ export default class Actor5e extends Actor {
     const feats = CONFIG.DND5E.characterFlags;
     const skillBonus = simplifyBonus(globalBonuses.skill, bonusData);
     for ( const [id, skl] of Object.entries(this.system.skills) ) {
-      
-      //MKEDIT: We pick the best ability available that the character has.
-      const ability = this.getBestAbilityForSkill(skl, false)
-      
+
+      // MKEDIT: We pick the best ability available that the character has.
+      skl.bestAbility = this.getBestAbilityForSkill(id);
+      const ability = this.system.abilities[skl.bestAbility];
+
       skl.value = Math.clamped(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
       const baseBonus = simplifyBonus(skl.bonuses?.check, bonusData);
       let roundDown = true;
@@ -852,7 +854,7 @@ export default class Actor5e extends Actor {
    */
   async rollSkill(skillId, options={}) {
     const skl = this.system.skills[skillId];
-    const ablID = this.getBestAbilityForSkill(skl, true);
+    const ablID = this.getBestAbilityForSkill(skillId, true);
     const abl = this.system.abilities[ablID];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = ["@mod", "@abilityCheckBonus"];

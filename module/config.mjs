@@ -55,7 +55,7 @@ preLocalize("abilityAbbreviations");
  * @typedef {object} SkillConfiguration
  * @property {string} label    Localized label.
  * @property {string} ability  Key for the default ability used by this skill. MKEDIT: Fallback.
- * @property {string} abilitylist  MKEDIT: List of default abilities.
+ * @property {Array} abilitylist  MKEDIT: List of default abilities.
  */
 
 /**
@@ -63,23 +63,23 @@ preLocalize("abilityAbbreviations");
  * @enum {SkillConfiguration}
  */
 DND5E.skills = {
-  art: { label: "DND5E.SkillArt", ability: "int", abilitylist: ["int","wis"] },
+  art: { label: "DND5E.SkillArt", ability: "int", abilitylist: ["int", "wis"] },
   acr: { label: "DND5E.SkillAcr", ability: "dex", abilitylist: ["dex"] },
   ath: { label: "DND5E.SkillAth", ability: "str", abilitylist: ["str"] },
   crd: { label: "DND5E.SkillCrd", ability: "dex", abilitylist: ["dex"] },
-  dec: { label: "DND5E.SkillDec", ability: "cha", abilitylist: ["int","cha"] },
-  inf: { label: "DND5E.SkillInf", ability: "cha", abilitylist: ["str","cha"] },
+  dec: { label: "DND5E.SkillDec", ability: "cha", abilitylist: ["int", "cha"] },
+  inf: { label: "DND5E.SkillInf", ability: "cha", abilitylist: ["str", "cha"] },
   ins: { label: "DND5E.SkillIns", ability: "wis", abilitylist: ["wis"] },
-  inv: { label: "DND5E.SkillInv", ability: "int", abilitylist: ["int","wis"] },
+  inv: { label: "DND5E.SkillInv", ability: "int", abilitylist: ["int", "wis"] },
   ldr: { label: "DND5E.SkillLdr", ability: "cha", abilitylist: ["cha"] },
-  med: { label: "DND5E.SkillMed", ability: "wis", abilitylist: ["int","wis"] },
+  med: { label: "DND5E.SkillMed", ability: "wis", abilitylist: ["int", "wis"] },
   mst: { label: "DND5E.SkillMst", ability: "int", abilitylist: ["int"] },
   prc: { label: "DND5E.SkillPrc", ability: "wis", abilitylist: ["wis"] },
-  prf: { label: "DND5E.SkillPrf", ability: "cha", abilitylist: ["str","dex","con","int","wis","cha"] },
+  prf: { label: "DND5E.SkillPrf", ability: "cha", abilitylist: ["str", "dex", "con", "int", "wis", "cha"] },
   per: { label: "DND5E.SkillPer", ability: "wis", abilitylist: ["wis"] },
-  pur: { label: "DND5E.SkillPur", ability: "wis", abilitylist: ["int","wis","cha"] },
+  pur: { label: "DND5E.SkillPur", ability: "wis", abilitylist: ["int", "wis", "cha"] },
   ste: { label: "DND5E.SkillSte", ability: "dex", abilitylist: ["dex"] },
-  stm: { label: "DND5E.SkillSTM", ability: "int", abilitylist: ["int"] },
+  stm: { label: "DND5E.SkillSTM", ability: "int", abilitylist: ["int"] }
 };
 preLocalize("skills", { key: "label", sort: true });
 patchConfig("skills", "label", { since: 2.0, until: 2.2 });
