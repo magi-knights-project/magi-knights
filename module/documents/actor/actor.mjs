@@ -239,6 +239,7 @@ export default class Actor5e extends Actor {
       if ( !skills[key] ) {
         skills[key] = foundry.utils.deepClone(game.system.template.Actor.templates.creature.skills.acr);
         skills[key].ability = skill.ability;
+        skills[key].abilitylist = skill.abilitylist;
         updates[`data.skills.${key}`] = foundry.utils.deepClone(skills[key]);
       }
     }
@@ -371,6 +372,39 @@ export default class Actor5e extends Actor {
       if ( originalSaves && abl.proficient ) abl.save = Math.max(abl.save, originalSaves[id].save);
     }
   }
+  /* -------------------------------------------- */
+
+  /**
+   * MKEDIT: Retrieves the best ability from the list available for the given skill, based on its modifiers and bonuses.
+   * @param {object} id      Skill ID.
+   * @returns {string} Returns skill string ID.
+   * @protected
+   */
+  getBestAbilityForSkill(id) {
+    const skl = this.system.skills[id];
+    const abllist = CONFIG.DND5E.skills[id].abilitylist;
+    const abllistlen = abllist?.length;
+    let abilityid = skl.ability;
+    let ability = this.system.abilities[abilityid];
+    if (abllistlen > 1) // Skip if it's only one ability
+    {
+      const bonusData = this.getRollData();
+      for (let i = 0; i < abllistlen; ++i)
+      {
+        const abl = abllist[i];
+        const abltest = this.system.abilities[abl];
+        const bonusTest1 = simplifyBonus(abltest?.bonuses?.check, bonusData);
+        const bonusTest2 = simplifyBonus(ability?.bonuses?.check, bonusData);
+        if (abltest.mod + bonusTest1 > ability.mod + bonusTest2)
+        {
+          abilityid = abllist[i];
+          ability = abltest;
+        }
+      }
+    }
+
+    return abilityid;
+  }
 
   /* -------------------------------------------- */
 
@@ -390,13 +424,17 @@ export default class Actor5e extends Actor {
     const feats = CONFIG.DND5E.characterFlags;
     const skillBonus = simplifyBonus(globalBonuses.skill, bonusData);
     for ( const [id, skl] of Object.entries(this.system.skills) ) {
-      const ability = this.system.abilities[skl.ability];
+
+      // MKEDIT: We pick the best ability available that the character has.
+      skl.bestAbility = this.getBestAbilityForSkill(id);
+      const ability = this.system.abilities[skl.bestAbility];
+
       skl.value = Math.clamped(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
       const baseBonus = simplifyBonus(skl.bonuses?.check, bonusData);
       let roundDown = true;
 
       // Remarkable Athlete
-      if ( this._isRemarkableAthlete(skl.ability) && (skl.value < 0.5) ) {
+      if ( this._isRemarkableAthlete(ability) && (skl.value < 0.5) ) {
         skl.value = 0.5;
         roundDown = false;
       }
@@ -816,14 +854,15 @@ export default class Actor5e extends Actor {
    */
   async rollSkill(skillId, options={}) {
     const skl = this.system.skills[skillId];
-    const abl = this.system.abilities[skl.ability];
+    const ablID = this.getBestAbilityForSkill(skillId);
+    const abl = this.system.abilities[ablID];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = ["@mod", "@abilityCheckBonus"];
     const data = this.getRollData();
 
     // Add ability modifier
     data.mod = skl.mod;
-    data.defaultAbility = skl.ability;
+    data.defaultAbility = ablID;
 
     // Include proficiency bonus
     if ( skl.prof.hasProficiency ) {
