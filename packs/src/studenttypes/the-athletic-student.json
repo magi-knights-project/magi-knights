@@ -1,0 +1,82 @@
+{
+  "name": "The Athletic Student",
+  "type": "feat",
+  "img": "icons/svg/combat.svg",
+  "system": {
+    "description": {
+      "value": "<p><em>The Athletic Student can be quite the popular character, typically because they help their school's sport teams excel and win championships! Able-bodied, muscular, and with an attractive physique, they carry an aura of confidence and prowess with them wherever they go.</em></p><p><strong>Restriction:</strong> Must start the game with at least 12 Strength</p><p><span style=\"text-decoration:underline\"><strong><span style=\"text-decoration:underline\">Student Abilities:</span></strong></span></p><ul><li><p><strong>Characteristic Points:</strong> +2 to Strength, +1 to Any Other</p></li><li><p><strong>Starting Skills:</strong> Athletics, Influence, Coordination</p></li><li><p><strong>Athletic Endurance: @UUID[Compendium.dnd5e.studenttypes.gTFJscI9OmacPPVX]{Athletic Endurance}</strong> You may use Inspiration and, as a Free Action, your next Strength or Constitution Skill Check result becomes 20+Mod. You may only use this ability during a Non-Combat Encounter and it can used after dice are rolled.</p></li></ul>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH2 P.20",
+    "activation": {
+      "type": "",
+      "cost": 0,
+      "condition": ""
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": ""
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null
+    },
+    "ability": null,
+    "actionType": "",
+    "attackBonus": 0,
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "requirements": "12 STR",
+    "recharge": {
+      "value": null,
+      "charged": false
+    }
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670351173957,
+    "modifiedTime": 1670404045437,
+    "lastModifiedBy": "RJIYZv8z53QKqobo"
+  },
+  "folder": null,
+  "sort": 0,
+  "_id": "72tvekaOslJc3ZWg"
+}

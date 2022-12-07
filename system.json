@@ -92,6 +92,13 @@
       "type": "Item"
     },
     {
+      "name": "studenttypes",
+      "label": "Student Types (MK)",
+      "system": "dnd5e",
+      "path": "./packs/studenttypes.db",
+      "type": "Item"
+    },
+    {
       "name": "monsterfeatures",
       "label": "Monster Features (SRD)",
       "system": "dnd5e",
