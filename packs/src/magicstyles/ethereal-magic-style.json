@@ -1,0 +1,44 @@
+{
+  "name": "Ethereal Magic Style",
+  "type": "class",
+  "img": "icons/svg/invisible.svg",
+  "system": {
+    "description": {
+      "value": "<p><em>This skill focuses on the ancient study and pursuit of traditional magic; whose origins are still entirely unknown. This is referred to as \"Ethereal Magic,\" or \"Mysticising.\"</em></p><p>Intelligence or Wisdom is your Magic Ability Modifier (MAM) for your Magi-Knight Spells.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.34",
+    "identifier": "ethereal-magic-style",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670453580048,
+    "modifiedTime": 1670534016715,
+    "lastModifiedBy": "RJIYZv8z53QKqobo"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "fixWjIg68bw1dXpZ"
+}

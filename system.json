@@ -22,6 +22,27 @@
   "styles": ["dnd5e.css"],
   "packs": [
     {
+      "name": "studenttypes",
+      "label": "Student Types (MK)",
+      "system": "dnd5e",
+      "path": "./packs/studenttypes.db",
+      "type": "Item"
+    },
+    {
+      "name": "magicstyles",
+      "label": "Magic Styles (MK)",
+      "system": "dnd5e",
+      "path": "./packs/magicstyles.db",
+      "type": "Item"
+    },
+    {
+      "name": "elementalaffinities",
+      "label": "Elemental Affinities (MK)",
+      "system": "dnd5e",
+      "path": "./packs/elementalaffinities.db",
+      "type": "Item"
+    },
+    {
       "name": "heroes",
       "label": "Starter Heroes",
       "system": "dnd5e",
@@ -89,13 +110,6 @@
       "label": "Racial Features (SRD)",
       "system": "dnd5e",
       "path": "./packs/races.db",
-      "type": "Item"
-    },
-    {
-      "name": "studenttypes",
-      "label": "Student Types (MK)",
-      "system": "dnd5e",
-      "path": "./packs/studenttypes.db",
       "type": "Item"
     },
     {
