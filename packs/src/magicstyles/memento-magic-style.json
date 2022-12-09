@@ -1,7 +1,7 @@
 {
   "name": "Memento Magic Style",
   "type": "class",
-  "img": "icons/svg/card-hand.svg",
+  "img": "icons/svg/heal.svg",
   "system": {
     "description": {
       "value": "<p><em>This skill manifests your magic through the power of an object that has significant importance to you. The object acts as a conduit for your wishes and desires. It is referred to as, \"Memento Magic.\"</em></p><p>Intelligence, Wisdom, or Charisma is your Magic Ability Modifier (MAM) for your Magi-Knight Spells.</p>",
@@ -30,9 +30,9 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "2.0.2",
-    "coreVersion": "10.287",
+    "coreVersion": "10.291",
     "createdTime": 1670530238331,
-    "modifiedTime": 1670534018099,
+    "modifiedTime": 1670541957683,
     "lastModifiedBy": "RJIYZv8z53QKqobo"
   },
   "folder": null,
