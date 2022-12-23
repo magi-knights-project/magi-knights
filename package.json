@@ -25,5 +25,8 @@
     "rollup": "^2.77.0",
     "through2": "^4.0.2",
     "yargs": "^17.5.1"
+  },
+  "dependencies": {
+    "esm": "^3.2.25"
   }
 }

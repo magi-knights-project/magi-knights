@@ -130,7 +130,8 @@
         },
         "details": {
           "alignment": "",
-          "race": ""
+          "race" : "",
+          "stype": ""
         },
         "skills": {
           "acr": {

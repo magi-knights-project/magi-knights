@@ -1,0 +1,82 @@
+{
+  "name": "The Troubled Student",
+  "type": "feat",
+  "img": "icons/svg/skull.svg",
+  "system": {
+    "description": {
+      "value": "<p><em>The Troubled Student is typically a lone wolf, marred by some tragic past or ongoing event. They're not necessarily unapproachable, but they do at times seem as if they are distracted and shouldering some unseen burden. However, their exposure to trauma also means that they know how to cope with it better than most, whether their methods are healthy or not.</em></p><p><strong>Restriction:</strong> None</p><p><strong>Student Abilities:</strong></p><ul><li><p><strong>Characteristic Points:</strong> +2 to Any, +1 to Any Other</p></li><li><p><strong>Starting Skills:</strong> Deception, Influence, Perception</p></li><li><p><strong>Choose 1 of 2 Student Abilities to Gain:</strong></p><ul><li><p><strong>Sealed Heart: @UUID[Compendium.dnd5e.studenttypes.m04pWy65w1R3Bfj1]{Sealed Heart}</strong> You've seen your fair share of difficulty. Maybe you've been open about it, or maybe you've kept it all inside. You begin the game with 1 Trauma Point. At any time, you may use Inspiration as an Immediate Action to negate up to 1 Trauma Point from a single source.</p></li><li><p><strong>Detached Heart: @UUID[Compendium.dnd5e.studenttypes.AvMtoB9TI2mAE0cK]{Detached Heart}</strong> You've seen your fair share of difficulty. You suppress it and pretend it isn't there instead of dealing with it. You begin the game with 2 Trauma Points. When making a Roll to Resist (Purity), you roll with Advantage. However, if you fail the Saving Throw, you take an additional Trauma Point</p></li></ul></li></ul><p></p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH2 P.22",
+    "activation": {
+      "type": "",
+      "cost": 0,
+      "condition": ""
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": ""
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null
+    },
+    "ability": null,
+    "actionType": "",
+    "attackBonus": 0,
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "requirements": "None",
+    "recharge": {
+      "value": null,
+      "charged": false
+    }
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670400343038,
+    "modifiedTime": 1670404284639,
+    "lastModifiedBy": "RJIYZv8z53QKqobo"
+  },
+  "folder": null,
+  "sort": 0,
+  "_id": "5HfQCaFGZH2Zsi3V"
+}
