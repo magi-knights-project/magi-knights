@@ -1,0 +1,44 @@
+{
+  "name": "Elemental Affinity: Earth (Solid)",
+  "type": "class",
+  "img": "icons/svg/mountain.svg",
+  "system": {
+    "description": {
+      "value": "<p><strong>Branching Elements:</strong> Wood or Metal</p><p><em>A person in-tune with Earth may be practical, disciplined, focused, enjoy routines, be a good leader, and be dependable. Usually they enjoy being in control, but are found to be very loyal.</em></p><p>Your Armor becomes 16</p><p><strong>Roll to Resist Proficiency:</strong> Choose one Physical (Strength, Dexterity, Constitution)</p><p><strong>Elemental Affinity (Skill Mastery):</strong> Your connection with your Element empowers you to recognize your strengths and grants confidence in yourself and a Skill. After choosing your Element, choose either a Skill you gained Proficiency in from your Court Card of Fate or one Proficiency gained from your Student Type. When you use this Skill, you add your Reputation Level to the roll (minimum 1). This is referred to as \"Skill Mastery.\" Trace a Circle around your Proficiency Diamond.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.37",
+    "identifier": "elemental-affinity-earth-solid",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670531279286,
+    "modifiedTime": 1670533979069,
+    "lastModifiedBy": "RJIYZv8z53QKqobo"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "XqvlTQy1aaoxIdlg"
+}

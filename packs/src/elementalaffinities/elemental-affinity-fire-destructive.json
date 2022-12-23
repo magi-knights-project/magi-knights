@@ -1,0 +1,44 @@
+{
+  "name": "Elemental Affinity: Fire (Destructive)",
+  "type": "class",
+  "img": "icons/svg/fire.svg",
+  "system": {
+    "description": {
+      "value": "<p><strong>Branching Elements:</strong> Lightning or Toxins</p><p><em>A person in-tune with Fire may be impulsive, open-minded, expressive, humorous, dramatic and a good performer. They usually act with their heart but can be blunt at times.</em></p><p>Your Armor becomes 14 + your Dexterity Modifier (Maximum +2)</p><p><strong>Roll to Resist Proficiency:</strong> Choose one Physical (Strength, Dexterity, Constitution)</p><p><strong>Elemental Affinity (Skill Mastery):</strong> Your connection with your Element empowers you to recognize your strengths and grants confidence in yourself and a Skill. After choosing your Element, choose either a Skill you gained Proficiency in from your Court Card of Fate or one Proficiency gained from your Student Type. When you use this Skill, you add your Reputation Level to the roll (minimum 1). This is referred to as \"Skill Mastery.\" Trace a Circle around your Proficiency Diamond.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.37",
+    "identifier": "elemental-affinity-fire-destructive",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670530696937,
+    "modifiedTime": 1670533981221,
+    "lastModifiedBy": "RJIYZv8z53QKqobo"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "yxBL74DZ8pVOaBvA"
+}
