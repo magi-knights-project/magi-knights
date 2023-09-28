@@ -408,6 +408,9 @@ export default class Actor5e extends Actor {
 
   /* -------------------------------------------- */
 
+
+  /* -------------------------------------------- */
+
   /**
    * Prepare skill checks. Mutates the values of system.skills.
    * @param {object} bonusData       Data produced by `getRollData` to be applied to bonus formulas.

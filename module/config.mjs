@@ -134,7 +134,7 @@ preLocalize("attunements");
  */
 DND5E.weaponProficiencies = {
   sim: "DND5E.WeaponSimpleProficiency",
-  mar: "DND5E.WeaponMartialProficiency"
+  sle: "DND5E.WeaponSoulProficiency"
 };
 preLocalize("weaponProficiencies");
 
@@ -147,8 +147,9 @@ DND5E.weaponProficienciesMap = {
   natural: true,
   simpleM: "sim",
   simpleR: "sim",
-  martialM: "mar",
-  martialR: "mar"
+  soulM: "sle",
+  soulR: "sle",
+  soulI: "sle"
 };
 
 /**
@@ -424,6 +425,7 @@ preLocalize("itemCapacityTypes", { sort: true });
  * @enum {string}
  */
 DND5E.itemRarity = {
+  soul: "DND5E.ItemRaritySoul",
   common: "DND5E.ItemRarityCommon",
   uncommon: "DND5E.ItemRarityUncommon",
   rare: "DND5E.ItemRarityRare",
@@ -458,6 +460,8 @@ DND5E.armorTypes = {
   medium: "DND5E.EquipmentMedium",
   heavy: "DND5E.EquipmentHeavy",
   natural: "DND5E.EquipmentNatural",
+  studentA: "DND5E.EquipmentStudArm",
+  elementalA: "DND5E.EquipmentElemArm",
   shield: "DND5E.EquipmentShield"
 };
 preLocalize("armorTypes");
@@ -469,8 +473,11 @@ preLocalize("armorTypes");
  * @enum {string}
  */
 DND5E.miscEquipmentTypes = {
+  soul: "DND5E.EquipmentSoul",
   clothing: "DND5E.EquipmentClothing",
   trinket: "DND5E.EquipmentTrinket",
+  rune: "DND5E.EquipmentRune",
+  weave: "DND5E.EquipmentWeave",
   vehicle: "DND5E.EquipmentVehicle"
 };
 preLocalize("miscEquipmentTypes", { sort: true });
@@ -565,6 +572,10 @@ DND5E.armorClasses = {
   flat: {
     label: "DND5E.ArmorClassFlat",
     formula: "@attributes.ac.flat"
+  },
+  studentArmor: {
+    label: "DND5E.ArmorClassStudentArmor",
+    formula: "10 + @abilities.dex.mod + @abilities.con.mod"
   },
   natural: {
     label: "DND5E.ArmorClassNatural",
@@ -883,11 +894,11 @@ preLocalize("spellScalingModes", { sort: true });
 DND5E.weaponTypes = {
   simpleM: "DND5E.WeaponSimpleM",
   simpleR: "DND5E.WeaponSimpleR",
-  martialM: "DND5E.WeaponMartialM",
-  martialR: "DND5E.WeaponMartialR",
+  soulM: "DND5E.WeaponSoulM",
+  soulR: "DND5E.WeaponSoulR",
+  soulI: "DND5E.WeaponSoulI",
   natural: "DND5E.WeaponNatural",
-  improv: "DND5E.WeaponImprov",
-  siege: "DND5E.WeaponSiege"
+  improv: "DND5E.WeaponImprov"
 };
 preLocalize("weaponTypes");
 
@@ -898,23 +909,35 @@ preLocalize("weaponTypes");
  * @enum {string}
  */
 DND5E.weaponProperties = {
-  ada: "DND5E.WeaponPropertiesAda",
-  amm: "DND5E.WeaponPropertiesAmm",
+  not: "DND5E.WeaponPropertiesNot",
+  acc: "DND5E.WeaponPropertiesAcc",
+  cou: "DND5E.WeaponPropertiesCou",
+  dis: "DND5E.WeaponPropertiesDis",
+  ens: "DND5E.WeaponPropertiesEns",
   fin: "DND5E.WeaponPropertiesFin",
-  fir: "DND5E.WeaponPropertiesFir",
-  foc: "DND5E.WeaponPropertiesFoc",
-  hvy: "DND5E.WeaponPropertiesHvy",
-  lgt: "DND5E.WeaponPropertiesLgt",
-  lod: "DND5E.WeaponPropertiesLod",
-  mgc: "DND5E.WeaponPropertiesMgc",
-  rch: "DND5E.WeaponPropertiesRch",
-  rel: "DND5E.WeaponPropertiesRel",
-  ret: "DND5E.WeaponPropertiesRet",
-  sil: "DND5E.WeaponPropertiesSil",
-  spc: "DND5E.WeaponPropertiesSpc",
-  thr: "DND5E.WeaponPropertiesThr",
+  mas: "DND5E.WeaponPropertiesMas",
+  stg: "DND5E.WeaponPropertiesStg",
+  vlp: "DND5E.WeaponPropertiesVlp",
+  vcu: "DND5E.WeaponPropertiesVcu",
   two: "DND5E.WeaponPropertiesTwo",
-  ver: "DND5E.WeaponPropertiesVer"
+  crd: "DND5E.WeaponPropertiesCrd",
+  emb: "DND5E.WeaponPropertiesEmb",
+  foc: "DND5E.WeaponPropertiesFoc",
+  lgt: "DND5E.WeaponPropertiesLgt",
+  con: "DND5E.WeaponPropertiesCon",
+  rad: "DND5E.WeaponPropertiesRad",
+  wrd: "DND5E.WeaponPropertiesWrd",
+  fir: "DND5E.WeaponPropertiesFir",
+  aki: "DND5E.WeaponPropertiesAki",
+  mus: "DND5E.WeaponPropertiesMus",
+  mob: "DND5E.WeaponPropertiesMob",
+  hil: "DND5E.WeaponPropertiesHil",
+  sgt: "DND5E.WeaponPropertiesSgt",
+  spr: "DND5E.WeaponPropertiesSpr",
+  blk: "DND5E.WeaponPropertiesBlk",
+  rec: "DND5E.WeaponPropertiesRec",
+  qrl: "DND5E.WeaponPropertiesQrl",
+  col: "DND5E.WeaponPropertiesCol"
 };
 preLocalize("weaponProperties", { sort: true });
 
@@ -955,20 +978,24 @@ DND5E.spellTags = {
 preLocalize("spellTags", {keys: ["label", "abbr"]});
 
 /**
- * Schools to which a spell can belong.
+ * MK Edit: Spell paths.
  * @enum {string}
  */
-DND5E.spellSchools = {
-  abj: "DND5E.SchoolAbj",
-  con: "DND5E.SchoolCon",
-  div: "DND5E.SchoolDiv",
-  enc: "DND5E.SchoolEnc",
-  evo: "DND5E.SchoolEvo",
-  ill: "DND5E.SchoolIll",
-  nec: "DND5E.SchoolNec",
-  trs: "DND5E.SchoolTrs"
+DND5E.spellPaths = {
+  bem: "DND5E.PathBeam",
+  exp: "DND5E.PathExplosion",
+  cur: "DND5E.PathCuring",
+  res: "DND5E.PathRestoration",
+  amp: "DND5E.PathAmplify",
+  man: "DND5E.PathManipulate",
+  bar: "DND5E.PathBarrier",
+  trs: "DND5E.PathTransformation",
+  sum: "DND5E.PathSummoning",
+  csm: "DND5E.PathCompanionSummoning",
+  div: "DND5E.PathDivination",
+  chr: "DND5E.PathChronomancy"
 };
-preLocalize("spellSchools", { sort: true });
+preLocalize("spellPaths", { sort: true });
 
 /**
  * Valid spell levels.

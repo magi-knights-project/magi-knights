@@ -59,10 +59,10 @@
 
             {{!-- Spell School --}}
             <div class="form-group">
-                <label>{{ localize "DND5E.SpellSchool" }}</label>
+                <label>{{ localize "DND5E.SpellPath" }}</label>
                 <select name="system.school">
                     {{#select system.school}}
-                    {{#each config.spellSchools as |name sch|}}
+                    {{#each config.spellPaths as |name sch|}}
                     <option value="{{sch}}">{{name}}</option>
                     {{/each}}
                     {{/select}}

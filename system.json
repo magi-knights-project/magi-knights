@@ -22,6 +22,13 @@
   "styles": ["dnd5e.css"],
   "packs": [
     {
+      "name": "magiknightdeck",
+      "label": "Magi Knight Spell Deck (MK)",
+      "system": "dnd5e",
+      "path": "./packs/mkspelldeck.db",
+      "type": "Cards"
+    },
+    {
       "name": "studenttypes",
       "label": "Student Types (MK)",
       "system": "dnd5e",
@@ -41,6 +48,76 @@
       "system": "dnd5e",
       "path": "./packs/elementalaffinities.db",
       "type": "Item"
+    },
+    {
+      "name": "spellpaths",
+      "label": "Spell Paths (MK)",
+      "system": "dnd5e",
+      "path": "./packs/spellpaths.db",
+      "type": "Item"
+    },
+    {
+      "name": "soulweapons",
+      "label": "Soul Weapons (MK)",
+      "system": "dnd5e",
+      "path": "./packs/soulweapons.db",
+      "type": "Item"
+    },
+    {
+      "name": "battletechniques",
+      "label": "Battle Techniques (MK)",
+      "system": "dnd5e",
+      "path": "./packs/battletechniques.db",
+      "type": "Item"
+    },
+    {
+      "name": "combattactics",
+      "label": "Combat Tactics (MK)",
+      "system": "dnd5e",
+      "path": "./packs/combattactics.db",
+      "type": "Item"
+    },
+    {
+      "name": "socialtactics",
+      "label": "Social Tactics (MK)",
+      "system": "dnd5e",
+      "path": "./packs/socialtactics.db",
+      "type": "Item"
+    },
+    {
+      "name": "armamentssoulweaves",
+      "label": "Armaments, Soul Weaves (MK)",
+      "system": "dnd5e",
+      "path": "./packs/socialtactics.db",
+      "type": "Item"
+    },
+    {
+      "name": "shards",
+      "label": "Shards (MK)",
+      "system": "dnd5e",
+      "path": "./packs/shards.db",
+      "type": "Item"
+    },
+    {
+      "name": "weaponrunes",
+      "label": "Weapon Runes (MK)",
+      "system": "dnd5e",
+      "path": "./packs/weaponrunes.db",
+      "type": "Item"
+    },
+    {
+      "name": "armorrunes",
+      "label": "Armor Runes (MK)",
+      "system": "dnd5e",
+      "path": "./packs/armorrunes.db",
+      "type": "Item"
+    },
+    {
+      "name": "enemies",
+      "label": "Enemies (MK)",
+      "system": "dnd5e",
+      "path": "./packs/enemies.db",
+      "type": "Actor"
     },
     {
       "name": "heroes",

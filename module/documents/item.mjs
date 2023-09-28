@@ -348,7 +348,7 @@ export default class Item5e extends Item {
     const attributes = {...CONFIG.DND5E.spellComponents, ...tags};
     this.system.preparation.mode ||= "prepared";
     this.labels.level = CONFIG.DND5E.spellLevels[this.system.level];
-    this.labels.school = CONFIG.DND5E.spellSchools[this.system.school];
+    this.labels.school = CONFIG.DND5E.spellPaths[this.system.school];
     this.labels.components = Object.entries(this.system.components).reduce((obj, [c, active]) => {
       const config = attributes[c];
       if ( !config || (active !== true) ) return obj;

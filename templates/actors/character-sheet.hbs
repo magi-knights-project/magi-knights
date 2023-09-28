@@ -130,8 +130,93 @@
                     </footer>
                 </li>
             </ul>
+
+            
         </section>
+
     </header>
+
+        {{!-- Secondary Attributes --}}
+            <ul class="attributes flexrow">
+                <li class="attribute unity">
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Unity" }}</h4>
+                    <div class="attribute-value multiple">
+                        <input name="system.attributes.unity.value" type="number" step="any"
+                            value="{{system.attributes.unity.value}}" placeholder="0"
+                            title="{{localize 'DND5E.UnityPointsCurrent'}}">
+                        <span class="sep"> / </span>
+                        <input name="system.attributes.unity.max" type="number" step="any"
+                            value="{{system.attributes.unity.max}}" placeholder="4"
+                            title="{{localize 'DND5E.UnityPointsMax'}}">
+                    </div>
+                </li>
+
+                <li class="attribute mp">
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.MP" }}</h4>
+                    <div class="attribute-value multiple">
+                        <input name="system.attributes.mp.value" type="number" step="any"
+                            value="{{system.attributes.mp.value}}" placeholder="0"
+                            title="{{localize 'DND5E.MagicPointsCurrent'}}">
+                        <span class="sep"> / </span>
+                        <input name="system.attributes.mp.max" type="number" step="any"
+                            value="{{system.attributes.mp.max}}" placeholder="10"
+                            title="{{localize 'DND5E.MagicPointsMax'}}">
+                    </div>
+                </li>
+
+                <li class="attribute exhaustion">
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Exhaustion" }}</h4>
+                    <div class="attribute-value multiple">
+                        <input name="system.attributes.exhaustion.value" type="number" step="any"
+                            value="{{system.attributes.exhaustion.value}}" placeholder="0"
+                            title="{{localize 'DND5E.ExhaustionPointsCurrent'}}">
+                        <span class="sep"> / </span>
+                        <input name="system.attributes.exhaustion.max" type="number" step="any"
+                            value="{{system.attributes.exhaustion.max}}" placeholder="6"
+                            title="{{localize 'DND5E.ExhaustionPointsMax'}}">
+                    </div>
+                </li>
+
+                <li class="attribute stress">
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Stress" }}</h4>
+                    <div class="attribute-value multiple">
+                        <input name="system.attributes.stress.value" type="number" step="any"
+                            value="{{system.attributes.stress.value}}" placeholder="0"
+                            title="{{localize 'DND5E.StressPointsCurrent'}}">
+                        <span class="sep"> / </span>
+                        <input name="system.attributes.stress.max" type="number" step="any"
+                            value="{{system.attributes.stress.max}}" placeholder="6"
+                            title="{{localize 'DND5E.StressPointsMax'}}">
+                    </div>
+                </li>
+
+                <li class="attribute trauma">
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Trauma" }}</h4>
+                    <div class="attribute-value multiple">
+                        <input name="system.attributes.trauma.value" type="number" step="any"
+                            value="{{system.attributes.trauma.value}}" placeholder="0"
+                            title="{{localize 'DND5E.TraumaPointsCurrent'}}">
+                        <span class="sep"> / </span>
+                        <input name="system.attributes.trauma.max" type="number" step="any"
+                            value="{{system.attributes.trauma.max}}" placeholder="8"
+                            title="{{localize 'DND5E.TraumaPointsMax'}}">
+                    </div>
+                </li>
+
+                <li class="attribute corruption">
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Corruption" }}</h4>
+                    <div class="attribute-value multiple">
+                        <input name="system.attributes.corruption.value" type="number" step="any"
+                            value="{{system.attributes.corruption.value}}" placeholder="0"
+                            title="{{localize 'DND5E.CorruptionPointsCurrent'}}">
+                        <span class="sep"> / </span>
+                        <input name="system.attributes.corruption.max" type="number" step="any"
+                            value="{{system.attributes.corruption.max}}" placeholder="4"
+                            title="{{localize 'DND5E.CorruptionPointsMax'}}">
+                    </div>
+                </li>
+            </ul>
+    
 
     {{!-- Character Sheet Navigation --}}
     <nav class="sheet-navigation tabs" data-group="primary">
