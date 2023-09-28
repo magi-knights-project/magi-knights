@@ -1,15 +1,15 @@
 /**
- * The DnD5e game system for Foundry Virtual Tabletop
- * A system for playing the fifth edition of the world's most popular role-playing game.
+ * The MKA game system for Foundry Virtual Tabletop
+ * A system for playing Magi-Knights Awakening.
  * Author: Atropos
  * Software License: MIT
  * Content License: https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf
- * Repository: https://github.com/foundryvtt/dnd5e
- * Issue Tracker: https://github.com/foundryvtt/dnd5e/issues
+ * Repository: https://github.com/magi-knights-project/magi-knights
+ * Issue Tracker: https://github.com/magi-knights-project/magi-knights/issues
  */
 
 // Import Configuration
-import DND5E from "./module/config.mjs";
+import MKA from "./module/config.mjs";
 import registerSystemSettings from "./module/settings.mjs";
 
 // Import Submodules
@@ -25,11 +25,11 @@ import * as utils from "./module/utils.mjs";
 /*  Define Module Structure                     */
 /* -------------------------------------------- */
 
-globalThis.dnd5e = {
+globalThis.mka = {
   advancement,
   applications,
   canvas,
-  config: DND5E,
+  config: MKA,
   dice,
   documents,
   migrations,
@@ -41,68 +41,68 @@ globalThis.dnd5e = {
 /* -------------------------------------------- */
 
 Hooks.once("init", function() {
-  globalThis.dnd5e = game.dnd5e = Object.assign(game.system, globalThis.dnd5e);
-  console.log(`DnD5e | Initializing the DnD5e Game System - Version ${dnd5e.version}\n${DND5E.ASCII}`);
+  globalThis.mka = game.mka = Object.assign(game.system, globalThis.mka);
+  console.log(`MKA | Initializing the MKA Game System - Version ${mka.version}\n${MKA.ASCII}`);
 
   /** @deprecated */
-  Object.defineProperty(dnd5e, "entities", {
+  Object.defineProperty(mka, "entities", {
     get() {
       foundry.utils.logCompatibilityWarning(
-        "You are referencing the 'dnd5e.entities' property which has been deprecated and renamed to "
-        + "'dnd5e.documents'. Support for this old path will be removed in a future version.",
-        { since: "DnD5e 2.0", until: "DnD5e 2.2" }
+        "You are referencing the 'mka.entities' property which has been deprecated and renamed to "
+        + "'mka.documents'. Support for this old path will be removed in a future version.",
+        { since: "MKA 2.0", until: "MKA 2.2" }
       );
-      return dnd5e.documents;
+      return mka.documents;
     }
   });
 
   /** @deprecated */
-  Object.defineProperty(dnd5e, "rollItemMacro", {
+  Object.defineProperty(mka, "rollItemMacro", {
     get() {
       foundry.utils.logCompatibilityWarning(
-        "You are referencing the 'dnd5e.rollItemMacro' method which has been deprecated and renamed to "
-        + "'dnd5e.documents.macro.rollItem'. Support for this old path will be removed in a future version.",
-        { since: "DnD5e 2.0", until: "DnD5e 2.2" }
+        "You are referencing the 'mka.rollItemMacro' method which has been deprecated and renamed to "
+        + "'mka.documents.macro.rollItem'. Support for this old path will be removed in a future version.",
+        { since: "MKA 2.0", until: "MKA 2.2" }
       );
-      return dnd5e.documents.macro.rollItem;
+      return mka.documents.macro.rollItem;
     }
   });
 
   /** @deprecated */
-  Object.defineProperty(dnd5e, "macros", {
+  Object.defineProperty(mka, "macros", {
     get() {
       foundry.utils.logCompatibilityWarning(
-        "You are referencing the 'dnd5e.macros' property which has been deprecated and renamed to "
-        + "'dnd5e.documents.macro'. Support for this old path will be removed in a future version.",
-        { since: "DnD5e 2.0", until: "DnD5e 2.2" }
+        "You are referencing the 'mka.macros' property which has been deprecated and renamed to "
+        + "'mka.documents.macro'. Support for this old path will be removed in a future version.",
+        { since: "MKA 2.0", until: "MKA 2.2" }
       );
-      return dnd5e.documents.macro;
+      return mka.documents.macro;
     }
   });
 
   // Record Configuration Values
-  CONFIG.DND5E = DND5E;
-  CONFIG.ActiveEffect.documentClass = documents.ActiveEffect5e;
-  CONFIG.Actor.documentClass = documents.Actor5e;
-  CONFIG.Item.documentClass = documents.Item5e;
-  CONFIG.Token.documentClass = documents.TokenDocument5e;
-  CONFIG.Token.objectClass = canvas.Token5e;
+  CONFIG.MKA = MKA;
+  CONFIG.ActiveEffect.documentClass = documents.ActiveEffectMKA;
+  CONFIG.Actor.documentClass = documents.ActorMKA;
+  CONFIG.Item.documentClass = documents.ItemMKA;
+  CONFIG.Token.documentClass = documents.TokenDocumentMKA;
+  CONFIG.Token.objectClass = canvas.TokenMKA;
   CONFIG.time.roundTime = 6;
   CONFIG.Dice.DamageRoll = dice.DamageRoll;
   CONFIG.Dice.D20Roll = dice.D20Roll;
-  CONFIG.MeasuredTemplate.defaults.angle = 53.13; // 5e cone RAW should be 53.13 degrees
+  CONFIG.MeasuredTemplate.defaults.angle = 53.13; // MKA cone RAW should be 53.13 degrees
 
   // Register System Settings
   registerSystemSettings();
 
   // Remove honor & sanity from configuration if they aren't enabled
-  if ( !game.settings.get("dnd5e", "honorScore") ) {
-    delete DND5E.abilities.hon;
-    delete DND5E.abilityAbbreviations.hon;
+  if ( !game.settings.get("mka", "honorScore") ) {
+    delete MKA.abilities.hon;
+    delete MKA.abilityAbbreviations.hon;
   }
-  if ( !game.settings.get("dnd5e", "sanityScore") ) {
-    delete DND5E.abilities.san;
-    delete DND5E.abilityAbbreviations.san;
+  if ( !game.settings.get("mka", "sanityScore") ) {
+    delete MKA.abilities.san;
+    delete MKA.abilityAbbreviations.san;
   }
 
   // Patch Core Functions
@@ -115,25 +115,25 @@ Hooks.once("init", function() {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("dnd5e", applications.actor.ActorSheet5eCharacter, {
+  Actors.registerSheet("mka", applications.actor.ActorSheetMKACharacter, {
     types: ["character"],
     makeDefault: true,
-    label: "DND5E.SheetClassCharacter"
+    label: "MKA.SheetClassCharacter"
   });
-  Actors.registerSheet("dnd5e", applications.actor.ActorSheet5eNPC, {
+  Actors.registerSheet("mka", applications.actor.ActorSheetMKANPC, {
     types: ["npc"],
     makeDefault: true,
-    label: "DND5E.SheetClassNPC"
+    label: "MKA.SheetClassNPC"
   });
-  Actors.registerSheet("dnd5e", applications.actor.ActorSheet5eVehicle, {
+  Actors.registerSheet("mka", applications.actor.ActorSheetMKAVehicle, {
     types: ["vehicle"],
     makeDefault: true,
-    label: "DND5E.SheetClassVehicle"
+    label: "MKA.SheetClassVehicle"
   });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("dnd5e", applications.item.ItemSheet5e, {
+  Items.registerSheet("mka", applications.item.ItemSheetMKA, {
     makeDefault: true,
-    label: "DND5E.SheetClassItem"
+    label: "MKA.SheetClassItem"
   });
 
   // Preload Handlebars helpers & partials
@@ -150,8 +150,8 @@ Hooks.once("init", function() {
  * Prepare attribute lists.
  */
 Hooks.once("setup", function() {
-  CONFIG.DND5E.trackableAttributes = expandAttributeList(CONFIG.DND5E.trackableAttributes);
-  CONFIG.DND5E.consumableResources = expandAttributeList(CONFIG.DND5E.consumableResources);
+  CONFIG.MKA.trackableAttributes = expandAttributeList(CONFIG.MKA.trackableAttributes);
+  CONFIG.MKA.consumableResources = expandAttributeList(CONFIG.MKA.consumableResources);
 });
 
 /* --------------------------------------------- */
@@ -173,7 +173,7 @@ function expandAttributeList(attributes) {
 /**
  * Perform one-time pre-localization and sorting of some configuration objects
  */
-Hooks.once("i18nInit", () => utils.performPreLocalization(CONFIG.DND5E));
+Hooks.once("i18nInit", () => utils.performPreLocalization(CONFIG.MKA));
 
 /* -------------------------------------------- */
 /*  Foundry VTT Ready                           */
@@ -184,27 +184,27 @@ Hooks.once("i18nInit", () => utils.performPreLocalization(CONFIG.DND5E));
  */
 Hooks.once("ready", function() {
   // Apply custom compendium styles to the SRD rules compendium.
-  const rules = game.packs.get("dnd5e.rules");
+  const rules = game.packs.get("mka.rules");
   rules.apps = [new applications.SRDCompendium(rules)];
 
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     if ( ["Item", "ActiveEffect"].includes(data.type) ) {
-      documents.macro.create5eMacro(data, slot);
+      documents.macro.createMKAMacro(data, slot);
       return false;
     }
   });
 
   // Determine whether a system migration is required and feasible
   if ( !game.user.isGM ) return;
-  const cv = game.settings.get("dnd5e", "systemMigrationVersion") || game.world.flags.dnd5e?.version;
+  const cv = game.settings.get("mka", "systemMigrationVersion") || game.world.flags.mka?.version;
   const totalDocuments = game.actors.size + game.scenes.size + game.items.size;
-  if ( !cv && totalDocuments === 0 ) return game.settings.set("dnd5e", "systemMigrationVersion", game.system.version);
+  if ( !cv && totalDocuments === 0 ) return game.settings.set("mka", "systemMigrationVersion", game.system.version);
   if ( cv && !isNewerVersion(game.system.flags.needsMigrationVersion, cv) ) return;
 
   // Perform the migration
   if ( cv && isNewerVersion(game.system.flags.compatibleMigrationVersion, cv) ) {
-    ui.notifications.error(game.i18n.localize("MIGRATION.5eVersionTooOldWarning"), {permanent: true});
+    ui.notifications.error(game.i18n.localize("MIGRATION.MKAVersionTooOldWarning"), {permanent: true});
   }
   migrations.migrateWorld();
 });
@@ -214,7 +214,7 @@ Hooks.once("ready", function() {
 /* -------------------------------------------- */
 
 Hooks.on("canvasInit", gameCanvas => {
-  gameCanvas.grid.diagonalRule = game.settings.get("dnd5e", "diagonalMovement");
+  gameCanvas.grid.diagonalRule = game.settings.get("mka", "diagonalMovement");
   SquareGrid.prototype.measureDistances = canvas.measureDistances;
 });
 
@@ -225,9 +225,9 @@ Hooks.on("canvasInit", gameCanvas => {
 Hooks.on("renderChatMessage", documents.chat.onRenderChatMessage);
 Hooks.on("getChatLogEntryContext", documents.chat.addChatMessageContextOptions);
 
-Hooks.on("renderChatLog", (app, html, data) => documents.Item5e.chatListeners(html));
-Hooks.on("renderChatPopout", (app, html, data) => documents.Item5e.chatListeners(html));
-Hooks.on("getActorDirectoryEntryContext", documents.Actor5e.addDirectoryContextOptions);
+Hooks.on("renderChatLog", (app, html, data) => documents.ItemMKA.chatListeners(html));
+Hooks.on("renderChatPopout", (app, html, data) => documents.ItemMKA.chatListeners(html));
+Hooks.on("getActorDirectoryEntryContext", documents.ActorMKA.addDirectoryContextOptions);
 
 /* -------------------------------------------- */
 /*  Bundled Module Exports                      */
@@ -241,5 +241,5 @@ export {
   documents,
   migrations,
   utils,
-  DND5E
+  MKA
 };

@@ -3,7 +3,7 @@
  */
 export default function registerSystemSettings() {
   // Internal System Migration Version
-  game.settings.register("dnd5e", "systemMigrationVersion", {
+  game.settings.register("mka", "systemMigrationVersion", {
     name: "System Migration Version",
     scope: "world",
     config: false,
@@ -12,54 +12,54 @@ export default function registerSystemSettings() {
   });
 
   // Rest Recovery Rules
-  game.settings.register("dnd5e", "restVariant", {
-    name: "SETTINGS.5eRestN",
-    hint: "SETTINGS.5eRestL",
+  game.settings.register("mka", "restVariant", {
+    name: "SETTINGS.MKARestN",
+    hint: "SETTINGS.MKARestL",
     scope: "world",
     config: true,
     default: "normal",
     type: String,
     choices: {
-      normal: "SETTINGS.5eRestPHB",
-      gritty: "SETTINGS.5eRestGritty",
-      epic: "SETTINGS.5eRestEpic"
+      normal: "SETTINGS.MKARestPHB",
+      gritty: "SETTINGS.MKARestGritty",
+      epic: "SETTINGS.MKARestEpic"
     }
   });
 
   // Diagonal Movement Rule
-  game.settings.register("dnd5e", "diagonalMovement", {
-    name: "SETTINGS.5eDiagN",
-    hint: "SETTINGS.5eDiagL",
+  game.settings.register("mka", "diagonalMovement", {
+    name: "SETTINGS.MKADiagN",
+    hint: "SETTINGS.MKADiagL",
     scope: "world",
     config: true,
     default: "555",
     type: String,
     choices: {
-      555: "SETTINGS.5eDiagPHB",
-      5105: "SETTINGS.5eDiagDMG",
-      EUCL: "SETTINGS.5eDiagEuclidean"
+      555: "SETTINGS.MKADiagPHB",
+      5105: "SETTINGS.MKADiagDMG",
+      EUCL: "SETTINGS.MKADiagEuclidean"
     },
     onChange: rule => canvas.grid.diagonalRule = rule
   });
 
   // Proficiency modifier type
-  game.settings.register("dnd5e", "proficiencyModifier", {
-    name: "SETTINGS.5eProfN",
-    hint: "SETTINGS.5eProfL",
+  game.settings.register("mka", "proficiencyModifier", {
+    name: "SETTINGS.MKAProfN",
+    hint: "SETTINGS.MKAProfL",
     scope: "world",
     config: true,
     default: "bonus",
     type: String,
     choices: {
-      bonus: "SETTINGS.5eProfBonus",
-      dice: "SETTINGS.5eProfDice"
+      bonus: "SETTINGS.MKAProfBonus",
+      dice: "SETTINGS.MKAProfDice"
     }
   });
 
   // Use Honor ability score
-  game.settings.register("dnd5e", "honorScore", {
-    name: "SETTINGS.5eHonorN",
-    hint: "SETTINGS.5eHonorL",
+  game.settings.register("mka", "honorScore", {
+    name: "SETTINGS.MKAHonorN",
+    hint: "SETTINGS.MKAHonorL",
     scope: "world",
     config: true,
     default: false,
@@ -68,9 +68,9 @@ export default function registerSystemSettings() {
   });
 
   // Use Sanity ability score
-  game.settings.register("dnd5e", "sanityScore", {
-    name: "SETTINGS.5eSanityN",
-    hint: "SETTINGS.5eSanityL",
+  game.settings.register("mka", "sanityScore", {
+    name: "SETTINGS.MKASanityN",
+    hint: "SETTINGS.MKASanityL",
     scope: "world",
     config: true,
     default: false,
@@ -79,9 +79,9 @@ export default function registerSystemSettings() {
   });
 
   // Apply Dexterity as Initiative Tiebreaker
-  game.settings.register("dnd5e", "initiativeDexTiebreaker", {
-    name: "SETTINGS.5eInitTBN",
-    hint: "SETTINGS.5eInitTBL",
+  game.settings.register("mka", "initiativeDexTiebreaker", {
+    name: "SETTINGS.MKAInitTBN",
+    hint: "SETTINGS.MKAInitTBL",
     scope: "world",
     config: true,
     default: false,
@@ -89,9 +89,9 @@ export default function registerSystemSettings() {
   });
 
   // Record Currency Weight
-  game.settings.register("dnd5e", "currencyWeight", {
-    name: "SETTINGS.5eCurWtN",
-    hint: "SETTINGS.5eCurWtL",
+  game.settings.register("mka", "currencyWeight", {
+    name: "SETTINGS.MKACurWtN",
+    hint: "SETTINGS.MKACurWtL",
     scope: "world",
     config: true,
     default: true,
@@ -99,9 +99,9 @@ export default function registerSystemSettings() {
   });
 
   // Disable Experience Tracking
-  game.settings.register("dnd5e", "disableExperienceTracking", {
-    name: "SETTINGS.5eNoExpN",
-    hint: "SETTINGS.5eNoExpL",
+  game.settings.register("mka", "disableExperienceTracking", {
+    name: "SETTINGS.MKANoExpN",
+    hint: "SETTINGS.MKANoExpL",
     scope: "world",
     config: true,
     default: false,
@@ -109,9 +109,9 @@ export default function registerSystemSettings() {
   });
 
   // Disable Advancements
-  game.settings.register("dnd5e", "disableAdvancements", {
-    name: "SETTINGS.5eNoAdvancementsN",
-    hint: "SETTINGS.5eNoAdvancementsL",
+  game.settings.register("mka", "disableAdvancements", {
+    name: "SETTINGS.MKANoAdvancementsN",
+    hint: "SETTINGS.MKANoAdvancementsL",
     scope: "world",
     config: true,
     default: false,
@@ -119,9 +119,9 @@ export default function registerSystemSettings() {
   });
 
   // Collapse Item Cards (by default)
-  game.settings.register("dnd5e", "autoCollapseItemCards", {
-    name: "SETTINGS.5eAutoCollapseCardN",
-    hint: "SETTINGS.5eAutoCollapseCardL",
+  game.settings.register("mka", "autoCollapseItemCards", {
+    name: "SETTINGS.MKAAutoCollapseCardN",
+    hint: "SETTINGS.MKAAutoCollapseCardL",
     scope: "client",
     config: true,
     default: false,
@@ -132,9 +132,9 @@ export default function registerSystemSettings() {
   });
 
   // Allow Polymorphing
-  game.settings.register("dnd5e", "allowPolymorphing", {
-    name: "SETTINGS.5eAllowPolymorphingN",
-    hint: "SETTINGS.5eAllowPolymorphingL",
+  game.settings.register("mka", "allowPolymorphing", {
+    name: "SETTINGS.MKAAllowPolymorphingN",
+    hint: "SETTINGS.MKAAllowPolymorphingL",
     scope: "world",
     config: true,
     default: false,
@@ -142,7 +142,7 @@ export default function registerSystemSettings() {
   });
 
   // Polymorph Settings
-  game.settings.register("dnd5e", "polymorphSettings", {
+  game.settings.register("mka", "polymorphSettings", {
     scope: "client",
     default: {
       keepPhysical: false,
@@ -162,9 +162,9 @@ export default function registerSystemSettings() {
   });
 
   // Metric Unit Weights
-  game.settings.register("dnd5e", "metricWeightUnits", {
-    name: "SETTINGS.5eMetricN",
-    hint: "SETTINGS.5eMetricL",
+  game.settings.register("mka", "metricWeightUnits", {
+    name: "SETTINGS.MKAMetricN",
+    hint: "SETTINGS.MKAMetricL",
     scope: "world",
     config: true,
     type: Boolean,
@@ -172,9 +172,9 @@ export default function registerSystemSettings() {
   });
 
   // Critical Damage Modifiers
-  game.settings.register("dnd5e", "criticalDamageModifiers", {
-    name: "SETTINGS.5eCriticalModifiersN",
-    hint: "SETTINGS.5eCriticalModifiersL",
+  game.settings.register("mka", "criticalDamageModifiers", {
+    name: "SETTINGS.MKACriticalModifiersN",
+    hint: "SETTINGS.MKACriticalModifiersL",
     scope: "world",
     config: true,
     type: Boolean,
@@ -182,9 +182,9 @@ export default function registerSystemSettings() {
   });
 
   // Critical Damage Maximize
-  game.settings.register("dnd5e", "criticalDamageMaxDice", {
-    name: "SETTINGS.5eCriticalMaxDiceN",
-    hint: "SETTINGS.5eCriticalMaxDiceL",
+  game.settings.register("mka", "criticalDamageMaxDice", {
+    name: "SETTINGS.MKACriticalMaxDiceN",
+    hint: "SETTINGS.MKACriticalMaxDiceL",
     scope: "world",
     config: true,
     type: Boolean,

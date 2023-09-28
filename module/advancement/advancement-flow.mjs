@@ -2,7 +2,7 @@
  * Base class for the advancement interface displayed by the advancement prompt that should be subclassed by
  * individual advancement types.
  *
- * @param {Item5e} item           Item to which the advancement belongs.
+ * @param {ItemMKA} item           Item to which the advancement belongs.
  * @param {string} advancementId  ID of the advancement this flow modifies.
  * @param {number} level          Level for which to configure this flow.
  * @param {object} [options={}]   Application rendering options.
@@ -13,7 +13,7 @@ export default class AdvancementFlow extends FormApplication {
 
     /**
      * The item that houses the Advancement.
-     * @type {Item5e}
+     * @type {ItemMKA}
      */
     this.item = item;
 
@@ -43,7 +43,7 @@ export default class AdvancementFlow extends FormApplication {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      template: "systems/dnd5e/templates/advancement/advancement-flow.hbs",
+      template: "systems/mka/templates/advancement/advancement-flow.hbs",
       popOut: false
     });
   }

@@ -2,7 +2,7 @@
   "_id": "PuPo4H4Dcxigf0fY",
   "name": "Specter",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/undead/Specter.webp",
+  "img": "systems/mka/tokens/undead/Specter.webp",
   "system": {
     "abilities": {
       "str": {
@@ -597,7 +597,7 @@
       "attenuation": 0.5
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/undead/Specter.webp",
+      "src": "systems/mka/tokens/undead/Specter.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -916,11 +916,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787232813,
     "modifiedTime": 1661878731614,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

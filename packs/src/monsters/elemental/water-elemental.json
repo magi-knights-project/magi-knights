@@ -2,7 +2,7 @@
   "_id": "namJz755U1EhvEJa",
   "name": "Water Elemental",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/elemental/WaterElemental.webp",
+  "img": "systems/mka/tokens/elemental/WaterElemental.webp",
   "system": {
     "abilities": {
       "str": {
@@ -594,7 +594,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/elemental/WaterElemental.webp",
+      "src": "systems/mka/tokens/elemental/WaterElemental.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1079,11 +1079,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787233161,
     "modifiedTime": 1661878735396,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

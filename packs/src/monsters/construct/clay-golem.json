@@ -2,7 +2,7 @@
   "_id": "YOqhbf8WsX0jH9Fu",
   "name": "Clay Golem",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/construct/ClayGolem.webp",
+  "img": "systems/mka/tokens/construct/ClayGolem.webp",
   "system": {
     "abilities": {
       "str": {
@@ -589,7 +589,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/construct/ClayGolem.webp",
+      "src": "systems/mka/tokens/construct/ClayGolem.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1333,11 +1333,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787232881,
     "modifiedTime": 1661878732650,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

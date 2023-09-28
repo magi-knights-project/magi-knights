@@ -1,5 +1,5 @@
 /**
- * A helper class for building MeasuredTemplates for 5e spells and abilities
+ * A helper class for building MeasuredTemplates for MKA spells and abilities
  */
 export default class AbilityTemplate extends MeasuredTemplate {
 
@@ -28,13 +28,13 @@ export default class AbilityTemplate extends MeasuredTemplate {
   /* -------------------------------------------- */
 
   /**
-   * A factory method to create an AbilityTemplate instance using provided data from an Item5e instance
-   * @param {Item5e} item               The Item object for which to construct the template
+   * A factory method to create an AbilityTemplate instance using provided data from an ItemMKA instance
+   * @param {ItemMKA} item               The Item object for which to construct the template
    * @returns {AbilityTemplate|null}    The template object, or null if the item does not produce a template
    */
   static fromItem(item) {
     const target = item.system.target || {};
-    const templateShape = dnd5e.config.areaTargetTypes[target.type];
+    const templateShape = mka.config.areaTargetTypes[target.type];
     if ( !templateShape ) return null;
 
     // Prepare template data
@@ -46,7 +46,7 @@ export default class AbilityTemplate extends MeasuredTemplate {
       x: 0,
       y: 0,
       fillColor: game.user.color,
-      flags: { dnd5e: { origin: item.uuid } }
+      flags: { mka: { origin: item.uuid } }
     };
 
     // Additional type-specific data
@@ -54,12 +54,12 @@ export default class AbilityTemplate extends MeasuredTemplate {
       case "cone":
         templateData.angle = CONFIG.MeasuredTemplate.defaults.angle;
         break;
-      case "rect": // 5e rectangular AoEs are always cubes
+      case "rect": // MKA rectangular AoEs are always cubes
         templateData.distance = Math.hypot(target.value, target.value);
         templateData.width = target.value;
         templateData.direction = 45;
         break;
-      case "ray": // 5e rays are most commonly 1 square (5 ft) in width
+      case "ray": // MKA rays are most commonly 1 square (5 ft) in width
         templateData.width = target.width ?? canvas.dimensions.distance;
         break;
       default:

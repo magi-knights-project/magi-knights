@@ -5,7 +5,7 @@
   "img": "icons/weapons/staves/staff-simple-green.webp",
   "system": {
     "description": {
-      "value": "<p>This wand has 3 charges. While holding it, you can expend 1 charge as an action to cast the @Compendium[dnd5e.spells.ghXTfe7sgCbgf1Q8]{Detect Magic} spell from it. The wand regains 1d3 expended charges daily at dawn.</p>",
+      "value": "<p>This wand has 3 charges. While holding it, you can expend 1 charge as an action to cast the @Compendium[mka.spells.ghXTfe7sgCbgf1Q8]{Detect Magic} spell from it. The wand regains 1d3 expended charges daily at dawn.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -80,11 +80,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787233438,
     "modifiedTime": 1661787233438,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

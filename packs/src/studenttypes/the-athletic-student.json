@@ -4,7 +4,7 @@
   "img": "icons/svg/combat.svg",
   "system": {
     "description": {
-      "value": "<p><em>The Athletic Student can be quite the popular character, typically because they help their school's sport teams excel and win championships! Able-bodied, muscular, and with an attractive physique, they carry an aura of confidence and prowess with them wherever they go.</em></p><p><strong>Restriction:</strong> Must start the game with at least 12 Strength</p><p><span style=\"text-decoration:underline\"><strong><span style=\"text-decoration:underline\">Student Abilities:</span></strong></span></p><ul><li><p><strong>Characteristic Points:</strong> +2 to Strength, +1 to Any Other</p></li><li><p><strong>Starting Skills:</strong> Athletics, Influence, Coordination</p></li><li><p><strong>Athletic Endurance: @UUID[Compendium.dnd5e.studenttypes.gTFJscI9OmacPPVX]{Athletic Endurance}</strong> You may use Inspiration and, as a Free Action, your next Strength or Constitution Skill Check result becomes 20+Mod. You may only use this ability during a Non-Combat Encounter and it can used after dice are rolled.</p></li></ul>",
+      "value": "<p><em>The Athletic Student can be quite the popular character, typically because they help their school's sport teams excel and win championships! Able-bodied, muscular, and with an attractive physique, they carry an aura of confidence and prowess with them wherever they go.</em></p><p><strong>Restriction:</strong> Must start the game with at least 12 Strength</p><p><span style=\"text-decoration:underline\"><strong><span style=\"text-decoration:underline\">Student Abilities:</span></strong></span></p><ul><li><p><strong>Characteristic Points:</strong> +2 to Strength, +1 to Any Other</p></li><li><p><strong>Starting Skills:</strong> Athletics, Influence, Coordination</p></li><li><p><strong>Athletic Endurance: @UUID[Compendium.mka.studenttypes.gTFJscI9OmacPPVX]{Athletic Endurance}</strong> You may use Inspiration and, as a Free Action, your next Strength or Constitution Skill Check result becomes 20+Mod. You may only use this ability during a Non-Combat Encounter and it can used after dice are rolled.</p></li></ul>",
       "chat": "",
       "unidentified": ""
     },
@@ -69,7 +69,7 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.2",
     "coreVersion": "10.287",
     "createdTime": 1670351173957,

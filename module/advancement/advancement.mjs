@@ -13,7 +13,7 @@ class AdvancementError extends Error {
 
 /**
  * Abstract base class which various advancement types can subclass.
- * @param {Item5e} item       Item to which this advancement belongs.
+ * @param {ItemMKA} item       Item to which this advancement belongs.
  * @param {object} [data={}]  Raw data stored in the advancement object.
  * @abstract
  */
@@ -21,7 +21,7 @@ export default class Advancement {
   constructor(item, data={}) {
     /**
      * Item to which this advancement belongs.
-     * @type {Item5e}
+     * @type {ItemMKA}
      */
     this.item = item;
 
@@ -69,7 +69,7 @@ export default class Advancement {
       },
       order: 100,
       icon: "icons/svg/upgrade.svg",
-      title: game.i18n.localize("DND5E.AdvancementTitle"),
+      title: game.i18n.localize("MKA.AdvancementTitle"),
       hint: "",
       multiLevel: false,
       validItemTypes: new Set(["background", "class", "subclass"]),
@@ -137,7 +137,7 @@ export default class Advancement {
 
   /**
    * Actor to which this advancement's item belongs, if the item is embedded.
-   * @type {Actor5e|null}
+   * @type {ActorMKA|null}
    */
   get actor() {
     return this.item.parent ?? null;
@@ -279,7 +279,7 @@ export default class Advancement {
 
   /**
    * Can an advancement of this type be added to the provided item?
-   * @param {Item5e} item  Item to check against.
+   * @param {ItemMKA} item  Item to check against.
    * @returns {boolean}    Should this be enabled as an option on the `AdvancementSelection` dialog?
    */
   static availableForItem(item) {

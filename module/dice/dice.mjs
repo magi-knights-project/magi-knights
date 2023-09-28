@@ -41,7 +41,7 @@
  */
 
 /**
- * A standardized helper function for managing core 5e d20 rolls.
+ * A standardized helper function for managing core MKA d20 rolls.
  * Holding SHIFT, ALT, or CTRL when the attack is rolled will "fast-forward".
  * This chooses the default options of a normal attack with no bonus, Advantage, or Disadvantage respectively
  *
@@ -157,7 +157,7 @@ function _determineAdvantageMode({event, advantage=false, disadvantage=false, fa
  */
 
 /**
- * A standardized helper function for managing core 5e damage rolls.
+ * A standardized helper function for managing core MKA damage rolls.
  * Holding SHIFT, ALT, or CTRL when the attack is rolled will "fast-forward".
  * This chooses the default options of a normal attack with no bonus, Critical, or no bonus respectively
  *
@@ -185,8 +185,8 @@ export async function damageRoll({
     criticalBonusDice,
     criticalMultiplier,
     criticalBonusDamage,
-    multiplyNumeric: multiplyNumeric ?? game.settings.get("dnd5e", "criticalDamageModifiers"),
-    powerfulCritical: powerfulCritical ?? game.settings.get("dnd5e", "criticalDamageMaxDice")
+    multiplyNumeric: multiplyNumeric ?? game.settings.get("mka", "criticalDamageModifiers"),
+    powerfulCritical: powerfulCritical ?? game.settings.get("mka", "criticalDamageMaxDice")
   });
 
   // Prompt a Dialog to further configure the DamageRoll

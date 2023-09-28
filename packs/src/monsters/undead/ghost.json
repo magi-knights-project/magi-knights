@@ -2,7 +2,7 @@
   "_id": "qoFEjfrANBdrCP6m",
   "name": "Ghost",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/undead/Ghost.webp",
+  "img": "systems/mka/tokens/undead/Ghost.webp",
   "system": {
     "abilities": {
       "str": {
@@ -584,7 +584,7 @@
       "attenuation": 0.5
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/undead/Ghost.webp",
+      "src": "systems/mka/tokens/undead/Ghost.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1147,11 +1147,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787233196,
     "modifiedTime": 1661878735912,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

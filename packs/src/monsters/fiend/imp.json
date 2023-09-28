@@ -2,7 +2,7 @@
   "_id": "dLQiESMsfsXijD5c",
   "name": "Imp",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/fiend/Imp.webp",
+  "img": "systems/mka/tokens/fiend/Imp.webp",
   "system": {
     "abilities": {
       "str": {
@@ -589,7 +589,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/fiend/Imp.webp",
+      "src": "systems/mka/tokens/fiend/Imp.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1194,11 +1194,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787232938,
     "modifiedTime": 1661878733315,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }
