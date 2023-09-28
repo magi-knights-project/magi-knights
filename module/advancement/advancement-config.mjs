@@ -17,7 +17,7 @@ export default class AdvancementConfig extends FormApplication {
 
     /**
      * Parent item to which this advancement belongs.
-     * @type {Item5e}
+     * @type {ItemMKA}
      */
     this.item = advancement.item;
   }
@@ -27,8 +27,8 @@ export default class AdvancementConfig extends FormApplication {
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "advancement", "dialog"],
-      template: "systems/dnd5e/templates/advancement/advancement-config.hbs",
+      classes: ["mka", "advancement", "dialog"],
+      template: "systems/mka/templates/advancement/advancement-config.hbs",
       width: 400,
       height: "auto",
       submitOnChange: true,
@@ -41,16 +41,16 @@ export default class AdvancementConfig extends FormApplication {
   /** @inheritDoc */
   get title() {
     const type = this.advancement.constructor.metadata.title;
-    return `${game.i18n.format("DND5E.AdvancementConfigureTitle", { item: this.item.name })}: ${type}`;
+    return `${game.i18n.format("MKA.AdvancementConfigureTitle", { item: this.item.name })}: ${type}`;
   }
 
   /* -------------------------------------------- */
 
   /** @inheritdoc */
   getData() {
-    const levels = Object.fromEntries(Array.fromRange(CONFIG.DND5E.maxLevel + 1).map(l => [l, l]));
+    const levels = Object.fromEntries(Array.fromRange(CONFIG.MKA.maxLevel + 1).map(l => [l, l]));
     if ( ["class", "subclass"].includes(this.item.type) ) delete levels[0];
-    else levels[0] = game.i18n.localize("DND5E.AdvancementLevelAnyHeader");
+    else levels[0] = game.i18n.localize("MKA.AdvancementLevelAnyHeader");
     return {
       data: this.advancement.data,
       default: {

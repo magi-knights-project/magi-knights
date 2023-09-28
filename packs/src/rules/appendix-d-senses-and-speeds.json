@@ -26,7 +26,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.oag7MR9Omacmhzb7.JournalEntryPage.9IYGlnEcbvDsesqE"
+          "sourceId": "Compendium.mka.rules.oag7MR9Omacmhzb7.JournalEntryPage.9IYGlnEcbvDsesqE"
         }
       }
     },
@@ -55,7 +55,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.10RNSKCH2hTja3DG.JournalEntryPage.njFKuQXewyxEKhhy"
+          "sourceId": "Compendium.mka.rules.10RNSKCH2hTja3DG.JournalEntryPage.njFKuQXewyxEKhhy"
         }
       }
     },
@@ -84,7 +84,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.MzNASNCgB0Qi2m8p.JournalEntryPage.h2Abug4QLGjQyLUC"
+          "sourceId": "Compendium.mka.rules.MzNASNCgB0Qi2m8p.JournalEntryPage.h2Abug4QLGjQyLUC"
         }
       }
     },
@@ -113,7 +113,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.eeQ4uW3yMwnbIYVs.JournalEntryPage.trtVIxHQGLdoQlNU"
+          "sourceId": "Compendium.mka.rules.eeQ4uW3yMwnbIYVs.JournalEntryPage.trtVIxHQGLdoQlNU"
         }
       }
     },
@@ -142,7 +142,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.treKHmCjr4aQiVyd.JournalEntryPage.xTlI7NaMAsWfKU85"
+          "sourceId": "Compendium.mka.rules.treKHmCjr4aQiVyd.JournalEntryPage.xTlI7NaMAsWfKU85"
         }
       }
     },
@@ -171,7 +171,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.cvRB5qT2M8wVUGRb.JournalEntryPage.txo9niGHXsuleMgb"
+          "sourceId": "Compendium.mka.rules.cvRB5qT2M8wVUGRb.JournalEntryPage.txo9niGHXsuleMgb"
         }
       }
     },
@@ -200,7 +200,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.KJHSCRHWW0UuhtoE.JournalEntryPage.lJtdbApn5zHZvyoq"
+          "sourceId": "Compendium.mka.rules.KJHSCRHWW0UuhtoE.JournalEntryPage.lJtdbApn5zHZvyoq"
         }
       }
     },
@@ -229,7 +229,7 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.rules.J9ppEykIQxUIarUj.JournalEntryPage.xRaG4s8Y4Jaz904c"
+          "sourceId": "Compendium.mka.rules.J9ppEykIQxUIarUj.JournalEntryPage.xRaG4s8Y4Jaz904c"
         }
       }
     }
@@ -243,12 +243,12 @@
     }
   },
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1660925150837,
     "modifiedTime": 1661787234665,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   },
   "folder": null,
   "sort": 0,

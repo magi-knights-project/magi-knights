@@ -1,6 +1,6 @@
-import ActiveEffect5e from "../../documents/active-effect.mjs";
-import Actor5e from "../../documents/actor/actor.mjs";
-import Item5e from "../../documents/item.mjs";
+import ActiveEffectMKA from "../../documents/active-effect.mjs";
+import ActorMKA from "../../documents/actor/actor.mjs";
+import ItemMKA from "../../documents/item.mjs";
 
 import ActorAbilityConfig from "./ability-config.mjs";
 import ActorArmorConfig from "./armor-config.mjs";
@@ -22,7 +22,7 @@ import TraitSelector from "../trait-selector.mjs";
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
  * @abstract
  */
-export default class ActorSheet5e extends ActorSheet {
+export default class ActorSheetMKA extends ActorSheet {
 
   /**
    * Track the set of item filters which are applied
@@ -50,8 +50,8 @@ export default class ActorSheet5e extends ActorSheet {
       tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}],
       width: 720,
       height: Math.max(680, Math.max(
-        237 + (Object.keys(CONFIG.DND5E.abilities).length * 70),
-        240 + (Object.keys(CONFIG.DND5E.skills).length * 24)
+        237 + (Object.keys(CONFIG.MKA.abilities).length * 70),
+        240 + (Object.keys(CONFIG.MKA.skills).length * 24)
       ))
     });
   }
@@ -68,8 +68,8 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   get template() {
-    if ( !game.user.isGM && this.actor.limited ) return "systems/dnd5e/templates/actors/limited-sheet.hbs";
-    return `systems/dnd5e/templates/actors/${this.actor.type}-sheet.hbs`;
+    if ( !game.user.isGM && this.actor.limited ) return "systems/mka/templates/actors/limited-sheet.hbs";
+    return `systems/mka/templates/actors/${this.actor.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */
@@ -92,7 +92,7 @@ export default class ActorSheet5e extends ActorSheet {
       labels: this._getLabels(actorData.system),
       movement: this._getMovementSpeed(actorData.system),
       senses: this._getSenses(actorData.system),
-      effects: ActiveEffect5e.prepareActiveEffectCategories(this.actor.effects),
+      effects: ActiveEffectMKA.prepareActiveEffectCategories(this.actor.effects),
       warnings: this.actor._preparationWarnings,
       filters: this._filters,
       owner: this.actor.isOwner,
@@ -103,16 +103,16 @@ export default class ActorSheet5e extends ActorSheet {
       isCharacter: this.actor.type === "character",
       isNPC: this.actor.type === "npc",
       isVehicle: this.actor.type === "vehicle",
-      config: CONFIG.DND5E,
+      config: CONFIG.MKA,
       rollData: this.actor.getRollData.bind(this.actor)
     };
 
     /** @deprecated */
     Object.defineProperty(context, "data", {
       get() {
-        const msg = `You are accessing the "data" attribute within the rendering context provided by the ItemSheet5e 
+        const msg = `You are accessing the "data" attribute within the rendering context provided by the ItemSheetMKAA 
         class. This attribute has been deprecated in favor of "system" and will be removed in a future release`;
-        foundry.utils.logCompatibilityWarning(msg, { since: "DnD5e 2.0", until: "DnD5e 2.2" });
+        foundry.utils.logCompatibilityWarning(msg, { since: "MKA 2.0", until: "MKA 2.2" });
         return context.system;
       }
     });
@@ -132,17 +132,17 @@ export default class ActorSheet5e extends ActorSheet {
     // Ability Scores
     for ( const [a, abl] of Object.entries(context.system.abilities) ) {
       abl.icon = this._getProficiencyIcon(abl.proficient);
-      abl.hover = CONFIG.DND5E.proficiencyLevels[abl.proficient];
-      abl.label = CONFIG.DND5E.abilities[a];
+      abl.hover = CONFIG.MKA.proficiencyLevels[abl.proficient];
+      abl.label = CONFIG.MKA.abilities[a];
       abl.baseProf = source.system.abilities[a]?.proficient ?? 0;
     }
 
     // Skills
     for ( const [s, skl] of Object.entries(context.system.skills ?? {}) ) {
-      skl.ability = CONFIG.DND5E.abilityAbbreviations[skl.bestAbility ?? skl.ability];
+      skl.ability = CONFIG.MKA.abilityAbbreviations[skl.bestAbility ?? skl.ability];
       skl.icon = this._getProficiencyIcon(skl.value);
-      skl.hover = CONFIG.DND5E.proficiencyLevels[skl.value];
-      skl.label = CONFIG.DND5E.skills[s]?.label;
+      skl.hover = CONFIG.MKA.proficiencyLevels[skl.value];
+      skl.label = CONFIG.MKA.skills[s]?.label;
       skl.baseValue = source.system.skills[s]?.value ?? 0;
     }
 
@@ -175,13 +175,13 @@ export default class ActorSheet5e extends ActorSheet {
     const labels = this.actor.labels ?? {};
 
     // Currency Labels
-    labels.currencies = Object.entries(CONFIG.DND5E.currencies).reduce((obj, [k, c]) => {
+    labels.currencies = Object.entries(CONFIG.MKA.currencies).reduce((obj, [k, c]) => {
       obj[k] = c.label;
       return obj;
     }, {});
 
     // Proficiency
-    labels.proficiency = game.settings.get("dnd5e", "proficiencyModifier") === "dice"
+    labels.proficiency = game.settings.get("mka", "proficiencyModifier") === "dice"
       ? `d${systemData.attributes.prof * 2}`
       : `+${systemData.attributes.prof}`;
 
@@ -202,13 +202,13 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Prepare an array of available movement speeds
     let speeds = [
-      [movement.burrow, `${game.i18n.localize("DND5E.MovementBurrow")} ${movement.burrow}`],
-      [movement.climb, `${game.i18n.localize("DND5E.MovementClimb")} ${movement.climb}`],
-      [movement.fly, `${game.i18n.localize("DND5E.MovementFly")} ${movement.fly}${movement.hover ? ` (${game.i18n.localize("DND5E.MovementHover")})` : ""}`],
-      [movement.swim, `${game.i18n.localize("DND5E.MovementSwim")} ${movement.swim}`]
+      [movement.burrow, `${game.i18n.localize("MKA.MovementBurrow")} ${movement.burrow}`],
+      [movement.climb, `${game.i18n.localize("MKA.MovementClimb")} ${movement.climb}`],
+      [movement.fly, `${game.i18n.localize("MKA.MovementFly")} ${movement.fly}${movement.hover ? ` (${game.i18n.localize("MKA.MovementHover")})` : ""}`],
+      [movement.swim, `${game.i18n.localize("MKA.MovementSwim")} ${movement.swim}`]
     ];
     if ( largestPrimary ) {
-      speeds.push([movement.walk, `${game.i18n.localize("DND5E.MovementWalk")} ${movement.walk}`]);
+      speeds.push([movement.walk, `${game.i18n.localize("MKA.MovementWalk")} ${movement.walk}`]);
     }
 
     // Filter and sort speeds on their values
@@ -243,7 +243,7 @@ export default class ActorSheet5e extends ActorSheet {
   _getSenses(systemData) {
     const senses = systemData.attributes.senses ?? {};
     const tags = {};
-    for ( let [k, label] of Object.entries(CONFIG.DND5E.senses) ) {
+    for ( let [k, label] of Object.entries(CONFIG.MKA.senses) ) {
       const v = senses[k] ?? 0;
       if ( v === 0 ) continue;
       tags[k] = `${game.i18n.localize(label)} ${v} ${senses.units}`;
@@ -290,13 +290,13 @@ export default class ActorSheet5e extends ActorSheet {
 
   /**
    * Produce a list of armor class attribution objects.
-   * @param {object} rollData             Data provided by Actor5e#getRollData
+   * @param {object} rollData             Data provided by ActorMKA#getRollData
    * @returns {AttributionDescription[]}  List of attribution descriptions.
    * @protected
    */
   _prepareArmorClassAttribution(rollData) {
     const ac = rollData.attributes.ac;
-    const cfg = CONFIG.DND5E.armorClasses[ac.calc];
+    const cfg = CONFIG.MKA.armorClasses[ac.calc];
     const attribution = [];
 
     // Base AC Attribution
@@ -305,7 +305,7 @@ export default class ActorSheet5e extends ActorSheet {
       // Flat AC
       case "flat":
         return [{
-          label: game.i18n.localize("DND5E.ArmorClassFlat"),
+          label: game.i18n.localize("MKA.ArmorClassFlat"),
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
           value: ac.flat
         }];
@@ -313,7 +313,7 @@ export default class ActorSheet5e extends ActorSheet {
       // Natural armor
       case "natural":
         attribution.push({
-          label: game.i18n.localize("DND5E.ArmorClassNatural"),
+          label: game.i18n.localize("MKA.ArmorClassNatural"),
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
           value: ac.flat
         });
@@ -334,8 +334,8 @@ export default class ActorSheet5e extends ActorSheet {
           });
         }
         const armorInFormula = formula.includes("@attributes.ac.armor");
-        let label = game.i18n.localize("DND5E.PropertyBase");
-        if ( armorInFormula ) label = this.actor.armor?.name ?? game.i18n.localize("DND5E.ArmorClassUnarmored");
+        let label = game.i18n.localize("MKA.PropertyBase");
+        if ( armorInFormula ) label = this.actor.armor?.name ?? game.i18n.localize("MKA.ArmorClassUnarmored");
         attribution.unshift({
           label,
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
@@ -346,7 +346,7 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Shield
     if ( ac.shield !== 0 ) attribution.push({
-      label: this.actor.shield?.name ?? game.i18n.localize("DND5E.EquipmentShield"),
+      label: this.actor.shield?.name ?? game.i18n.localize("MKA.EquipmentShield"),
       mode: CONST.ACTIVE_EFFECT_MODES.ADD,
       value: ac.shield
     });
@@ -356,7 +356,7 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Cover
     if ( ac.cover !== 0 ) attribution.push({
-      label: game.i18n.localize("DND5E.Cover"),
+      label: game.i18n.localize("MKA.Cover"),
       mode: CONST.ACTIVE_EFFECT_MODES.ADD,
       value: ac.cover
     });
@@ -372,11 +372,11 @@ export default class ActorSheet5e extends ActorSheet {
    */
   _prepareTraits(traits) {
     const map = {
-      dr: CONFIG.DND5E.damageResistanceTypes,
-      di: CONFIG.DND5E.damageResistanceTypes,
-      dv: CONFIG.DND5E.damageResistanceTypes,
-      ci: CONFIG.DND5E.conditionTypes,
-      languages: CONFIG.DND5E.languages
+      dr: CONFIG.MKA.damageResistanceTypes,
+      di: CONFIG.MKA.damageResistanceTypes,
+      dv: CONFIG.MKA.damageResistanceTypes,
+      ci: CONFIG.MKA.conditionTypes,
+      languages: CONFIG.MKA.languages
     };
     for ( let [t, choices] of Object.entries(map) ) {
       const trait = traits[t];
@@ -397,7 +397,7 @@ export default class ActorSheet5e extends ActorSheet {
     for ( const t of ["armor", "weapon", "tool"] ) {
       const trait = traits[`${t}Prof`];
       if ( !trait ) continue;
-      Actor5e.prepareProficiencies(trait, t);
+      ActorMKA.prepareProficiencies(trait, t);
       trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
     }
   }
@@ -456,19 +456,19 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Level-based spellcasters have cantrips and leveled slots
     if ( maxLevel > 0 ) {
-      registerSection("spell0", 0, CONFIG.DND5E.spellLevels[0]);
+      registerSection("spell0", 0, CONFIG.MKA.spellLevels[0]);
       for (let lvl = 1; lvl <= maxLevel; lvl++) {
         const sl = `spell${lvl}`;
-        registerSection(sl, lvl, CONFIG.DND5E.spellLevels[lvl], levels[sl]);
+        registerSection(sl, lvl, CONFIG.MKA.spellLevels[lvl], levels[sl]);
       }
     }
 
     // Pact magic users have cantrips and a pact magic section
     if ( levels.pact && levels.pact.max ) {
-      if ( !spellbook["0"] ) registerSection("spell0", 0, CONFIG.DND5E.spellLevels[0]);
+      if ( !spellbook["0"] ) registerSection("spell0", 0, CONFIG.MKA.spellLevels[0]);
       const l = levels.pact;
-      const config = CONFIG.DND5E.spellPreparationModes.pact;
-      const level = game.i18n.localize(`DND5E.SpellLevel${levels.pact.level}`);
+      const config = CONFIG.MKA.spellPreparationModes.pact;
+      const level = game.i18n.localize(`MKA.SpellLevel${levels.pact.level}`);
       const label = `${config} — ${level}`;
       registerSection("pact", sections.pact, label, {
         prepMode: "pact",
@@ -489,7 +489,7 @@ export default class ActorSheet5e extends ActorSheet {
         s = sections[mode];
         if ( !spellbook[s] ) {
           const l = levels[mode] || {};
-          const config = CONFIG.DND5E.spellPreparationModes[mode];
+          const config = CONFIG.MKA.spellPreparationModes[mode];
           registerSection(mode, s, config, {
             prepMode: mode,
             value: l.value,
@@ -501,7 +501,7 @@ export default class ActorSheet5e extends ActorSheet {
 
       // Sections for higher-level spells which the caster "should not" have, but spell items exist for
       else if ( !spellbook[s] ) {
-        registerSection(sl, s, CONFIG.DND5E.spellLevels[s], {levels: levels[sl]});
+        registerSection(sl, s, CONFIG.MKA.spellLevels[s], {levels: levels[sl]});
       }
 
       // Add the spell to the relevant heading
@@ -550,7 +550,7 @@ export default class ActorSheet5e extends ActorSheet {
 
   /**
    * Get the font-awesome icon used to display a certain level of skill proficiency.
-   * @param {number} level  A proficiency mode defined in `CONFIG.DND5E.proficiencyLevels`.
+   * @param {number} level  A proficiency mode defined in `CONFIG.MKA.proficiencyLevels`.
    * @returns {string}      HTML string for the chosen icon.
    * @private
    */
@@ -613,7 +613,7 @@ export default class ActorSheet5e extends ActorSheet {
       html.find(".slot-max-override").click(this._onSpellSlotOverride.bind(this));
 
       // Active Effect management
-      html.find(".effect-control").click(ev => ActiveEffect5e.onManageActiveEffect(ev, this.actor));
+      html.find(".effect-control").click(ev => ActiveEffectMKA.onManageActiveEffect(ev, this.actor));
     }
 
     // Owner Only Listeners
@@ -747,7 +747,7 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   async _onDropActor(event, data) {
-    const canPolymorph = game.user.isGM || (this.actor.isOwner && game.settings.get("dnd5e", "allowPolymorphing"));
+    const canPolymorph = game.user.isGM || (this.actor.isOwner && game.settings.get("mka", "allowPolymorphing"));
     if ( !canPolymorph ) return false;
 
     // Get the target actor
@@ -761,29 +761,29 @@ export default class ActorSheet5e extends ActorSheet {
       html.find("input").each((i, el) => {
         options[el.name] = el.checked;
       });
-      const settings = foundry.utils.mergeObject(game.settings.get("dnd5e", "polymorphSettings") ?? {}, options);
-      game.settings.set("dnd5e", "polymorphSettings", settings);
+      const settings = foundry.utils.mergeObject(game.settings.get("mka", "polymorphSettings") ?? {}, options);
+      game.settings.set("mka", "polymorphSettings", settings);
       return settings;
     };
 
     // Create and render the Dialog
     return new Dialog({
-      title: game.i18n.localize("DND5E.PolymorphPromptTitle"),
+      title: game.i18n.localize("MKA.PolymorphPromptTitle"),
       content: {
-        options: game.settings.get("dnd5e", "polymorphSettings"),
-        i18n: CONFIG.DND5E.polymorphSettings,
+        options: game.settings.get("mka", "polymorphSettings"),
+        i18n: CONFIG.MKA.polymorphSettings,
         isToken: this.actor.isToken
       },
       default: "accept",
       buttons: {
         accept: {
           icon: '<i class="fas fa-check"></i>',
-          label: game.i18n.localize("DND5E.PolymorphAcceptSettings"),
+          label: game.i18n.localize("MKA.PolymorphAcceptSettings"),
           callback: html => this.actor.transformInto(sourceActor, rememberOptions(html))
         },
         wildshape: {
           icon: '<i class="fas fa-paw"></i>',
-          label: game.i18n.localize("DND5E.PolymorphWildShape"),
+          label: game.i18n.localize("MKA.PolymorphWildShape"),
           callback: html => this.actor.transformInto(sourceActor, {
             keepBio: true,
             keepClass: true,
@@ -795,7 +795,7 @@ export default class ActorSheet5e extends ActorSheet {
         },
         polymorph: {
           icon: '<i class="fas fa-pastafarianism"></i>',
-          label: game.i18n.localize("DND5E.Polymorph"),
+          label: game.i18n.localize("MKA.Polymorph"),
           callback: html => this.actor.transformInto(sourceActor, {
             transformTokens: rememberOptions(html).transformTokens
           })
@@ -806,9 +806,9 @@ export default class ActorSheet5e extends ActorSheet {
         }
       }
     }, {
-      classes: ["dialog", "dnd5e"],
+      classes: ["dialog", "mka"],
       width: 600,
-      template: "systems/dnd5e/templates/apps/polymorph-prompt.hbs"
+      template: "systems/mka/templates/apps/polymorph-prompt.hbs"
     }).render(true);
   }
 
@@ -819,8 +819,8 @@ export default class ActorSheet5e extends ActorSheet {
     let items = itemData instanceof Array ? itemData : [itemData];
     const itemsWithoutAdvancement = items.filter(i => !i.system.advancement?.length);
     const multipleAdvancements = (items.length - itemsWithoutAdvancement.length) > 1;
-    if ( multipleAdvancements && !game.settings.get("dnd5e", "disableAdvancements") ) {
-      ui.notifications.warn(game.i18n.format("DND5E.WarnCantAddMultipleAdvancements"));
+    if ( multipleAdvancements && !game.settings.get("mka", "disableAdvancements") ) {
+      ui.notifications.warn(game.i18n.format("MKA.WarnCantAddMultipleAdvancements"));
       items = itemsWithoutAdvancement;
     }
 
@@ -847,7 +847,7 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Check to make sure items of this type are allowed on this actor
     if ( this.constructor.unsupportedItemTypes.has(itemData.type) ) {
-      ui.notifications.warn(game.i18n.format("DND5E.ActorWarningInvalidItem", {
+      ui.notifications.warn(game.i18n.format("MKA.ActorWarningInvalidItem", {
         itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
         actorType: game.i18n.localize(CONFIG.Actor.typeLabels[this.actor.type])
       }));
@@ -856,7 +856,7 @@ export default class ActorSheet5e extends ActorSheet {
 
     // Create a Consumable spell scroll on the Inventory tab
     if ( (itemData.type === "spell") && (this._tabs[0].active === "inventory") ) {
-      const scroll = await Item5e.createScrollFromSpell(itemData);
+      const scroll = await ItemMKA.createScrollFromSpell(itemData);
       return scroll.toObject();
     }
 
@@ -868,7 +868,7 @@ export default class ActorSheet5e extends ActorSheet {
     if ( stacked ) return false;
 
     // Bypass normal creation flow for any items with advancement
-    if ( itemData.system.advancement?.length && !game.settings.get("dnd5e", "disableAdvancements") ) {
+    if ( itemData.system.advancement?.length && !game.settings.get("mka", "disableAdvancements") ) {
       const manager = AdvancementManager.forNewItem(this.actor, itemData);
       if ( manager.steps.length ) {
         manager.render(true);
@@ -888,7 +888,7 @@ export default class ActorSheet5e extends ActorSheet {
     if ( !itemData.system ) return;
     ["equipped", "proficient", "prepared"].forEach(k => delete itemData.system[k]);
     if ( "attunement" in itemData.system ) {
-      itemData.system.attunement = Math.min(itemData.system.attunement, CONFIG.DND5E.attunementTypes.REQUIRED);
+      itemData.system.attunement = Math.min(itemData.system.attunement, CONFIG.MKA.attunementTypes.REQUIRED);
     }
   }
 
@@ -897,7 +897,7 @@ export default class ActorSheet5e extends ActorSheet {
   /**
    * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
    * @param {object} itemData         The item data requested for creation.
-   * @returns {Promise<Item5e>|null}  If a duplicate was found, returns the adjusted item stack.
+   * @returns {Promise<ItemMKA>|null}  If a duplicate was found, returns the adjusted item stack.
    */
   _onDropStackConsumables(itemData) {
     const droppedSourceId = itemData.flags.core?.sourceId;
@@ -941,7 +941,7 @@ export default class ActorSheet5e extends ActorSheet {
   /**
    * Change the uses amount of an Owned Item within the Actor.
    * @param {Event} event        The triggering click event.
-   * @returns {Promise<Item5e>}  Updated item.
+   * @returns {Promise<ItemMKA>}  Updated item.
    * @private
    */
   async _onUsesChange(event) {
@@ -1016,7 +1016,7 @@ export default class ActorSheet5e extends ActorSheet {
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset.
    * @param {Event} event          The originating click event.
-   * @returns {Promise<Item5e[]>}  The newly created item.
+   * @returns {Promise<ItemMKA[]>}  The newly created item.
    * @private
    */
   _onItemCreate(event) {
@@ -1025,13 +1025,13 @@ export default class ActorSheet5e extends ActorSheet {
     const type = header.dataset.type;
 
     // Check to make sure the newly created class doesn't take player over level cap
-    if ( type === "class" && (this.actor.system.details.level + 1 > CONFIG.DND5E.maxLevel) ) {
-      const err = game.i18n.format("DND5E.MaxCharacterLevelExceededWarn", {max: CONFIG.DND5E.maxLevel});
+    if ( type === "class" && (this.actor.system.details.level + 1 > CONFIG.MKA.maxLevel) ) {
+      const err = game.i18n.format("MKA.MaxCharacterLevelExceededWarn", {max: CONFIG.MKA.maxLevel});
       return ui.notifications.error(err);
     }
 
     const itemData = {
-      name: game.i18n.format("DND5E.ItemNew", {type: game.i18n.localize(`DND5E.ItemType${type.capitalize()}`)}),
+      name: game.i18n.format("MKA.ItemNew", {type: game.i18n.localize(`MKA.ItemType${type.capitalize()}`)}),
       type: type,
       system: foundry.utils.deepClone(header.dataset)
     };
@@ -1044,7 +1044,7 @@ export default class ActorSheet5e extends ActorSheet {
   /**
    * Handle editing an existing Owned Item for the Actor.
    * @param {Event} event    The originating click event.
-   * @returns {ItemSheet5e}  The rendered item sheet.
+   * @returns {ItemSheetMKA}  The rendered item sheet.
    * @private
    */
   _onItemEdit(event) {
@@ -1059,7 +1059,7 @@ export default class ActorSheet5e extends ActorSheet {
   /**
    * Handle deleting an existing Owned Item for the Actor.
    * @param {Event} event  The originating click event.
-   * @returns {Promise<Item5e|AdvancementManager>|undefined}  The deleted item if something was deleted or the
+   * @returns {Promise<ItemMKA|AdvancementManager>|undefined}  The deleted item if something was deleted or the
    *                                                          advancement manager if advancements need removing.
    * @private
    */
@@ -1070,7 +1070,7 @@ export default class ActorSheet5e extends ActorSheet {
     if ( !item ) return;
 
     // If item has advancement, handle it separately
-    if ( !game.settings.get("dnd5e", "disableAdvancements") ) {
+    if ( !game.settings.get("mka", "disableAdvancements") ) {
       const manager = AdvancementManager.forDeletedItem(this.actor, item.id);
       if ( manager.steps.length ) {
         if ( ["class", "subclass"].includes(item.type) ) {
@@ -1143,7 +1143,7 @@ export default class ActorSheet5e extends ActorSheet {
   /**
    * Handle toggling Ability score proficiency level.
    * @param {Event} event         The originating click event.
-   * @returns {Promise<Actor5e>}  Updated actor instance.
+   * @returns {Promise<ActorMKA>}  Updated actor instance.
    * @private
    */
   _onToggleAbilityProficiency(event) {
@@ -1157,7 +1157,7 @@ export default class ActorSheet5e extends ActorSheet {
   /**
    * Handle toggling of filters to display a different set of owned items.
    * @param {Event} event     The click event which triggered the toggle.
-   * @returns {ActorSheet5e}  This actor sheet with toggled filters.
+   * @returns {ActorSheetMKA}  This actor sheet with toggled filters.
    * @private
    */
   _onToggleFilter(event) {
@@ -1198,7 +1198,7 @@ export default class ActorSheet5e extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const label = a.parentElement.querySelector("label");
-    const choices = CONFIG.DND5E[a.dataset.options];
+    const choices = CONFIG.MKA[a.dataset.options];
     const options = { name: a.dataset.target, title: `${label.innerText}: ${this.actor.name}`, choices };
     return new TraitSelector(this.actor, options).render(true);
   }
@@ -1210,7 +1210,7 @@ export default class ActorSheet5e extends ActorSheet {
     let buttons = super._getHeaderButtons();
     if ( this.actor.isPolymorphed ) {
       buttons.unshift({
-        label: "DND5E.PolymorphRestoreTransformation",
+        label: "MKA.PolymorphRestoreTransformation",
         class: "restore-transformation",
         icon: "fas fa-backward",
         onclick: () => this.actor.revertOriginalForm()

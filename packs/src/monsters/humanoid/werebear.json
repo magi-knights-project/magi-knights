@@ -2,7 +2,7 @@
   "_id": "oRBnO5OHoOZzlCOr",
   "name": "Werebear",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/humanoid/Werebear.webp",
+  "img": "systems/mka/tokens/humanoid/Werebear.webp",
   "system": {
     "abilities": {
       "str": {
@@ -583,7 +583,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/humanoid/Werebear.webp",
+      "src": "systems/mka/tokens/humanoid/Werebear.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1217,11 +1217,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787233169,
     "modifiedTime": 1661878735503,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

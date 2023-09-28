@@ -4,7 +4,7 @@
   "img": "icons/svg/eye.svg",
   "system": {
     "description": {
-      "value": "<p><em>The Spiritual Student is someone who has a core belief in something greater than themselves. This belief could be drawn from a religion, or possibly a broad conviction in the strength of human goodness. They may feel as if they are guided along by ancestors or other spirits, divine beings, or perhaps even by fate itself.</em></p><p><strong>Restriction:</strong> Must start the game with at least 12 Wisdom</p><p><span style=\"text-decoration:underline\"><strong><span style=\"text-decoration:underline\">Student Abilities:</span></strong></span></p><ul><li><p><strong>Characteristic Points:</strong> +2 to Wisdom, +1 to Any Other</p></li><li><p><strong>Starting Skills:</strong> Insight, Academic Arts, Purity</p></li><li><p><strong>Self-Disciplined: @UUID[Compendium.dnd5e.studenttypes.TNVn39Apg6KLWNPu]{Self-Disciplined}</strong> You may use Inspiration and, as a Free Action, your next Wisdom Skill Check result becomes 20+Mod. You may only use this ability during a Non-Combat Encounter and it can used after dice are rolled.</p></li></ul>",
+      "value": "<p><em>The Spiritual Student is someone who has a core belief in something greater than themselves. This belief could be drawn from a religion, or possibly a broad conviction in the strength of human goodness. They may feel as if they are guided along by ancestors or other spirits, divine beings, or perhaps even by fate itself.</em></p><p><strong>Restriction:</strong> Must start the game with at least 12 Wisdom</p><p><span style=\"text-decoration:underline\"><strong><span style=\"text-decoration:underline\">Student Abilities:</span></strong></span></p><ul><li><p><strong>Characteristic Points:</strong> +2 to Wisdom, +1 to Any Other</p></li><li><p><strong>Starting Skills:</strong> Insight, Academic Arts, Purity</p></li><li><p><strong>Self-Disciplined: @UUID[Compendium.mka.studenttypes.TNVn39Apg6KLWNPu]{Self-Disciplined}</strong> You may use Inspiration and, as a Free Action, your next Wisdom Skill Check result becomes 20+Mod. You may only use this ability during a Non-Combat Encounter and it can used after dice are rolled.</p></li></ul>",
       "chat": "",
       "unidentified": ""
     },
@@ -69,7 +69,7 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.2",
     "coreVersion": "10.287",
     "createdTime": 1670400155643,

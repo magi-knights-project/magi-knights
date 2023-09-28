@@ -2,7 +2,7 @@
   "_id": "9ggQBmAKXraOtz7S",
   "name": "Bearded Devil",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/fiend/BeardedDevil.webp",
+  "img": "systems/mka/tokens/fiend/BeardedDevil.webp",
   "system": {
     "abilities": {
       "str": {
@@ -588,7 +588,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/fiend/BeardedDevil.webp",
+      "src": "systems/mka/tokens/fiend/BeardedDevil.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1197,11 +1197,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787232643,
     "modifiedTime": 1661878729832,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

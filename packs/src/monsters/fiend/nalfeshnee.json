@@ -2,7 +2,7 @@
   "_id": "rUg5JMnKNnZNBAq9",
   "name": "Nalfeshnee",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/fiend/Nalfeshnee.webp",
+  "img": "systems/mka/tokens/fiend/Nalfeshnee.webp",
   "system": {
     "abilities": {
       "str": {
@@ -588,7 +588,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/fiend/Nalfeshnee.webp",
+      "src": "systems/mka/tokens/fiend/Nalfeshnee.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1185,11 +1185,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787233201,
     "modifiedTime": 1661878735942,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

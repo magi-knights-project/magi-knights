@@ -53,13 +53,13 @@ export default class ProficiencySelector extends TraitSelector {
    * @returns {Object<string, ProficiencyChoice>}  Object mapping proficiency ids to choice objects.
    */
   static async getChoices(type, chosen=[]) {
-    let data = Object.entries(CONFIG.DND5E[`${type}Proficiencies`]).reduce((obj, [key, label]) => {
+    let data = Object.entries(CONFIG.MKA[`${type}Proficiencies`]).reduce((obj, [key, label]) => {
       obj[key] = { label: label, chosen: chosen.includes(key) };
       return obj;
     }, {});
 
-    const ids = CONFIG.DND5E[`${type}Ids`];
-    const map = CONFIG.DND5E[`${type}ProficienciesMap`];
+    const ids = CONFIG.MKA[`${type}Ids`];
+    const map = CONFIG.MKA[`${type}ProficienciesMap`];
     if ( ids !== undefined ) {
       const typeProperty = (type !== "armor") ? `${type}Type` : "armor.type";
       for ( const [key, id] of Object.entries(ids) ) {
@@ -84,16 +84,16 @@ export default class ProficiencySelector extends TraitSelector {
     }
 
     if ( type === "tool" ) {
-      data.vehicle.children = Object.entries(CONFIG.DND5E.vehicleTypes).reduce((obj, [key, label]) => {
+      data.vehicle.children = Object.entries(CONFIG.MKA.vehicleTypes).reduce((obj, [key, label]) => {
         obj[key] = { label: label, chosen: chosen.includes(key) };
         return obj;
       }, {});
-      data = dnd5e.utils.sortObjectEntries(data, "label");
+      data = mka.utils.sortObjectEntries(data, "label");
     }
 
     for ( const category of Object.values(data) ) {
       if ( !category.children ) continue;
-      category.children = dnd5e.utils.sortObjectEntries(category.children, "label");
+      category.children = mka.utils.sortObjectEntries(category.children, "label");
     }
 
     return data;
@@ -104,7 +104,7 @@ export default class ProficiencySelector extends TraitSelector {
   /**
    * Fetch an item for the provided ID. If the provided ID contains a compendium pack name
    * it will be fetched from that pack, otherwise it will be fetched from the compendium defined
-   * in `DND5E.sourcePacks.ITEMS`.
+   * in `MKA.sourcePacks.ITEMS`.
    *
    * @param {string} identifier            Simple ID or compendium name and ID separated by a dot.
    * @param {object} [options]
@@ -112,18 +112,18 @@ export default class ProficiencySelector extends TraitSelector {
    *                                       Promise).
    * @param {boolean} [options.fullItem]   If set to true, the full item will be returned as long as `indexOnly` is
    *                                       false.
-   * @returns {Promise<Item5e>|object}     Promise for a `Document` if `indexOnly` is false & `fullItem` is true,
+   * @returns {Promise<ItemMKA>|object}     Promise for a `Document` if `indexOnly` is false & `fullItem` is true,
    *                                       otherwise else a simple object containing the minimal index data.
    */
   static getBaseItem(identifier, { indexOnly=false, fullItem=false }={}) {
-    let pack = CONFIG.DND5E.sourcePacks.ITEMS;
+    let pack = CONFIG.MKA.sourcePacks.ITEMS;
     let [scope, collection, id] = identifier.split(".");
     if ( scope && collection ) pack = `${scope}.${collection}`;
     if ( !id ) id = identifier;
 
     const packObject = game.packs.get(pack);
 
-    // Full Item5e document required, always async.
+    // Full ItemMKA document required, always async.
     if ( fullItem && !indexOnly ) {
       return packObject?.getDocument(id);
     }

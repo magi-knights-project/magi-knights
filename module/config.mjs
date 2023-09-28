@@ -2,32 +2,35 @@ import ClassFeatures from "./advancement/class-features.mjs";
 import { preLocalize } from "./utils.mjs";
 
 // Namespace Configuration Values
-const DND5E = {};
+const MKA = {};
 
 // ASCII Artwork
-DND5E.ASCII = `_______________________________
-______      ______ _____ _____
-|  _  \\___  |  _  \\  ___|  ___|
-| | | ( _ ) | | | |___ \\| |__
-| | | / _ \\/\\ | | |   \\ \\  __|
-| |/ / (_>  < |/ //\\__/ / |___
-|___/ \\___/\\/___/ \\____/\\____/
-_______________________________`;
+MKA.ASCII = ` .----------------.  .----------------.  .----------------. 
+| .--------------. || .--------------. || .--------------. |
+| | ____    ____ | || |  ___  ____   | || |      __      | |
+| ||_   \  /   _|| || | |_  ||_  _|  | || |     /  \     | |
+| |  |   \/   |  | || |   | |_/ /    | || |    / /\ \    | |
+| |  | |\  /| |  | || |   |  __'.    | || |   / ____ \   | |
+| | _| |_\/_| |_ | || |  _| |  \ \_  | || | _/ /    \ \_ | |
+| ||_____||_____|| || | |____||____| | || ||____|  |____|| |
+| |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'`;
 
 
 /**
  * The set of Ability Scores used within the system.
  * @enum {string}
  */
-DND5E.abilities = {
-  str: "DND5E.AbilityStr",
-  dex: "DND5E.AbilityDex",
-  con: "DND5E.AbilityCon",
-  int: "DND5E.AbilityInt",
-  wis: "DND5E.AbilityWis",
-  cha: "DND5E.AbilityCha",
-  hon: "DND5E.AbilityHon",
-  san: "DND5E.AbilitySan"
+MKA.abilities = {
+  str: "MKA.AbilityStr",
+  dex: "MKA.AbilityDex",
+  con: "MKA.AbilityCon",
+  int: "MKA.AbilityInt",
+  wis: "MKA.AbilityWis",
+  cha: "MKA.AbilityCha",
+  hon: "MKA.AbilityHon",
+  san: "MKA.AbilitySan"
 };
 preLocalize("abilities");
 
@@ -35,15 +38,15 @@ preLocalize("abilities");
  * Localized abbreviations for Ability Scores.
  * @enum {string}
  */
-DND5E.abilityAbbreviations = {
-  str: "DND5E.AbilityStrAbbr",
-  dex: "DND5E.AbilityDexAbbr",
-  con: "DND5E.AbilityConAbbr",
-  int: "DND5E.AbilityIntAbbr",
-  wis: "DND5E.AbilityWisAbbr",
-  cha: "DND5E.AbilityChaAbbr",
-  hon: "DND5E.AbilityHonAbbr",
-  san: "DND5E.AbilitySanAbbr"
+MKA.abilityAbbreviations = {
+  str: "MKA.AbilityStrAbbr",
+  dex: "MKA.AbilityDexAbbr",
+  con: "MKA.AbilityConAbbr",
+  int: "MKA.AbilityIntAbbr",
+  wis: "MKA.AbilityWisAbbr",
+  cha: "MKA.AbilityChaAbbr",
+  hon: "MKA.AbilityHonAbbr",
+  san: "MKA.AbilitySanAbbr"
 };
 preLocalize("abilityAbbreviations");
 
@@ -62,24 +65,24 @@ preLocalize("abilityAbbreviations");
  * The set of skill which can be trained with their default ability scores.
  * @enum {SkillConfiguration}
  */
-DND5E.skills = {
-  art: { label: "DND5E.SkillArt", ability: "int", abilitylist: ["int", "wis"] },
-  acr: { label: "DND5E.SkillAcr", ability: "dex", abilitylist: ["dex"] },
-  ath: { label: "DND5E.SkillAth", ability: "str", abilitylist: ["str"] },
-  crd: { label: "DND5E.SkillCrd", ability: "dex", abilitylist: ["dex"] },
-  dec: { label: "DND5E.SkillDec", ability: "cha", abilitylist: ["int", "cha"] },
-  inf: { label: "DND5E.SkillInf", ability: "cha", abilitylist: ["str", "cha"] },
-  ins: { label: "DND5E.SkillIns", ability: "wis", abilitylist: ["wis"] },
-  inv: { label: "DND5E.SkillInv", ability: "int", abilitylist: ["int", "wis"] },
-  ldr: { label: "DND5E.SkillLdr", ability: "cha", abilitylist: ["cha"] },
-  med: { label: "DND5E.SkillMed", ability: "wis", abilitylist: ["int", "wis"] },
-  mst: { label: "DND5E.SkillMst", ability: "int", abilitylist: ["int"] },
-  prc: { label: "DND5E.SkillPrc", ability: "wis", abilitylist: ["wis"] },
-  prf: { label: "DND5E.SkillPrf", ability: "cha", abilitylist: ["str", "dex", "con", "int", "wis", "cha"] },
-  per: { label: "DND5E.SkillPer", ability: "wis", abilitylist: ["wis"] },
-  pur: { label: "DND5E.SkillPur", ability: "wis", abilitylist: ["int", "wis", "cha"] },
-  ste: { label: "DND5E.SkillSte", ability: "dex", abilitylist: ["dex"] },
-  stm: { label: "DND5E.SkillSTM", ability: "int", abilitylist: ["int"] }
+MKA.skills = {
+  art: { label: "MKA.SkillArt", ability: "int", abilitylist: ["int", "wis"] },
+  acr: { label: "MKA.SkillAcr", ability: "dex", abilitylist: ["dex"] },
+  ath: { label: "MKA.SkillAth", ability: "str", abilitylist: ["str"] },
+  crd: { label: "MKA.SkillCrd", ability: "dex", abilitylist: ["dex"] },
+  dec: { label: "MKA.SkillDec", ability: "cha", abilitylist: ["int", "cha"] },
+  inf: { label: "MKA.SkillInf", ability: "cha", abilitylist: ["str", "cha"] },
+  ins: { label: "MKA.SkillIns", ability: "wis", abilitylist: ["wis"] },
+  inv: { label: "MKA.SkillInv", ability: "int", abilitylist: ["int", "wis"] },
+  ldr: { label: "MKA.SkillLdr", ability: "cha", abilitylist: ["cha"] },
+  med: { label: "MKA.SkillMed", ability: "wis", abilitylist: ["int", "wis"] },
+  mst: { label: "MKA.SkillMst", ability: "int", abilitylist: ["int"] },
+  prc: { label: "MKA.SkillPrc", ability: "wis", abilitylist: ["wis"] },
+  prf: { label: "MKA.SkillPrf", ability: "cha", abilitylist: ["str", "dex", "con", "int", "wis", "cha"] },
+  per: { label: "MKA.SkillPer", ability: "wis", abilitylist: ["wis"] },
+  pur: { label: "MKA.SkillPur", ability: "wis", abilitylist: ["int", "wis", "cha"] },
+  ste: { label: "MKA.SkillSte", ability: "dex", abilitylist: ["dex"] },
+  stm: { label: "MKA.SkillSTM", ability: "int", abilitylist: ["int"] }
 };
 preLocalize("skills", { key: "label", sort: true });
 patchConfig("skills", "label", { since: 2.0, until: 2.2 });
@@ -90,16 +93,16 @@ patchConfig("skills", "label", { since: 2.0, until: 2.2 });
  * Character alignment options.
  * @enum {string}
  */
-DND5E.alignments = {
-  lg: "DND5E.AlignmentLG",
-  ng: "DND5E.AlignmentNG",
-  cg: "DND5E.AlignmentCG",
-  ln: "DND5E.AlignmentLN",
-  tn: "DND5E.AlignmentTN",
-  cn: "DND5E.AlignmentCN",
-  le: "DND5E.AlignmentLE",
-  ne: "DND5E.AlignmentNE",
-  ce: "DND5E.AlignmentCE"
+MKA.alignments = {
+  lg: "MKA.AlignmentLG",
+  ng: "MKA.AlignmentNG",
+  cg: "MKA.AlignmentCG",
+  ln: "MKA.AlignmentLN",
+  tn: "MKA.AlignmentTN",
+  cn: "MKA.AlignmentCN",
+  le: "MKA.AlignmentLE",
+  ne: "MKA.AlignmentNE",
+  ce: "MKA.AlignmentCE"
 };
 preLocalize("alignments");
 
@@ -109,7 +112,7 @@ preLocalize("alignments");
  * An enumeration of item attunement types.
  * @enum {number}
  */
-DND5E.attunementTypes = {
+MKA.attunementTypes = {
   NONE: 0,
   REQUIRED: 1,
   ATTUNED: 2
@@ -119,10 +122,10 @@ DND5E.attunementTypes = {
  * An enumeration of item attunement states.
  * @type {{"0": string, "1": string, "2": string}}
  */
-DND5E.attunements = {
-  0: "DND5E.AttunementNone",
-  1: "DND5E.AttunementRequired",
-  2: "DND5E.AttunementAttuned"
+MKA.attunements = {
+  0: "MKA.AttunementNone",
+  1: "MKA.AttunementRequired",
+  2: "MKA.AttunementAttuned"
 };
 preLocalize("attunements");
 
@@ -132,31 +135,32 @@ preLocalize("attunements");
  * General weapon categories.
  * @enum {string}
  */
-DND5E.weaponProficiencies = {
-  sim: "DND5E.WeaponSimpleProficiency",
-  mar: "DND5E.WeaponMartialProficiency"
+MKA.weaponProficiencies = {
+  sim: "MKA.WeaponSimpleProficiency",
+  sle: "MKA.WeaponSoulProficiency"
 };
 preLocalize("weaponProficiencies");
 
 /**
- * A mapping between `DND5E.weaponTypes` and `DND5E.weaponProficiencies` that
+ * A mapping between `MKA.weaponTypes` and `MKA.weaponProficiencies` that
  * is used to determine if character has proficiency when adding an item.
  * @enum {(boolean|string)}
  */
-DND5E.weaponProficienciesMap = {
+MKA.weaponProficienciesMap = {
   natural: true,
   simpleM: "sim",
   simpleR: "sim",
-  martialM: "mar",
-  martialR: "mar"
+  soulM: "sle",
+  soulR: "sle",
+  soulI: "sle"
 };
 
 /**
- * The basic weapon types in 5e. This enables specific weapon proficiencies or
+ * The basic weapon types in MKA. This enables specific weapon proficiencies or
  * starting equipment provided by classes and backgrounds.
  * @enum {string}
  */
-DND5E.weaponIds = {
+MKA.weaponIds = {
   battleaxe: "I0WocDSuNpGJayPb",
   blowgun: "wNWK6yJMHG9ANqQV",
   club: "nfIRTECQIG81CvM4",
@@ -203,10 +207,10 @@ DND5E.weaponIds = {
  *
  * @enum {string}
  */
-DND5E.toolTypes = {
-  art: "DND5E.ToolArtisans",
-  game: "DND5E.ToolGamingSet",
-  music: "DND5E.ToolMusicalInstrument"
+MKA.toolTypes = {
+  art: "MKA.ToolArtisans",
+  game: "MKA.ToolGamingSet",
+  music: "MKA.ToolMusicalInstrument"
 };
 preLocalize("toolTypes", { sort: true });
 
@@ -215,18 +219,18 @@ preLocalize("toolTypes", { sort: true });
  *
  * @enum {string}
  */
-DND5E.toolProficiencies = {
-  ...DND5E.toolTypes,
-  vehicle: "DND5E.ToolVehicle"
+MKA.toolProficiencies = {
+  ...MKA.toolTypes,
+  vehicle: "MKA.ToolVehicle"
 };
 preLocalize("toolProficiencies", { sort: true });
 
 /**
- * The basic tool types in 5e. This enables specific tool proficiencies or
+ * The basic tool types in MKA. This enables specific tool proficiencies or
  * starting equipment provided by classes and backgrounds.
  * @enum {string}
  */
-DND5E.toolIds = {
+MKA.toolIds = {
   alchemist: "SztwZhbhZeCqyAes",
   bagpipes: "yxHi57T5mmVt0oDr",
   brewer: "Y9S75go1hLMXUD48",
@@ -271,17 +275,17 @@ DND5E.toolIds = {
  * The various lengths of time over which effects can occur.
  * @enum {string}
  */
-DND5E.timePeriods = {
-  inst: "DND5E.TimeInst",
-  turn: "DND5E.TimeTurn",
-  round: "DND5E.TimeRound",
-  minute: "DND5E.TimeMinute",
-  hour: "DND5E.TimeHour",
-  day: "DND5E.TimeDay",
-  month: "DND5E.TimeMonth",
-  year: "DND5E.TimeYear",
-  perm: "DND5E.TimePerm",
-  spec: "DND5E.Special"
+MKA.timePeriods = {
+  inst: "MKA.TimeInst",
+  turn: "MKA.TimeTurn",
+  round: "MKA.TimeRound",
+  minute: "MKA.TimeMinute",
+  hour: "MKA.TimeHour",
+  day: "MKA.TimeDay",
+  month: "MKA.TimeMonth",
+  year: "MKA.TimeYear",
+  perm: "MKA.TimePerm",
+  spec: "MKA.Special"
 };
 preLocalize("timePeriods");
 
@@ -291,18 +295,18 @@ preLocalize("timePeriods");
  * Various ways in which an item or ability can be activated.
  * @enum {string}
  */
-DND5E.abilityActivationTypes = {
-  none: "DND5E.None",
-  action: "DND5E.Action",
-  bonus: "DND5E.BonusAction",
-  reaction: "DND5E.Reaction",
-  minute: DND5E.timePeriods.minute,
-  hour: DND5E.timePeriods.hour,
-  day: DND5E.timePeriods.day,
-  special: DND5E.timePeriods.spec,
-  legendary: "DND5E.LegendaryActionLabel",
-  lair: "DND5E.LairActionLabel",
-  crew: "DND5E.VehicleCrewAction"
+MKA.abilityActivationTypes = {
+  none: "MKA.None",
+  action: "MKA.Action",
+  bonus: "MKA.BonusAction",
+  reaction: "MKA.Reaction",
+  minute: MKA.timePeriods.minute,
+  hour: MKA.timePeriods.hour,
+  day: MKA.timePeriods.day,
+  special: MKA.timePeriods.spec,
+  legendary: "MKA.LegendaryActionLabel",
+  lair: "MKA.LairActionLabel",
+  crew: "MKA.VehicleCrewAction"
 };
 preLocalize("abilityActivationTypes", { sort: true });
 
@@ -312,12 +316,12 @@ preLocalize("abilityActivationTypes", { sort: true });
  * Different things that an ability can consume upon use.
  * @enum {string}
  */
-DND5E.abilityConsumptionTypes = {
-  ammo: "DND5E.ConsumeAmmunition",
-  attribute: "DND5E.ConsumeAttribute",
-  hitDice: "DND5E.ConsumeHitDice",
-  material: "DND5E.ConsumeMaterial",
-  charges: "DND5E.ConsumeCharges"
+MKA.abilityConsumptionTypes = {
+  ammo: "MKA.ConsumeAmmunition",
+  attribute: "MKA.ConsumeAttribute",
+  hitDice: "MKA.ConsumeHitDice",
+  material: "MKA.ConsumeMaterial",
+  charges: "MKA.ConsumeCharges"
 };
 preLocalize("abilityConsumptionTypes", { sort: true });
 
@@ -327,21 +331,21 @@ preLocalize("abilityConsumptionTypes", { sort: true });
  * Creature sizes.
  * @enum {string}
  */
-DND5E.actorSizes = {
-  tiny: "DND5E.SizeTiny",
-  sm: "DND5E.SizeSmall",
-  med: "DND5E.SizeMedium",
-  lg: "DND5E.SizeLarge",
-  huge: "DND5E.SizeHuge",
-  grg: "DND5E.SizeGargantuan"
+MKA.actorSizes = {
+  tiny: "MKA.SizeTiny",
+  sm: "MKA.SizeSmall",
+  med: "MKA.SizeMedium",
+  lg: "MKA.SizeLarge",
+  huge: "MKA.SizeHuge",
+  grg: "MKA.SizeGargantuan"
 };
 preLocalize("actorSizes");
 
 /**
- * Default token image size for the values of `DND5E.actorSizes`.
+ * Default token image size for the values of `MKA.actorSizes`.
  * @enum {number}
  */
-DND5E.tokenSizes = {
+MKA.tokenSizes = {
   tiny: 0.5,
   sm: 1,
   med: 1,
@@ -354,7 +358,7 @@ DND5E.tokenSizes = {
  * Colors used to visualize temporary and temporary maximum HP in token health bars.
  * @enum {number}
  */
-DND5E.tokenHPColors = {
+MKA.tokenHPColors = {
   damage: 0xFF0000,
   healing: 0x00FF00,
   temp: 0x66CCFF,
@@ -369,21 +373,21 @@ DND5E.tokenHPColors = {
  * *Note: Not pre-localized to allow for easy fetching of pluralized forms.*
  * @enum {string}
  */
-DND5E.creatureTypes = {
-  aberration: "DND5E.CreatureAberration",
-  beast: "DND5E.CreatureBeast",
-  celestial: "DND5E.CreatureCelestial",
-  construct: "DND5E.CreatureConstruct",
-  dragon: "DND5E.CreatureDragon",
-  elemental: "DND5E.CreatureElemental",
-  fey: "DND5E.CreatureFey",
-  fiend: "DND5E.CreatureFiend",
-  giant: "DND5E.CreatureGiant",
-  humanoid: "DND5E.CreatureHumanoid",
-  monstrosity: "DND5E.CreatureMonstrosity",
-  ooze: "DND5E.CreatureOoze",
-  plant: "DND5E.CreaturePlant",
-  undead: "DND5E.CreatureUndead"
+MKA.creatureTypes = {
+  aberration: "MKA.CreatureAberration",
+  beast: "MKA.CreatureBeast",
+  celestial: "MKA.CreatureCelestial",
+  construct: "MKA.CreatureConstruct",
+  dragon: "MKA.CreatureDragon",
+  elemental: "MKA.CreatureElemental",
+  fey: "MKA.CreatureFey",
+  fiend: "MKA.CreatureFiend",
+  giant: "MKA.CreatureGiant",
+  humanoid: "MKA.CreatureHumanoid",
+  monstrosity: "MKA.CreatureMonstrosity",
+  ooze: "MKA.CreatureOoze",
+  plant: "MKA.CreaturePlant",
+  undead: "MKA.CreatureUndead"
 };
 
 /* -------------------------------------------- */
@@ -392,16 +396,16 @@ DND5E.creatureTypes = {
  * Classification types for item action types.
  * @enum {string}
  */
-DND5E.itemActionTypes = {
-  mwak: "DND5E.ActionMWAK",
-  rwak: "DND5E.ActionRWAK",
-  msak: "DND5E.ActionMSAK",
-  rsak: "DND5E.ActionRSAK",
-  save: "DND5E.ActionSave",
-  heal: "DND5E.ActionHeal",
-  abil: "DND5E.ActionAbil",
-  util: "DND5E.ActionUtil",
-  other: "DND5E.ActionOther"
+MKA.itemActionTypes = {
+  mwak: "MKA.ActionMWAK",
+  rwak: "MKA.ActionRWAK",
+  msak: "MKA.ActionMSAK",
+  rsak: "MKA.ActionRSAK",
+  save: "MKA.ActionSave",
+  heal: "MKA.ActionHeal",
+  abil: "MKA.ActionAbil",
+  util: "MKA.ActionUtil",
+  other: "MKA.ActionOther"
 };
 preLocalize("itemActionTypes");
 
@@ -411,9 +415,9 @@ preLocalize("itemActionTypes");
  * Different ways in which item capacity can be limited.
  * @enum {string}
  */
-DND5E.itemCapacityTypes = {
-  items: "DND5E.ItemContainerCapacityItems",
-  weight: "DND5E.ItemContainerCapacityWeight"
+MKA.itemCapacityTypes = {
+  items: "MKA.ItemContainerCapacityItems",
+  weight: "MKA.ItemContainerCapacityWeight"
 };
 preLocalize("itemCapacityTypes", { sort: true });
 
@@ -423,13 +427,14 @@ preLocalize("itemCapacityTypes", { sort: true });
  * List of various item rarities.
  * @enum {string}
  */
-DND5E.itemRarity = {
-  common: "DND5E.ItemRarityCommon",
-  uncommon: "DND5E.ItemRarityUncommon",
-  rare: "DND5E.ItemRarityRare",
-  veryRare: "DND5E.ItemRarityVeryRare",
-  legendary: "DND5E.ItemRarityLegendary",
-  artifact: "DND5E.ItemRarityArtifact"
+MKA.itemRarity = {
+  soul: "MKA.ItemRaritySoul",
+  common: "MKA.ItemRarityCommon",
+  uncommon: "MKA.ItemRarityUncommon",
+  rare: "MKA.ItemRarityRare",
+  veryRare: "MKA.ItemRarityVeryRare",
+  legendary: "MKA.ItemRarityLegendary",
+  artifact: "MKA.ItemRarityArtifact"
 };
 preLocalize("itemRarity");
 
@@ -439,11 +444,11 @@ preLocalize("itemRarity");
  * Enumerate the lengths of time over which an item can have limited use ability.
  * @enum {string}
  */
-DND5E.limitedUsePeriods = {
-  sr: "DND5E.ShortRest",
-  lr: "DND5E.LongRest",
-  day: "DND5E.Day",
-  charges: "DND5E.Charges"
+MKA.limitedUsePeriods = {
+  sr: "MKA.ShortRest",
+  lr: "MKA.LongRest",
+  day: "MKA.Day",
+  charges: "MKA.Charges"
 };
 preLocalize("limitedUsePeriods");
 
@@ -453,12 +458,14 @@ preLocalize("limitedUsePeriods");
  * Specific equipment types that modify base AC.
  * @enum {string}
  */
-DND5E.armorTypes = {
-  light: "DND5E.EquipmentLight",
-  medium: "DND5E.EquipmentMedium",
-  heavy: "DND5E.EquipmentHeavy",
-  natural: "DND5E.EquipmentNatural",
-  shield: "DND5E.EquipmentShield"
+MKA.armorTypes = {
+  light: "MKA.EquipmentLight",
+  medium: "MKA.EquipmentMedium",
+  heavy: "MKA.EquipmentHeavy",
+  natural: "MKA.EquipmentNatural",
+  studentA: "MKA.EquipmentStudArm",
+  elementalA: "MKA.EquipmentElemArm",
+  shield: "MKA.EquipmentShield"
 };
 preLocalize("armorTypes");
 
@@ -468,10 +475,13 @@ preLocalize("armorTypes");
  * Equipment types that aren't armor.
  * @enum {string}
  */
-DND5E.miscEquipmentTypes = {
-  clothing: "DND5E.EquipmentClothing",
-  trinket: "DND5E.EquipmentTrinket",
-  vehicle: "DND5E.EquipmentVehicle"
+MKA.miscEquipmentTypes = {
+  soul: "MKA.EquipmentSoul",
+  clothing: "MKA.EquipmentClothing",
+  trinket: "MKA.EquipmentTrinket",
+  rune: "MKA.EquipmentRune",
+  weave: "MKA.EquipmentWeave",
+  vehicle: "MKA.EquipmentVehicle"
 };
 preLocalize("miscEquipmentTypes", { sort: true });
 
@@ -481,9 +491,9 @@ preLocalize("miscEquipmentTypes", { sort: true });
  * The set of equipment types for armor, clothing, and other objects which can be worn by the character.
  * @enum {string}
  */
-DND5E.equipmentTypes = {
-  ...DND5E.miscEquipmentTypes,
-  ...DND5E.armorTypes
+MKA.equipmentTypes = {
+  ...MKA.miscEquipmentTypes,
+  ...MKA.armorTypes
 };
 preLocalize("equipmentTypes", { sort: true });
 
@@ -493,11 +503,11 @@ preLocalize("equipmentTypes", { sort: true });
  * The various types of vehicles in which characters can be proficient.
  * @enum {string}
  */
-DND5E.vehicleTypes = {
-  air: "DND5E.VehicleTypeAir",
-  land: "DND5E.VehicleTypeLand",
-  space: "DND5E.VehicleTypeSpace",
-  water: "DND5E.VehicleTypeWater"
+MKA.vehicleTypes = {
+  air: "MKA.VehicleTypeAir",
+  land: "MKA.VehicleTypeLand",
+  space: "MKA.VehicleTypeSpace",
+  water: "MKA.VehicleTypeWater"
 };
 preLocalize("vehicleTypes", { sort: true });
 
@@ -507,20 +517,20 @@ preLocalize("vehicleTypes", { sort: true });
  * The set of Armor Proficiencies which a character may have.
  * @type {object}
  */
-DND5E.armorProficiencies = {
-  lgt: DND5E.equipmentTypes.light,
-  med: DND5E.equipmentTypes.medium,
-  hvy: DND5E.equipmentTypes.heavy,
-  shl: "DND5E.EquipmentShieldProficiency"
+MKA.armorProficiencies = {
+  lgt: MKA.equipmentTypes.light,
+  med: MKA.equipmentTypes.medium,
+  hvy: MKA.equipmentTypes.heavy,
+  shl: "MKA.EquipmentShieldProficiency"
 };
 preLocalize("armorProficiencies");
 
 /**
- * A mapping between `DND5E.equipmentTypes` and `DND5E.armorProficiencies` that
+ * A mapping between `MKA.equipmentTypes` and `MKA.armorProficiencies` that
  * is used to determine if character has proficiency when adding an item.
  * @enum {(boolean|string)}
  */
-DND5E.armorProficienciesMap = {
+MKA.armorProficienciesMap = {
   natural: true,
   clothing: true,
   light: "lgt",
@@ -530,11 +540,11 @@ DND5E.armorProficienciesMap = {
 };
 
 /**
- * The basic armor types in 5e. This enables specific armor proficiencies,
+ * The basic armor types in MKA. This enables specific armor proficiencies,
  * automated AC calculation in NPCs, and starting equipment.
  * @enum {string}
  */
-DND5E.armorIds = {
+MKA.armorIds = {
   breastplate: "SK2HATQ4abKUlV8i",
   chainmail: "rLMflzmxpe8JGTOA",
   chainshirt: "p2zChy24ZJdVqMSH",
@@ -543,17 +553,17 @@ DND5E.armorIds = {
   leather: "WwdpHLXGX5r8uZu5",
   padded: "GtKV1b5uqFQqpEni",
   plate: "OjkIqlW2UpgFcjZa",
-  ringmail: "nsXZejlmgalj4he9",
+  ringmail: "nsXZejlmkalj4he9",
   scalemail: "XmnlF5fgIO3tg6TG",
   splint: "cKpJmsJmU8YaiuqG",
   studded: "TIV3B1vbrVHIhQAm"
 };
 
 /**
- * The basic shield in 5e.
+ * The basic shield in MKA.
  * @enum {string}
  */
-DND5E.shieldIds = {
+MKA.shieldIds = {
   shield: "sSs3hSzkKBMNBgTs"
 };
 
@@ -561,37 +571,41 @@ DND5E.shieldIds = {
  * Common armor class calculations.
  * @enum {{ label: string, [formula]: string }}
  */
-DND5E.armorClasses = {
+MKA.armorClasses = {
   flat: {
-    label: "DND5E.ArmorClassFlat",
+    label: "MKA.ArmorClassFlat",
     formula: "@attributes.ac.flat"
   },
+  studentArmor: {
+    label: "MKA.ArmorClassStudentArmor",
+    formula: "10 + @abilities.dex.mod + @abilities.con.mod"
+  },
   natural: {
-    label: "DND5E.ArmorClassNatural",
+    label: "MKA.ArmorClassNatural",
     formula: "@attributes.ac.flat"
   },
   default: {
-    label: "DND5E.ArmorClassEquipment",
+    label: "MKA.ArmorClassEquipment",
     formula: "@attributes.ac.armor + @attributes.ac.dex"
   },
   mage: {
-    label: "DND5E.ArmorClassMage",
+    label: "MKA.ArmorClassMage",
     formula: "13 + @abilities.dex.mod"
   },
   draconic: {
-    label: "DND5E.ArmorClassDraconic",
+    label: "MKA.ArmorClassDraconic",
     formula: "13 + @abilities.dex.mod"
   },
   unarmoredMonk: {
-    label: "DND5E.ArmorClassUnarmoredMonk",
+    label: "MKA.ArmorClassUnarmoredMonk",
     formula: "10 + @abilities.dex.mod + @abilities.wis.mod"
   },
   unarmoredBarb: {
-    label: "DND5E.ArmorClassUnarmoredBarbarian",
+    label: "MKA.ArmorClassUnarmoredBarbarian",
     formula: "10 + @abilities.dex.mod + @abilities.con.mod"
   },
   custom: {
-    label: "DND5E.ArmorClassCustom"
+    label: "MKA.ArmorClassCustom"
   }
 };
 preLocalize("armorClasses", { key: "label" });
@@ -602,15 +616,15 @@ preLocalize("armorClasses", { key: "label" });
  * Enumerate the valid consumable types which are recognized by the system.
  * @enum {string}
  */
-DND5E.consumableTypes = {
-  ammo: "DND5E.ConsumableAmmunition",
-  potion: "DND5E.ConsumablePotion",
-  poison: "DND5E.ConsumablePoison",
-  food: "DND5E.ConsumableFood",
-  scroll: "DND5E.ConsumableScroll",
-  wand: "DND5E.ConsumableWand",
-  rod: "DND5E.ConsumableRod",
-  trinket: "DND5E.ConsumableTrinket"
+MKA.consumableTypes = {
+  ammo: "MKA.ConsumableAmmunition",
+  potion: "MKA.ConsumablePotion",
+  poison: "MKA.ConsumablePoison",
+  food: "MKA.ConsumableFood",
+  scroll: "MKA.ConsumableScroll",
+  wand: "MKA.ConsumableWand",
+  rod: "MKA.ConsumableRod",
+  trinket: "MKA.ConsumableTrinket"
 };
 preLocalize("consumableTypes", { sort: true });
 
@@ -624,29 +638,29 @@ preLocalize("consumableTypes", { sort: true });
  *   [conversion]: {into: string, each: number}
  * }}
  */
-DND5E.currencies = {
+MKA.currencies = {
   pp: {
-    label: "DND5E.CurrencyPP",
-    abbreviation: "DND5E.CurrencyAbbrPP"
+    label: "MKA.CurrencyPP",
+    abbreviation: "MKA.CurrencyAbbrPP"
   },
   gp: {
-    label: "DND5E.CurrencyGP",
-    abbreviation: "DND5E.CurrencyAbbrGP",
+    label: "MKA.CurrencyGP",
+    abbreviation: "MKA.CurrencyAbbrGP",
     conversion: {into: "pp", each: 10}
   },
   ep: {
-    label: "DND5E.CurrencyEP",
-    abbreviation: "DND5E.CurrencyAbbrEP",
+    label: "MKA.CurrencyEP",
+    abbreviation: "MKA.CurrencyAbbrEP",
     conversion: {into: "gp", each: 2}
   },
   sp: {
-    label: "DND5E.CurrencySP",
-    abbreviation: "DND5E.CurrencyAbbrSP",
+    label: "MKA.CurrencySP",
+    abbreviation: "MKA.CurrencyAbbrSP",
     conversion: {into: "ep", each: 5}
   },
   cp: {
-    label: "DND5E.CurrencyCP",
-    abbreviation: "DND5E.CurrencyAbbrCP",
+    label: "MKA.CurrencyCP",
+    abbreviation: "MKA.CurrencyAbbrCP",
     conversion: {into: "sp", each: 10}
   }
 };
@@ -658,20 +672,20 @@ preLocalize("currencies", { keys: ["label", "abbreviation"] });
  * Types of damage the can be caused by abilities.
  * @enum {string}
  */
-DND5E.damageTypes = {
-  acid: "DND5E.DamageAcid",
-  bludgeoning: "DND5E.DamageBludgeoning",
-  cold: "DND5E.DamageCold",
-  fire: "DND5E.DamageFire",
-  force: "DND5E.DamageForce",
-  lightning: "DND5E.DamageLightning",
-  necrotic: "DND5E.DamageNecrotic",
-  piercing: "DND5E.DamagePiercing",
-  poison: "DND5E.DamagePoison",
-  psychic: "DND5E.DamagePsychic",
-  radiant: "DND5E.DamageRadiant",
-  slashing: "DND5E.DamageSlashing",
-  thunder: "DND5E.DamageThunder"
+MKA.damageTypes = {
+  acid: "MKA.DamageAcid",
+  bludgeoning: "MKA.DamageBludgeoning",
+  cold: "MKA.DamageCold",
+  fire: "MKA.DamageFire",
+  force: "MKA.DamageForce",
+  lightning: "MKA.DamageLightning",
+  necrotic: "MKA.DamageNecrotic",
+  piercing: "MKA.DamagePiercing",
+  poison: "MKA.DamagePoison",
+  psychic: "MKA.DamagePsychic",
+  radiant: "MKA.DamageRadiant",
+  slashing: "MKA.DamageSlashing",
+  thunder: "MKA.DamageThunder"
 };
 preLocalize("damageTypes", { sort: true });
 
@@ -679,9 +693,9 @@ preLocalize("damageTypes", { sort: true });
  * Types of damage to which an actor can possess resistance, immunity, or vulnerability.
  * @enum {string}
  */
-DND5E.damageResistanceTypes = {
-  ...DND5E.damageTypes,
-  physical: "DND5E.DamagePhysical"
+MKA.damageResistanceTypes = {
+  ...MKA.damageTypes,
+  physical: "MKA.DamagePhysical"
 };
 preLocalize("damageResistanceTypes", { sort: true });
 
@@ -692,12 +706,12 @@ preLocalize("damageResistanceTypes", { sort: true });
  * By default this uses the imperial units of feet and miles.
  * @enum {string}
  */
-DND5E.movementTypes = {
-  burrow: "DND5E.MovementBurrow",
-  climb: "DND5E.MovementClimb",
-  fly: "DND5E.MovementFly",
-  swim: "DND5E.MovementSwim",
-  walk: "DND5E.MovementWalk"
+MKA.movementTypes = {
+  burrow: "MKA.MovementBurrow",
+  climb: "MKA.MovementClimb",
+  fly: "MKA.MovementFly",
+  swim: "MKA.MovementSwim",
+  walk: "MKA.MovementWalk"
 };
 preLocalize("movementTypes", { sort: true });
 
@@ -706,26 +720,26 @@ preLocalize("movementTypes", { sort: true });
  * By default this uses the imperial units of feet and miles.
  * @enum {string}
  */
-DND5E.movementUnits = {
-  ft: "DND5E.DistFt",
-  mi: "DND5E.DistMi",
-  m: "DND5E.DistM",
-  km: "DND5E.DistKm"
+MKA.movementUnits = {
+  ft: "MKA.DistFt",
+  mi: "MKA.DistMi",
+  m: "MKA.DistM",
+  km: "MKA.DistKm"
 };
 preLocalize("movementUnits");
 
 /**
  * The valid units of measure for the range of an action or effect.
- * This object automatically includes the movement units from `DND5E.movementUnits`.
+ * This object automatically includes the movement units from `MKA.movementUnits`.
  * @enum {string}
  */
-DND5E.distanceUnits = {
-  none: "DND5E.None",
-  self: "DND5E.DistSelf",
-  touch: "DND5E.DistTouch",
-  spec: "DND5E.Special",
-  any: "DND5E.DistAny",
-  ...DND5E.movementUnits
+MKA.distanceUnits = {
+  none: "MKA.None",
+  self: "MKA.DistSelf",
+  touch: "MKA.DistTouch",
+  spec: "MKA.Special",
+  any: "MKA.DistAny",
+  ...MKA.movementUnits
 };
 preLocalize("distanceUnits");
 
@@ -735,7 +749,7 @@ preLocalize("distanceUnits");
  * Configure aspects of encumbrance calculation so that it could be configured by modules.
  * @enum {{ imperial: number, metric: number }}
  */
-DND5E.encumbrance = {
+MKA.encumbrance = {
   currencyPerWeight: {
     imperial: 50,
     metric: 110
@@ -756,33 +770,33 @@ DND5E.encumbrance = {
  * The types of single or area targets which can be applied to abilities.
  * @enum {string}
  */
-DND5E.targetTypes = {
-  none: "DND5E.None",
-  self: "DND5E.TargetSelf",
-  creature: "DND5E.TargetCreature",
-  ally: "DND5E.TargetAlly",
-  enemy: "DND5E.TargetEnemy",
-  object: "DND5E.TargetObject",
-  space: "DND5E.TargetSpace",
-  radius: "DND5E.TargetRadius",
-  sphere: "DND5E.TargetSphere",
-  cylinder: "DND5E.TargetCylinder",
-  cone: "DND5E.TargetCone",
-  square: "DND5E.TargetSquare",
-  cube: "DND5E.TargetCube",
-  line: "DND5E.TargetLine",
-  wall: "DND5E.TargetWall"
+MKA.targetTypes = {
+  none: "MKA.None",
+  self: "MKA.TargetSelf",
+  creature: "MKA.TargetCreature",
+  ally: "MKA.TargetAlly",
+  enemy: "MKA.TargetEnemy",
+  object: "MKA.TargetObject",
+  space: "MKA.TargetSpace",
+  radius: "MKA.TargetRadius",
+  sphere: "MKA.TargetSphere",
+  cylinder: "MKA.TargetCylinder",
+  cone: "MKA.TargetCone",
+  square: "MKA.TargetSquare",
+  cube: "MKA.TargetCube",
+  line: "MKA.TargetLine",
+  wall: "MKA.TargetWall"
 };
 preLocalize("targetTypes", { sort: true });
 
 /* -------------------------------------------- */
 
 /**
- * Mapping between `DND5E.targetTypes` and `MeasuredTemplate` shape types to define
+ * Mapping between `MKA.targetTypes` and `MeasuredTemplate` shape types to define
  * which templates are produced by which area of effect target type.
  * @enum {string}
  */
-DND5E.areaTargetTypes = {
+MKA.areaTargetTypes = {
   cone: "cone",
   cube: "rect",
   cylinder: "circle",
@@ -799,9 +813,9 @@ DND5E.areaTargetTypes = {
  * Different types of healing that can be applied using abilities.
  * @enum {string}
  */
-DND5E.healingTypes = {
-  healing: "DND5E.Healing",
-  temphp: "DND5E.HealingTemp"
+MKA.healingTypes = {
+  healing: "MKA.Healing",
+  temphp: "MKA.HealingTemp"
 };
 preLocalize("healingTypes");
 
@@ -811,7 +825,7 @@ preLocalize("healingTypes");
  * Denominations of hit dice which can apply to classes.
  * @type {string[]}
  */
-DND5E.hitDieTypes = ["d6", "d8", "d10", "d12"];
+MKA.hitDieTypes = ["d6", "d8", "d10", "d12"];
 
 /* -------------------------------------------- */
 
@@ -819,11 +833,11 @@ DND5E.hitDieTypes = ["d6", "d8", "d10", "d12"];
  * The set of possible sensory perception types which an Actor may have.
  * @enum {string}
  */
-DND5E.senses = {
-  blindsight: "DND5E.SenseBlindsight",
-  darkvision: "DND5E.SenseDarkvision",
-  tremorsense: "DND5E.SenseTremorsense",
-  truesight: "DND5E.SenseTruesight"
+MKA.senses = {
+  blindsight: "MKA.SenseBlindsight",
+  darkvision: "MKA.SenseDarkvision",
+  tremorsense: "MKA.SenseTremorsense",
+  truesight: "MKA.SenseTruesight"
 };
 preLocalize("senses", { sort: true });
 
@@ -832,32 +846,32 @@ preLocalize("senses", { sort: true });
 /**
  * Various different ways a spell can be prepared.
  */
-DND5E.spellPreparationModes = {
-  prepared: "DND5E.SpellPrepPrepared",
-  pact: "DND5E.PactMagic",
-  always: "DND5E.SpellPrepAlways",
-  atwill: "DND5E.SpellPrepAtWill",
-  innate: "DND5E.SpellPrepInnate"
+MKA.spellPreparationModes = {
+  prepared: "MKA.SpellPrepPrepared",
+  pact: "MKA.PactMagic",
+  always: "MKA.SpellPrepAlways",
+  atwill: "MKA.SpellPrepAtWill",
+  innate: "MKA.SpellPrepInnate"
 };
 preLocalize("spellPreparationModes");
 
 /**
- * Subset of `DND5E.spellPreparationModes` that consume spell slots.
+ * Subset of `MKA.spellPreparationModes` that consume spell slots.
  * @type {boolean[]}
  */
-DND5E.spellUpcastModes = ["always", "pact", "prepared"];
+MKA.spellUpcastModes = ["always", "pact", "prepared"];
 
 /**
  * Ways in which a class can contribute to spellcasting levels.
  * @enum {string}
  */
-DND5E.spellProgression = {
-  none: "DND5E.SpellNone",
-  full: "DND5E.SpellProgFull",
-  half: "DND5E.SpellProgHalf",
-  third: "DND5E.SpellProgThird",
-  pact: "DND5E.SpellProgPact",
-  artificer: "DND5E.SpellProgArt"
+MKA.spellProgression = {
+  none: "MKA.SpellNone",
+  full: "MKA.SpellProgFull",
+  half: "MKA.SpellProgHalf",
+  third: "MKA.SpellProgThird",
+  pact: "MKA.SpellProgPact",
+  artificer: "MKA.SpellProgArt"
 };
 preLocalize("spellProgression");
 
@@ -867,10 +881,10 @@ preLocalize("spellProgression");
  * The available choices for how spell damage scaling may be computed.
  * @enum {string}
  */
-DND5E.spellScalingModes = {
-  none: "DND5E.SpellNone",
-  cantrip: "DND5E.SpellCantrip",
-  level: "DND5E.SpellLevel"
+MKA.spellScalingModes = {
+  none: "MKA.SpellNone",
+  cantrip: "MKA.SpellCantrip",
+  level: "MKA.SpellLevel"
 };
 preLocalize("spellScalingModes", { sort: true });
 
@@ -880,14 +894,14 @@ preLocalize("spellScalingModes", { sort: true });
  * The set of types which a weapon item can take.
  * @enum {string}
  */
-DND5E.weaponTypes = {
-  simpleM: "DND5E.WeaponSimpleM",
-  simpleR: "DND5E.WeaponSimpleR",
-  martialM: "DND5E.WeaponMartialM",
-  martialR: "DND5E.WeaponMartialR",
-  natural: "DND5E.WeaponNatural",
-  improv: "DND5E.WeaponImprov",
-  siege: "DND5E.WeaponSiege"
+MKA.weaponTypes = {
+  simpleM: "MKA.WeaponSimpleM",
+  simpleR: "MKA.WeaponSimpleR",
+  soulM: "MKA.WeaponSoulM",
+  soulR: "MKA.WeaponSoulR",
+  soulI: "MKA.WeaponSoulI",
+  natural: "MKA.WeaponNatural",
+  improv: "MKA.WeaponImprov"
 };
 preLocalize("weaponTypes");
 
@@ -897,24 +911,36 @@ preLocalize("weaponTypes");
  * The set of weapon property flags which can exist on a weapon.
  * @enum {string}
  */
-DND5E.weaponProperties = {
-  ada: "DND5E.WeaponPropertiesAda",
-  amm: "DND5E.WeaponPropertiesAmm",
-  fin: "DND5E.WeaponPropertiesFin",
-  fir: "DND5E.WeaponPropertiesFir",
-  foc: "DND5E.WeaponPropertiesFoc",
-  hvy: "DND5E.WeaponPropertiesHvy",
-  lgt: "DND5E.WeaponPropertiesLgt",
-  lod: "DND5E.WeaponPropertiesLod",
-  mgc: "DND5E.WeaponPropertiesMgc",
-  rch: "DND5E.WeaponPropertiesRch",
-  rel: "DND5E.WeaponPropertiesRel",
-  ret: "DND5E.WeaponPropertiesRet",
-  sil: "DND5E.WeaponPropertiesSil",
-  spc: "DND5E.WeaponPropertiesSpc",
-  thr: "DND5E.WeaponPropertiesThr",
-  two: "DND5E.WeaponPropertiesTwo",
-  ver: "DND5E.WeaponPropertiesVer"
+MKA.weaponProperties = {
+  not: "MKA.WeaponPropertiesNot",
+  acc: "MKA.WeaponPropertiesAcc",
+  cou: "MKA.WeaponPropertiesCou",
+  dis: "MKA.WeaponPropertiesDis",
+  ens: "MKA.WeaponPropertiesEns",
+  fin: "MKA.WeaponPropertiesFin",
+  mas: "MKA.WeaponPropertiesMas",
+  stg: "MKA.WeaponPropertiesStg",
+  vlp: "MKA.WeaponPropertiesVlp",
+  vcu: "MKA.WeaponPropertiesVcu",
+  two: "MKA.WeaponPropertiesTwo",
+  crd: "MKA.WeaponPropertiesCrd",
+  emb: "MKA.WeaponPropertiesEmb",
+  foc: "MKA.WeaponPropertiesFoc",
+  lgt: "MKA.WeaponPropertiesLgt",
+  con: "MKA.WeaponPropertiesCon",
+  rad: "MKA.WeaponPropertiesRad",
+  wrd: "MKA.WeaponPropertiesWrd",
+  fir: "MKA.WeaponPropertiesFir",
+  aki: "MKA.WeaponPropertiesAki",
+  mus: "MKA.WeaponPropertiesMus",
+  mob: "MKA.WeaponPropertiesMob",
+  hil: "MKA.WeaponPropertiesHil",
+  sgt: "MKA.WeaponPropertiesSgt",
+  spr: "MKA.WeaponPropertiesSpr",
+  blk: "MKA.WeaponPropertiesBlk",
+  rec: "MKA.WeaponPropertiesRec",
+  qrl: "MKA.WeaponPropertiesQrl",
+  col: "MKA.WeaponPropertiesCol"
 };
 preLocalize("weaponProperties", { sort: true });
 
@@ -922,18 +948,18 @@ preLocalize("weaponProperties", { sort: true });
  * Types of components that can be required when casting a spell.
  * @enum {object}
  */
-DND5E.spellComponents = {
+MKA.spellComponents = {
   vocal: {
-    label: "DND5E.ComponentVerbal",
-    abbr: "DND5E.ComponentVerbalAbbr"
+    label: "MKA.ComponentVerbal",
+    abbr: "MKA.ComponentVerbalAbbr"
   },
   somatic: {
-    label: "DND5E.ComponentSomatic",
-    abbr: "DND5E.ComponentSomaticAbbr"
+    label: "MKA.ComponentSomatic",
+    abbr: "MKA.ComponentSomaticAbbr"
   },
   material: {
-    label: "DND5E.ComponentMaterial",
-    abbr: "DND5E.ComponentMaterialAbbr"
+    label: "MKA.ComponentMaterial",
+    abbr: "MKA.ComponentMaterialAbbr"
   }
 };
 preLocalize("spellComponents", {keys: ["label", "abbr"]});
@@ -942,57 +968,61 @@ preLocalize("spellComponents", {keys: ["label", "abbr"]});
  * Supplementary rules keywords that inform a spell's use.
  * @enum {object}
  */
-DND5E.spellTags = {
+MKA.spellTags = {
   concentration: {
-    label: "DND5E.Concentration",
-    abbr: "DND5E.ConcentrationAbbr"
+    label: "MKA.Concentration",
+    abbr: "MKA.ConcentrationAbbr"
   },
   ritual: {
-    label: "DND5E.Ritual",
-    abbr: "DND5E.RitualAbbr"
+    label: "MKA.Ritual",
+    abbr: "MKA.RitualAbbr"
   }
 };
 preLocalize("spellTags", {keys: ["label", "abbr"]});
 
 /**
- * Schools to which a spell can belong.
+ * MK Edit: Spell paths.
  * @enum {string}
  */
-DND5E.spellSchools = {
-  abj: "DND5E.SchoolAbj",
-  con: "DND5E.SchoolCon",
-  div: "DND5E.SchoolDiv",
-  enc: "DND5E.SchoolEnc",
-  evo: "DND5E.SchoolEvo",
-  ill: "DND5E.SchoolIll",
-  nec: "DND5E.SchoolNec",
-  trs: "DND5E.SchoolTrs"
+MKA.spellPaths = {
+  bem: "MKA.PathBeam",
+  exp: "MKA.PathExplosion",
+  cur: "MKA.PathCuring",
+  res: "MKA.PathRestoration",
+  amp: "MKA.PathAmplify",
+  man: "MKA.PathManipulate",
+  bar: "MKA.PathBarrier",
+  trs: "MKA.PathTransformation",
+  sum: "MKA.PathSummoning",
+  csm: "MKA.PathCompanionSummoning",
+  div: "MKA.PathDivination",
+  chr: "MKA.PathChronomancy"
 };
-preLocalize("spellSchools", { sort: true });
+preLocalize("spellPaths", { sort: true });
 
 /**
  * Valid spell levels.
  * @enum {string}
  */
-DND5E.spellLevels = {
-  0: "DND5E.SpellLevel0",
-  1: "DND5E.SpellLevel1",
-  2: "DND5E.SpellLevel2",
-  3: "DND5E.SpellLevel3",
-  4: "DND5E.SpellLevel4",
-  5: "DND5E.SpellLevel5",
-  6: "DND5E.SpellLevel6",
-  7: "DND5E.SpellLevel7",
-  8: "DND5E.SpellLevel8",
-  9: "DND5E.SpellLevel9"
+MKA.spellLevels = {
+  0: "MKA.SpellLevel0",
+  1: "MKA.SpellLevel1",
+  2: "MKA.SpellLevel2",
+  3: "MKA.SpellLevel3",
+  4: "MKA.SpellLevel4",
+  5: "MKA.SpellLevel5",
+  6: "MKA.SpellLevel6",
+  7: "MKA.SpellLevel7",
+  8: "MKA.SpellLevel8",
+  9: "MKA.SpellLevel9"
 };
 preLocalize("spellLevels");
 
 /**
- * Spell scroll item ID within the `DND5E.sourcePacks` compendium for each level.
+ * Spell scroll item ID within the `MKA.sourcePacks` compendium for each level.
  * @enum {string}
  */
-DND5E.spellScrollIds = {
+MKA.spellScrollIds = {
   0: "rQ6sO7HDWzqMhSI3",
   1: "9GSfMg0VOA2b4uFN",
   2: "XdDp6CKh9qEvPTuS",
@@ -1009,8 +1039,8 @@ DND5E.spellScrollIds = {
  * Compendium packs used for localized items.
  * @enum {string}
  */
-DND5E.sourcePacks = {
-  ITEMS: "dnd5e.items"
+MKA.sourcePacks = {
+  ITEMS: "mka.items"
 };
 
 /**
@@ -1018,7 +1048,7 @@ DND5E.sourcePacks = {
  * The entries of this array represent the spell slot progression for a full spell-caster.
  * @type {number[][]}
  */
-DND5E.SPELL_SLOT_TABLE = [
+MKA.SPELL_SLOT_TABLE = [
   [2],
   [3],
   [4, 2],
@@ -1047,19 +1077,19 @@ DND5E.SPELL_SLOT_TABLE = [
  * Settings to configure how actors are merged when polymorphing is applied.
  * @enum {string}
  */
-DND5E.polymorphSettings = {
-  keepPhysical: "DND5E.PolymorphKeepPhysical",
-  keepMental: "DND5E.PolymorphKeepMental",
-  keepSaves: "DND5E.PolymorphKeepSaves",
-  keepSkills: "DND5E.PolymorphKeepSkills",
-  mergeSaves: "DND5E.PolymorphMergeSaves",
-  mergeSkills: "DND5E.PolymorphMergeSkills",
-  keepClass: "DND5E.PolymorphKeepClass",
-  keepFeats: "DND5E.PolymorphKeepFeats",
-  keepSpells: "DND5E.PolymorphKeepSpells",
-  keepItems: "DND5E.PolymorphKeepItems",
-  keepBio: "DND5E.PolymorphKeepBio",
-  keepVision: "DND5E.PolymorphKeepVision"
+MKA.polymorphSettings = {
+  keepPhysical: "MKA.PolymorphKeepPhysical",
+  keepMental: "MKA.PolymorphKeepMental",
+  keepSaves: "MKA.PolymorphKeepSaves",
+  keepSkills: "MKA.PolymorphKeepSkills",
+  mergeSaves: "MKA.PolymorphMergeSaves",
+  mergeSkills: "MKA.PolymorphMergeSkills",
+  keepClass: "MKA.PolymorphKeepClass",
+  keepFeats: "MKA.PolymorphKeepFeats",
+  keepSpells: "MKA.PolymorphKeepSpells",
+  keepItems: "MKA.PolymorphKeepItems",
+  keepBio: "MKA.PolymorphKeepBio",
+  keepVision: "MKA.PolymorphKeepVision"
 };
 preLocalize("polymorphSettings", { sort: true });
 
@@ -1070,11 +1100,11 @@ preLocalize("polymorphSettings", { sort: true });
  * The key for each level represents its proficiency multiplier.
  * @enum {string}
  */
-DND5E.proficiencyLevels = {
-  0: "DND5E.NotProficient",
-  1: "DND5E.Proficient",
-  0.5: "DND5E.HalfProficient",
-  2: "DND5E.Expertise"
+MKA.proficiencyLevels = {
+  0: "MKA.NotProficient",
+  1: "MKA.Proficient",
+  0.5: "MKA.HalfProficient",
+  2: "MKA.Expertise"
 };
 preLocalize("proficiencyLevels");
 
@@ -1085,11 +1115,11 @@ preLocalize("proficiencyLevels");
  * of cover are in play, we take the highest value.
  * @enum {string}
  */
-DND5E.cover = {
-  0: "DND5E.None",
-  .5: "DND5E.CoverHalf",
-  .75: "DND5E.CoverThreeQuarters",
-  1: "DND5E.CoverTotal"
+MKA.cover = {
+  0: "MKA.None",
+  .5: "MKA.CoverHalf",
+  .75: "MKA.CoverThreeQuarters",
+  1: "MKA.CoverTotal"
 };
 preLocalize("cover");
 
@@ -1099,7 +1129,7 @@ preLocalize("cover");
  * A selection of actor attributes that can be tracked on token resource bars.
  * @type {string[]}
  */
-DND5E.trackableAttributes = [
+MKA.trackableAttributes = [
   "attributes.ac.value", "attributes.init.value", "attributes.movement", "attributes.senses", "attributes.spelldc",
   "attributes.spellLevel", "details.cr", "details.spellLevel", "details.xp.value", "skills.*.passive",
   "abilities.*.value"
@@ -1111,7 +1141,7 @@ DND5E.trackableAttributes = [
  * A selection of actor and item attributes that are valid targets for item resource consumption.
  * @type {string[]}
  */
-DND5E.consumableResources = [
+MKA.consumableResources = [
   "item.quantity", "item.weight", "item.duration.value", "currency", "details.xp.value", "abilities.*.value",
   "attributes.senses", "attributes.movement", "attributes.ac.flat", "item.armor.value", "item.target", "item.range",
   "item.save.dc"
@@ -1123,23 +1153,23 @@ DND5E.consumableResources = [
  * Conditions that can effect an actor.
  * @enum {string}
  */
-DND5E.conditionTypes = {
-  blinded: "DND5E.ConBlinded",
-  charmed: "DND5E.ConCharmed",
-  deafened: "DND5E.ConDeafened",
-  diseased: "DND5E.ConDiseased",
-  exhaustion: "DND5E.ConExhaustion",
-  frightened: "DND5E.ConFrightened",
-  grappled: "DND5E.ConGrappled",
-  incapacitated: "DND5E.ConIncapacitated",
-  invisible: "DND5E.ConInvisible",
-  paralyzed: "DND5E.ConParalyzed",
-  petrified: "DND5E.ConPetrified",
-  poisoned: "DND5E.ConPoisoned",
-  prone: "DND5E.ConProne",
-  restrained: "DND5E.ConRestrained",
-  stunned: "DND5E.ConStunned",
-  unconscious: "DND5E.ConUnconscious"
+MKA.conditionTypes = {
+  blinded: "MKA.ConBlinded",
+  charmed: "MKA.ConCharmed",
+  deafened: "MKA.ConDeafened",
+  diseased: "MKA.ConDiseased",
+  exhaustion: "MKA.ConExhaustion",
+  frightened: "MKA.ConFrightened",
+  grappled: "MKA.ConGrappled",
+  incapacitated: "MKA.ConIncapacitated",
+  invisible: "MKA.ConInvisible",
+  paralyzed: "MKA.ConParalyzed",
+  petrified: "MKA.ConPetrified",
+  poisoned: "MKA.ConPoisoned",
+  prone: "MKA.ConProne",
+  restrained: "MKA.ConRestrained",
+  stunned: "MKA.ConStunned",
+  unconscious: "MKA.ConUnconscious"
 };
 preLocalize("conditionTypes", { sort: true });
 
@@ -1147,32 +1177,32 @@ preLocalize("conditionTypes", { sort: true });
  * Languages a character can learn.
  * @enum {string}
  */
-DND5E.languages = {
-  common: "DND5E.LanguagesCommon",
-  aarakocra: "DND5E.LanguagesAarakocra",
-  abyssal: "DND5E.LanguagesAbyssal",
-  aquan: "DND5E.LanguagesAquan",
-  auran: "DND5E.LanguagesAuran",
-  celestial: "DND5E.LanguagesCelestial",
-  deep: "DND5E.LanguagesDeepSpeech",
-  draconic: "DND5E.LanguagesDraconic",
-  druidic: "DND5E.LanguagesDruidic",
-  dwarvish: "DND5E.LanguagesDwarvish",
-  elvish: "DND5E.LanguagesElvish",
-  giant: "DND5E.LanguagesGiant",
-  gith: "DND5E.LanguagesGith",
-  gnomish: "DND5E.LanguagesGnomish",
-  goblin: "DND5E.LanguagesGoblin",
-  gnoll: "DND5E.LanguagesGnoll",
-  halfling: "DND5E.LanguagesHalfling",
-  ignan: "DND5E.LanguagesIgnan",
-  infernal: "DND5E.LanguagesInfernal",
-  orc: "DND5E.LanguagesOrc",
-  primordial: "DND5E.LanguagesPrimordial",
-  sylvan: "DND5E.LanguagesSylvan",
-  terran: "DND5E.LanguagesTerran",
-  cant: "DND5E.LanguagesThievesCant",
-  undercommon: "DND5E.LanguagesUndercommon"
+MKA.languages = {
+  common: "MKA.LanguagesCommon",
+  aarakocra: "MKA.LanguagesAarakocra",
+  abyssal: "MKA.LanguagesAbyssal",
+  aquan: "MKA.LanguagesAquan",
+  auran: "MKA.LanguagesAuran",
+  celestial: "MKA.LanguagesCelestial",
+  deep: "MKA.LanguagesDeepSpeech",
+  draconic: "MKA.LanguagesDraconic",
+  druidic: "MKA.LanguagesDruidic",
+  dwarvish: "MKA.LanguagesDwarvish",
+  elvish: "MKA.LanguagesElvish",
+  giant: "MKA.LanguagesGiant",
+  gith: "MKA.LanguagesGith",
+  gnomish: "MKA.LanguagesGnomish",
+  goblin: "MKA.LanguagesGoblin",
+  gnoll: "MKA.LanguagesGnoll",
+  halfling: "MKA.LanguagesHalfling",
+  ignan: "MKA.LanguagesIgnan",
+  infernal: "MKA.LanguagesInfernal",
+  orc: "MKA.LanguagesOrc",
+  primordial: "MKA.LanguagesPrimordial",
+  sylvan: "MKA.LanguagesSylvan",
+  terran: "MKA.LanguagesTerran",
+  cant: "MKA.LanguagesThievesCant",
+  undercommon: "MKA.LanguagesUndercommon"
 };
 preLocalize("languages", { sort: true });
 
@@ -1180,13 +1210,13 @@ preLocalize("languages", { sort: true });
  * Maximum allowed character level.
  * @type {number}
  */
-DND5E.maxLevel = 20;
+MKA.maxLevel = 20;
 
 /**
  * XP required to achieve each character level.
  * @type {number[]}
  */
-DND5E.CHARACTER_EXP_LEVELS = [
+MKA.CHARACTER_EXP_LEVELS = [
   0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
   120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
 ];
@@ -1195,7 +1225,7 @@ DND5E.CHARACTER_EXP_LEVELS = [
  * XP granted for each challenge rating.
  * @type {number[]}
  */
-DND5E.CR_EXP_LEVELS = [
+MKA.CR_EXP_LEVELS = [
   10, 200, 450, 700, 1100, 1800, 2300, 2900, 3900, 5000, 5900, 7200, 8400, 10000, 11500, 13000, 15000, 18000,
   20000, 22000, 25000, 33000, 41000, 50000, 62000, 75000, 90000, 105000, 120000, 135000, 155000
 ];
@@ -1205,7 +1235,7 @@ DND5E.CR_EXP_LEVELS = [
  * @type {object}
  * @deprecated since 1.6.0, targeted for removal in 2.1
  */
-DND5E.classFeatures = ClassFeatures;
+MKA.classFeatures = ClassFeatures;
 
 /**
  * Special character flags.
@@ -1220,88 +1250,88 @@ DND5E.classFeatures = ClassFeatures;
  *   placeholder: any
  * }}
  */
-DND5E.characterFlags = {
+MKA.characterFlags = {
   diamondSoul: {
-    name: "DND5E.FlagsDiamondSoul",
-    hint: "DND5E.FlagsDiamondSoulHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsDiamondSoul",
+    hint: "MKA.FlagsDiamondSoulHint",
+    section: "MKA.Feats",
     type: Boolean
   },
   elvenAccuracy: {
-    name: "DND5E.FlagsElvenAccuracy",
-    hint: "DND5E.FlagsElvenAccuracyHint",
-    section: "DND5E.RacialTraits",
+    name: "MKA.FlagsElvenAccuracy",
+    hint: "MKA.FlagsElvenAccuracyHint",
+    section: "MKA.RacialTraits",
     abilities: ["dex", "int", "wis", "cha"],
     type: Boolean
   },
   halflingLucky: {
-    name: "DND5E.FlagsHalflingLucky",
-    hint: "DND5E.FlagsHalflingLuckyHint",
-    section: "DND5E.RacialTraits",
+    name: "MKA.FlagsHalflingLucky",
+    hint: "MKA.FlagsHalflingLuckyHint",
+    section: "MKA.RacialTraits",
     type: Boolean
   },
   initiativeAdv: {
-    name: "DND5E.FlagsInitiativeAdv",
-    hint: "DND5E.FlagsInitiativeAdvHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsInitiativeAdv",
+    hint: "MKA.FlagsInitiativeAdvHint",
+    section: "MKA.Feats",
     type: Boolean
   },
   initiativeAlert: {
-    name: "DND5E.FlagsAlert",
-    hint: "DND5E.FlagsAlertHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsAlert",
+    hint: "MKA.FlagsAlertHint",
+    section: "MKA.Feats",
     type: Boolean
   },
   jackOfAllTrades: {
-    name: "DND5E.FlagsJOAT",
-    hint: "DND5E.FlagsJOATHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsJOAT",
+    hint: "MKA.FlagsJOATHint",
+    section: "MKA.Feats",
     type: Boolean
   },
   observantFeat: {
-    name: "DND5E.FlagsObservant",
-    hint: "DND5E.FlagsObservantHint",
+    name: "MKA.FlagsObservant",
+    hint: "MKA.FlagsObservantHint",
     skills: ["prc", "inv"],
-    section: "DND5E.Feats",
+    section: "MKA.Feats",
     type: Boolean
   },
   powerfulBuild: {
-    name: "DND5E.FlagsPowerfulBuild",
-    hint: "DND5E.FlagsPowerfulBuildHint",
-    section: "DND5E.RacialTraits",
+    name: "MKA.FlagsPowerfulBuild",
+    hint: "MKA.FlagsPowerfulBuildHint",
+    section: "MKA.RacialTraits",
     type: Boolean
   },
   reliableTalent: {
-    name: "DND5E.FlagsReliableTalent",
-    hint: "DND5E.FlagsReliableTalentHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsReliableTalent",
+    hint: "MKA.FlagsReliableTalentHint",
+    section: "MKA.Feats",
     type: Boolean
   },
   remarkableAthlete: {
-    name: "DND5E.FlagsRemarkableAthlete",
-    hint: "DND5E.FlagsRemarkableAthleteHint",
+    name: "MKA.FlagsRemarkableAthlete",
+    hint: "MKA.FlagsRemarkableAthleteHint",
     abilities: ["str", "dex", "con"],
-    section: "DND5E.Feats",
+    section: "MKA.Feats",
     type: Boolean
   },
   weaponCriticalThreshold: {
-    name: "DND5E.FlagsWeaponCritThreshold",
-    hint: "DND5E.FlagsWeaponCritThresholdHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsWeaponCritThreshold",
+    hint: "MKA.FlagsWeaponCritThresholdHint",
+    section: "MKA.Feats",
     type: Number,
     placeholder: 20
   },
   spellCriticalThreshold: {
-    name: "DND5E.FlagsSpellCritThreshold",
-    hint: "DND5E.FlagsSpellCritThresholdHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsSpellCritThreshold",
+    hint: "MKA.FlagsSpellCritThresholdHint",
+    section: "MKA.Feats",
     type: Number,
     placeholder: 20
   },
   meleeCriticalDamageDice: {
-    name: "DND5E.FlagsMeleeCriticalDice",
-    hint: "DND5E.FlagsMeleeCriticalDiceHint",
-    section: "DND5E.Feats",
+    name: "MKA.FlagsMeleeCriticalDice",
+    hint: "MKA.FlagsMeleeCriticalDiceHint",
+    section: "MKA.Feats",
     type: Number,
     placeholder: 0
   }
@@ -1312,29 +1342,29 @@ preLocalize("characterFlags", { keys: ["name", "hint", "section"] });
  * Flags allowed on actors. Any flags not in the list may be deleted during a migration.
  * @type {string[]}
  */
-DND5E.allowedActorFlags = ["isPolymorphed", "originalActor"].concat(Object.keys(DND5E.characterFlags));
+MKA.allowedActorFlags = ["isPolymorphed", "originalActor"].concat(Object.keys(MKA.characterFlags));
 
 /* -------------------------------------------- */
 
 /**
  * Patch an existing config enum to allow conversion from string values to object values without
  * breaking existing modules that are expecting strings.
- * @param {string} key          Key within DND5E that has been replaced with an enum of objects.
+ * @param {string} key          Key within MKA that has been replaced with an enum of objects.
  * @param {string} fallbackKey  Key within the new config object from which to get the fallback value.
  * @param {object} [options]    Additional options passed through to logCompatibilityWarning.
  */
 function patchConfig(key, fallbackKey, options) {
   /** @override */
   function toString() {
-    const message = `The value of CONFIG.DND5E.${key} has been changed to an object.`
+    const message = `The value of CONFIG.MKA.${key} has been changed to an object.`
       +` The former value can be acccessed from .${fallbackKey}.`;
     foundry.utils.logCompatibilityWarning(message, options);
     return this[fallbackKey];
   }
 
-  Object.values(DND5E[key]).forEach(o => o.toString = toString);
+  Object.values(MKA[key]).forEach(o => o.toString = toString);
 }
 
 /* -------------------------------------------- */
 
-export default DND5E;
+export default MKA;

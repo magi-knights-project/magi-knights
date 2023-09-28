@@ -2,7 +2,7 @@
   "_id": "KCvt4FdOVJbuZ3T0",
   "name": "Tarrasque",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/monstrosity/Tarrasque.webp",
+  "img": "systems/mka/tokens/monstrosity/Tarrasque.webp",
   "system": {
     "abilities": {
       "str": {
@@ -586,7 +586,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/monstrosity/Tarrasque.webp",
+      "src": "systems/mka/tokens/monstrosity/Tarrasque.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -2198,11 +2198,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787232752,
     "modifiedTime": 1661878730884,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

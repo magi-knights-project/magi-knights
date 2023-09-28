@@ -14,7 +14,7 @@
       },
       "text": {
         "format": 1,
-        "content": "<blockquote>\n<p>This work was adapted from the <a href=\"https://dnd.wizards.com/articles/features/systems-reference-document-srd\">System Reference Document</a> under the OGL (license available in the User Data/systems/dnd5e folder).</p>\n<p>Some additional information , like character creation, is available in the <a href=\"https://dnd.wizards.com/articles/features/basicrules\">Basic Rules</a> which \"Wizards\" makes available for free.</p>\n</blockquote>",
+        "content": "<blockquote>\n<p>This work was adapted from the <a href=\"https://dnd.wizards.com/articles/features/systems-reference-document-srd\">System Reference Document</a> under the OGL (license available in the User Data/systems/mka folder).</p>\n<p>Some additional information , like character creation, is available in the <a href=\"https://dnd.wizards.com/articles/features/basicrules\">Basic Rules</a> which \"Wizards\" makes available for free.</p>\n</blockquote>",
         "markdown": ""
       },
       "_id": "9iCIjvYzMdxWPtd1",
@@ -33,12 +33,12 @@
     }
   ],
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1660925115431,
     "modifiedTime": 1661787234675,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   },
   "folder": null,
   "sort": 0,

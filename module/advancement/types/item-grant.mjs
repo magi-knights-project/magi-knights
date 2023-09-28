@@ -15,9 +15,9 @@ export class ItemGrantAdvancement extends Advancement {
         configuration: { items: [], optional: false }
       },
       order: 40,
-      icon: "systems/dnd5e/icons/svg/item-grant.svg",
-      title: game.i18n.localize("DND5E.AdvancementItemGrantTitle"),
-      hint: game.i18n.localize("DND5E.AdvancementItemGrantHint"),
+      icon: "systems/mka/icons/svg/item-grant.svg",
+      title: game.i18n.localize("MKA.AdvancementItemGrantTitle"),
+      hint: game.i18n.localize("MKA.AdvancementItemGrantHint"),
       apps: {
         config: ItemGrantConfig,
         flow: ItemGrantFlow
@@ -40,7 +40,7 @@ export class ItemGrantAdvancement extends Advancement {
   summaryForLevel(level, { configMode=false }={}) {
     // Link to compendium items
     if ( !this.data.value.added || configMode ) {
-      return this.data.configuration.items.reduce((html, uuid) => html + dnd5e.utils.linkForUuid(uuid), "");
+      return this.data.configuration.items.reduce((html, uuid) => html + mka.utils.linkForUuid(uuid), "");
     }
 
     // Link to items on the actor
@@ -75,8 +75,8 @@ export class ItemGrantAdvancement extends Advancement {
         if ( !source ) continue;
         itemData = source.clone({
           _id: foundry.utils.randomID(),
-          "flags.dnd5e.sourceId": uuid,
-          "flags.dnd5e.advancementOrigin": `${this.item.id}.${this.id}`
+          "flags.mka.sourceId": uuid,
+          "flags.mka.advancementOrigin": `${this.item.id}.${this.id}`
         }, {keepId: true}).toObject();
       }
 
@@ -96,7 +96,7 @@ export class ItemGrantAdvancement extends Advancement {
     for ( const item of data.items ) {
       this.actor.updateSource({items: [item]});
       // TODO: Restore any additional advancement data here
-      updates[item._id] = item.flags.dnd5e.sourceId;
+      updates[item._id] = item.flags.mka.sourceId;
     }
     this.updateSource({"value.added": updates});
   }
@@ -129,7 +129,7 @@ export class ItemGrantConfig extends AdvancementConfig {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       dragDrop: [{ dropSelector: ".drop-target" }],
-      template: "systems/dnd5e/templates/advancement/item-grant-config.hbs"
+      template: "systems/mka/templates/advancement/item-grant-config.hbs"
     });
   }
 
@@ -147,7 +147,7 @@ export class ItemGrantConfig extends AdvancementConfig {
   /**
    * Handle deleting an existing Item entry from the Advancement.
    * @param {Event} event  The originating click event.
-   * @returns {Promise<Item5e>}  The promise for the updated parent Item which resolves after the application re-renders
+   * @returns {Promise<ItemMKA>}  The promise for the updated par. Item which resolves after the application re-renders
    * @private
    */
   async _onItemDelete(event) {
@@ -185,12 +185,12 @@ export class ItemGrantConfig extends AdvancementConfig {
 
     // Abort if this uuid is the parent item
     if ( item.uuid === this.item.uuid ) {
-      return ui.notifications.warn(game.i18n.localize("DND5E.AdvancementItemGrantRecursiveWarning"));
+      return ui.notifications.warn(game.i18n.localize("MKA.AdvancementItemGrantRecursiveWarning"));
     }
 
     // Abort if this uuid exists already
     if ( existingItems.includes(item.uuid) ) {
-      return ui.notifications.warn(game.i18n.localize("DND5E.AdvancementItemGrantDuplicateWarning"));
+      return ui.notifications.warn(game.i18n.localize("MKA.AdvancementItemGrantDuplicateWarning"));
     }
 
     await this.advancement.update({"configuration.items": [...existingItems, item.uuid]});
@@ -207,7 +207,7 @@ export class ItemGrantFlow extends AdvancementFlow {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      template: "systems/dnd5e/templates/advancement/item-grant-flow.hbs"
+      template: "systems/mka/templates/advancement/item-grant-flow.hbs"
     });
   }
 
@@ -216,7 +216,7 @@ export class ItemGrantFlow extends AdvancementFlow {
   /** @inheritdoc */
   async getData() {
     const config = this.advancement.data.configuration.items;
-    const added = this.retainedData?.items.map(i => foundry.utils.getProperty(i, "flags.dnd5e.sourceId"))
+    const added = this.retainedData?.items.map(i => foundry.utils.getProperty(i, "flags.mka.sourceId"))
       ?? this.advancement.data.value.added;
     const checked = new Set(Object.values(added ?? {}));
 
@@ -259,7 +259,7 @@ export class ItemGrantFlow extends AdvancementFlow {
   /** @inheritdoc */
   async _updateObject(event, formData) {
     const retainedData = this.retainedData?.items.reduce((obj, i) => {
-      obj[foundry.utils.getProperty(i, "flags.dnd5e.sourceId")] = i;
+      obj[foundry.utils.getProperty(i, "flags.mka.sourceId")] = i;
       return obj;
     }, {});
     await this.advancement.apply(this.level, formData, retainedData);

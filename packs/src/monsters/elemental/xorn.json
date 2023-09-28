@@ -2,7 +2,7 @@
   "_id": "2MZNHeOZweXAYbv1",
   "name": "Xorn",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/elemental/Xorn.webp",
+  "img": "systems/mka/tokens/elemental/Xorn.webp",
   "system": {
     "abilities": {
       "str": {
@@ -582,7 +582,7 @@
       "color": null
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/elemental/Xorn.webp",
+      "src": "systems/mka/tokens/elemental/Xorn.webp",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -1179,11 +1179,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787232563,
     "modifiedTime": 1661878728734,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

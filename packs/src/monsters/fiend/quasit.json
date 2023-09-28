@@ -2,7 +2,7 @@
   "_id": "bwtkdzavdNHISgp4",
   "name": "Quasit",
   "type": "npc",
-  "img": "systems/dnd5e/tokens/fiend/Quasit.webp",
+  "img": "systems/mka/tokens/fiend/Quasit.webp",
   "system": {
     "abilities": {
       "str": {
@@ -590,7 +590,7 @@
       "attenuation": 0.5
     },
     "texture": {
-      "src": "systems/dnd5e/tokens/fiend/Quasit.webp",
+      "src": "systems/mka/tokens/fiend/Quasit.webp",
       "tint": null,
       "scaleX": 2,
       "scaleY": 2,
@@ -1073,11 +1073,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787232916,
     "modifiedTime": 1661878733096,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

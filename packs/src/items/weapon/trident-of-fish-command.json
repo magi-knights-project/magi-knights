@@ -5,7 +5,7 @@
   "img": "icons/skills/ranged/arrows-flying-salvo-purple.webp",
   "system": {
     "description": {
-      "value": "<p><em>(Requires attunement)</em></p>\n<p>This trident is a magic weapon. It has 3 charges. While you carry it, you can use an action and expend 1 charge to cast @Compendium[dnd5e.spells.LrPvWHBPmiMQQsKB]{Dominate Beast} (save DC 15) from it on a beast that has an innate swimming speed. The trident regains 1d3 expended charges daily at dawn.</p>",
+      "value": "<p><em>(Requires attunement)</em></p>\n<p>This trident is a magic weapon. It has 3 charges. While you carry it, you can use an action and expend 1 charge to cast @Compendium[mka.spells.LrPvWHBPmiMQQsKB]{Dominate Beast} (save DC 15) from it on a beast that has an innate swimming speed. The trident regains 1d3 expended charges daily at dawn.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -111,11 +111,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.0.0",
     "coreVersion": "10.279",
     "createdTime": 1661787233866,
     "modifiedTime": 1661787233866,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }
