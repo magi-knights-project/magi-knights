@@ -7,7 +7,7 @@
     "minimum": "10.303",
     "verified": "11"
   },
-  "url": "https://github.com/foundryvtt/dnd5e/",
+  "url": "https://github.com/magi-knights-project/magi-knights",
   "manifest": "https://raw.githubusercontent.com/magi-knights-project/magi-knights/dev/system.json",
   "download": "https://github.com/magi-knights-project/magi-knights/archive/refs/tags/alpha.zip",
   "authors": [
