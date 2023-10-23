@@ -8,8 +8,8 @@
     "verified": "11"
   },
   "url": "https://github.com/foundryvtt/dnd5e/",
-  "manifest": "https://raw.githubusercontent.com/magi-knights-project/magi-knights/master/system.json",
-  "download": "https://github.com/foundryvtt/dnd5e/releases/download/release-2.3.1/dnd5e-release-2.3.1.zip",
+  "manifest": "https://raw.githubusercontent.com/magi-knights-project/magi-knights/dev/system.json",
+  "download": "https://github.com/magi-knights-project/magi-knights/archive/refs/tags/alpha.zip",
   "authors": [
     {
       "name": "Devon",
