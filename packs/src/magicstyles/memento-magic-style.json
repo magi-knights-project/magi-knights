@@ -1,0 +1,44 @@
+{
+  "name": "Memento Magic Style",
+  "type": "class",
+  "img": "icons/svg/heal.svg",
+  "system": {
+    "description": {
+      "value": "<p><em>This skill manifests your magic through the power of an object that has significant importance to you. The object acts as a conduit for your wishes and desires. It is referred to as, \"Memento Magic.\"</em></p><p>Intelligence, Wisdom, or Charisma is your Magic Ability Modifier (MAM) for your Magi-Knight Spells.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.34",
+    "identifier": "memento-magic-style",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "mka",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.291",
+    "createdTime": 1670530238331,
+    "modifiedTime": 1670541957683,
+    "lastModifiedBy": "mkabuilder0000"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "E3mMHVYnOqKNvT8L"
+}

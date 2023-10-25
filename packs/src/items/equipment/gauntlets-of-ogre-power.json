@@ -94,7 +94,7 @@
     {
       "label": "Gauntlets of Ogre Power",
       "icon": "icons/magic/unholy/strike-hand-glow-pink.webp",
-      "origin": "Compendium.dnd5e.items.3TWT5bv3z5zGUZCe",
+      "origin": "Compendium.mka.items.3TWT5bv3z5zGUZCe",
       "duration": {
         "startTime": null,
         "seconds": null,
@@ -125,12 +125,12 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.2.2",
     "coreVersion": "10.303",
     "createdTime": 1661787233454,
     "modifiedTime": 1691500120771,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   },
   "folder": null,
   "sort": 0,

@@ -13,13 +13,13 @@ export default class ItemDescriptionTemplate extends foundry.abstract.DataModel 
   static defineSchema() {
     return {
       description: new foundry.data.fields.SchemaField({
-        value: new foundry.data.fields.HTMLField({required: true, nullable: true, label: "DND5E.Description"}),
-        chat: new foundry.data.fields.HTMLField({required: true, nullable: true, label: "DND5E.DescriptionChat"}),
+        value: new foundry.data.fields.HTMLField({required: true, nullable: true, label: "MKA.Description"}),
+        chat: new foundry.data.fields.HTMLField({required: true, nullable: true, label: "MKA.DescriptionChat"}),
         unidentified: new foundry.data.fields.HTMLField({
-          required: true, nullable: true, label: "DND5E.DescriptionUnidentified"
+          required: true, nullable: true, label: "MKA.DescriptionUnidentified"
         })
       }),
-      source: new foundry.data.fields.StringField({required: true, label: "DND5E.Source"})
+      source: new foundry.data.fields.StringField({required: true, label: "MKA.Source"})
     };
   }
 

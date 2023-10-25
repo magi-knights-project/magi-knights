@@ -594,7 +594,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.3OXueEpvDDCVfGFA"
+          "sourceId": "Compendium.mka.items.3OXueEpvDDCVfGFA"
         }
       },
       "img": "icons/equipment/back/cloak-heavy-fur-blue.webp",
@@ -724,7 +724,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.Tobce1hexTnDk4sV"
+          "sourceId": "Compendium.mka.items.Tobce1hexTnDk4sV"
         }
       },
       "img": "icons/weapons/swords/sword-guard-brown.webp",
@@ -831,12 +831,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011647567,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -948,7 +948,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.GJv6WkD7D2J6rP6M"
+          "sourceId": "Compendium.mka.items.GJv6WkD7D2J6rP6M"
         }
       },
       "img": "icons/weapons/bows/shortbow-recurve.webp",
@@ -1075,7 +1075,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.0E565kQUBmndJ1a2"
+          "sourceId": "Compendium.mka.items.0E565kQUBmndJ1a2"
         }
       },
       "img": "icons/weapons/daggers/dagger-jeweled-purple.webp",
@@ -1188,7 +1188,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.WwdpHLXGX5r8uZu5"
+          "sourceId": "Compendium.mka.items.WwdpHLXGX5r8uZu5"
         }
       },
       "img": "icons/equipment/chest/breastplate-quilted-brown.webp",
@@ -1237,7 +1237,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.woWZ1sO5IUVGzo58"
+          "sourceId": "Compendium.mka.items.woWZ1sO5IUVGzo58"
         }
       },
       "img": "icons/tools/hand/lockpicks-steel-grey.webp",
@@ -1292,7 +1292,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.H8YCd689ezlD26aT"
+          "sourceId": "Compendium.mka.items.H8YCd689ezlD26aT"
         }
       },
       "img": "icons/containers/bags/pack-simple-leather.webp",
@@ -1347,7 +1347,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.9bWTRRDym06PzSAf"
+          "sourceId": "Compendium.mka.items.9bWTRRDym06PzSAf"
         }
       },
       "img": "icons/containers/bags/coinpouch-simple-tan.webp",
@@ -1357,12 +1357,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640763,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -1402,7 +1402,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.4MtQKPn9qMWCFjDA"
+          "sourceId": "Compendium.mka.items.4MtQKPn9qMWCFjDA"
         }
       },
       "img": "icons/containers/ammunition/arrows-quiver-black.webp",
@@ -1445,7 +1445,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.14pNRT4sZy9rgvhb"
+          "sourceId": "Compendium.mka.items.14pNRT4sZy9rgvhb"
         }
       },
       "img": "icons/tools/smithing/hammer-sledge-steel-grey.webp",
@@ -1541,7 +1541,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.QXmaarJ4X8P0C1HV"
+          "sourceId": "Compendium.mka.items.QXmaarJ4X8P0C1HV"
         }
       },
       "img": "icons/sundries/survival/rope-wrapped-brown.webp",
@@ -1637,7 +1637,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.TqyvIglHDj5kfohR"
+          "sourceId": "Compendium.mka.items.TqyvIglHDj5kfohR"
         }
       },
       "img": "icons/sundries/survival/stake-rough-simple-brown.webp",
@@ -1647,12 +1647,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011647573,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -1733,7 +1733,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.f4w4GxBi0nYXmhX4"
+          "sourceId": "Compendium.mka.items.f4w4GxBi0nYXmhX4"
         }
       },
       "img": "icons/consumables/meat/hock-leg-pink-brown.webp",
@@ -1743,12 +1743,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640777,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -1776,7 +1776,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.DNOSEAvF4Oh1DlWy"
+          "sourceId": "Compendium.mka.items.DNOSEAvF4Oh1DlWy"
         }
       },
       "img": "icons/sundries/lights/torch-black.webp",
@@ -1786,12 +1786,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640783,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -1877,7 +1877,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl"
+          "sourceId": "Compendium.mka.items.BnOCLuNWhVvzHLjl"
         }
       },
       "img": "icons/sundries/lights/torch-black.webp",
@@ -1887,12 +1887,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011647579,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -1973,7 +1973,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.Uv0ilmzbWvqmlCVH"
+          "sourceId": "Compendium.mka.items.Uv0ilmzbWvqmlCVH"
         }
       },
       "img": "icons/sundries/survival/wetskin-leather-purple.webp",
@@ -1983,12 +1983,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640803,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -2016,7 +2016,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.V13fjV5oSmvbRdgP"
+          "sourceId": "Compendium.mka.items.V13fjV5oSmvbRdgP"
         }
       },
       "img": "icons/tools/cooking/fork-steel-grey.webp",
@@ -2026,12 +2026,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640809,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -2059,7 +2059,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.DVXmyetZuvxbzAwW"
+          "sourceId": "Compendium.mka.items.DVXmyetZuvxbzAwW"
         }
       },
       "img": "icons/sundries/flags/banner-worn-blue.webp",
@@ -2225,7 +2225,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.V5UAjT3ed6sDNtgm"
+          "sourceId": "Compendium.mka.items.V5UAjT3ed6sDNtgm"
         }
       },
       "img": "icons/tools/hand/pickaxe-steel-white.webp",
@@ -2318,7 +2318,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.races.ufysTkqet2Ctmtyi"
+          "sourceId": "Compendium.mka.races.ufysTkqet2Ctmtyi"
         }
       },
       "img": "icons/creatures/abilities/stinger-poison-green.webp",
@@ -2411,7 +2411,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.races.mQPZDRbUhgYTbXKa"
+          "sourceId": "Compendium.mka.races.mQPZDRbUhgYTbXKa"
         }
       },
       "img": "icons/commodities/tech/cog-bronze.webp",
@@ -2504,7 +2504,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.races.UQiRQUTBcsz8gZU1"
+          "sourceId": "Compendium.mka.races.UQiRQUTBcsz8gZU1"
         }
       },
       "img": "icons/magic/defensive/shield-barrier-glowing-triangle-magenta.webp",
@@ -2528,7 +2528,7 @@
       "type": "feat",
       "system": {
         "description": {
-          "value": "<div title=\"Page 3\">\n<p><em>Your dwarf character has an assortment of inborn abilities, part and parcel of dwarven nature.</em></p><p><em><strong>Ability Score Increase.</strong></em> Your Constitution score increases by 2.</p><p><em><strong>Age.</strong></em> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</p><p><em><strong>Alignment.</strong></em> Most dwarves are lawful, believing firmly in the benefits of a well-­ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.</p><p><em><strong>Size. </strong></em>Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.</p><p><em><strong>Speed. </strong></em>Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</p><p><em><strong>Darkvision.</strong></em> Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</p><p><em><strong>Dwarven Resilience.</strong></em> @Compendium[dnd5e.races.ufysTkqet2Ctmtyi]{Dwarven Resilience} You have advantage on saving throws against poison, and you have resistance against poison damage.</p><p><em><strong>Dwarven Combat Training.</strong></em> You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.</p><p><em><strong>Tool Proficiency.</strong></em> You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.</p>\n</div>\n<div>\n<div>\n<p><em><strong>Stonecunning.</strong></em> @Compendium[dnd5e.races.mQPZDRbUhgYTbXKa]{Stonecunning} Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</p>\n</div>\n</div>\n<div>\n<div>\n<p><em><strong>Languages.</strong></em> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</p>\n</div>\n</div>\n<div title=\"Page 3\">\n<div>\n<div>\n<div class=\"page\" title=\"Page 3\"> </div>\n</div>\n</div>\n</div>",
+          "value": "<div title=\"Page 3\">\n<p><em>Your dwarf character has an assortment of inborn abilities, part and parcel of dwarven nature.</em></p><p><em><strong>Ability Score Increase.</strong></em> Your Constitution score increases by 2.</p><p><em><strong>Age.</strong></em> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</p><p><em><strong>Alignment.</strong></em> Most dwarves are lawful, believing firmly in the benefits of a well-­ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.</p><p><em><strong>Size. </strong></em>Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.</p><p><em><strong>Speed. </strong></em>Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</p><p><em><strong>Darkvision.</strong></em> Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</p><p><em><strong>Dwarven Resilience.</strong></em> @Compendium[mka.races.ufysTkqet2Ctmtyi]{Dwarven Resilience} You have advantage on saving throws against poison, and you have resistance against poison damage.</p><p><em><strong>Dwarven Combat Training.</strong></em> You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.</p><p><em><strong>Tool Proficiency.</strong></em> You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.</p>\n</div>\n<div>\n<div>\n<p><em><strong>Stonecunning.</strong></em> @Compendium[mka.races.mQPZDRbUhgYTbXKa]{Stonecunning} Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</p>\n</div>\n</div>\n<div>\n<div>\n<p><em><strong>Languages.</strong></em> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</p>\n</div>\n</div>\n<div title=\"Page 3\">\n<div>\n<div>\n<div class=\"page\" title=\"Page 3\"> </div>\n</div>\n</div>\n</div>",
           "chat": "",
           "unidentified": ""
         },
@@ -2597,7 +2597,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.races.6N31WSez2szqQcIQ"
+          "sourceId": "Compendium.mka.races.6N31WSez2szqQcIQ"
         }
       },
       "img": "icons/magic/defensive/shield-barrier-glowing-triangle-teal-purple.webp",
@@ -2636,12 +2636,12 @@
       },
       "flags": {},
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.1.0",
         "coreVersion": "10.291",
         "createdTime": 1673040183979,
         "modifiedTime": 1673040521187,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       },
       "_id": "kLWeji1tfubIJvfT"
     },
@@ -2652,7 +2652,7 @@
       "img": "icons/skills/melee/strike-sword-stabbed-brown.webp",
       "system": {
         "description": {
-          "value": "<p>As a rogue, you have the following class features.</p>\n<h3>Hit Points</h3>\n<p><strong>Hit Dice:</strong> 1d8 per rogue level<br /><strong>Hit Points at 1st Level:</strong> 8 + your Constitution modifier<br /><strong>Hit Points at Higher Levels:</strong> 1d8 (or 5) + your Constitution modifier per rogue level after 1st</p>\n<h3>Proficiencies</h3>\n<p><strong>Armor:</strong> Light armor<br /><strong>Weapons:</strong> Simple weapons, hand crossbows, longswords, rapiers, shortswords<br /><strong>Tools:</strong> Thieves' tools<br /><strong>Saving Throws:</strong> Dexterity, Intelligence<br /><strong>Skills:</strong> Choose four from Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth</p>\n<h3>Equipment</h3>\n<p>You start with the following equipment, in addition to the equipment granted by your background:</p>\n<ul>\n<li>(a) a rapier or (b) a shortsword</li>\n<li>(a) a shortbow and quiver of 20 arrows or (b) a shortsword</li>\n<li>(a) a burglar's pack, (b) a dungeoneer's pack, or (c) an explorer's pack</li>\n<li>(a) Leather armor, two daggers, and thieves' tools</li>\n</ul>\n<h1>Rogue Advancement</h1>\n<table>\n<thead>\n<tr>\n<td>Level</td>\n<td>Proficiency Bonus</td>\n<td>Sneak Attack</td>\n<td>Features</td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1st</td>\n<td>+2</td>\n<td>1d6</td>\n<td>@Compendium[dnd5e.classfeatures.3sYPftQKnbbVnHrh]{Expertise}, @Compendium[dnd5e.classfeatures.DPN2Gfk8yi1Z5wp7]{Sneak Attack}, @Compendium[dnd5e.classfeatures.ohwfuwnvuoBWlSQr]{Thieves' Cant}</td>\n</tr>\n<tr>\n<td>2nd</td>\n<td>+2</td>\n<td>1d6</td>\n<td>@Compendium[dnd5e.classfeatures.01pcLg6PRu5zGrsb]{Cunning Action}</td>\n</tr>\n<tr>\n<td>3rd</td>\n<td>+2</td>\n<td>2d6</td>\n<td>@Compendium[dnd5e.classfeatures.80USV8ZFPIahpLd0]{Roguish Archetype}</td>\n</tr>\n<tr>\n<td>4th</td>\n<td>+2</td>\n<td>2d6</td>\n<td>@Compendium[dnd5e.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>+3</td>\n<td>3d6</td>\n<td>@Compendium[dnd5e.classfeatures.Mm64SKAHJWYecgXS]{Uncanny Dodge}</td>\n</tr>\n<tr>\n<td>6th</td>\n<td>+3</td>\n<td>3d6</td>\n<td>@Compendium[dnd5e.classfeatures.3sYPftQKnbbVnHrh]{Expertise improvement}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>+3</td>\n<td>4d6</td>\n<td>@Compendium[dnd5e.classfeatures.a4P4DNMmH8CqSNkC]{Evasion}</td>\n</tr>\n<tr>\n<td>8th</td>\n<td>+3</td>\n<td>4d6</td>\n<td>@Compendium[dnd5e.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>+4</td>\n<td>5d6</td>\n<td>Roguish Archetype feature</td>\n</tr>\n<tr>\n<td>10th</td>\n<td>+4</td>\n<td>5d6</td>\n<td>@Compendium[dnd5e.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>11th</td>\n<td>+4</td>\n<td>6d6</td>\n<td>@Compendium[dnd5e.classfeatures.YN9xm6MCvse4Y60u]{Reliable Talent}</td>\n</tr>\n<tr>\n<td>12th</td>\n<td>+4</td>\n<td>6d6</td>\n<td>@Compendium[dnd5e.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>13th</td>\n<td>+5</td>\n<td>7d6</td>\n<td>Roguish Archetype feature</td>\n</tr>\n<tr>\n<td>14th</td>\n<td>+5</td>\n<td>7d6</td>\n<td>@Compendium[dnd5e.classfeatures.fjsBk7zxoAbLf8ZI]{Blindsense}</td>\n</tr>\n<tr>\n<td>15th</td>\n<td>+5</td>\n<td>8d6</td>\n<td>@Compendium[dnd5e.classfeatures.V4pwFxlwHtNeB4w9]{Slippery Mind}</td>\n</tr>\n<tr>\n<td>16th</td>\n<td>+5</td>\n<td>8d6</td>\n<td>@Compendium[dnd5e.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>17th</td>\n<td>+6</td>\n<td>9d6</td>\n<td>Roguish Archetype feature</td>\n</tr>\n<tr>\n<td>18th</td>\n<td>+6</td>\n<td>9d6</td>\n<td>@Compendium[dnd5e.classfeatures.L7nJSRosos8sHJH9]{Elusive}</td>\n</tr>\n<tr>\n<td>19th</td>\n<td>+6</td>\n<td>10d6</td>\n<td>@Compendium[dnd5e.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>20th</td>\n<td>+6</td>\n<td>10d6</td>\n<td>@Compendium[dnd5e.classfeatures.rQhWDaMHMn7iU4f2]{Stroke of Luck}</td>\n</tr>\n</tbody>\n</table>\n<h1>Roguish Archetypes</h1>\n<p>Rogues have many features in common, including their emphasis on perfecting their skills, their precise and deadly approach to combat, and their increasingly quick reflexes. But different rogues steer those talents in varying directions, embodied by the rogue archetypes. Your choice of archetype is a reflection of your focus—not necessarily an indication of your chosen profession, but a description of your preferred techniques.</p>\n<p>@Compendium[dnd5e.subclasses.k8iuefRorWOjb9gR]{Thief}</p>",
+          "value": "<p>As a rogue, you have the following class features.</p>\n<h3>Hit Points</h3>\n<p><strong>Hit Dice:</strong> 1d8 per rogue level<br /><strong>Hit Points at 1st Level:</strong> 8 + your Constitution modifier<br /><strong>Hit Points at Higher Levels:</strong> 1d8 (or 5) + your Constitution modifier per rogue level after 1st</p>\n<h3>Proficiencies</h3>\n<p><strong>Armor:</strong> Light armor<br /><strong>Weapons:</strong> Simple weapons, hand crossbows, longswords, rapiers, shortswords<br /><strong>Tools:</strong> Thieves' tools<br /><strong>Saving Throws:</strong> Dexterity, Intelligence<br /><strong>Skills:</strong> Choose four from Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth</p>\n<h3>Equipment</h3>\n<p>You start with the following equipment, in addition to the equipment granted by your background:</p>\n<ul>\n<li>(a) a rapier or (b) a shortsword</li>\n<li>(a) a shortbow and quiver of 20 arrows or (b) a shortsword</li>\n<li>(a) a burglar's pack, (b) a dungeoneer's pack, or (c) an explorer's pack</li>\n<li>(a) Leather armor, two daggers, and thieves' tools</li>\n</ul>\n<h1>Rogue Advancement</h1>\n<table>\n<thead>\n<tr>\n<td>Level</td>\n<td>Proficiency Bonus</td>\n<td>Sneak Attack</td>\n<td>Features</td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1st</td>\n<td>+2</td>\n<td>1d6</td>\n<td>@Compendium[mka.classfeatures.3sYPftQKnbbVnHrh]{Expertise}, @Compendium[mka.classfeatures.DPN2Gfk8yi1Z5wp7]{Sneak Attack}, @Compendium[mka.classfeatures.ohwfuwnvuoBWlSQr]{Thieves' Cant}</td>\n</tr>\n<tr>\n<td>2nd</td>\n<td>+2</td>\n<td>1d6</td>\n<td>@Compendium[mka.classfeatures.01pcLg6PRu5zGrsb]{Cunning Action}</td>\n</tr>\n<tr>\n<td>3rd</td>\n<td>+2</td>\n<td>2d6</td>\n<td>@Compendium[mka.classfeatures.80USV8ZFPIahpLd0]{Roguish Archetype}</td>\n</tr>\n<tr>\n<td>4th</td>\n<td>+2</td>\n<td>2d6</td>\n<td>@Compendium[mka.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>+3</td>\n<td>3d6</td>\n<td>@Compendium[mka.classfeatures.Mm64SKAHJWYecgXS]{Uncanny Dodge}</td>\n</tr>\n<tr>\n<td>6th</td>\n<td>+3</td>\n<td>3d6</td>\n<td>@Compendium[mka.classfeatures.3sYPftQKnbbVnHrh]{Expertise improvement}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>+3</td>\n<td>4d6</td>\n<td>@Compendium[mka.classfeatures.a4P4DNMmH8CqSNkC]{Evasion}</td>\n</tr>\n<tr>\n<td>8th</td>\n<td>+3</td>\n<td>4d6</td>\n<td>@Compendium[mka.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>+4</td>\n<td>5d6</td>\n<td>Roguish Archetype feature</td>\n</tr>\n<tr>\n<td>10th</td>\n<td>+4</td>\n<td>5d6</td>\n<td>@Compendium[mka.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>11th</td>\n<td>+4</td>\n<td>6d6</td>\n<td>@Compendium[mka.classfeatures.YN9xm6MCvse4Y60u]{Reliable Talent}</td>\n</tr>\n<tr>\n<td>12th</td>\n<td>+4</td>\n<td>6d6</td>\n<td>@Compendium[mka.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>13th</td>\n<td>+5</td>\n<td>7d6</td>\n<td>Roguish Archetype feature</td>\n</tr>\n<tr>\n<td>14th</td>\n<td>+5</td>\n<td>7d6</td>\n<td>@Compendium[mka.classfeatures.fjsBk7zxoAbLf8ZI]{Blindsense}</td>\n</tr>\n<tr>\n<td>15th</td>\n<td>+5</td>\n<td>8d6</td>\n<td>@Compendium[mka.classfeatures.V4pwFxlwHtNeB4w9]{Slippery Mind}</td>\n</tr>\n<tr>\n<td>16th</td>\n<td>+5</td>\n<td>8d6</td>\n<td>@Compendium[mka.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>17th</td>\n<td>+6</td>\n<td>9d6</td>\n<td>Roguish Archetype feature</td>\n</tr>\n<tr>\n<td>18th</td>\n<td>+6</td>\n<td>9d6</td>\n<td>@Compendium[mka.classfeatures.L7nJSRosos8sHJH9]{Elusive}</td>\n</tr>\n<tr>\n<td>19th</td>\n<td>+6</td>\n<td>10d6</td>\n<td>@Compendium[mka.classfeatures.v7MxFuTAgOsmxZCD]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>20th</td>\n<td>+6</td>\n<td>10d6</td>\n<td>@Compendium[mka.classfeatures.rQhWDaMHMn7iU4f2]{Stroke of Luck}</td>\n</tr>\n</tbody>\n</table>\n<h1>Roguish Archetypes</h1>\n<p>Rogues have many features in common, including their emphasis on perfecting their skills, their precise and deadly approach to combat, and their increasingly quick reflexes. But different rogues steer those talents in varying directions, embodied by the rogue archetypes. Your choice of archetype is a reflection of your focus—not necessarily an indication of your chosen profession, but a description of your preferred techniques.</p>\n<p>@Compendium[mka.subclasses.k8iuefRorWOjb9gR]{Thief}</p>",
           "chat": "",
           "unidentified": ""
         },
@@ -2669,16 +2669,16 @@
               "1": "max"
             },
             "title": "Hit Points",
-            "icon": "systems/dnd5e/icons/svg/hit-points.svg",
+            "icon": "systems/mka/icons/svg/hit-points.svg",
             "_id": "WMbkpELkLBvDaEsL"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.3sYPftQKnbbVnHrh",
-                "Compendium.dnd5e.classfeatures.DPN2Gfk8yi1Z5wp7",
-                "Compendium.dnd5e.classfeatures.ohwfuwnvuoBWlSQr"
+                "Compendium.mka.classfeatures.3sYPftQKnbbVnHrh",
+                "Compendium.mka.classfeatures.DPN2Gfk8yi1Z5wp7",
+                "Compendium.mka.classfeatures.ohwfuwnvuoBWlSQr"
               ],
               "optional": false,
               "spell": {
@@ -2692,21 +2692,21 @@
             },
             "value": {
               "added": {
-                "GcRC4ZItJPqsIrsm": "Compendium.dnd5e.classfeatures.3sYPftQKnbbVnHrh",
-                "vRhjcnnlifZYB4dy": "Compendium.dnd5e.classfeatures.DPN2Gfk8yi1Z5wp7",
-                "eHh5dHiq9wss2Vq0": "Compendium.dnd5e.classfeatures.ohwfuwnvuoBWlSQr"
+                "GcRC4ZItJPqsIrsm": "Compendium.mka.classfeatures.3sYPftQKnbbVnHrh",
+                "vRhjcnnlifZYB4dy": "Compendium.mka.classfeatures.DPN2Gfk8yi1Z5wp7",
+                "eHh5dHiq9wss2Vq0": "Compendium.mka.classfeatures.ohwfuwnvuoBWlSQr"
               }
             },
             "level": 1,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "13XHsx4Z3vQ2XYkJ"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.01pcLg6PRu5zGrsb"
+                "Compendium.mka.classfeatures.01pcLg6PRu5zGrsb"
               ],
               "optional": false,
               "spell": {
@@ -2721,14 +2721,14 @@
             "value": {},
             "level": 2,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "5crdJzGJRQIVhbyr"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.80USV8ZFPIahpLd0"
+                "Compendium.mka.classfeatures.80USV8ZFPIahpLd0"
               ],
               "optional": false,
               "spell": {
@@ -2743,14 +2743,14 @@
             "value": {},
             "level": 3,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "9F1ZUcRqNsBCOFNX"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.Mm64SKAHJWYecgXS"
+                "Compendium.mka.classfeatures.Mm64SKAHJWYecgXS"
               ],
               "optional": false,
               "spell": {
@@ -2765,14 +2765,14 @@
             "value": {},
             "level": 5,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "PvQXh3OhvuLhjVoo"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.a4P4DNMmH8CqSNkC"
+                "Compendium.mka.classfeatures.a4P4DNMmH8CqSNkC"
               ],
               "optional": false,
               "spell": {
@@ -2787,14 +2787,14 @@
             "value": {},
             "level": 7,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "X8G2PrPxOrfWQevi"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.YN9xm6MCvse4Y60u"
+                "Compendium.mka.classfeatures.YN9xm6MCvse4Y60u"
               ],
               "optional": false,
               "spell": {
@@ -2809,14 +2809,14 @@
             "value": {},
             "level": 11,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "MqV3BlQkAZycZ4Ue"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.fjsBk7zxoAbLf8ZI"
+                "Compendium.mka.classfeatures.fjsBk7zxoAbLf8ZI"
               ],
               "optional": false,
               "spell": {
@@ -2831,14 +2831,14 @@
             "value": {},
             "level": 14,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "sI4nacIwT4B8Y7mb"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.V4pwFxlwHtNeB4w9"
+                "Compendium.mka.classfeatures.V4pwFxlwHtNeB4w9"
               ],
               "optional": false,
               "spell": {
@@ -2853,14 +2853,14 @@
             "value": {},
             "level": 15,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "mugszpD8eVZ2jybU"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.L7nJSRosos8sHJH9"
+                "Compendium.mka.classfeatures.L7nJSRosos8sHJH9"
               ],
               "optional": false,
               "spell": {
@@ -2875,14 +2875,14 @@
             "value": {},
             "level": 18,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "EOVFTUpweDErdpSz"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.rQhWDaMHMn7iU4f2"
+                "Compendium.mka.classfeatures.rQhWDaMHMn7iU4f2"
               ],
               "optional": false,
               "spell": {
@@ -2897,7 +2897,7 @@
             "value": {},
             "level": 20,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "GVuwdOHDEDfQX9cl"
           },
           {
@@ -2953,7 +2953,7 @@
             },
             "value": {},
             "title": "Sneak Attack",
-            "icon": "systems/dnd5e/icons/svg/scale-value.svg",
+            "icon": "systems/mka/icons/svg/scale-value.svg",
             "_id": "81nHtANt6Ffg9M4V"
           },
           {
@@ -2974,7 +2974,7 @@
             },
             "level": 4,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "smghqQkObY4OOg30"
           },
           {
@@ -2995,7 +2995,7 @@
             },
             "level": 8,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "WFAAUfKJA9QR46Bw"
           },
           {
@@ -3016,7 +3016,7 @@
             },
             "level": 12,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "ahuQ3gMqz6sCza0m"
           },
           {
@@ -3037,7 +3037,7 @@
             },
             "level": 16,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "iVq9vmwTow7KielM"
           },
           {
@@ -3115,16 +3115,16 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.classes.xEb8jmA5HlNs7xTF"
+          "sourceId": "Compendium.mka.classes.xEb8jmA5HlNs7xTF"
         }
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.2.2",
         "coreVersion": "10.303",
         "createdTime": 1661787234284,
         "modifiedTime": 1691519191232,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -3203,8 +3203,8 @@
         }
       },
       "flags": {
-        "dnd5e": {
-          "sourceId": "Compendium.dnd5e.classfeatures.3sYPftQKnbbVnHrh",
+        "mka": {
+          "sourceId": "Compendium.mka.classfeatures.3sYPftQKnbbVnHrh",
           "advancementOrigin": "POlGoMp1xwT02K3S.13XHsx4Z3vQ2XYkJ"
         }
       },
@@ -3213,12 +3213,12 @@
       "folder": null,
       "sort": 0,
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.2.2",
         "coreVersion": "10.303",
         "createdTime": 1661787234328,
         "modifiedTime": 1691519191233,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -3302,8 +3302,8 @@
         }
       },
       "flags": {
-        "dnd5e": {
-          "sourceId": "Compendium.dnd5e.classfeatures.DPN2Gfk8yi1Z5wp7",
+        "mka": {
+          "sourceId": "Compendium.mka.classfeatures.DPN2Gfk8yi1Z5wp7",
           "advancementOrigin": "POlGoMp1xwT02K3S.13XHsx4Z3vQ2XYkJ"
         }
       },
@@ -3312,12 +3312,12 @@
       "folder": null,
       "sort": 0,
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.2.2",
         "coreVersion": "10.303",
         "createdTime": 1661787234348,
         "modifiedTime": 1691519191234,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -3396,8 +3396,8 @@
         }
       },
       "flags": {
-        "dnd5e": {
-          "sourceId": "Compendium.dnd5e.classfeatures.ohwfuwnvuoBWlSQr",
+        "mka": {
+          "sourceId": "Compendium.mka.classfeatures.ohwfuwnvuoBWlSQr",
           "advancementOrigin": "POlGoMp1xwT02K3S.13XHsx4Z3vQ2XYkJ"
         }
       },
@@ -3435,12 +3435,12 @@
       "folder": null,
       "sort": 0,
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.2.2",
         "coreVersion": "10.303",
         "createdTime": 1661787234423,
         "modifiedTime": 1691519191235,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     }
   ],
@@ -3467,7 +3467,7 @@
       },
       "icon": "icons/sundries/documents/document-torn-diagram-tan.webp",
       "label": "Thieves' Cant",
-      "origin": "Compendium.dnd5e.heroes.bzlxBO5km3zCQA8G.Item.eHh5dHiq9wss2Vq0",
+      "origin": "Compendium.mka.heroes.bzlxBO5km3zCQA8G.Item.eHh5dHiq9wss2Vq0",
       "transfer": false,
       "flags": {},
       "tint": null,
@@ -3482,11 +3482,11 @@
   "flags": {},
   "_id": "bzlxBO5km3zCQA8G",
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.2.2",
     "coreVersion": "10.303",
     "createdTime": 1661787232177,
     "modifiedTime": 1691519191272,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

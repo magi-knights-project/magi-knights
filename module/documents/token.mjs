@@ -3,7 +3,7 @@ import { MappingField } from "../data/fields.mjs";
 /**
  * Extend the base TokenDocument class to implement system-specific HP bar logic.
  */
-export default class TokenDocument5e extends TokenDocument {
+export default class TokenDocumentMKA extends TokenDocument {
 
   /** @inheritdoc */
   getBarAttribute(...args) {
@@ -20,11 +20,11 @@ export default class TokenDocument5e extends TokenDocument {
 
   /** @inheritdoc */
   static getTrackedAttributes(data, _path=[]) {
-    if ( !game.dnd5e.isV10 ) return super.getTrackedAttributes(data, _path);
+    if ( !game.mka.isV10 ) return super.getTrackedAttributes(data, _path);
     if ( data instanceof foundry.abstract.DataModel ) return this._getTrackedAttributesFromSchema(data.schema, _path);
     const attributes = super.getTrackedAttributes(data, _path);
     if ( _path.length ) return attributes;
-    const allowed = CONFIG.DND5E.trackableAttributes;
+    const allowed = CONFIG.MKA.trackableAttributes;
     attributes.value = attributes.value.filter(attrs => this._isAllowedAttribute(allowed, attrs));
     return attributes;
   }
@@ -70,7 +70,7 @@ export default class TokenDocument5e extends TokenDocument {
    * @returns {string[]}
    */
   static getConsumedAttributes(data) {
-    return CONFIG.DND5E.consumableResources;
+    return CONFIG.MKA.consumableResources;
   }
 
   /* -------------------------------------------- */

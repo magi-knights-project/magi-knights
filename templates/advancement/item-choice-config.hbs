@@ -1,28 +1,28 @@
 <form autocomplete="off">
   <div class="left-column">
-    {{> "dnd5e.advancement-controls"}}
+    {{> "mka.advancement-controls"}}
     <div class="form-group">
-      <label>{{localize "DND5E.AdvancementHint"}}</label>
+      <label>{{localize "MKA.AdvancementHint"}}</label>
       <textarea name="configuration.hint">{{configuration.hint}}</textarea>
     </div>
 
     <div class="form-group">
-      <label>{{localize "DND5E.AdvancementConfigureAllowDrops"}}</label>
+      <label>{{localize "MKA.AdvancementConfigureAllowDrops"}}</label>
       <div class="form-fields">
         <input type="checkbox" name="configuration.allowDrops" {{checked configuration.allowDrops}}>
       </div>
-      <p class="hint">{{localize "DND5E.AdvancementConfigureAllowDropsHint"}}</p>
+      <p class="hint">{{localize "MKA.AdvancementConfigureAllowDropsHint"}}</p>
     </div>
 
     <div class="form-group">
-      <label>{{localize "DND5E.AdvancementItemChoiceType"}}</label>
+      <label>{{localize "MKA.AdvancementItemChoiceType"}}</label>
       <div class="form-fields">
         <select name="configuration.type">
           {{selectOptions validTypes selected=configuration.type
-            blank=(localize "DND5E.AdvancementItemChoiceTypeAny")}}
+            blank=(localize "MKA.AdvancementItemChoiceTypeAny")}}
         </select>
       </div>
-      <p class="hint">{{localize "DND5E.AdvancementItemChoiceTypeHint"}}</p>
+      <p class="hint">{{localize "MKA.AdvancementItemChoiceTypeHint"}}</p>
     </div>
 
     {{#if typeRestriction}}
@@ -50,7 +50,7 @@
 
     {{#if showSpellConfig}}
       <div class="form-group">
-        <label>{{localize "DND5E.SpellLevel"}}</label>
+        <label>{{localize "MKA.SpellLevel"}}</label>
         <div class="form-fields">
           <select name="configuration.restriction.level">
             {{#select configuration.restriction.level}}
@@ -58,14 +58,14 @@
               {{#each CONFIG.spellLevels as |label key|}}
                 <option value="{{key}}">{{label}}</option>
               {{/each}}
-              <option value="available">{{localize "DND5E.AdvancementItemChoiceSpellLevelAvailable"}}</option>
+              <option value="available">{{localize "MKA.AdvancementItemChoiceSpellLevelAvailable"}}</option>
             {{/select}}
           </select>
         </div>
-        <p class="hint">{{localize "DND5E.AdvancementItemChoiceSpellLevelHint"}}</p>
+        <p class="hint">{{localize "MKA.AdvancementItemChoiceSpellLevelHint"}}</p>
       </div>
 
-      {{> "dnd5e.advancement-spell-config"}}
+      {{> "mka.advancement-spell-config"}}
     {{/if}}
 
     <div class="drop-target">
@@ -74,9 +74,9 @@
         <ol class="item-list">
         {{#each configuration.pool}}
           <li class="item flexrow" data-item-uuid="{{this}}">
-            <div class="item-name">{{{dnd5e-linkForUuid this}}}</div>
+            <div class="item-name">{{{mka-linkForUuid this}}}</div>
             <div class="item-controls flexrow">
-              <a class="item-control item-action" data-action="delete" title="{{localize 'DND5E.ItemDelete'}}">
+              <a class="item-control item-action" data-action="delete" title="{{localize 'MKA.ItemDelete'}}">
                 <i class="fas fa-trash"></i>
               </a>
             </div>
@@ -85,12 +85,12 @@
         </ol>
       </ol>
 
-      <p class="hint centered">{{localize "DND5E.AdvancementConfigureDropAreaHint"}}</p>
+      <p class="hint centered">{{localize "MKA.AdvancementConfigureDropAreaHint"}}</p>
     </div>
   </div>
 
   <div class="right-column level-list">
-    <p class="hint">{{localize "DND5E.AdvancementItemChoiceLevelsHint"}}</p>
+    <p class="hint">{{localize "MKA.AdvancementItemChoiceLevelsHint"}}</p>
     {{#each levels as |label level|}}
       <div class="form-group">
         <label>{{label}}</label>

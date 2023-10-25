@@ -8,8 +8,8 @@ export default class ActorMovementConfig extends BaseConfigSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e"],
-      template: "systems/dnd5e/templates/apps/movement-config.hbs",
+      classes: ["mka"],
+      template: "systems/mka/templates/apps/movement-config.hbs",
       width: 300,
       height: "auto"
     });
@@ -19,7 +19,7 @@ export default class ActorMovementConfig extends BaseConfigSheet {
 
   /** @override */
   get title() {
-    return `${game.i18n.localize("DND5E.MovementConfig")}: ${this.document.name}`;
+    return `${game.i18n.localize("MKA.MovementConfig")}: ${this.document.name}`;
   }
 
   /* -------------------------------------------- */
@@ -37,15 +37,15 @@ export default class ActorMovementConfig extends BaseConfigSheet {
 
     // Allowed speeds
     const speeds = source.type === "group" ? {
-      land: "DND5E.MovementLand",
-      water: "DND5E.MovementWater",
-      air: "DND5E.MovementAir"
+      land: "MKA.MovementLand",
+      water: "MKA.MovementWater",
+      air: "MKA.MovementAir"
     } : {
-      walk: "DND5E.MovementWalk",
-      burrow: "DND5E.MovementBurrow",
-      climb: "DND5E.MovementClimb",
-      fly: "DND5E.MovementFly",
-      swim: "DND5E.MovementSwim"
+      walk: "MKA.MovementWalk",
+      burrow: "MKA.MovementBurrow",
+      climb: "MKA.MovementClimb",
+      fly: "MKA.MovementFly",
+      swim: "MKA.MovementSwim"
     };
 
     // Return rendering context
@@ -54,7 +54,7 @@ export default class ActorMovementConfig extends BaseConfigSheet {
       movement,
       selectUnits: source.type !== "group",
       canHover: source.type !== "group",
-      units: CONFIG.DND5E.movementUnits
+      units: CONFIG.MKA.movementUnits
     };
   }
 }

@@ -7,7 +7,7 @@
   "type": "feat",
   "system": {
     "description": {
-      "value": "<p>By 11th level, you are so suffused with righteous might that all your melee weapon strikes carry divine power with them.</p><p>Whenever you hit a creature with a melee weapon, the creature takes an extra 1d8 radiant damage. If you also use your @Compendium[dnd5e.classfeatures.ySMPQ6zNSlvkrl2f]{Divine Smite} with an attack, you add this damage to the extra damage of your Divine Smite.</p>",
+      "value": "<p>By 11th level, you are so suffused with righteous might that all your melee weapon strikes carry divine power with them.</p><p>Whenever you hit a creature with a melee weapon, the creature takes an extra 1d8 radiant damage. If you also use your @Compendium[mka.classfeatures.ySMPQ6zNSlvkrl2f]{Divine Smite} with an attack, you add this damage to the extra damage of your Divine Smite.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -112,11 +112,11 @@
   "folder": null,
   "sort": 0,
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.1.0",
     "coreVersion": "10.291",
     "createdTime": 1661787234354,
     "modifiedTime": 1672334830939,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

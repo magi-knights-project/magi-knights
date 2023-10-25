@@ -6,7 +6,7 @@ export default class AdvancementMigrationDialog extends Dialog {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "advancement-migration", "dialog"],
+      classes: ["mka", "advancement-migration", "dialog"],
       jQuery: false,
       width: 500
     });
@@ -16,7 +16,7 @@ export default class AdvancementMigrationDialog extends Dialog {
 
   /**
    * A helper constructor function which displays the migration dialog.
-   * @param {Item5e} item                    Item to which the advancements are being added.
+   * @param {ItemMKA} item                    Item to which the advancements are being added.
    * @param {Advancement[]} advancements     New advancements that should be displayed in the prompt.
    * @returns {Promise<Advancement[]|null>}  Resolves with the advancements that should be added, if any.
    */
@@ -27,15 +27,15 @@ export default class AdvancementMigrationDialog extends Dialog {
     }));
     return new Promise(async (resolve, reject) => {
       const dialog = new this({
-        title: `${game.i18n.localize("DND5E.AdvancementMigrationTitle")}: ${item.name}`,
+        title: `${game.i18n.localize("MKA.AdvancementMigrationTitle")}: ${item.name}`,
         content: await renderTemplate(
-          "systems/dnd5e/templates/advancement/advancement-migration-dialog.hbs",
+          "systems/mka/templates/advancement/advancement-migration-dialog.hbs",
           { item, advancements: advancementContext }
         ),
         buttons: {
           continue: {
             icon: '<i class="fas fa-check"></i>',
-            label: game.i18n.localize("DND5E.AdvancementMigrationConfirm"),
+            label: game.i18n.localize("MKA.AdvancementMigrationConfirm"),
             callback: html => resolve(advancements.filter(a => html.querySelector(`[name="${a.id}"]`)?.checked))
           },
           cancel: {

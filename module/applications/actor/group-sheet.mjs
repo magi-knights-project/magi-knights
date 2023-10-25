@@ -1,11 +1,11 @@
 import ActorMovementConfig from "./movement-config.mjs";
-import ActorSheet5e from "./base-sheet.mjs";
-import Item5e from "../../documents/item.mjs";
+import ActorSheetMKA from "./base-sheet.mjs";
+import ItemMKA from "../../documents/item.mjs";
 
 /**
  * A character sheet for group-type Actors.
  * The functionality of this sheet is sufficiently different from other Actor types that we extend the base
- * Foundry VTT ActorSheet instead of the ActorSheet5e abstraction used for character, npc, and vehicle types.
+ * Foundry VTT ActorSheet instead of the ActorSheetMKA abstraction used for character, npc, and vehicle types.
  */
 export default class GroupActorSheet extends ActorSheet {
 
@@ -21,8 +21,8 @@ export default class GroupActorSheet extends ActorSheet {
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "sheet", "actor", "group"],
-      template: "systems/dnd5e/templates/actors/group-sheet.hbs",
+      classes: ["mka", "sheet", "actor", "group"],
+      template: "systems/mka/templates/actors/group-sheet.hbs",
       tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "members"}],
       scrollY: [".inventory .inventory-list"],
       width: 620,
@@ -80,7 +80,7 @@ export default class GroupActorSheet extends ActorSheet {
 
     // Text labels
     context.labels = {
-      currencies: Object.entries(CONFIG.DND5E.currencies).reduce((obj, [k, c]) => {
+      currencies: Object.entries(CONFIG.MKA.currencies).reduce((obj, [k, c]) => {
         obj[k] = c.label;
         return obj;
       }, {})
@@ -98,10 +98,10 @@ export default class GroupActorSheet extends ActorSheet {
   #getSummary(stats) {
     const formatter = new Intl.ListFormat(game.i18n.lang, {style: "long", type: "conjunction"});
     const members = [];
-    if ( stats.nMembers ) members.push(`${stats.nMembers} ${game.i18n.localize("DND5E.GroupMembers")}`);
-    if ( stats.nVehicles ) members.push(`${stats.nVehicles} ${game.i18n.localize("DND5E.GroupVehicles")}`);
-    if ( !members.length ) return game.i18n.localize("DND5E.GroupSummaryEmpty");
-    return game.i18n.format("DND5E.GroupSummary", {members: formatter.format(members)});
+    if ( stats.nMembers ) members.push(`${stats.nMembers} ${game.i18n.localize("MKA.GroupMembers")}`);
+    if ( stats.nVehicles ) members.push(`${stats.nVehicles} ${game.i18n.localize("MKA.GroupVehicles")}`);
+    if ( !members.length ) return game.i18n.localize("MKA.GroupSummaryEmpty");
+    return game.i18n.format("MKA.GroupSummary", {members: formatter.format(members)});
   }
 
   /* -------------------------------------------- */
@@ -137,7 +137,7 @@ export default class GroupActorSheet extends ActorSheet {
       m.hp.current = hp.value + (hp.temp || 0);
       m.hp.max = Math.max(0, hp.max + (hp.tempmax || 0));
       m.hp.pct = Math.clamped((m.hp.current / m.hp.max) * 100, 0, 100).toFixed(2);
-      m.hp.color = dnd5e.documents.Actor5e.getHPColor(m.hp.current, m.hp.max).css;
+      m.hp.color = mka.documents.ActorMKA.getHPColor(m.hp.current, m.hp.max).css;
       stats.currentHP += m.hp.current;
       stats.maxHP += m.hp.max;
 
@@ -160,9 +160,9 @@ export default class GroupActorSheet extends ActorSheet {
   #prepareMovementSpeed() {
     const movement = this.object.system.attributes.movement;
     let speeds = [
-      [movement.land, `${game.i18n.localize("DND5E.MovementLand")} ${movement.land}`],
-      [movement.water, `${game.i18n.localize("DND5E.MovementWater")} ${movement.water}`],
-      [movement.air, `${game.i18n.localize("DND5E.MovementAir")} ${movement.air}`]
+      [movement.land, `${game.i18n.localize("MKA.MovementLand")} ${movement.land}`],
+      [movement.water, `${game.i18n.localize("MKA.MovementWater")} ${movement.water}`],
+      [movement.air, `${game.i18n.localize("MKA.MovementAir")} ${movement.air}`]
     ];
     speeds = speeds.filter(s => s[0]).sort((a, b) => b[0] - a[0]);
     const primary = speeds.shift();
@@ -235,7 +235,7 @@ export default class GroupActorSheet extends ActorSheet {
       // Input focus and update
       const inputs = html.find("input");
       inputs.focus(ev => ev.currentTarget.select());
-      inputs.addBack().find('[type="text"][data-dtype="Number"]').change(ActorSheet5e.prototype._onChangeInputDelta.bind(this));
+      inputs.addBack().find('[type="text"][data-dtype="Number"]').change(ActorSheetMKA.prototype._onChangeInputDelta.bind(this));
       html.find(".action-button").click(this._onClickActionButton.bind(this));
       html.find(".item-control").click(this._onClickItemControl.bind(this));
       html.find(".item .rollable h4").click(event => this._onClickItemName(event));
@@ -257,8 +257,8 @@ export default class GroupActorSheet extends ActorSheet {
     switch ( button.dataset.action ) {
       case "convertCurrency":
         Dialog.confirm({
-          title: `${game.i18n.localize("DND5E.CurrencyConvert")}`,
-          content: `<p>${game.i18n.localize("DND5E.CurrencyConvertHint")}</p>`,
+          title: `${game.i18n.localize("MKA.CurrencyConvert")}`,
+          content: `<p>${game.i18n.localize("MKA.CurrencyConvertHint")}</p>`,
           yes: () => this.actor.convertCurrency()
         });
         break;
@@ -305,14 +305,14 @@ export default class GroupActorSheet extends ActorSheet {
   /**
    * Handle workflows to create a new Item directly within the Group Actor sheet.
    * @param {HTMLElement} button      The clicked create button
-   * @returns {Item5e}                The created embedded Item
+   * @returns {ItemMKA}                The created embedded Item
    * @protected
    */
   _createItem(button) {
     const type = button.dataset.type;
     const system = {...button.dataset};
     delete system.type;
-    const name = game.i18n.format("DND5E.ItemNew", {type: game.i18n.localize(CONFIG.Item.typeLabels[type])});
+    const name = game.i18n.format("MKA.ItemNew", {type: game.i18n.localize(CONFIG.Item.typeLabels[type])});
     const itemData = {name, type, system};
     return this.actor.createEmbeddedDocuments("Item", [itemData]);
   }
@@ -322,15 +322,15 @@ export default class GroupActorSheet extends ActorSheet {
   /**
    * Handle activation of a context menu for an embedded Item document.
    * Dynamically populate the array of context menu options.
-   * Reuse the item context options provided by the base ActorSheet5e class.
+   * Reuse the item context options provided by the base ActorSheetMKA class.
    * @param {HTMLElement} element       The HTML element for which the context menu is activated
    * @protected
    */
   _onItemContext(element) {
     const item = this.actor.items.get(element.dataset.itemId);
     if ( !item ) return;
-    ui.context.menuItems = ActorSheet5e.prototype._getItemContextOptions.call(this, item);
-    Hooks.call("dnd5e.getItemContextOptions", item, ui.context.menuItems);
+    ui.context.menuItems = ActorSheetMKA.prototype._getItemContextOptions.call(this, item);
+    Hooks.call("mka.getItemContextOptions", item, ui.context.menuItems);
   }
 
   /* -------------------------------------------- */
@@ -355,7 +355,7 @@ export default class GroupActorSheet extends ActorSheet {
    * @protected
    */
   _onClickItemName(event) {
-    game.system.applications.actor.ActorSheet5e.prototype._onItemSummary.call(this, event);
+    game.system.applications.actor.ActorSheetMKA.prototype._onItemSummary.call(this, event);
   }
 
   /* -------------------------------------------- */
@@ -363,11 +363,11 @@ export default class GroupActorSheet extends ActorSheet {
   /**
    * Change the quantity or limited uses of an Owned Item within the actor.
    * @param {Event} event        The triggering click event.
-   * @returns {Promise<Item5e>}  Updated item.
+   * @returns {Promise<ItemMKA>}  Updated item.
    * @protected
    */
   async _onItemPropertyChange(event) {
-    const proto = game.system.applications.actor.ActorSheet5e.prototype;
+    const proto = game.system.applications.actor.ActorSheetMKA.prototype;
     const parent = event.currentTarget.parentElement;
     if ( parent.classList.contains("item-quantity") ) return proto._onQuantityChange.call(this, event);
     else if ( parent.classList.contains("item-uses") ) return proto._onUsesChange.call(this, event);
@@ -413,7 +413,7 @@ export default class GroupActorSheet extends ActorSheet {
 
     // Check to make sure items of this type are allowed on this actor
     if ( this.constructor.unsupportedItemTypes.has(itemData.type) ) {
-      ui.notifications.warn(game.i18n.format("DND5E.ActorWarningInvalidItem", {
+      ui.notifications.warn(game.i18n.format("MKA.ActorWarningInvalidItem", {
         itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
         actorType: game.i18n.localize(CONFIG.Actor.typeLabels[this.actor.type])
       }));
@@ -422,7 +422,7 @@ export default class GroupActorSheet extends ActorSheet {
 
     // Create a Consumable spell scroll on the Inventory tab
     if ( itemData.type === "spell" ) {
-      const scroll = await Item5e.createScrollFromSpell(itemData);
+      const scroll = await ItemMKA.createScrollFromSpell(itemData);
       return scroll.toObject();
     }
 

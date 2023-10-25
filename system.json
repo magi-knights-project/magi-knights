@@ -1,15 +1,15 @@
 {
-  "id": "dnd5e",
-  "title": "DnD5e - Fifth Edition System",
-  "description": "A system for playing the fifth edition of the worlds most popular role-playing game in the Foundry Virtual Tabletop environment.",
+  "id": "mka",
+  "title": "Magi-Knights System",
+  "description": "A system for the Magi-Knights role-playing game in the Foundry Virtual Tabletop environment.",
   "version": "2.3.1",
   "compatibility": {
     "minimum": "10.303",
     "verified": "11"
   },
-  "url": "https://github.com/foundryvtt/dnd5e/",
-  "manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
-  "download": "https://github.com/foundryvtt/dnd5e/releases/download/release-2.3.1/dnd5e-release-2.3.1.zip",
+  "url": "https://github.com/magi-knights-project/magi-knights",
+  "manifest": "https://raw.githubusercontent.com/magi-knights-project/magi-knights/master/system.json",
+  "download": "https://github.com/foundryvtt/mka/releases/download/release-2.3.1/mka-release-2.3.1.zip",
   "authors": [
     {
       "name": "Atropos",
@@ -18,16 +18,142 @@
     }
   ],
   "esmodules": [
-    "dnd5e.mjs"
+    "mka.mjs"
   ],
   "styles": [
-    "dnd5e.css"
+    "mka.css"
   ],
   "packs": [
     {
+      "name": "magiknightdeck",
+      "label": "Magi Knight Spell Deck (MKA)",
+      "system": "mka",
+      "path": "packs/mkspelldeck.db",
+      "type": "Cards",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "studenttypes",
+      "label": "Student Types (MKA)",
+      "system": "mka",
+      "path": "packs/studenttypes.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "magicstyles",
+      "label": "Magic Styles (MKA)",
+      "system": "mka",
+      "path": "packs/magicstyles.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "elementalaffinities",
+      "label": "Elemental Affinities (MKA)",
+      "system": "mka",
+      "path": "packs/elementalaffinities.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "spellpaths",
+      "label": "Spell Paths (MKA)",
+      "system": "mka",
+      "path": "packs/spellpaths.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "soulweapons",
+      "label": "Soul Weapons (MKA)",
+      "system": "mka",
+      "path": "packs/soulweapons.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "battletechniques",
+      "label": "Battle Techniques (MKA)",
+      "system": "mka",
+      "path": "packs/battletechniques.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "combattactics",
+      "label": "Combat Tactics (MKA)",
+      "system": "mka",
+      "path": "packs/combattactics.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "socialtactics",
+      "label": "Social Tactics (MKA)",
+      "system": "mka",
+      "path": "packs/socialtactics.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "armamentssoulweaves",
+      "label": "Armaments, Soul Weaves (MKA)",
+      "system": "mka",
+      "path": "packs/armaments.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "shards",
+      "label": "Shards (MKA)",
+      "system": "mka",
+      "path": "packs/shards.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "weaponrunes",
+      "label": "Weapon Runes (MKA)",
+      "system": "mka",
+      "path": "packs/weaponrunes.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "armorrunes",
+      "label": "Armor Runes (MKA)",
+      "system": "mka",
+      "path": "packs/armorrunes.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "enemies",
+      "label": "Enemies (MKA)",
+      "system": "mka",
+      "path": "packs/enemies.db",
+      "type": "Actor",
+      "private": false,
+      "flags": {}
+    },
+    {
       "name": "heroes",
       "label": "Starter Heroes",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/heroes.db",
       "type": "Actor",
       "private": false,
@@ -36,7 +162,7 @@
     {
       "name": "monsters",
       "label": "Monsters (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/monsters.db",
       "type": "Actor",
       "private": false,
@@ -45,7 +171,7 @@
     {
       "name": "items",
       "label": "Items (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/items.db",
       "type": "Item",
       "private": false,
@@ -54,7 +180,7 @@
     {
       "name": "tradegoods",
       "label": "Trade Goods (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/tradegoods.db",
       "type": "Item",
       "private": false,
@@ -63,7 +189,7 @@
     {
       "name": "spells",
       "label": "Spells (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/spells.db",
       "type": "Item",
       "private": false,
@@ -72,7 +198,7 @@
     {
       "name": "backgrounds",
       "label": "Backgrounds (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/backgrounds.db",
       "type": "Item",
       "private": false,
@@ -81,7 +207,7 @@
     {
       "name": "classes",
       "label": "Classes (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/classes.db",
       "type": "Item",
       "private": false,
@@ -90,7 +216,7 @@
     {
       "name": "subclasses",
       "label": "Subclasses (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/subclasses.db",
       "type": "Item",
       "private": false,
@@ -99,7 +225,7 @@
     {
       "name": "classfeatures",
       "label": "Class Features (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/classfeatures.db",
       "type": "Item",
       "private": false,
@@ -108,7 +234,7 @@
     {
       "name": "races",
       "label": "Racial Features (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/races.db",
       "type": "Item",
       "private": false,
@@ -117,7 +243,7 @@
     {
       "name": "monsterfeatures",
       "label": "Monster Features (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/monsterfeatures.db",
       "type": "Item",
       "private": false,
@@ -126,7 +252,7 @@
     {
       "name": "rules",
       "label": "Rules (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/rules.db",
       "type": "JournalEntry",
       "private": false,
@@ -135,7 +261,7 @@
     {
       "name": "tables",
       "label": "Tables (SRD)",
-      "system": "dnd5e",
+      "system": "mka",
       "path": "packs/tables.db",
       "type": "RollTable",
       "private": false,
@@ -144,7 +270,7 @@
   ],
   "packFolders": [
     {
-      "name": "DnD5e SRD Content",
+      "name": "MKA SRD Content",
       "sorting": "m",
       "color": "#cd2c1e",
       "packs": [

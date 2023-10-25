@@ -26,7 +26,7 @@ export default class AdvancementConfig extends FormApplication {
 
   /**
    * Parent item to which this advancement belongs.
-   * @type {Item5e}
+   * @type {ItemMKA}
    */
   item;
 
@@ -35,8 +35,8 @@ export default class AdvancementConfig extends FormApplication {
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "advancement", "dialog"],
-      template: "systems/dnd5e/templates/advancement/advancement-config.hbs",
+      classes: ["mka", "advancement", "dialog"],
+      template: "systems/mka/templates/advancement/advancement-config.hbs",
       width: 400,
       height: "auto",
       submitOnChange: true,
@@ -60,7 +60,7 @@ export default class AdvancementConfig extends FormApplication {
   /** @inheritDoc */
   get title() {
     const type = this.advancement.constructor.metadata.title;
-    return `${game.i18n.format("DND5E.AdvancementConfigureTitle", { item: this.item.name })}: ${type}`;
+    return `${game.i18n.format("MKA.AdvancementConfigureTitle", { item: this.item.name })}: ${type}`;
   }
 
   /* -------------------------------------------- */
@@ -75,11 +75,11 @@ export default class AdvancementConfig extends FormApplication {
 
   /** @inheritdoc */
   getData() {
-    const levels = Object.fromEntries(Array.fromRange(CONFIG.DND5E.maxLevel + 1).map(l => [l, l]));
+    const levels = Object.fromEntries(Array.fromRange(CONFIG.MKA.maxLevel + 1).map(l => [l, l]));
     if ( ["class", "subclass"].includes(this.item.type) ) delete levels[0];
-    else levels[0] = game.i18n.localize("DND5E.AdvancementLevelAnyHeader");
+    else levels[0] = game.i18n.localize("MKA.AdvancementLevelAnyHeader");
     const context = {
-      CONFIG: CONFIG.DND5E,
+      CONFIG: CONFIG.MKA,
       ...this.advancement.toObject(false),
       src: this.advancement.toObject(),
       default: {
@@ -155,7 +155,7 @@ export default class AdvancementConfig extends FormApplication {
   /**
    * Handle deleting an existing Item entry from the Advancement.
    * @param {Event} event        The originating click event.
-   * @returns {Promise<Item5e>}  The updated parent Item after the application re-renders.
+   * @returns {Promise<ItemMKA>}  The updated parent Item after the application re-renders.
    * @protected
    */
   async _onItemDelete(event) {
@@ -201,12 +201,12 @@ export default class AdvancementConfig extends FormApplication {
 
     // Abort if this uuid is the parent item
     if ( item.uuid === this.item.uuid ) {
-      return ui.notifications.error(game.i18n.localize("DND5E.AdvancementItemGrantRecursiveWarning"));
+      return ui.notifications.error(game.i18n.localize("MKA.AdvancementItemGrantRecursiveWarning"));
     }
 
     // Abort if this uuid exists already
     if ( existingItems.includes(item.uuid) ) {
-      return ui.notifications.warn(game.i18n.localize("DND5E.AdvancementItemGrantDuplicateWarning"));
+      return ui.notifications.warn(game.i18n.localize("MKA.AdvancementItemGrantDuplicateWarning"));
     }
 
     await this.advancement.update({[`configuration.${this.options.dropKeyPath}`]: [...existingItems, item.uuid]});
@@ -218,7 +218,7 @@ export default class AdvancementConfig extends FormApplication {
    * Called when an item is dropped to validate the Item before it is saved. An error should be thrown
    * if the item is invalid.
    * @param {Event} event  Triggering drop event.
-   * @param {Item5e} item  The materialized Item that was dropped.
+   * @param {ItemMKA} item  The materialized Item that was dropped.
    * @throws An error if the item is invalid.
    * @protected
    */

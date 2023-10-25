@@ -1,7 +1,7 @@
 /**
  * Extend the base ActiveEffect class to implement system-specific logic.
  */
-export default class ActiveEffect5e extends ActiveEffect {
+export default class ActiveEffectMKA extends ActiveEffect {
 
   /**
    * Is this active effect currently suppressed?
@@ -14,7 +14,7 @@ export default class ActiveEffect5e extends ActiveEffect {
   /** @inheritdoc */
   apply(actor, change) {
     if ( this.isSuppressed ) return null;
-    if ( change.key.startsWith("flags.dnd5e.") ) change = this._prepareFlagChange(actor, change);
+    if ( change.key.startsWith("flags.mka.") ) change = this._prepareFlagChange(actor, change);
     return super.apply(actor, change);
   }
 
@@ -47,13 +47,13 @@ export default class ActiveEffect5e extends ActiveEffect {
 
   /**
    * Transform the data type of the change to match the type expected for flags.
-   * @param {Actor5e} actor            The Actor to whom this effect should be applied.
+   * @param {ActorMKA} actor            The Actor to whom this effect should be applied.
    * @param {EffectChangeData} change  The change being applied.
    * @returns {EffectChangeData}       The change with altered types if necessary.
    */
   _prepareFlagChange(actor, change) {
     const { key, value } = change;
-    const data = CONFIG.DND5E.characterFlags[key.replace("flags.dnd5e.", "")];
+    const data = CONFIG.MKA.characterFlags[key.replace("flags.mka.", "")];
     if ( !data ) return change;
 
     // Set flag to initial value if it isn't present
@@ -104,7 +104,7 @@ export default class ActiveEffect5e extends ActiveEffect {
   /**
    * Manage Active Effect instances through the Actor Sheet via effect control buttons.
    * @param {MouseEvent} event      The left-click event on the effect control
-   * @param {Actor5e|Item5e} owner  The owning document which manages this effect
+   * @param {ActorMKA|ItemMKA} owner  The owning document which manages this effect
    * @returns {Promise|null}        Promise that resolves when the changes are complete.
    */
   static onManageActiveEffect(event, owner) {
@@ -115,7 +115,7 @@ export default class ActiveEffect5e extends ActiveEffect {
     switch ( a.dataset.action ) {
       case "create":
         return owner.createEmbeddedDocuments("ActiveEffect", [{
-          label: game.i18n.localize("DND5E.EffectNew"),
+          label: game.i18n.localize("MKA.EffectNew"),
           icon: "icons/svg/aura.svg",
           origin: owner.uuid,
           "duration.rounds": li.dataset.effectType === "temporary" ? 1 : undefined,
@@ -134,7 +134,7 @@ export default class ActiveEffect5e extends ActiveEffect {
 
   /**
    * Prepare the data structure for Active Effects which are currently applied to an Actor or Item.
-   * @param {ActiveEffect5e[]} effects  The array of Active Effect instances to prepare sheet data for
+   * @param {ActiveEffectMKA[]} effects  The array of Active Effect instances to prepare sheet data for
    * @returns {object}                  Data for rendering
    */
   static prepareActiveEffectCategories(effects) {
@@ -142,30 +142,30 @@ export default class ActiveEffect5e extends ActiveEffect {
     const categories = {
       temporary: {
         type: "temporary",
-        label: game.i18n.localize("DND5E.EffectTemporary"),
+        label: game.i18n.localize("MKA.EffectTemporary"),
         effects: []
       },
       passive: {
         type: "passive",
-        label: game.i18n.localize("DND5E.EffectPassive"),
+        label: game.i18n.localize("MKA.EffectPassive"),
         effects: []
       },
       inactive: {
         type: "inactive",
-        label: game.i18n.localize("DND5E.EffectInactive"),
+        label: game.i18n.localize("MKA.EffectInactive"),
         effects: []
       },
       suppressed: {
         type: "suppressed",
-        label: game.i18n.localize("DND5E.EffectUnavailable"),
+        label: game.i18n.localize("MKA.EffectUnavailable"),
         effects: [],
-        info: [game.i18n.localize("DND5E.EffectUnavailableInfo")]
+        info: [game.i18n.localize("MKA.EffectUnavailableInfo")]
       }
     };
 
     // Iterate over active effects, classifying them into categories
     for ( let e of effects ) {
-      if ( game.dnd5e.isV10 ) e._getSourceName(); // Trigger a lookup for the source name
+      if ( game.mka.isV10 ) e._getSourceName(); // Trigger a lookup for the source name
       if ( e.isSuppressed ) categories.suppressed.effects.push(e);
       else if ( e.disabled ) categories.inactive.effects.push(e);
       else if ( e.isTemporary ) categories.temporary.effects.push(e);

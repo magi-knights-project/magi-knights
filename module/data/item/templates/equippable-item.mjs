@@ -1,7 +1,7 @@
 /**
  * Data model template with information on items that can be attuned and equipped.
  *
- * @property {number} attunement  Attunement information as defined in `DND5E.attunementTypes`.
+ * @property {number} attunement  Attunement information as defined in `MKA.attunementTypes`.
  * @property {boolean} equipped   Is this item equipped on its owning actor.
  * @mixin
  */
@@ -10,9 +10,9 @@ export default class EquippableItemTemplate extends foundry.abstract.DataModel {
   static defineSchema() {
     return {
       attunement: new foundry.data.fields.NumberField({
-        required: true, integer: true, initial: CONFIG.DND5E.attunementTypes.NONE, label: "DND5E.Attunement"
+        required: true, integer: true, initial: CONFIG.MKA.attunementTypes.NONE, label: "MKA.Attunement"
       }),
-      equipped: new foundry.data.fields.BooleanField({required: true, label: "DND5E.Equipped"})
+      equipped: new foundry.data.fields.BooleanField({required: true, label: "MKA.Equipped"})
     };
   }
 
@@ -34,7 +34,7 @@ export default class EquippableItemTemplate extends foundry.abstract.DataModel {
    */
   static #migrateAttunement(source) {
     if ( (source.attuned === undefined) || (source.attunement !== undefined) ) return;
-    source.attunement = source.attuned ? CONFIG.DND5E.attunementTypes.ATTUNED : CONFIG.DND5E.attunementTypes.NONE;
+    source.attunement = source.attuned ? CONFIG.MKA.attunementTypes.ATTUNED : CONFIG.MKA.attunementTypes.NONE;
   }
 
   /* -------------------------------------------- */
@@ -57,11 +57,11 @@ export default class EquippableItemTemplate extends foundry.abstract.DataModel {
    * @type {string[]}
    */
   get equippableItemChatProperties() {
-    const req = CONFIG.DND5E.attunementTypes.REQUIRED;
+    const req = CONFIG.MKA.attunementTypes.REQUIRED;
     return [
-      this.attunement === req ? CONFIG.DND5E.attunements[req] : null,
-      game.i18n.localize(this.equipped ? "DND5E.Equipped" : "DND5E.Unequipped"),
-      ("proficient" in this) ? CONFIG.DND5E.proficiencyLevels[this.prof?.multiplier || 0] : null
+      this.attunement === req ? CONFIG.MKA.attunements[req] : null,
+      game.i18n.localize(this.equipped ? "MKA.Equipped" : "MKA.Unequipped"),
+      ("proficient" in this) ? CONFIG.MKA.proficiencyLevels[this.prof?.multiplier || 0] : null
     ];
   }
 }

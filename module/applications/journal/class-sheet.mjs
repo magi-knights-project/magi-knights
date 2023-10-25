@@ -1,4 +1,4 @@
-import Actor5e from "../../documents/actor/actor.mjs";
+import ActorMKA from "../../documents/actor/actor.mjs";
 import Proficiency from "../../documents/actor/proficiency.mjs";
 import JournalEditor from "./journal-editor.mjs";
 
@@ -21,7 +21,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
   /** @inheritdoc */
   get template() {
-    return `systems/dnd5e/templates/journal/page-class-${this.isEditable ? "edit" : "view"}.hbs`;
+    return `systems/mka/templates/journal/page-class-${this.isEditable ? "edit" : "view"}.hbs`;
   }
 
   /* -------------------------------------------- */
@@ -65,7 +65,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
   /**
    * Prepare features granted by various advancement types.
-   * @param {Item5e} item  Class item belonging to this journal.
+   * @param {ItemMKA} item  Class item belonging to this journal.
    * @returns {object}     Prepared advancement section.
    */
   _getAdvancement(item) {
@@ -108,7 +108,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
   /**
    * Prepare table based on non-optional GrantItem advancement & ScaleValue advancement.
-   * @param {Item5e} item              Class item belonging to this journal.
+   * @param {ItemMKA} item              Class item belonging to this journal.
    * @param {number} [initialLevel=1]  Level at which the table begins.
    * @returns {object}                 Prepared table.
    */
@@ -117,9 +117,9 @@ export default class JournalClassPageSheet extends JournalPageSheet {
     const scaleValues = (item.advancement.byType.ScaleValue ?? []);
     const spellProgression = await this._getSpellProgression(item);
 
-    const headers = [[{content: game.i18n.localize("DND5E.Level")}]];
-    if ( item.type === "class" ) headers[0].push({content: game.i18n.localize("DND5E.ProficiencyBonus")});
-    if ( hasFeatures ) headers[0].push({content: game.i18n.localize("DND5E.Features")});
+    const headers = [[{content: game.i18n.localize("MKA.Level")}]];
+    if ( item.type === "class" ) headers[0].push({content: game.i18n.localize("MKA.ProficiencyBonus")});
+    if ( hasFeatures ) headers[0].push({content: game.i18n.localize("MKA.Features")});
     headers[0].push(...scaleValues.map(a => ({content: a.title})));
     if ( spellProgression ) {
       if ( spellProgression.headers.length > 1 ) {
@@ -140,12 +140,12 @@ export default class JournalClassPageSheet extends JournalPageSheet {
     const makeLink = async uuid => (await fromUuid(uuid))?.toAnchor({classes: ["content-link"]}).outerHTML;
 
     const rows = [];
-    for ( const level of Array.fromRange((CONFIG.DND5E.maxLevel - (initialLevel - 1)), initialLevel) ) {
+    for ( const level of Array.fromRange((CONFIG.MKA.maxLevel - (initialLevel - 1)), initialLevel) ) {
       const features = [];
       for ( const advancement of item.advancement.byLevel[level] ) {
         switch ( advancement.constructor.typeName ) {
           case "AbilityScoreImprovement":
-            features.push(game.i18n.localize("DND5E.AdvancementAbilityScoreImprovementTitle"));
+            features.push(game.i18n.localize("MKA.AdvancementAbilityScoreImprovementTitle"));
             continue;
           case "ItemGrant":
             if ( advancement.configuration.optional ) continue;
@@ -175,7 +175,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
   /**
    * Build out the spell progression data.
-   * @param {Item5e} item  Class item belonging to this journal.
+   * @param {ItemMKA} item  Class item belonging to this journal.
    * @returns {object}     Prepared spell progression table.
    */
   async _getSpellProgression(item) {
@@ -186,15 +186,15 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
     if ( spellcasting.type === "leveled" ) {
       const spells = {};
-      const maxSpellLevel = CONFIG.DND5E.SPELL_SLOT_TABLE[CONFIG.DND5E.SPELL_SLOT_TABLE.length - 1].length;
+      const maxSpellLevel = CONFIG.MKA.SPELL_SLOT_TABLE[CONFIG.MKA.SPELL_SLOT_TABLE.length - 1].length;
       Array.fromRange(maxSpellLevel, 1).forEach(l => spells[`spell${l}`] = {});
 
       let largestSlot;
-      for ( const level of Array.fromRange(CONFIG.DND5E.maxLevel, 1).reverse() ) {
+      for ( const level of Array.fromRange(CONFIG.MKA.maxLevel, 1).reverse() ) {
         const progression = { slot: 0 };
         spellcasting.levels = level;
-        Actor5e.computeClassProgression(progression, item, { spellcasting });
-        Actor5e.prepareSpellcastingSlots(spells, "leveled", progression);
+        ActorMKA.computeClassProgression(progression, item, { spellcasting });
+        ActorMKA.prepareSpellcastingSlots(spells, "leveled", progression);
 
         if ( !largestSlot ) largestSlot = Object.entries(spells).reduce((slot, [key, data]) => {
           if ( !data.max ) return slot;
@@ -210,7 +210,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
       // Prepare headers & columns
       table.headers = [
-        [{content: game.i18n.localize("JOURNALENTRYPAGE.DND5E.Class.SpellSlotsPerSpellLevel"), colSpan: largestSlot}],
+        [{content: game.i18n.localize("JOURNALENTRYPAGE.MKA.Class.SpellSlotsPerSpellLevel"), colSpan: largestSlot}],
         Array.fromRange(largestSlot, 1).map(spellLevel => ({content: spellLevel.ordinalString()}))
       ];
       table.cols = [{class: "spellcasting", span: largestSlot}];
@@ -221,17 +221,17 @@ export default class JournalClassPageSheet extends JournalPageSheet {
       const spells = { pact: {} };
 
       table.headers = [[
-        { content: game.i18n.localize("JOURNALENTRYPAGE.DND5E.Class.SpellSlots") },
-        { content: game.i18n.localize("JOURNALENTRYPAGE.DND5E.Class.SpellSlotLevel") }
+        { content: game.i18n.localize("JOURNALENTRYPAGE.MKA.Class.SpellSlots") },
+        { content: game.i18n.localize("JOURNALENTRYPAGE.MKA.Class.SpellSlotLevel") }
       ]];
       table.cols = [{class: "spellcasting", span: 2}];
 
       // Loop through each level, gathering "Spell Slots" & "Slot Level" for each one
-      for ( const level of Array.fromRange(CONFIG.DND5E.maxLevel, 1) ) {
+      for ( const level of Array.fromRange(CONFIG.MKA.maxLevel, 1) ) {
         const progression = { pact: 0 };
         spellcasting.levels = level;
-        Actor5e.computeClassProgression(progression, item, { spellcasting });
-        Actor5e.prepareSpellcastingSlots(spells, "pact", progression);
+        ActorMKA.computeClassProgression(progression, item, { spellcasting });
+        ActorMKA.prepareSpellcastingSlots(spells, "pact", progression);
         table.rows.push([
           { class: "spell-slots", content: `${spells.pact.max}` },
           { class: "slot-level", content: spells.pact.level.ordinalString() }
@@ -242,15 +242,15 @@ export default class JournalClassPageSheet extends JournalPageSheet {
     else {
       /**
        * A hook event that fires to generate the table for custom spellcasting types.
-       * The actual hook names include the spellcasting type (e.g. `dnd5e.buildPsionicSpellcastingTable`).
+       * The actual hook names include the spellcasting type (e.g. `mka.buildPsionicSpellcastingTable`).
        * @param {object} table                          Table definition being built. *Will be mutated.*
-       * @param {Item5e} item                           Class for which the spellcasting table is being built.
+       * @param {ItemMKA} item                           Class for which the spellcasting table is being built.
        * @param {SpellcastingDescription} spellcasting  Spellcasting descriptive object.
-       * @function dnd5e.buildSpellcastingTable
+       * @function mka.buildSpellcastingTable
        * @memberof hookEvents
        */
       Hooks.callAll(
-        `dnd5e.build${spellcasting.type.capitalize()}SpellcastingTable`, table, item, spellcasting
+        `mka.build${spellcasting.type.capitalize()}SpellcastingTable`, table, item, spellcasting
       );
     }
 
@@ -261,13 +261,13 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
   /**
    * Prepare options table based on optional GrantItem advancement.
-   * @param {Item5e} item    Class item belonging to this journal.
+   * @param {ItemMKA} item    Class item belonging to this journal.
    * @returns {object|null}  Prepared optional features table.
    */
   async _getOptionalTable(item) {
     const headers = [[
-      { content: game.i18n.localize("DND5E.Level") },
-      { content: game.i18n.localize("DND5E.Features") }
+      { content: game.i18n.localize("MKA.Level") },
+      { content: game.i18n.localize("MKA.Features") }
     ]];
 
     const cols = [
@@ -278,7 +278,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
     const makeLink = async uuid => (await fromUuid(uuid))?.toAnchor({classes: ["content-link"]}).outerHTML;
 
     const rows = [];
-    for ( const level of Array.fromRange(CONFIG.DND5E.maxLevel, 1) ) {
+    for ( const level of Array.fromRange(CONFIG.MKA.maxLevel, 1) ) {
       const features = [];
       for ( const advancement of item.advancement.byLevel[level] ) {
         switch ( advancement.constructor.typeName ) {
@@ -306,7 +306,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
   /**
    * Fetch data for each class feature listed.
-   * @param {Item5e} item               Class or subclass item belonging to this journal.
+   * @param {ItemMKA} item               Class or subclass item belonging to this journal.
    * @param {boolean} [optional=false]  Should optional features be fetched rather than required features?
    * @returns {object[]}   Prepared features.
    */
@@ -352,7 +352,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
 
   /**
    * Prepare data for the provided subclass.
-   * @param {Item5e} item  Subclass item being prepared.
+   * @param {ItemMKA} item  Subclass item being prepared.
    * @returns {object}     Presentation data for this subclass.
    */
   async _getSubclass(item) {
@@ -399,7 +399,7 @@ export default class JournalClassPageSheet extends JournalPageSheet {
   /**
    * Handle deleting a dropped item.
    * @param {Event} event  The triggering click event.
-   * @returns {JournalClassSummary5ePageSheet}
+   * @returns {JournalClassSummaryMKAPageSheet}
    */
   async _onDeleteItem(event) {
     event.preventDefault();

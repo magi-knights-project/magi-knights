@@ -1,0 +1,44 @@
+{
+  "name": "Shaper Magic Style",
+  "type": "class",
+  "img": "icons/svg/statue.svg",
+  "system": {
+    "description": {
+      "value": "<p><em>This skill manifests your creativity and cleverness into loose energy to be then molded into various manifestations, which most refer to as \"Shaper Magic,\" or, \"Shaping.\"</em></p><p>Intelligence, Wisdom, or Charisma is your Magic Ability Modifier (MAM) for your Magi-Knight Spells.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.34",
+    "identifier": "shaper-magic-style",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "mka",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670529926013,
+    "modifiedTime": 1670534019600,
+    "lastModifiedBy": "mkabuilder0000"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "7Jsx8Qk80Ruvqtzo"
+}

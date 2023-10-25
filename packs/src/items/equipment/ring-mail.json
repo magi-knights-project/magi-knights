@@ -1,5 +1,5 @@
 {
-  "_id": "nsXZejlmgalj4he9",
+  "_id": "nsXZejlmkalj4he9",
   "name": "Ring Mail",
   "type": "equipment",
   "img": "icons/equipment/chest/breastplate-banded-simple-leather-brown.webp",
@@ -99,11 +99,11 @@
   },
   "flags": {},
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.2.2",
     "coreVersion": "10.291",
     "createdTime": 1661787233865,
     "modifiedTime": 1690539369755,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

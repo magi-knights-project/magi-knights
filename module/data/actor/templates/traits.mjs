@@ -33,11 +33,11 @@ export default class TraitsField {
    */
   static get common() {
     return {
-      size: new foundry.data.fields.StringField({required: true, initial: "med", label: "DND5E.Size"}),
-      di: this.makeDamageTrait({label: "DND5E.DamImm"}),
-      dr: this.makeDamageTrait({label: "DND5E.DamRes"}),
-      dv: this.makeDamageTrait({label: "DND5E.DamVuln"}),
-      ci: this.makeSimpleTrait({label: "DND5E.ConImm"})
+      size: new foundry.data.fields.StringField({required: true, initial: "med", label: "MKA.Size"}),
+      di: this.makeDamageTrait({label: "MKA.DamImm"}),
+      dr: this.makeDamageTrait({label: "MKA.DamRes"}),
+      dv: this.makeDamageTrait({label: "MKA.DamVuln"}),
+      ci: this.makeSimpleTrait({label: "MKA.ConImm"})
     };
   }
 
@@ -51,7 +51,7 @@ export default class TraitsField {
    */
   static get creature() {
     return {
-      languages: this.makeSimpleTrait({label: "DND5E.Languages"})
+      languages: this.makeSimpleTrait({label: "MKA.Languages"})
     };
   }
 
@@ -69,9 +69,9 @@ export default class TraitsField {
     return new foundry.data.fields.SchemaField({
       ...extraFields,
       value: new foundry.data.fields.SetField(
-        new foundry.data.fields.StringField(), {label: "DND5E.TraitsChosen", initial}
+        new foundry.data.fields.StringField(), {label: "MKA.TraitsChosen", initial}
       ),
-      custom: new foundry.data.fields.StringField({required: true, label: "DND5E.Special"})
+      custom: new foundry.data.fields.StringField({required: true, label: "MKA.Special"})
     }, schemaOptions);
   }
 
@@ -89,7 +89,7 @@ export default class TraitsField {
     return this.makeSimpleTrait(schemaOptions, {initial, extraFields: {
       ...extraFields,
       bypasses: new foundry.data.fields.SetField(new foundry.data.fields.StringField(), {
-        label: "DND5E.DamagePhysicalBypass", hint: "DND5E.DamagePhysicalBypassHint", initial: initialBypasses
+        label: "MKA.DamagePhysicalBypass", hint: "MKA.DamagePhysicalBypassHint", initial: initialBypasses
       })
     }});
   }

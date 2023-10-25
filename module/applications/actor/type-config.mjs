@@ -1,4 +1,4 @@
-import Actor5e from "../../documents/actor/actor.mjs";
+import ActorMKA from "../../documents/actor/actor.mjs";
 
 /**
  * A specialized form used to select from a checklist of attributes, traits, or properties
@@ -8,8 +8,8 @@ export default class ActorTypeConfig extends FormApplication {
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "actor-type", "trait-selector"],
-      template: "systems/dnd5e/templates/apps/actor-type.hbs",
+      classes: ["mka", "actor-type", "trait-selector"],
+      template: "systems/mka/templates/apps/actor-type.hbs",
       width: 280,
       height: "auto",
       choices: {},
@@ -23,7 +23,7 @@ export default class ActorTypeConfig extends FormApplication {
 
   /** @inheritDoc */
   get title() {
-    return `${game.i18n.localize("DND5E.CreatureTypeTitle")}: ${this.object.name}`;
+    return `${game.i18n.localize("MKA.CreatureTypeTitle")}: ${this.object.name}`;
   }
 
   /* -------------------------------------------- */
@@ -41,7 +41,7 @@ export default class ActorTypeConfig extends FormApplication {
     // Get current value or new default
     let attr = foundry.utils.getProperty(this.object.system, "details.type");
     if ( foundry.utils.getType(attr) !== "Object" ) attr = {
-      value: (attr in CONFIG.DND5E.creatureTypes) ? attr : "humanoid",
+      value: (attr in CONFIG.MKA.creatureTypes) ? attr : "humanoid",
       subtype: "",
       swarm: "",
       custom: ""
@@ -49,7 +49,7 @@ export default class ActorTypeConfig extends FormApplication {
 
     // Populate choices
     const types = {};
-    for ( let [k, v] of Object.entries(CONFIG.DND5E.creatureTypes) ) {
+    for ( let [k, v] of Object.entries(CONFIG.MKA.creatureTypes) ) {
       types[k] = {
         label: game.i18n.localize(v),
         chosen: attr.value === k
@@ -61,16 +61,16 @@ export default class ActorTypeConfig extends FormApplication {
       types: types,
       custom: {
         value: attr.custom,
-        label: game.i18n.localize("DND5E.CreatureTypeSelectorCustom"),
+        label: game.i18n.localize("MKA.CreatureTypeSelectorCustom"),
         chosen: attr.value === "custom"
       },
       subtype: attr.subtype,
       swarm: attr.swarm,
-      sizes: Array.from(Object.entries(CONFIG.DND5E.actorSizes)).reverse().reduce((obj, e) => {
+      sizes: Array.from(Object.entries(CONFIG.MKA.actorSizes)).reverse().reduce((obj, e) => {
         obj[e[0]] = e[1];
         return obj;
       }, {}),
-      preview: Actor5e.formatCreatureType(attr) || "–"
+      preview: ActorMKA.formatCreatureType(attr) || "–"
     };
   }
 
@@ -98,7 +98,7 @@ export default class ActorTypeConfig extends FormApplication {
   _onChangeInput(event) {
     super._onChangeInput(event);
     const typeObject = foundry.utils.expandObject(this._getSubmitData());
-    this.form.preview.value = Actor5e.formatCreatureType(typeObject) || "—";
+    this.form.preview.value = ActorMKA.formatCreatureType(typeObject) || "—";
   }
 
   /* -------------------------------------------- */

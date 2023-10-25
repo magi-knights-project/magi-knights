@@ -4,15 +4,15 @@ import BaseConfigSheet from "./base-config.mjs";
 /**
  * A specialized application used to modify actor traits.
  *
- * @param {Actor5e} actor                       Actor for whose traits are being edited.
+ * @param {ActorMKA} actor                       Actor for whose traits are being edited.
  * @param {string} trait                        Trait key as defined in CONFIG.traits.
  * @param {object} [options={}]
  * @param {boolean} [options.allowCustom=true]  Support user custom trait entries.
  */
 export default class TraitSelector extends BaseConfigSheet {
   constructor(actor, trait, options={}) {
-    if ( !CONFIG.DND5E.traits[trait] ) throw new Error(
-      `Cannot instantiate TraitSelector with a trait not defined in CONFIG.DND5E.traits: ${trait}.`
+    if ( !CONFIG.MKA.traits[trait] ) throw new Error(
+      `Cannot instantiate TraitSelector with a trait not defined in CONFIG.MKA.traits: ${trait}.`
     );
     if ( ["saves", "skills"].includes(trait) ) throw new Error(
       `TraitSelector does not support selection of ${trait}. That should be handled through `
@@ -34,8 +34,8 @@ export default class TraitSelector extends BaseConfigSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: "trait-selector",
-      classes: ["dnd5e", "trait-selector", "subconfig"],
-      template: "systems/dnd5e/templates/apps/trait-selector.hbs",
+      classes: ["mka", "trait-selector", "subconfig"],
+      template: "systems/mka/templates/apps/trait-selector.hbs",
       width: 320,
       height: "auto",
       sheetConfig: false,
@@ -70,7 +70,7 @@ export default class TraitSelector extends BaseConfigSheet {
       choices: await Trait.choices(this.trait, data.value),
       custom: data.custom,
       customPath: "custom" in data ? `${path}.custom` : null,
-      bypasses: "bypasses" in data ? Object.entries(CONFIG.DND5E.physicalWeaponProperties).reduce((obj, [k, v]) => {
+      bypasses: "bypasses" in data ? Object.entries(CONFIG.MKA.physicalWeaponProperties).reduce((obj, [k, v]) => {
         obj[k] = { label: v, chosen: data.bypasses.has(k) };
         return obj;
       }, {}) : null,

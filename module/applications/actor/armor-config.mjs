@@ -9,7 +9,7 @@ export default class ActorArmorConfig extends BaseConfigSheet {
 
     /**
      * Cloned copy of the actor for previewing changes.
-     * @type {Actor5e}
+     * @type {ActorMKA}
      */
     this.clone = this.document.clone();
   }
@@ -19,8 +19,8 @@ export default class ActorArmorConfig extends BaseConfigSheet {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "actor-armor-config"],
-      template: "systems/dnd5e/templates/apps/actor-armor.hbs",
+      classes: ["mka", "actor-armor-config"],
+      template: "systems/mka/templates/apps/actor-armor.hbs",
       width: 320,
       height: "auto",
       sheetConfig: false
@@ -31,7 +31,7 @@ export default class ActorArmorConfig extends BaseConfigSheet {
 
   /** @inheritdoc */
   get title() {
-    return `${game.i18n.localize("DND5E.ArmorConfig")}: ${this.document.name}`;
+    return `${game.i18n.localize("MKA.ArmorConfig")}: ${this.document.name}`;
   }
 
   /* -------------------------------------------- */
@@ -42,16 +42,16 @@ export default class ActorArmorConfig extends BaseConfigSheet {
     const isFlat = ["flat", "natural"].includes(ac.calc);
 
     // Get configuration data for the calculation mode, reset to flat if configuration is unavailable
-    let cfg = CONFIG.DND5E.armorClasses[ac.calc];
+    let cfg = CONFIG.MKA.armorClasses[ac.calc];
     if ( !cfg ) {
       ac.calc = "flat";
-      cfg = CONFIG.DND5E.armorClasses.flat;
+      cfg = CONFIG.MKA.armorClasses.flat;
       this.clone.updateSource({ "system.attributes.ac.calc": "flat" });
     }
 
     return {
       ac, isFlat,
-      calculations: CONFIG.DND5E.armorClasses,
+      calculations: CONFIG.MKA.armorClasses,
       valueDisabled: !isFlat,
       formula: ac.calc === "custom" ? ac.formula : cfg.formula,
       formulaDisabled: ac.calc !== "custom"

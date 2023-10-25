@@ -1,0 +1,44 @@
+{
+  "name": "Elemental Affinity: Air (Incorporeal)",
+  "type": "class",
+  "img": "icons/svg/windmill.svg",
+  "system": {
+    "description": {
+      "value": "<p><strong>Branching Elements:</strong> Force or Sonance</p><p><em>A person in-tune with Air may be an intellectual, a good communicator, observant, talkative, curious and fickle-hearted. Typically they can be conversational, but also distracted.</em></p><p>Your Armor becomes 12 + Dexterity Modifier</p><p><strong>Roll to Resist Proficiency:</strong> Choose one Physical (Strength, Dexterity, Constitution)</p><p><strong>Elemental Affinity (Skill Mastery):</strong> Your connection with your Element empowers you to recognize your strengths and grants confidence in yourself and a Skill. After choosing your Element, choose either a Skill you gained Proficiency in from your Court Card of Fate or one Proficiency gained from your Student Type. When you use this Skill, you add your Reputation Level to the roll (minimum 1). This is referred to as \"Skill Mastery.\" Trace a Circle around your Proficiency Diamond.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.38",
+    "identifier": "elemental-affinity-air-incorporeal",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "mka",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670531425464,
+    "modifiedTime": 1670533977703,
+    "lastModifiedBy": "mkabuilder0000"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "yS9obur2D86kPsj6"
+}

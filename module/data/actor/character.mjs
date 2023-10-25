@@ -57,64 +57,64 @@ export default class CharacterData extends CreatureTemplate {
         ...AttributesFields.common,
         ...AttributesFields.creature,
         ac: new foundry.data.fields.SchemaField({
-          flat: new foundry.data.fields.NumberField({integer: true, min: 0, label: "DND5E.ArmorClassFlat"}),
-          calc: new foundry.data.fields.StringField({initial: "default", label: "DND5E.ArmorClassCalculation"}),
-          formula: new FormulaField({deterministic: true, label: "DND5E.ArmorClassFormula"})
-        }, {label: "DND5E.ArmorClass"}),
+          flat: new foundry.data.fields.NumberField({integer: true, min: 0, label: "MKA.ArmorClassFlat"}),
+          calc: new foundry.data.fields.StringField({initial: "default", label: "MKA.ArmorClassCalculation"}),
+          formula: new FormulaField({deterministic: true, label: "MKA.ArmorClassFormula"})
+        }, {label: "MKA.ArmorClass"}),
         hp: new foundry.data.fields.SchemaField({
           value: new foundry.data.fields.NumberField({
-            nullable: false, integer: true, min: 0, initial: 0, label: "DND5E.HitPointsCurrent"
+            nullable: false, integer: true, min: 0, initial: 0, label: "MKA.HitPointsCurrent"
           }),
           max: new foundry.data.fields.NumberField({
-            nullable: true, integer: true, min: 0, initial: null, label: "DND5E.HitPointsOverride"
+            nullable: true, integer: true, min: 0, initial: null, label: "MKA.HitPointsOverride"
           }),
-          temp: new foundry.data.fields.NumberField({integer: true, initial: 0, min: 0, label: "DND5E.HitPointsTemp"}),
-          tempmax: new foundry.data.fields.NumberField({integer: true, initial: 0, label: "DND5E.HitPointsTempMax"}),
+          temp: new foundry.data.fields.NumberField({integer: true, initial: 0, min: 0, label: "MKA.HitPointsTemp"}),
+          tempmax: new foundry.data.fields.NumberField({integer: true, initial: 0, label: "MKA.HitPointsTempMax"}),
           bonuses: new foundry.data.fields.SchemaField({
-            level: new FormulaField({deterministic: true, label: "DND5E.HitPointsBonusLevel"}),
-            overall: new FormulaField({deterministic: true, label: "DND5E.HitPointsBonusOverall"})
+            level: new FormulaField({deterministic: true, label: "MKA.HitPointsBonusLevel"}),
+            overall: new FormulaField({deterministic: true, label: "MKA.HitPointsBonusOverall"})
           })
-        }, {label: "DND5E.HitPoints"}),
+        }, {label: "MKA.HitPoints"}),
         death: new foundry.data.fields.SchemaField({
           success: new foundry.data.fields.NumberField({
-            required: true, nullable: false, integer: true, min: 0, initial: 0, label: "DND5E.DeathSaveSuccesses"
+            required: true, nullable: false, integer: true, min: 0, initial: 0, label: "MKA.DeathSaveSuccesses"
           }),
           failure: new foundry.data.fields.NumberField({
-            required: true, nullable: false, integer: true, min: 0, initial: 0, label: "DND5E.DeathSaveFailures"
+            required: true, nullable: false, integer: true, min: 0, initial: 0, label: "MKA.DeathSaveFailures"
           })
-        }, {label: "DND5E.DeathSave"}),
+        }, {label: "MKA.DeathSave"}),
         exhaustion: new foundry.data.fields.NumberField({
-          required: true, nullable: false, integer: true, min: 0, initial: 0, label: "DND5E.Exhaustion"
+          required: true, nullable: false, integer: true, min: 0, initial: 0, label: "MKA.Exhaustion"
         }),
-        inspiration: new foundry.data.fields.BooleanField({required: true, label: "DND5E.Inspiration"})
-      }, {label: "DND5E.Attributes"}),
+        inspiration: new foundry.data.fields.BooleanField({required: true, label: "MKA.Inspiration"})
+      }, {label: "MKA.Attributes"}),
       details: new foundry.data.fields.SchemaField({
         ...DetailsFields.common,
         ...DetailsFields.creature,
-        background: new foundry.data.fields.StringField({required: true, label: "DND5E.Background"}),
-        originalClass: new foundry.data.fields.StringField({required: true, label: "DND5E.ClassOriginal"}),
+        background: new foundry.data.fields.StringField({required: true, label: "MKA.Background"}),
+        originalClass: new foundry.data.fields.StringField({required: true, label: "MKA.ClassOriginal"}),
         xp: new foundry.data.fields.SchemaField({
           value: new foundry.data.fields.NumberField({
-            required: true, nullable: false, integer: true, min: 0, initial: 0, label: "DND5E.ExperiencePointsCurrent"
+            required: true, nullable: false, integer: true, min: 0, initial: 0, label: "MKA.ExperiencePointsCurrent"
           })
-        }, {label: "DND5E.ExperiencePoints"}),
-        appearance: new foundry.data.fields.StringField({required: true, label: "DND5E.Appearance"}),
-        trait: new foundry.data.fields.StringField({required: true, label: "DND5E.PersonalityTraits"}),
-        ideal: new foundry.data.fields.StringField({required: true, label: "DND5E.Ideals"}),
-        bond: new foundry.data.fields.StringField({required: true, label: "DND5E.Bonds"}),
-        flaw: new foundry.data.fields.StringField({required: true, label: "DND5E.Flaws"})
-      }, {label: "DND5E.Details"}),
+        }, {label: "MKA.ExperiencePoints"}),
+        appearance: new foundry.data.fields.StringField({required: true, label: "MKA.Appearance"}),
+        trait: new foundry.data.fields.StringField({required: true, label: "MKA.PersonalityTraits"}),
+        ideal: new foundry.data.fields.StringField({required: true, label: "MKA.Ideals"}),
+        bond: new foundry.data.fields.StringField({required: true, label: "MKA.Bonds"}),
+        flaw: new foundry.data.fields.StringField({required: true, label: "MKA.Flaws"})
+      }, {label: "MKA.Details"}),
       traits: new foundry.data.fields.SchemaField({
         ...TraitsFields.common,
         ...TraitsFields.creature,
-        weaponProf: TraitsFields.makeSimpleTrait({label: "DND5E.TraitWeaponProf"}),
-        armorProf: TraitsFields.makeSimpleTrait({label: "DND5E.TraitArmorProf"})
-      }, {label: "DND5E.Traits"}),
+        weaponProf: TraitsFields.makeSimpleTrait({label: "MKA.TraitWeaponProf"}),
+        armorProf: TraitsFields.makeSimpleTrait({label: "MKA.TraitArmorProf"})
+      }, {label: "MKA.Traits"}),
       resources: new foundry.data.fields.SchemaField({
-        primary: makeResourceField({label: "DND5E.ResourcePrimary"}),
-        secondary: makeResourceField({label: "DND5E.ResourceSecondary"}),
-        tertiary: makeResourceField({label: "DND5E.ResourceTertiary"})
-      }, {label: "DND5E.Resources"})
+        primary: makeResourceField({label: "MKA.ResourcePrimary"}),
+        secondary: makeResourceField({label: "MKA.ResourceSecondary"}),
+        tertiary: makeResourceField({label: "MKA.ResourceTertiary"})
+      }, {label: "MKA.Resources"})
     });
   }
 
@@ -148,13 +148,13 @@ export default class CharacterData extends CreatureTemplate {
 function makeResourceField(schemaOptions={}) {
   return new foundry.data.fields.SchemaField({
     value: new foundry.data.fields.NumberField({
-      required: true, integer: true, initial: 0, labels: "DND5E.ResourceValue"
+      required: true, integer: true, initial: 0, labels: "MKA.ResourceValue"
     }),
     max: new foundry.data.fields.NumberField({
-      required: true, integer: true, initial: 0, labels: "DND5E.ResourceMax"
+      required: true, integer: true, initial: 0, labels: "MKA.ResourceMax"
     }),
-    sr: new foundry.data.fields.BooleanField({required: true, labels: "DND5E.ShortRestRecovery"}),
-    lr: new foundry.data.fields.BooleanField({required: true, labels: "DND5E.LongRestRecovery"}),
-    label: new foundry.data.fields.StringField({required: true, labels: "DND5E.ResourceLabel"})
+    sr: new foundry.data.fields.BooleanField({required: true, labels: "MKA.ShortRestRecovery"}),
+    lr: new foundry.data.fields.BooleanField({required: true, labels: "MKA.LongRestRecovery"}),
+    label: new foundry.data.fields.StringField({required: true, labels: "MKA.ResourceLabel"})
   }, schemaOptions);
 }

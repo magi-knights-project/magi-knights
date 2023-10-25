@@ -8,10 +8,10 @@ export default class ItemChoiceConfig extends AdvancementConfig {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "advancement", "item-choice", "two-column"],
+      classes: ["mka", "advancement", "item-choice", "two-column"],
       dragDrop: [{ dropSelector: ".drop-target" }],
       dropKeyPath: "pool",
-      template: "systems/dnd5e/templates/advancement/item-choice-config.hbs",
+      template: "systems/mka/templates/advancement/item-choice-config.hbs",
       width: 540
     });
   }
@@ -29,11 +29,11 @@ export default class ItemChoiceConfig extends AdvancementConfig {
       }, {})
     };
     if ( this.advancement.configuration.type === "feat" ) {
-      const selectedType = CONFIG.DND5E.featureTypes[this.advancement.configuration.restriction.type];
+      const selectedType = CONFIG.MKA.featureTypes[this.advancement.configuration.restriction.type];
       context.typeRestriction = {
-        typeLabel: game.i18n.localize("DND5E.ItemFeatureType"),
-        typeOptions: CONFIG.DND5E.featureTypes,
-        subtypeLabel: game.i18n.format("DND5E.ItemFeatureSubtype", {category: selectedType?.label}),
+        typeLabel: game.i18n.localize("MKA.ItemFeatureType"),
+        typeOptions: CONFIG.MKA.featureTypes,
+        subtypeLabel: game.i18n.format("MKA.ItemFeatureSubtype", {category: selectedType?.label}),
         subtypeOptions: selectedType?.subtypes
       };
     }

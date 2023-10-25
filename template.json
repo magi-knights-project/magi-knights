@@ -71,6 +71,36 @@
             "temp": 0,
             "tempmax": 0
           },
+          "unity": {
+            "value": 1,
+            "min": 0,
+            "max": 1
+          },
+          "mp": {
+            "value": 10,
+            "min": 0,
+            "max": 10
+          },
+          "stress": {
+            "value": 0,
+            "min": 0,
+            "max": 6
+          },
+          "exhaustion": {
+            "value": 0,
+            "min": 0,
+            "max": 6
+          },
+          "trauma": {
+            "value": 0,
+            "min": 0,
+            "max": 8
+          },
+          "corruption": {
+            "value": 0,
+            "min": 0,
+            "max": 4
+          },
           "init": {
             "ability": "",
             "bonus": ""
@@ -114,11 +144,8 @@
           }
         },
         "currency": {
-          "pp": 0,
-          "gp": 0,
-          "ep": 0,
-          "sp": 0,
-          "cp": 0
+          "gg": 0,
+          "bt": 0
         }
       },
       "creature": {
@@ -138,7 +165,8 @@
         },
         "details": {
           "alignment": "",
-          "race": ""
+          "race" : "",
+          "stype": ""
         },
         "skills": {
           "acr": {

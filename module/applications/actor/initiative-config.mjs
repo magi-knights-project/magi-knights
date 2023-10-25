@@ -8,8 +8,8 @@ export default class ActorInitiativeConfig extends BaseConfigSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e"],
-      template: "systems/dnd5e/templates/apps/initiative-config.hbs",
+      classes: ["mka"],
+      template: "systems/mka/templates/apps/initiative-config.hbs",
       width: 360,
       height: "auto"
     });
@@ -19,7 +19,7 @@ export default class ActorInitiativeConfig extends BaseConfigSheet {
 
   /** @override */
   get title() {
-    return `${game.i18n.localize("DND5E.InitiativeConfig")}: ${this.document.name}`;
+    return `${game.i18n.localize("MKA.InitiativeConfig")}: ${this.document.name}`;
   }
 
   /* -------------------------------------------- */
@@ -28,10 +28,10 @@ export default class ActorInitiativeConfig extends BaseConfigSheet {
   getData(options={}) {
     const source = this.document.toObject();
     const init = source.system.attributes.init || {};
-    const flags = source.flags.dnd5e || {};
+    const flags = source.flags.mka || {};
     return {
       ability: init.ability,
-      abilities: CONFIG.DND5E.abilities,
+      abilities: CONFIG.MKA.abilities,
       bonus: init.bonus,
       initiativeAlert: flags.initiativeAlert,
       initiativeAdv: flags.initiativeAdv
@@ -43,11 +43,11 @@ export default class ActorInitiativeConfig extends BaseConfigSheet {
   /** @inheritDoc */
   _getSubmitData(updateData={}) {
     const formData = super._getSubmitData(updateData);
-    formData.flags = {dnd5e: {}};
+    formData.flags = {mka: {}};
     for ( const flag of ["initiativeAlert", "initiativeAdv"] ) {
-      const k = `flags.dnd5e.${flag}`;
-      if ( formData[k] ) formData.flags.dnd5e[flag] = true;
-      else formData.flags.dnd5e[`-=${flag}`] = null;
+      const k = `flags.mka.${flag}`;
+      if ( formData[k] ) formData.flags.mka[flag] = true;
+      else formData.flags.mka[`-=${flag}`] = null;
       delete formData[k];
     }
     return formData;

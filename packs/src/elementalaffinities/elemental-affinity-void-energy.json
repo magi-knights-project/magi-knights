@@ -1,0 +1,44 @@
+{
+  "name": "Elemental Affinity: Void (Energy)",
+  "type": "class",
+  "img": "icons/svg/circle.svg",
+  "system": {
+    "description": {
+      "value": "<p><strong>Branching Elements:</strong> Light, Dark</p><p><em>A person in-tune with the Void may be someone who is strangely well-balanced in their Personal Element and, as such, is a little of everything. Or it could even be someone who is very disconnected from their emotions— but such a harmful separation from one's own feelings is typically temporary and self-imposed (whether consciously or subconsciously). To remain in such a state for lengthy periods of time is inherently agonizing for any person, most especially for a Magi-Knight.</em></p><p>Your Armor becomes 14 + your Dexterity Modifier (Maximum +2)</p><p><strong>Roll to Resist Proficiency:</strong> Resist Magic Proficiency</p><p><strong>Elemental Affinity (Skill Mastery):</strong> Your connection with your Element empowers you to recognize your strengths and grants confidence in yourself and a Skill. After choosing your Element, choose either a Skill you gained Proficiency in from your Court Card of Fate or one Proficiency gained from your Student Type. When you use this Skill, you add your Reputation Level to the roll (minimum 1). This is referred to as \"Skill Mastery.\" Trace a Circle around your Proficiency Diamond.</p><p></p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.38",
+    "identifier": "elemental-affinity-void-energy",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "mka",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670531511063,
+    "modifiedTime": 1670533983046,
+    "lastModifiedBy": "mkabuilder0000"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "ZZ2xu3A9tCwbqdFF"
+}

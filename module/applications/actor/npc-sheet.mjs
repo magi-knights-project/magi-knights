@@ -1,14 +1,14 @@
-import ActorSheet5e from "./base-sheet.mjs";
+import ActorSheetMKA from "./base-sheet.mjs";
 
 /**
  * An Actor sheet for NPC type characters.
  */
-export default class ActorSheet5eNPC extends ActorSheet5e {
+export default class ActorSheetMKANPC extends ActorSheetMKA {
 
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["dnd5e", "sheet", "actor", "npc"],
+      classes: ["mka", "sheet", "actor", "npc"],
       width: 600
     });
   }
@@ -46,12 +46,12 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
 
     // Categorize Items as Features and Spells
     const features = {
-      weapons: { label: game.i18n.localize("DND5E.AttackPl"), items: [], hasActions: true,
+      weapons: { label: game.i18n.localize("MKA.AttackPl"), items: [], hasActions: true,
         dataset: {type: "weapon", "weapon-type": "natural"} },
-      actions: { label: game.i18n.localize("DND5E.ActionPl"), items: [], hasActions: true,
+      actions: { label: game.i18n.localize("MKA.ActionPl"), items: [], hasActions: true,
         dataset: {type: "feat", "activation.type": "action"} },
-      passive: { label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
-      equipment: { label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
+      passive: { label: game.i18n.localize("MKA.Features"), items: [], dataset: {type: "feat"} },
+      equipment: { label: game.i18n.localize("MKA.Inventory"), items: [], dataset: {type: "loot"}}
     };
 
     // Start by classifying items into groups for rendering
@@ -102,8 +102,8 @@ export default class ActorSheet5eNPC extends ActorSheet5e {
   getArmorLabel() {
     const ac = this.actor.system.attributes.ac;
     const label = [];
-    if ( ac.calc === "default" ) label.push(this.actor.armor?.name || game.i18n.localize("DND5E.ArmorClassUnarmored"));
-    else label.push(game.i18n.localize(CONFIG.DND5E.armorClasses[ac.calc].label));
+    if ( ac.calc === "default" ) label.push(this.actor.armor?.name || game.i18n.localize("MKA.ArmorClassUnarmored"));
+    else label.push(game.i18n.localize(CONFIG.MKA.armorClasses[ac.calc].label));
     if ( this.actor.shield ) label.push(this.actor.shield.name);
     return label.filterJoin(", ");
   }

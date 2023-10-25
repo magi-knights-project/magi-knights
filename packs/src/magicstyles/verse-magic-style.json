@@ -1,0 +1,44 @@
+{
+  "name": "Verse Magic Style",
+  "type": "class",
+  "img": "icons/svg/book.svg",
+  "system": {
+    "description": {
+      "value": "<p><em>This skill manifests your latent magic abilities through song, poetry, or performance. But doing a mundane action like singing would fall under the Performance Skill. It has been known by many names through history, but is now called, \"Verse Magic,\" or, \"Versing.\"</em></p><p>Charisma or Intelligence is your Magic Ability Modifier (MAM) for your Magi-Knight Spells.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "MK CH.3 P.34",
+    "identifier": "verse-magic-style",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "mka",
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.287",
+    "createdTime": 1670530053342,
+    "modifiedTime": 1670534022399,
+    "lastModifiedBy": "mkabuilder0000"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "C01RhjuaDug8Qzhr"
+}

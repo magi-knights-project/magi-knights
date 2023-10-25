@@ -16,13 +16,13 @@ const parsedArgs = yargs(process.argv).argv;
 
 /**
  * Folder where the compiled compendium packs should be located relative to the
- * base 5e system folder.
+ * base MKAA system folder.
  * @type {string}
  */
 const PACK_DEST = "packs";
 
 /**
- * Folder where source JSON files should be located relative to the 5e system folder.
+ * Folder where source JSON files should be located relative to the MKAA system folder.
  * @type {string}
  */
 const PACK_SRC = "packs/src";
@@ -50,7 +50,7 @@ function cleanPackEntry(data, { clearSourceId=true }={}) {
   if ( typeof data.folder === "string" ) data.folder = null;
   delete data.flags?.importSource;
   delete data.flags?.exportSource;
-  if ( data._stats?.lastModifiedBy ) data._stats.lastModifiedBy = "dnd5ebuilder0000";
+  if ( data._stats?.lastModifiedBy ) data._stats.lastModifiedBy = "mkabuilder0000";
 
   // Remove empty entries in flags
   if ( !data.flags ) data.flags = {};

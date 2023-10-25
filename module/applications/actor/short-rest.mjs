@@ -1,7 +1,7 @@
 /**
  * A helper Dialog subclass for rolling Hit Dice on short rest.
  *
- * @param {Actor5e} actor           Actor that is taking the short rest.
+ * @param {ActorMKA} actor           Actor that is taking the short rest.
  * @param {object} [dialogData={}]  An object of dialog data which configures how the modal window is rendered.
  * @param {object} [options={}]     Dialog rendering options.
  */
@@ -27,8 +27,8 @@ export default class ShortRestDialog extends Dialog {
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      template: "systems/dnd5e/templates/apps/short-rest.hbs",
-      classes: ["dnd5e", "dialog"]
+      template: "systems/mka/templates/apps/short-rest.hbs",
+      classes: ["mka", "dialog"]
     });
   }
 
@@ -52,7 +52,7 @@ export default class ShortRestDialog extends Dialog {
     data.denomination = this._denom;
 
     // Determine rest type
-    const variant = game.settings.get("dnd5e", "restVariant");
+    const variant = game.settings.get("mka", "restVariant");
     data.promptNewDay = variant !== "epic";     // It's never a new day when only resting 1 minute
     data.newDay = false;                        // It may be a new day, but not by default
     return data;
@@ -89,20 +89,20 @@ export default class ShortRestDialog extends Dialog {
    * A helper constructor function which displays the Short Rest dialog and returns a Promise once it's workflow has
    * been resolved.
    * @param {object} [options={}]
-   * @param {Actor5e} [options.actor]  Actor that is taking the short rest.
+   * @param {ActorMKA} [options.actor]  Actor that is taking the short rest.
    * @returns {Promise}                Promise that resolves when the rest is completed or rejects when canceled.
    */
   static async shortRestDialog({ actor }={}) {
     return new Promise((resolve, reject) => {
       const dlg = new this(actor, {
-        title: `${game.i18n.localize("DND5E.ShortRest")}: ${actor.name}`,
+        title: `${game.i18n.localize("MKA.ShortRest")}: ${actor.name}`,
         buttons: {
           rest: {
             icon: '<i class="fas fa-bed"></i>',
-            label: game.i18n.localize("DND5E.Rest"),
+            label: game.i18n.localize("MKA.Rest"),
             callback: html => {
               let newDay = false;
-              if ( game.settings.get("dnd5e", "restVariant") !== "epic" ) {
+              if ( game.settings.get("mka", "restVariant") !== "epic" ) {
                 newDay = html.find('input[name="newDay"]')[0].checked;
               }
               resolve(newDay);

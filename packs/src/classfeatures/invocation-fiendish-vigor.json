@@ -7,7 +7,7 @@
   "type": "feat",
   "system": {
     "description": {
-      "value": "<p>You can cast @Compendium[dnd5e.spells.7e3QXF10hLNDEdr6]{False Life} on yourself at will as a 1st-level spell, without expending a spell slot or material components.</p>",
+      "value": "<p>You can cast @Compendium[mka.spells.7e3QXF10hLNDEdr6]{False Life} on yourself at will as a 1st-level spell, without expending a spell slot or material components.</p>",
       "chat": "",
       "unidentified": ""
     },
@@ -83,11 +83,11 @@
   "folder": null,
   "sort": 0,
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.1.0",
     "coreVersion": "10.291",
     "createdTime": 1661787234410,
     "modifiedTime": 1672334758806,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

@@ -1,6 +1,6 @@
-![](https://github.com/foundryvtt/dnd5e/blob/v10-dev/media/repo-dnd5e.jpg?raw=true)
+![](https://github.com/foundryvtt/magi-knights-project/magi-knights/master/media/repo-dnd5e.jpg)
 
-# Foundry Virtual Tabletop - DnD5e Game System
+# Foundry Virtual Tabletop - MKA Game System
 
 This game system for [Foundry Virtual Tabletop](http://foundryvtt.com) provides character sheet and game system 
 support for the Fifth Edition of the world's most popular roleplaying game.
@@ -17,14 +17,14 @@ The software component of this system is distributed under the MIT license.
 
 ## Installation Instructions
 
-To install and use the DnD5e system for Foundry Virtual Tabletop, simply paste the following URL into the 
+To install and use the Magi-Knights system for Foundry Virtual Tabletop, simply paste the following URL into the 
 **Install System** dialog on the Setup menu of the application.
 
-https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json
+https://raw.githubusercontent.com/magi-knights-project/magi-knights/master/system.json
 
-If you wish to manually install the system, you must clone or extract it into the ``Data/systems/dnd5e`` folder. You
+If you wish to manually install the system, you must clone or extract it into the ``Data/systems/mka`` folder. You
 may do this by cloning the repository or downloading a zip archive from the
-[Releases Page](https://github.com/foundryvtt/dnd5e/releases).
+[Releases Page](https://github.com/magi-knights-project/magi-knights/releases).
 
 ## Frequently Asked Questions  
 Check the [Wiki](../../wiki) for answers to our most [frequently asked questions](../../wiki/faq)

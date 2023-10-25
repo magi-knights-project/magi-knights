@@ -1,1 +1,1 @@
-export {default as CombatTracker5e} from "./combat-tracker.mjs";
+export {default as CombatTrackerMKA} from "./combat-tracker.mjs";

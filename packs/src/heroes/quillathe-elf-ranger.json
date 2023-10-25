@@ -517,7 +517,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.DNOSEAvF4Oh1DlWy"
+          "sourceId": "Compendium.mka.items.DNOSEAvF4Oh1DlWy"
         }
       },
       "img": "icons/sundries/lights/torch-black.webp",
@@ -527,12 +527,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640816,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -613,7 +613,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.QXmaarJ4X8P0C1HV"
+          "sourceId": "Compendium.mka.items.QXmaarJ4X8P0C1HV"
         }
       },
       "img": "icons/sundries/survival/rope-wrapped-brown.webp",
@@ -656,7 +656,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.V13fjV5oSmvbRdgP"
+          "sourceId": "Compendium.mka.items.V13fjV5oSmvbRdgP"
         }
       },
       "img": "icons/tools/cooking/fork-steel-grey.webp",
@@ -666,12 +666,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640821,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -699,7 +699,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.DVXmyetZuvxbzAwW"
+          "sourceId": "Compendium.mka.items.DVXmyetZuvxbzAwW"
         }
       },
       "img": "icons/sundries/flags/banner-worn-blue.webp",
@@ -795,7 +795,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.Uv0ilmzbWvqmlCVH"
+          "sourceId": "Compendium.mka.items.Uv0ilmzbWvqmlCVH"
         }
       },
       "img": "icons/sundries/survival/wetskin-leather-purple.webp",
@@ -805,12 +805,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640826,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -902,12 +902,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011647589,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -947,7 +947,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.H8YCd689ezlD26aT"
+          "sourceId": "Compendium.mka.items.H8YCd689ezlD26aT"
         }
       },
       "img": "icons/containers/bags/pack-simple-leather.webp",
@@ -1002,7 +1002,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.4MtQKPn9qMWCFjDA"
+          "sourceId": "Compendium.mka.items.4MtQKPn9qMWCFjDA"
         }
       },
       "img": "icons/containers/ammunition/arrows-quiver-black.webp",
@@ -1115,7 +1115,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.WwdpHLXGX5r8uZu5"
+          "sourceId": "Compendium.mka.items.WwdpHLXGX5r8uZu5"
         }
       },
       "img": "icons/equipment/chest/breastplate-quilted-brown.webp",
@@ -1242,7 +1242,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.3cymOVja8jXbzrdT"
+          "sourceId": "Compendium.mka.items.3cymOVja8jXbzrdT"
         }
       },
       "img": "icons/weapons/bows/longbow-leather-green.webp",
@@ -1369,7 +1369,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.osLzOwQdPtrK3rQH"
+          "sourceId": "Compendium.mka.items.osLzOwQdPtrK3rQH"
         }
       },
       "img": "icons/weapons/swords/sword-guard-brown.webp",
@@ -1588,7 +1588,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.f4w4GxBi0nYXmhX4"
+          "sourceId": "Compendium.mka.items.f4w4GxBi0nYXmhX4"
         }
       },
       "img": "icons/consumables/meat/hock-leg-pink-brown.webp",
@@ -1598,12 +1598,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011640842,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -1689,7 +1689,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl"
+          "sourceId": "Compendium.mka.items.BnOCLuNWhVvzHLjl"
         }
       },
       "img": "icons/sundries/lights/torch-black.webp",
@@ -1699,12 +1699,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.3",
         "coreVersion": "10.290",
         "createdTime": null,
         "modifiedTime": 1670011647596,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -1782,7 +1782,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.monsterfeatures.LvSBjRKoCAKaAnQy"
+          "sourceId": "Compendium.mka.monsterfeatures.LvSBjRKoCAKaAnQy"
         }
       },
       "img": "icons/creatures/mammals/elk-moose-marked-green.webp",
@@ -1806,7 +1806,7 @@
       "type": "feat",
       "system": {
         "description": {
-          "value": "<div title=\"Page 4\">\n<div>\n<div>\n<p><em>Your elf character has a variety of natural abilities, the result of thousands of years of elven refinement. </em></p><p><em><strong>Ability Score Increase.</strong></em> Your Dexterity score increases by 2.</p><p><em><strong>Age.</strong></em> Although elves reach physical maturity at about the same age as humans, the elven understanding of adulthood goes beyond physical growth to encompass worldly experience. An elf typically claims adulthood and an adult name around the age of 100 and can live to be 750 years old.</p><p><em><strong>Alignment</strong></em>. Elves love freedom, variety, and self-­expression, so they lean strongly toward the gentler aspects of chaos. They value and protect others' freedom as well as their own, and they are more often good than not.</p><p><em><strong>Size.</strong></em> Elves range from under 5 to over 6 feet tall and have slender builds. Your size is Medium.</p><p><em><strong>Speed.</strong></em> Your base walking speed is 30 feet.</p><p><em><strong>Darkvision.</strong></em> Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</p><p><em><strong>Keen Senses.</strong></em> You have proficiency in the Perception skill.</p><p><em><strong>Fey Ancestry.</strong></em> @Compendium[dnd5e.races.cnTbpPPeGW7vGjOV]{Fey Ancestry} You have advantage on saving throws against being charmed, and magic can't put you to sleep.</p><p><em><strong>Trance.</strong></em> Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is \"trance.\") While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.</p>\n<div title=\"Page 4\">\n<div>\n<div>\n<p><em><strong>Languages.</strong></em> You can speak, read, and write Common and Elvish. Elvish is fluid, with subtle intonations and intricate grammar. Elven literature is rich and varied, and their songs and poems are famous among other races. Many bards learn their language so they can add Elvish ballads to their repertoires.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
+          "value": "<div title=\"Page 4\">\n<div>\n<div>\n<p><em>Your elf character has a variety of natural abilities, the result of thousands of years of elven refinement. </em></p><p><em><strong>Ability Score Increase.</strong></em> Your Dexterity score increases by 2.</p><p><em><strong>Age.</strong></em> Although elves reach physical maturity at about the same age as humans, the elven understanding of adulthood goes beyond physical growth to encompass worldly experience. An elf typically claims adulthood and an adult name around the age of 100 and can live to be 750 years old.</p><p><em><strong>Alignment</strong></em>. Elves love freedom, variety, and self-­expression, so they lean strongly toward the gentler aspects of chaos. They value and protect others' freedom as well as their own, and they are more often good than not.</p><p><em><strong>Size.</strong></em> Elves range from under 5 to over 6 feet tall and have slender builds. Your size is Medium.</p><p><em><strong>Speed.</strong></em> Your base walking speed is 30 feet.</p><p><em><strong>Darkvision.</strong></em> Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</p><p><em><strong>Keen Senses.</strong></em> You have proficiency in the Perception skill.</p><p><em><strong>Fey Ancestry.</strong></em> @Compendium[mka.races.cnTbpPPeGW7vGjOV]{Fey Ancestry} You have advantage on saving throws against being charmed, and magic can't put you to sleep.</p><p><em><strong>Trance.</strong></em> Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is \"trance.\") While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.</p>\n<div title=\"Page 4\">\n<div>\n<div>\n<p><em><strong>Languages.</strong></em> You can speak, read, and write Common and Elvish. Elvish is fluid, with subtle intonations and intricate grammar. Elven literature is rich and varied, and their songs and poems are famous among other races. Many bards learn their language so they can add Elvish ballads to their repertoires.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
           "chat": "",
           "unidentified": ""
         },
@@ -1875,7 +1875,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.races.rAGnsfgw3ZqAme1v"
+          "sourceId": "Compendium.mka.races.rAGnsfgw3ZqAme1v"
         }
       },
       "img": "icons/magic/nature/leaf-glow-maple-teal.webp",
@@ -1968,7 +1968,7 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.races.A69KxdH1renVPrQV"
+          "sourceId": "Compendium.mka.races.A69KxdH1renVPrQV"
         }
       },
       "img": "icons/magic/nature/leaf-glow-maple-green.webp",
@@ -2078,19 +2078,19 @@
       "sort": 0,
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.spells.udsLtG0BugXHR2JQ"
+          "sourceId": "Compendium.mka.spells.udsLtG0BugXHR2JQ"
         }
       },
       "img": "icons/magic/fire/explosion-fireball-small-purple-orange.webp",
       "effects": [],
       "folder": null,
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.0.0",
         "coreVersion": "10.279",
         "createdTime": 1661603486171,
         "modifiedTime": 1661603486171,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -2114,12 +2114,12 @@
       },
       "flags": {},
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.1.0",
         "coreVersion": "10.291",
         "createdTime": 1673040183979,
         "modifiedTime": 1673040678183,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       },
       "_id": "I5EK9j7jV6mrXt7K"
     },
@@ -2130,7 +2130,7 @@
       "img": "icons/weapons/bows/shortbow-recurve-yellow.webp",
       "system": {
         "description": {
-          "value": "<p>As a ranger, you gain the following class features.</p>\n<h3>Hit Points</h3>\n<p><strong>Hit Dice:</strong> 1d10 per ranger level<br /><strong>Hit Points at 1st Level:</strong> 10 + your Constitution modifier<br /><strong>Hit Points at Higher Levels:</strong> 1d10 (or 6) + your Constitution modifier per ranger level after 1st</p>\n<h3>Proficiencies</h3>\n<p><strong>Armor:</strong> Light armor, medium armor, shields<br /><strong>Weapons:</strong> Simple weapons, martial weapons<br /><strong>Tools:</strong> None<br /><strong>Saving Throws:</strong> Strength, Dexterity<br /><strong>Skills:</strong> Choose three from Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, and Survival</p>\n<h3>Equipment</h3>\n<p>You start with the following equipment, in addition to the equipment granted by your background:</p>\n<ul>\n<li>(a) scale mail or (b) leather armor</li>\n<li>(a) two shortswords or (b) two simple melee weapons</li>\n<li>(a) a dungeoneer's pack or (b) an explorer's pack</li>\n<li>A longbow and a quiver of 20 arrows</li>\n</ul>\n<h1>Ranger Advancement</h1>\n<table>\n<thead>\n<tr>\n<td>Level</td>\n<td>Proficiency Bonus</td>\n<td>Features</td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1st</td>\n<td>+2</td>\n<td>@Compendium[dnd5e.classfeatures.4Vpj9vCOB37GtXk6]{Favored Enemy}, @Compendium[dnd5e.classfeatures.8fbZt2Qh7ZttwIan]{Natural Explorer}</td>\n</tr>\n<tr>\n<td>2nd</td>\n<td>+2</td>\n<td>@Compendium[dnd5e.classfeatures.nJA3ISVmyj3uPRVM]{Fighting Style}, @Compendium[dnd5e.classfeatures.u6xV3Ki3TXRrD7zg]{Spellcasting}</td>\n</tr>\n<tr>\n<td>3rd</td>\n<td>+2</td>\n<td>@Compendium[dnd5e.classfeatures.1dJHU48yNqn3lcfx]{Ranger Archetype}, @Compendium[dnd5e.classfeatures.kaHcUGiwi8AtfZIm]{Primeval Awareness}</td>\n</tr>\n<tr>\n<td>4th</td>\n<td>+2</td>\n<td>@Compendium[dnd5e.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>+3</td>\n<td>2nd Level Spell Slot, @Compendium[dnd5e.classfeatures.XogoBnFWmCAHXppo]{Extra Attack}</td>\n</tr>\n<tr>\n<td>6th</td>\n<td>+3</td>\n<td>@Compendium[dnd5e.classfeatures.4Vpj9vCOB37GtXk6]{Favored Enemy +1}, @Compendium[dnd5e.classfeatures.8fbZt2Qh7ZttwIan]{Natural Explorer improvements}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>+3</td>\n<td>Ranger Archetype feature</td>\n</tr>\n<tr>\n<td>8th</td>\n<td>+3</td>\n<td>@Compendium[dnd5e.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}, @Compendium[dnd5e.classfeatures.C5fzaOBc6HxyOWRn]{Land's Stride}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>+4</td>\n<td>3rd Level Spell Slot</td>\n</tr>\n<tr>\n<td>10th</td>\n<td>+4</td>\n<td>@Compendium[dnd5e.classfeatures.8fbZt2Qh7ZttwIan]{Natural Explorer improvement}, @Compendium[dnd5e.classfeatures.r0unvWK0lPsDthDx]{Hide in Plain Sight}</td>\n</tr>\n<tr>\n<td>11th</td>\n<td>+4</td>\n<td>Ranger Archetype feature</td>\n</tr>\n<tr>\n<td>12th</td>\n<td>+4</td>\n<td>@Compendium[dnd5e.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>13th</td>\n<td>+5</td>\n<td>4th Level Spell Slot</td>\n</tr>\n<tr>\n<td>14th</td>\n<td>+5</td>\n<td>@Compendium[dnd5e.classfeatures.4Vpj9vCOB37GtXk6]{Favored Enemy +1}, @Compendium[dnd5e.classfeatures.DhU2dWCNnX78TstR]{Vanish}</td>\n</tr>\n<tr>\n<td>15th</td>\n<td>+5</td>\n<td>Ranger Archetype feature</td>\n</tr>\n<tr>\n<td>16th</td>\n<td>+5</td>\n<td>@Compendium[dnd5e.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>17th</td>\n<td>+6</td>\n<td>5th Level Spell Slot</td>\n</tr>\n<tr>\n<td>18th</td>\n<td>+6</td>\n<td>@Compendium[dnd5e.classfeatures.QBVmY56RMQuh6C8h]{Feral Senses}</td>\n</tr>\n<tr>\n<td>19th</td>\n<td>+6</td>\n<td>@Compendium[dnd5e.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>20th</td>\n<td>+6</td>\n<td>@Compendium[dnd5e.classfeatures.3CaP1vFHVR8LgHjx]{Foe Slayer}</td>\n</tr>\n</tbody>\n</table>\n<h1>Ranger Archetypes</h1>\n<p>A classic expression of the ranger ideal is the Hunter.</p>\n<p>@Compendium[dnd5e.subclasses.uqd2q6WjVfcsaaGb]{Hunter}</p>",
+          "value": "<p>As a ranger, you gain the following class features.</p>\n<h3>Hit Points</h3>\n<p><strong>Hit Dice:</strong> 1d10 per ranger level<br /><strong>Hit Points at 1st Level:</strong> 10 + your Constitution modifier<br /><strong>Hit Points at Higher Levels:</strong> 1d10 (or 6) + your Constitution modifier per ranger level after 1st</p>\n<h3>Proficiencies</h3>\n<p><strong>Armor:</strong> Light armor, medium armor, shields<br /><strong>Weapons:</strong> Simple weapons, martial weapons<br /><strong>Tools:</strong> None<br /><strong>Saving Throws:</strong> Strength, Dexterity<br /><strong>Skills:</strong> Choose three from Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, and Survival</p>\n<h3>Equipment</h3>\n<p>You start with the following equipment, in addition to the equipment granted by your background:</p>\n<ul>\n<li>(a) scale mail or (b) leather armor</li>\n<li>(a) two shortswords or (b) two simple melee weapons</li>\n<li>(a) a dungeoneer's pack or (b) an explorer's pack</li>\n<li>A longbow and a quiver of 20 arrows</li>\n</ul>\n<h1>Ranger Advancement</h1>\n<table>\n<thead>\n<tr>\n<td>Level</td>\n<td>Proficiency Bonus</td>\n<td>Features</td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1st</td>\n<td>+2</td>\n<td>@Compendium[mka.classfeatures.4Vpj9vCOB37GtXk6]{Favored Enemy}, @Compendium[mka.classfeatures.8fbZt2Qh7ZttwIan]{Natural Explorer}</td>\n</tr>\n<tr>\n<td>2nd</td>\n<td>+2</td>\n<td>@Compendium[mka.classfeatures.nJA3ISVmyj3uPRVM]{Fighting Style}, @Compendium[mka.classfeatures.u6xV3Ki3TXRrD7zg]{Spellcasting}</td>\n</tr>\n<tr>\n<td>3rd</td>\n<td>+2</td>\n<td>@Compendium[mka.classfeatures.1dJHU48yNqn3lcfx]{Ranger Archetype}, @Compendium[mka.classfeatures.kaHcUGiwi8AtfZIm]{Primeval Awareness}</td>\n</tr>\n<tr>\n<td>4th</td>\n<td>+2</td>\n<td>@Compendium[mka.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>+3</td>\n<td>2nd Level Spell Slot, @Compendium[mka.classfeatures.XogoBnFWmCAHXppo]{Extra Attack}</td>\n</tr>\n<tr>\n<td>6th</td>\n<td>+3</td>\n<td>@Compendium[mka.classfeatures.4Vpj9vCOB37GtXk6]{Favored Enemy +1}, @Compendium[mka.classfeatures.8fbZt2Qh7ZttwIan]{Natural Explorer improvements}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>+3</td>\n<td>Ranger Archetype feature</td>\n</tr>\n<tr>\n<td>8th</td>\n<td>+3</td>\n<td>@Compendium[mka.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}, @Compendium[mka.classfeatures.C5fzaOBc6HxyOWRn]{Land's Stride}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>+4</td>\n<td>3rd Level Spell Slot</td>\n</tr>\n<tr>\n<td>10th</td>\n<td>+4</td>\n<td>@Compendium[mka.classfeatures.8fbZt2Qh7ZttwIan]{Natural Explorer improvement}, @Compendium[mka.classfeatures.r0unvWK0lPsDthDx]{Hide in Plain Sight}</td>\n</tr>\n<tr>\n<td>11th</td>\n<td>+4</td>\n<td>Ranger Archetype feature</td>\n</tr>\n<tr>\n<td>12th</td>\n<td>+4</td>\n<td>@Compendium[mka.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>13th</td>\n<td>+5</td>\n<td>4th Level Spell Slot</td>\n</tr>\n<tr>\n<td>14th</td>\n<td>+5</td>\n<td>@Compendium[mka.classfeatures.4Vpj9vCOB37GtXk6]{Favored Enemy +1}, @Compendium[mka.classfeatures.DhU2dWCNnX78TstR]{Vanish}</td>\n</tr>\n<tr>\n<td>15th</td>\n<td>+5</td>\n<td>Ranger Archetype feature</td>\n</tr>\n<tr>\n<td>16th</td>\n<td>+5</td>\n<td>@Compendium[mka.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>17th</td>\n<td>+6</td>\n<td>5th Level Spell Slot</td>\n</tr>\n<tr>\n<td>18th</td>\n<td>+6</td>\n<td>@Compendium[mka.classfeatures.QBVmY56RMQuh6C8h]{Feral Senses}</td>\n</tr>\n<tr>\n<td>19th</td>\n<td>+6</td>\n<td>@Compendium[mka.classfeatures.s0Cc2zcX0JzIgam5]{Ability Score Improvement}</td>\n</tr>\n<tr>\n<td>20th</td>\n<td>+6</td>\n<td>@Compendium[mka.classfeatures.3CaP1vFHVR8LgHjx]{Foe Slayer}</td>\n</tr>\n</tbody>\n</table>\n<h1>Ranger Archetypes</h1>\n<p>A classic expression of the ranger ideal is the Hunter.</p>\n<p>@Compendium[mka.subclasses.uqd2q6WjVfcsaaGb]{Hunter}</p>",
           "chat": "",
           "unidentified": ""
         },
@@ -2147,15 +2147,15 @@
               "1": "max"
             },
             "title": "Hit Points",
-            "icon": "systems/dnd5e/icons/svg/hit-points.svg",
+            "icon": "systems/mka/icons/svg/hit-points.svg",
             "_id": "SkYbfsObK8qAoAjy"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.4Vpj9vCOB37GtXk6",
-                "Compendium.dnd5e.classfeatures.8fbZt2Qh7ZttwIan"
+                "Compendium.mka.classfeatures.4Vpj9vCOB37GtXk6",
+                "Compendium.mka.classfeatures.8fbZt2Qh7ZttwIan"
               ],
               "optional": false,
               "spell": {
@@ -2169,21 +2169,21 @@
             },
             "value": {
               "added": {
-                "btJCgsHp9d6BKOdE": "Compendium.dnd5e.classfeatures.4Vpj9vCOB37GtXk6",
-                "UAmLNoN2LQpPR7ok": "Compendium.dnd5e.classfeatures.8fbZt2Qh7ZttwIan"
+                "btJCgsHp9d6BKOdE": "Compendium.mka.classfeatures.4Vpj9vCOB37GtXk6",
+                "UAmLNoN2LQpPR7ok": "Compendium.mka.classfeatures.8fbZt2Qh7ZttwIan"
               }
             },
             "level": 1,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "M6VVuuAZuUXtx626"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.nJA3ISVmyj3uPRVM",
-                "Compendium.dnd5e.classfeatures.u6xV3Ki3TXRrD7zg"
+                "Compendium.mka.classfeatures.nJA3ISVmyj3uPRVM",
+                "Compendium.mka.classfeatures.u6xV3Ki3TXRrD7zg"
               ],
               "optional": false,
               "spell": {
@@ -2198,15 +2198,15 @@
             "value": {},
             "level": 2,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "PQHnGY7M3A3HSAEN"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.1dJHU48yNqn3lcfx",
-                "Compendium.dnd5e.classfeatures.kaHcUGiwi8AtfZIm"
+                "Compendium.mka.classfeatures.1dJHU48yNqn3lcfx",
+                "Compendium.mka.classfeatures.kaHcUGiwi8AtfZIm"
               ],
               "optional": false,
               "spell": {
@@ -2221,14 +2221,14 @@
             "value": {},
             "level": 3,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "E3Fu31GhXZXLCKHa"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.XogoBnFWmCAHXppo"
+                "Compendium.mka.classfeatures.XogoBnFWmCAHXppo"
               ],
               "optional": false,
               "spell": {
@@ -2243,14 +2243,14 @@
             "value": {},
             "level": 5,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "DDK9RajTrB0Lw94p"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.C5fzaOBc6HxyOWRn"
+                "Compendium.mka.classfeatures.C5fzaOBc6HxyOWRn"
               ],
               "optional": false,
               "spell": {
@@ -2265,14 +2265,14 @@
             "value": {},
             "level": 8,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "H9oKoc0pdFEUSZFR"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.r0unvWK0lPsDthDx"
+                "Compendium.mka.classfeatures.r0unvWK0lPsDthDx"
               ],
               "optional": false,
               "spell": {
@@ -2287,14 +2287,14 @@
             "value": {},
             "level": 10,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "XsbIXKY5i8zcuXC5"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.DhU2dWCNnX78TstR"
+                "Compendium.mka.classfeatures.DhU2dWCNnX78TstR"
               ],
               "optional": false,
               "spell": {
@@ -2309,14 +2309,14 @@
             "value": {},
             "level": 14,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "EFRAOwx7zVkuNqbp"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.QBVmY56RMQuh6C8h"
+                "Compendium.mka.classfeatures.QBVmY56RMQuh6C8h"
               ],
               "optional": false,
               "spell": {
@@ -2331,14 +2331,14 @@
             "value": {},
             "level": 18,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "8s9JkKlFgFVnhXSp"
           },
           {
             "type": "ItemGrant",
             "configuration": {
               "items": [
-                "Compendium.dnd5e.classfeatures.3CaP1vFHVR8LgHjx"
+                "Compendium.mka.classfeatures.3CaP1vFHVR8LgHjx"
               ],
               "optional": false,
               "spell": {
@@ -2353,7 +2353,7 @@
             "value": {},
             "level": 20,
             "title": "Features",
-            "icon": "systems/dnd5e/icons/svg/item-grant.svg",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
             "_id": "rbJWoILhV02P07jx"
           },
           {
@@ -2366,10 +2366,10 @@
               "allowDrops": true,
               "type": "feat",
               "pool": [
-                "Compendium.dnd5e.classfeatures.8YwPFv3UAPjWVDNf",
-                "Compendium.dnd5e.classfeatures.zSlV0O2rQMdoq6pB",
-                "Compendium.dnd5e.classfeatures.hCop9uJrWhF1QPb4",
-                "Compendium.dnd5e.classfeatures.mHcSjcHJ8oZu3hkb"
+                "Compendium.mka.classfeatures.8YwPFv3UAPjWVDNf",
+                "Compendium.mka.classfeatures.zSlV0O2rQMdoq6pB",
+                "Compendium.mka.classfeatures.hCop9uJrWhF1QPb4",
+                "Compendium.mka.classfeatures.mHcSjcHJ8oZu3hkb"
               ],
               "spell": {
                 "ability": "",
@@ -2387,7 +2387,7 @@
             },
             "value": {},
             "title": "Fighting Style",
-            "icon": "systems/dnd5e/icons/svg/item-choice.svg",
+            "icon": "systems/mka/icons/svg/item-choice.svg",
             "_id": "hpZ8GPheWy74OSxM"
           },
           {
@@ -2433,7 +2433,7 @@
             },
             "value": {},
             "title": "Spells Known",
-            "icon": "systems/dnd5e/icons/svg/scale-value.svg",
+            "icon": "systems/mka/icons/svg/scale-value.svg",
             "_id": "ICcYTdeBoPcYsSTb"
           },
           {
@@ -2454,7 +2454,7 @@
             },
             "level": 4,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "EH25FmaNCnf9jK9c"
           },
           {
@@ -2475,7 +2475,7 @@
             },
             "level": 8,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "ugN9LCjVqQJaHfoq"
           },
           {
@@ -2496,7 +2496,7 @@
             },
             "level": 12,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "5OzCatRi7tbcXdeX"
           },
           {
@@ -2517,7 +2517,7 @@
             },
             "level": 16,
             "title": "Ability Score Improvement",
-            "icon": "systems/dnd5e/icons/svg/ability-score-improvement.svg",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
             "_id": "ddOTz5cri6De4Vqa"
           },
           {
@@ -2572,16 +2572,16 @@
       },
       "flags": {
         "core": {
-          "sourceId": "Compendium.dnd5e.classes.VkRQ7glQvTWWiOCS"
+          "sourceId": "Compendium.mka.classes.VkRQ7glQvTWWiOCS"
         }
       },
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.2.2",
         "coreVersion": "10.303",
         "createdTime": 1661787234280,
         "modifiedTime": 1691519160853,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -2660,8 +2660,8 @@
         }
       },
       "flags": {
-        "dnd5e": {
-          "sourceId": "Compendium.dnd5e.classfeatures.4Vpj9vCOB37GtXk6",
+        "mka": {
+          "sourceId": "Compendium.mka.classfeatures.4Vpj9vCOB37GtXk6",
           "advancementOrigin": "Apx6i4A5a7JKqaGi.M6VVuuAZuUXtx626"
         }
       },
@@ -2670,12 +2670,12 @@
       "folder": null,
       "sort": 0,
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.2.2",
         "coreVersion": "10.303",
         "createdTime": 1661787234330,
         "modifiedTime": 1691519160854,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     },
     {
@@ -2754,8 +2754,8 @@
         }
       },
       "flags": {
-        "dnd5e": {
-          "sourceId": "Compendium.dnd5e.classfeatures.8fbZt2Qh7ZttwIan",
+        "mka": {
+          "sourceId": "Compendium.mka.classfeatures.8fbZt2Qh7ZttwIan",
           "advancementOrigin": "Apx6i4A5a7JKqaGi.M6VVuuAZuUXtx626"
         }
       },
@@ -2764,12 +2764,12 @@
       "folder": null,
       "sort": 0,
       "_stats": {
-        "systemId": "dnd5e",
+        "systemId": "mka",
         "systemVersion": "2.2.2",
         "coreVersion": "10.303",
         "createdTime": 1661787234342,
         "modifiedTime": 1691519160855,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "mkabuilder0000"
       }
     }
   ],
@@ -2782,11 +2782,11 @@
   "flags": {},
   "_id": "cYD0wRXLW4B17aoY",
   "_stats": {
-    "systemId": "dnd5e",
+    "systemId": "mka",
     "systemVersion": "2.2.2",
     "coreVersion": "10.303",
     "createdTime": 1661787232181,
     "modifiedTime": 1691519160867,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "mkabuilder0000"
   }
 }

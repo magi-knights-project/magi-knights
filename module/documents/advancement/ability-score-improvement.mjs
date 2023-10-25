@@ -19,9 +19,9 @@ export default class AbilityScoreImprovementAdvancement extends Advancement {
         value: AbilityScoreImprovementValueData
       },
       order: 20,
-      icon: "systems/dnd5e/icons/svg/ability-score-improvement.svg",
-      title: game.i18n.localize("DND5E.AdvancementAbilityScoreImprovementTitle"),
-      hint: game.i18n.localize("DND5E.AdvancementAbilityScoreImprovementHint"),
+      icon: "systems/mka/icons/svg/ability-score-improvement.svg",
+      title: game.i18n.localize("MKA.AdvancementAbilityScoreImprovementTitle"),
+      hint: game.i18n.localize("MKA.AdvancementAbilityScoreImprovementHint"),
       validItemTypes: new Set(["background", "class"]),
       apps: {
         config: AbilityScoreImprovementConfig,
@@ -39,7 +39,7 @@ export default class AbilityScoreImprovementAdvancement extends Advancement {
    * @type {boolean}
    */
   get allowFeat() {
-    return (this.item.type === "class") && game.settings.get("dnd5e", "allowFeats");
+    return (this.item.type === "class") && game.settings.get("mka", "allowFeats");
   }
 
   /* -------------------------------------------- */
@@ -71,7 +71,7 @@ export default class AbilityScoreImprovementAdvancement extends Advancement {
    * @returns {boolean}
    */
   canImprove(ability) {
-    return CONFIG.DND5E.abilities[ability]?.improvement !== false;
+    return CONFIG.MKA.abilities[ability]?.improvement !== false;
   }
 
   /* -------------------------------------------- */
@@ -81,7 +81,7 @@ export default class AbilityScoreImprovementAdvancement extends Advancement {
   /** @inheritdoc */
   titleForLevel(level, { configMode=false }={}) {
     if ( this.value.selected !== "feat" ) return this.title;
-    return game.i18n.localize("DND5E.Feature.Feat");
+    return game.i18n.localize("MKA.Feature.Feat");
   }
 
   /* -------------------------------------------- */
@@ -98,7 +98,7 @@ export default class AbilityScoreImprovementAdvancement extends Advancement {
 
       const formatter = new Intl.NumberFormat(game.i18n.lang, { signDisplay: "always" });
       return Object.entries(this.value.assignments).reduce((html, [key, value]) => {
-        const name = CONFIG.DND5E.abilities[key]?.label ?? key;
+        const name = CONFIG.MKA.abilities[key]?.label ?? key;
         html += `<span class="tag">${name} <strong>${formatter.format(value)}</strong></span>\n`;
         return html;
       }, "");
@@ -135,8 +135,8 @@ export default class AbilityScoreImprovementAdvancement extends Advancement {
         if ( source ) {
           itemData = source.clone({
             _id: foundry.utils.randomID(),
-            "flags.dnd5e.sourceId": data.featUuid,
-            "flags.dnd5e.advancementOrigin": `${this.item.id}.${this.id}`
+            "flags.mka.sourceId": data.featUuid,
+            "flags.mka.advancementOrigin": `${this.item.id}.${this.id}`
           }, {keepId: true}).toObject();
         }
       }

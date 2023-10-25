@@ -2,7 +2,7 @@ import SystemDataModel from "../abstract.mjs";
 import CurrencyTemplate from "../shared/currency.mjs";
 
 /**
- * A data model and API layer which handles the schema and functionality of "group" type Actors in the dnd5e system.
+ * A data model and API layer which handles the schema and functionality of "group" type Actors in the mka system.
  * @mixes CurrencyTemplate
  *
  * @property {object} description
@@ -16,7 +16,7 @@ import CurrencyTemplate from "../shared/currency.mjs";
  * @property {number} attributes.movement.air    Base movement speed through the air.
  *
  * @example Create a new Group
- * const g = new dnd5e.documents.Actor5e({
+ * const g = new mka.documents.ActorMKA({
  *  type: "group",
  *  name: "Test Group",
  *  system: {
@@ -29,26 +29,26 @@ export default class GroupActor extends SystemDataModel.mixin(CurrencyTemplate) 
   static defineSchema() {
     return this.mergeSchema(super.defineSchema(), {
       description: new foundry.data.fields.SchemaField({
-        full: new foundry.data.fields.HTMLField({label: "DND5E.Description"}),
-        summary: new foundry.data.fields.HTMLField({label: "DND5E.DescriptionSummary"})
+        full: new foundry.data.fields.HTMLField({label: "MKA.Description"}),
+        summary: new foundry.data.fields.HTMLField({label: "MKA.DescriptionSummary"})
       }),
       members: new foundry.data.fields.SetField(
         new foundry.data.fields.ForeignDocumentField(foundry.documents.BaseActor, {idOnly: true}),
-        {label: "DND5E.GroupMembers"}
+        {label: "MKA.GroupMembers"}
       ),
       attributes: new foundry.data.fields.SchemaField({
         movement: new foundry.data.fields.SchemaField({
           land: new foundry.data.fields.NumberField({
-            nullable: false, min: 0, step: 0.1, initial: 0, label: "DND5E.MovementLand"
+            nullable: false, min: 0, step: 0.1, initial: 0, label: "MKA.MovementLand"
           }),
           water: new foundry.data.fields.NumberField({
-            nullable: false, min: 0, step: 0.1, initial: 0, label: "DND5E.MovementWater"
+            nullable: false, min: 0, step: 0.1, initial: 0, label: "MKA.MovementWater"
           }),
           air: new foundry.data.fields.NumberField({
-            nullable: false, min: 0, step: 0.1, initial: 0, label: "DND5E.MovementAir"
+            nullable: false, min: 0, step: 0.1, initial: 0, label: "MKA.MovementAir"
           })
         })
-      }, {label: "DND5E.Attributes"})
+      }, {label: "MKA.Attributes"})
     });
   }
 
@@ -88,8 +88,8 @@ export default class GroupActor extends SystemDataModel.mixin(CurrencyTemplate) 
 
   /**
    * Add a new member to the group.
-   * @param {Actor5e} actor           A non-group Actor to add to the group
-   * @returns {Promise<Actor5e>}      The updated group Actor
+   * @param {ActorMKA} actor           A non-group Actor to add to the group
+   * @returns {Promise<ActorMKA>}      The updated group Actor
    */
   async addMember(actor) {
     if ( actor.type === "group" ) throw new Error("You may not add a group within a group.");
@@ -107,8 +107,8 @@ export default class GroupActor extends SystemDataModel.mixin(CurrencyTemplate) 
 
   /**
    * Remove a member from the group.
-   * @param {Actor5e|string} actor    An Actor or ID to remove from this group
-   * @returns {Promise<Actor5e>}      The updated group Actor
+   * @param {ActorMKA|string} actor    An Actor or ID to remove from this group
+   * @returns {Promise<ActorMKA>}      The updated group Actor
    */
   async removeMember(actor) {
     const memberIds = foundry.utils.deepClone(this._source.members);

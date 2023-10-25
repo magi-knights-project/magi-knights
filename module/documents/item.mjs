@@ -7,11 +7,11 @@ import Proficiency from "./actor/proficiency.mjs";
 /**
  * Override and extend the basic Item implementation.
  */
-export default class Item5e extends Item {
+export default class ItemMKA extends Item {
 
   /**
    * Caches an item linked to this one, such as a subclass associated with a class.
-   * @type {Item5e}
+   * @type {ItemMKA}
    * @private
    */
   _classLink;
@@ -211,7 +211,7 @@ export default class Item5e extends Item {
 
   /**
    * Class associated with this subclass. Always returns null on non-subclass or non-embedded items.
-   * @type {Item5e|null}
+   * @type {ItemMKA|null}
    */
   get class() {
     if ( !this.isEmbedded || (this.type !== "subclass") ) return null;
@@ -223,7 +223,7 @@ export default class Item5e extends Item {
 
   /**
    * Subclass associated with this class. Always returns null on non-class or non-embedded items.
-   * @type {Item5e|null}
+   * @type {ItemMKA|null}
    */
   get subclass() {
     if ( !this.isEmbedded || (this.type !== "class") ) return null;
@@ -253,7 +253,7 @@ export default class Item5e extends Item {
    * Spellcasting details for a class or subclass.
    *
    * @typedef {object} SpellcastingDescription
-   * @property {string} type              Spellcasting type as defined in ``CONFIG.DND5E.spellcastingTypes`.
+   * @property {string} type              Spellcasting type as defined in ``CONFIG.MKA.spellcastingTypes`.
    * @property {string|null} progression  Progression within the specified spellcasting type if supported.
    * @property {string} ability           Ability used when casting spells from this class or subclass.
    * @property {number|null} levels       Number of levels of this class or subclass's class if embedded.
@@ -278,8 +278,8 @@ export default class Item5e extends Item {
     finalSC.levels = this.isEmbedded ? (this.system.levels ?? this.class?.system.levels) : null;
 
     // Temp method for determining spellcasting type until this data is available directly using advancement
-    if ( CONFIG.DND5E.spellcastingTypes[finalSC.progression] ) finalSC.type = finalSC.progression;
-    else finalSC.type = Object.entries(CONFIG.DND5E.spellcastingTypes).find(([type, data]) => {
+    if ( CONFIG.MKA.spellcastingTypes[finalSC.progression] ) finalSC.type = finalSC.progression;
+    else finalSC.type = Object.entries(CONFIG.MKA.spellcastingTypes).find(([type, data]) => {
       return !!data.progression?.[finalSC.progression];
     })?.[0];
 
@@ -296,7 +296,7 @@ export default class Item5e extends Item {
     const requireEquipped = (this.type !== "consumable")
       || ["rod", "trinket", "wand"].includes(this.system.consumableType);
     if ( requireEquipped && (this.system.equipped === false) ) return true;
-    return this.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED;
+    return this.system.attunement === CONFIG.MKA.attunementTypes.REQUIRED;
   }
 
   /* -------------------------------------------- */
@@ -339,7 +339,7 @@ export default class Item5e extends Item {
    * @protected
    */
   _prepareEquipment() {
-    this.labels.armor = this.system.armor.value ? `${this.system.armor.value} ${game.i18n.localize("DND5E.AC")}` : "";
+    this.labels.armor = this.system.armor.value ? `${this.system.armor.value} ${game.i18n.localize("MKA.AC")}` : "";
   }
 
   /* -------------------------------------------- */
@@ -350,13 +350,13 @@ export default class Item5e extends Item {
    */
   _prepareFeat() {
     const act = this.system.activation;
-    const types = CONFIG.DND5E.abilityActivationTypes;
-    if ( act?.type === types.legendary ) this.labels.featType = game.i18n.localize("DND5E.LegendaryActionLabel");
-    else if ( act?.type === types.lair ) this.labels.featType = game.i18n.localize("DND5E.LairActionLabel");
+    const types = CONFIG.MKA.abilityActivationTypes;
+    if ( act?.type === types.legendary ) this.labels.featType = game.i18n.localize("MKA.LegendaryActionLabel");
+    else if ( act?.type === types.lair ) this.labels.featType = game.i18n.localize("MKA.LairActionLabel");
     else if ( act?.type ) {
-      this.labels.featType = game.i18n.localize(this.system.damage.length ? "DND5E.Attack" : "DND5E.Action");
+      this.labels.featType = game.i18n.localize(this.system.damage.length ? "MKA.Attack" : "MKA.Action");
     }
-    else this.labels.featType = game.i18n.localize("DND5E.Passive");
+    else this.labels.featType = game.i18n.localize("MKA.Passive");
   }
 
   /* -------------------------------------------- */
@@ -366,14 +366,14 @@ export default class Item5e extends Item {
    * @protected
    */
   _prepareSpell() {
-    const tags = Object.fromEntries(Object.entries(CONFIG.DND5E.spellTags).map(([k, v]) => {
+    const tags = Object.fromEntries(Object.entries(CONFIG.MKA.spellTags).map(([k, v]) => {
       v.tag = true;
       return [k, v];
     }));
-    const attributes = {...CONFIG.DND5E.spellComponents, ...tags};
+    const attributes = {...CONFIG.MKA.spellComponents, ...tags};
     this.system.preparation.mode ||= "prepared";
-    this.labels.level = CONFIG.DND5E.spellLevels[this.system.level];
-    this.labels.school = CONFIG.DND5E.spellSchools[this.system.school];
+    this.labels.level = CONFIG.MKA.spellLevels[this.system.level];
+    this.labels.school = CONFIG.MKA.spellPaths[this.system.school];
     this.labels.components = Object.entries(this.system.components).reduce((obj, [c, active]) => {
       const config = attributes[c];
       if ( !config || (active !== true) ) return obj;
@@ -395,7 +395,7 @@ export default class Item5e extends Item {
    */
   _prepareActivation() {
     if ( !("activation" in this.system) ) return;
-    const C = CONFIG.DND5E;
+    const C = CONFIG.MKA;
 
     // Ability Activation Label
     const act = this.system.activation ?? {};
@@ -420,7 +420,7 @@ export default class Item5e extends Item {
     // Recharge Label
     let chg = this.system.recharge ?? {};
     const chgSuffix = `${chg.value}${parseInt(chg.value) < 6 ? "+" : ""}`;
-    this.labels.recharge = `${game.i18n.localize("DND5E.Recharge")} [${chgSuffix}]`;
+    this.labels.recharge = `${game.i18n.localize("MKA.Recharge")} [${chgSuffix}]`;
   }
 
   /* -------------------------------------------- */
@@ -433,7 +433,7 @@ export default class Item5e extends Item {
     if ( !("actionType" in this.system) ) return;
     let dmg = this.system.damage || {};
     if ( dmg.parts ) {
-      const types = CONFIG.DND5E.damageTypes;
+      const types = CONFIG.MKA.damageTypes;
       this.labels.damage = dmg.parts.map(d => d[0]).join(" + ").replace(/\+ -/g, "- ");
       this.labels.damageTypes = dmg.parts.map(d => types[d[1]]).join(", ");
     }
@@ -450,7 +450,7 @@ export default class Item5e extends Item {
     this.advancement = {
       byId: {},
       byLevel: Object.fromEntries(
-        Array.fromRange(CONFIG.DND5E.maxLevel + 1).slice(minAdvancementLevel).map(l => [l, []])
+        Array.fromRange(CONFIG.MKA.maxLevel + 1).slice(minAdvancementLevel).map(l => [l, []])
       ),
       byType: {},
       needingConfiguration: []
@@ -489,7 +489,7 @@ export default class Item5e extends Item {
   /**
    * Compute item attributes which might depend on prepared actor data. If this item is embedded this method will
    * be called after the actor's data is prepared.
-   * Otherwise, it will be called at the end of `Item5e#prepareDerivedData`.
+   * Otherwise, it will be called at the end of `ItemMKA#prepareDerivedData`.
    */
   prepareFinalAttributes() {
 
@@ -501,8 +501,8 @@ export default class Item5e extends Item {
 
     // Action usage
     if ( "actionType" in this.system ) {
-      this.labels.abilityCheck = game.i18n.format("DND5E.AbilityPromptTitle", {
-        ability: CONFIG.DND5E.abilities[this.system.ability]?.label ?? ""
+      this.labels.abilityCheck = game.i18n.format("MKA.AbilityPromptTitle", {
+        ability: CONFIG.MKA.abilities[this.system.ability]?.label ?? ""
       });
 
       // Saving throws
@@ -526,13 +526,13 @@ export default class Item5e extends Item {
 
   /**
    * Populate a label with the compiled and simplified damage formula based on owned item
-   * actor data. This is only used for display purposes and is not related to `Item5e#rollDamage`.
+   * actor data. This is only used for display purposes and is not related to `ItemMKA#rollDamage`.
    * @returns {{damageType: string, formula: string, label: string}[]}
    */
   getDerivedDamageLabel() {
     if ( !this.hasDamage || !this.isOwned ) return [];
     const rollData = this.getRollData();
-    const damageLabels = { ...CONFIG.DND5E.damageTypes, ...CONFIG.DND5E.healingTypes };
+    const damageLabels = { ...CONFIG.MKA.damageTypes, ...CONFIG.MKA.healingTypes };
     const derivedDamage = this.system.damage?.parts?.map(damagePart => {
       let formula;
       try {
@@ -569,8 +569,8 @@ export default class Item5e extends Item {
     }
 
     // Update labels
-    const abl = CONFIG.DND5E.abilities[save.ability]?.label ?? "";
-    this.labels.save = game.i18n.format("DND5E.SaveDC", {dc: save.dc || "", ability: abl});
+    const abl = CONFIG.MKA.abilities[save.ability]?.label ?? "";
+    this.labels.save = game.i18n.format("MKA.SaveDC", {dc: save.dc || "", ability: abl});
     return save.dc;
   }
 
@@ -645,12 +645,12 @@ export default class Item5e extends Item {
     if ( !uses?.max ) return;
     let max = uses.max;
     if ( this.isOwned && !Number.isNumeric(max) ) {
-      const property = game.i18n.localize("DND5E.UsesMax");
+      const property = game.i18n.localize("MKA.UsesMax");
       try {
         const rollData = this.getRollData({ deterministic: true });
         max = Roll.safeEval(this.replaceFormulaData(max, rollData, { property }));
       } catch(e) {
-        const message = game.i18n.format("DND5E.FormulaMalformedError", { property, name: this.name });
+        const message = game.i18n.format("MKA.FormulaMalformedError", { property, name: this.name });
         this.actor._preparationWarnings.push({ message, link: this.uuid, type: "error" });
         console.error(message, e);
         return;
@@ -672,12 +672,12 @@ export default class Item5e extends Item {
 
     // If this is an owned item and the value is not numeric, we need to calculate it
     if ( this.isOwned && !Number.isNumeric(value) ) {
-      const property = game.i18n.localize("DND5E.Duration");
+      const property = game.i18n.localize("MKA.Duration");
       try {
         const rollData = this.getRollData({ deterministic: true });
         value = Roll.safeEval(this.replaceFormulaData(value, rollData, { property }));
       } catch(e) {
-        const message = game.i18n.format("DND5E.FormulaMalformedError", { property, name: this.name });
+        const message = game.i18n.format("MKA.FormulaMalformedError", { property, name: this.name });
         this.actor._preparationWarnings.push({ message, link: this.uuid, type: "error" });
         console.error(message, e);
         return;
@@ -687,7 +687,7 @@ export default class Item5e extends Item {
 
     // Now that duration value is a number, set the label
     if ( ["inst", "perm"].includes(duration.units) ) duration.value = null;
-    this.labels.duration = [duration.value, CONFIG.DND5E.timePeriods[duration.units]].filterJoin(" ");
+    this.labels.duration = [duration.value, CONFIG.MKA.timePeriods[duration.units]].filterJoin(" ");
   }
 
   /* -------------------------------------------- */
@@ -714,7 +714,7 @@ export default class Item5e extends Item {
     });
     if ( (missingReferences.size > 0) && this.actor ) {
       const listFormatter = new Intl.ListFormat(game.i18n.lang, { style: "long", type: "conjunction" });
-      const message = game.i18n.format("DND5E.FormulaMissingReferenceWarn", {
+      const message = game.i18n.format("MKA.FormulaMissingReferenceWarn", {
         property, name: this.name, references: listFormatter.format(missingReferences)
       });
       this.actor._preparationWarnings.push({ message, link: this.uuid, type: "warning" });
@@ -755,12 +755,12 @@ export default class Item5e extends Item {
    * @param {ItemUseOptions} [options]           Options used for configuring item usage.
    * @returns {Promise<ChatMessage|object|void>} Chat message if options.createMessage is true, message data if it is
    *                                             false, and nothing if the roll wasn't performed.
-   * @deprecated since 2.0 in favor of `Item5e#use`, targeted for removal in 2.4
+   * @deprecated since 2.0 in favor of `ItemMKA#use`, targeted for removal in 2.4
    */
   async roll(options={}) {
     foundry.utils.logCompatibilityWarning(
-      "Item5e#roll has been renamed Item5e#use. Support for the old name will be removed in future versions.",
-      { since: "DnD5e 2.0", until: "DnD5e 2.4" }
+      "ItemMKA#roll has been renamed ItemMKA#use. Support for the old name will be removed in future versions.",
+      { since: "MKA 2.0", until: "MKA 2.4" }
     );
     return this.use(undefined, options);
   }
@@ -781,13 +781,13 @@ export default class Item5e extends Item {
     options = foundry.utils.mergeObject({
       configureDialog: true,
       createMessage: true,
-      "flags.dnd5e.use": {type: this.type, itemId: this.id, itemUuid: this.uuid}
+      "flags.mka.use": {type: this.type, itemId: this.id, itemUuid: this.uuid}
     }, options);
 
     // Reference aspects of the item data necessary for usage
     const resource = is.consume || {};        // Resource consumption
     const isSpell = item.type === "spell";    // Does the item require a spell slot?
-    const requireSpellSlot = isSpell && (is.level > 0) && CONFIG.DND5E.spellUpcastModes.includes(is.preparation.mode);
+    const requireSpellSlot = isSpell && (is.level > 0) && CONFIG.MKA.spellUpcastModes.includes(is.preparation.mode);
 
     // Define follow-up actions resulting from the item usage
     config = foundry.utils.mergeObject({
@@ -806,14 +806,14 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires before an item usage is configured.
-     * @function dnd5e.preUseItem
+     * @function mka.preUseItem
      * @memberof hookEvents
-     * @param {Item5e} item                  Item being used.
+     * @param {ItemMKA} item                  Item being used.
      * @param {ItemUseConfiguration} config  Configuration data for the item usage being prepared.
      * @param {ItemUseOptions} options       Additional options used for configuring item usage.
      * @returns {boolean}                    Explicitly return `false` to prevent item from being used.
      */
-    if ( Hooks.call("dnd5e.preUseItem", item, config, options) === false ) return;
+    if ( Hooks.call("mka.preUseItem", item, config, options) === false ) return;
 
     // Display configuration dialog
     if ( (options.configureDialog !== false) && config.needsConfiguration ) {
@@ -832,18 +832,18 @@ export default class Item5e extends Item {
         item.prepareFinalAttributes();
       }
     }
-    if ( isSpell ) foundry.utils.mergeObject(options.flags, {"dnd5e.use.spellLevel": item.system.level});
+    if ( isSpell ) foundry.utils.mergeObject(options.flags, {"mka.use.spellLevel": item.system.level});
 
     /**
      * A hook event that fires before an item's resource consumption has been calculated.
-     * @function dnd5e.preItemUsageConsumption
+     * @function mka.preItemUsageConsumption
      * @memberof hookEvents
-     * @param {Item5e} item                  Item being used.
+     * @param {ItemMKA} item                  Item being used.
      * @param {ItemUseConfiguration} config  Configuration data for the item usage being prepared.
      * @param {ItemUseOptions} options       Additional options used for configuring item usage.
      * @returns {boolean}                    Explicitly return `false` to prevent item from being used.
      */
-    if ( Hooks.call("dnd5e.preItemUsageConsumption", item, config, options) === false ) return;
+    if ( Hooks.call("mka.preItemUsageConsumption", item, config, options) === false ) return;
 
     // Determine whether the item can be used by testing for resource consumption
     const usage = item._getUsageUpdates(config);
@@ -852,9 +852,9 @@ export default class Item5e extends Item {
     /**
      * A hook event that fires after an item's resource consumption has been calculated but before any
      * changes have been made.
-     * @function dnd5e.itemUsageConsumption
+     * @function mka.itemUsageConsumption
      * @memberof hookEvents
-     * @param {Item5e} item                     Item being used.
+     * @param {ItemMKA} item                     Item being used.
      * @param {ItemUseConfiguration} config     Configuration data for the item usage being prepared.
      * @param {ItemUseOptions} options          Additional options used for configuring item usage.
      * @param {object} usage
@@ -863,7 +863,7 @@ export default class Item5e extends Item {
      * @param {object[]} usage.resourceUpdates  Updates that will be applied to other items on the actor.
      * @returns {boolean}                       Explicitly return `false` to prevent item from being used.
      */
-    if ( Hooks.call("dnd5e.itemUsageConsumption", item, config, options, usage) === false ) return;
+    if ( Hooks.call("mka.itemUsageConsumption", item, config, options, usage) === false ) return;
 
     // Commit pending data updates
     const { actorUpdates, itemUpdates, resourceUpdates } = usage;
@@ -879,10 +879,10 @@ export default class Item5e extends Item {
     let templates;
     if ( config.createMeasuredTemplate ) {
       try {
-        templates = await (dnd5e.canvas.AbilityTemplate.fromItem(item))?.drawPreview();
+        templates = await (mka.canvas.AbilityTemplate.fromItem(item))?.drawPreview();
       } catch(err) {
-        Hooks.onError("Item5e#use", err, {
-          msg: game.i18n.localize("DND5E.PlaceTemplateError"),
+        Hooks.onError("ItemMKA#use", err, {
+          msg: game.i18n.localize("MKA.PlaceTemplateError"),
           log: "error",
           notify: "error"
         });
@@ -891,14 +891,14 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires when an item is used, after the measured template has been created if one is needed.
-     * @function dnd5e.useItem
+     * @function mka.useItem
      * @memberof hookEvents
-     * @param {Item5e} item                                Item being used.
+     * @param {ItemMKA} item                                Item being used.
      * @param {ItemUseConfiguration} config                Configuration data for the roll.
      * @param {ItemUseOptions} options                     Additional options for configuring item usage.
      * @param {MeasuredTemplateDocument[]|null} templates  The measured templates if they were created.
      */
-    Hooks.callAll("dnd5e.useItem", item, config, options, templates ?? null);
+    Hooks.callAll("mka.useItem", item, config, options, templates ?? null);
 
     return cardData;
   }
@@ -923,7 +923,7 @@ export default class Item5e extends Item {
     if ( consumeRecharge ) {
       const recharge = this.system.recharge || {};
       if ( recharge.charged === false ) {
-        ui.notifications.warn(game.i18n.format("DND5E.ItemNoUses", {name: this.name}));
+        ui.notifications.warn(game.i18n.format("MKA.ItemNoUses", {name: this.name}));
         return false;
       }
       itemUpdates["system.recharge.charged"] = false;
@@ -941,9 +941,9 @@ export default class Item5e extends Item {
       const level = this.actor?.system.spells[consumeSpellLevel];
       const spells = Number(level?.value ?? 0);
       if ( spells === 0 ) {
-        const labelKey = consumeSpellLevel === "pact" ? "DND5E.SpellProgPact" : `DND5E.SpellLevel${this.system.level}`;
+        const labelKey = consumeSpellLevel === "pact" ? "MKA.SpellProgPact" : `MKA.SpellLevel${this.system.level}`;
         const label = game.i18n.localize(labelKey);
-        ui.notifications.warn(game.i18n.format("DND5E.SpellCastNoSlots", {name: this.name, level: label}));
+        ui.notifications.warn(game.i18n.format("MKA.SpellCastNoSlots", {name: this.name, level: label}));
         return false;
       }
       actorUpdates[`system.spells.${consumeSpellLevel}.value`] = Math.max(spells - 1, 0);
@@ -972,7 +972,7 @@ export default class Item5e extends Item {
 
       // If the item was not used, return a warning
       if ( !used ) {
-        ui.notifications.warn(game.i18n.format("DND5E.ItemNoUses", {name: this.name}));
+        ui.notifications.warn(game.i18n.format("MKA.ItemNoUses", {name: this.name}));
         return false;
       }
     }
@@ -996,9 +996,9 @@ export default class Item5e extends Item {
     if ( !consume.type ) return;
 
     // No consumed target
-    const typeLabel = CONFIG.DND5E.abilityConsumptionTypes[consume.type];
+    const typeLabel = CONFIG.MKA.abilityConsumptionTypes[consume.type];
     if ( !consume.target ) {
-      ui.notifications.warn(game.i18n.format("DND5E.ConsumeWarningNoResource", {name: this.name, type: typeLabel}));
+      ui.notifications.warn(game.i18n.format("MKA.ConsumeWarningNoResource", {name: this.name, type: typeLabel}));
       return false;
     }
 
@@ -1035,14 +1035,14 @@ export default class Item5e extends Item {
 
     // Verify that a consumed resource is available
     if ( resource === undefined ) {
-      ui.notifications.warn(game.i18n.format("DND5E.ConsumeWarningNoSource", {name: this.name, type: typeLabel}));
+      ui.notifications.warn(game.i18n.format("MKA.ConsumeWarningNoSource", {name: this.name, type: typeLabel}));
       return false;
     }
 
     // Verify that the required quantity is available
     let remaining = quantity - amount;
     if ( remaining < 0 ) {
-      ui.notifications.warn(game.i18n.format("DND5E.ConsumeWarningNoQuantity", {name: this.name, type: typeLabel}));
+      ui.notifications.warn(game.i18n.format("MKA.ConsumeWarningNoQuantity", {name: this.name, type: typeLabel}));
       return false;
     }
 
@@ -1111,7 +1111,7 @@ export default class Item5e extends Item {
       isTool: this.type === "tool",
       hasAbilityCheck: this.hasAbilityCheck
     };
-    const html = await renderTemplate("systems/dnd5e/templates/chat/item-card.hbs", templateData);
+    const html = await renderTemplate("systems/mka/templates/chat/item-card.hbs", templateData);
 
     // Create the ChatMessage data object
     const chatData = {
@@ -1125,7 +1125,7 @@ export default class Item5e extends Item {
 
     // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
     if ( (this.type === "consumable") && !this.actor.items.has(this.id) ) {
-      chatData.flags["dnd5e.itemData"] = templateData.item.toObject();
+      chatData.flags["mka.itemData"] = templateData.item.toObject();
     }
 
     // Merge in the flags from options
@@ -1133,13 +1133,13 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires before an item chat card is created.
-     * @function dnd5e.preDisplayCard
+     * @function mka.preDisplayCard
      * @memberof hookEvents
-     * @param {Item5e} item             Item for which the chat card is being displayed.
+     * @param {ItemMKA} item             Item for which the chat card is being displayed.
      * @param {object} chatData         Data used to create the chat message.
      * @param {ItemUseOptions} options  Options which configure the display of the item chat card.
      */
-    Hooks.callAll("dnd5e.preDisplayCard", this, chatData, options);
+    Hooks.callAll("mka.preDisplayCard", this, chatData, options);
 
     // Apply the roll mode to adjust message visibility
     ChatMessage.applyRollMode(chatData, options.rollMode ?? game.settings.get("core", "rollMode"));
@@ -1149,13 +1149,13 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires after an item chat card is created.
-     * @function dnd5e.displayCard
+     * @function mka.displayCard
      * @memberof hookEvents
-     * @param {Item5e} item              Item for which the chat card is being displayed.
+     * @param {ItemMKA} item              Item for which the chat card is being displayed.
      * @param {ChatMessage|object} card  The created ChatMessage instance or ChatMessageData depending on whether
      *                                   options.createMessage was set to `true`.
      */
-    Hooks.callAll("dnd5e.displayCard", this, card);
+    Hooks.callAll("mka.displayCard", this, card);
 
     return card;
   }
@@ -1202,9 +1202,9 @@ export default class Item5e extends Item {
    * @returns {Promise<D20Roll|null>}       A Promise which resolves to the created Roll instance
    */
   async rollAttack(options={}) {
-    const flags = this.actor.flags.dnd5e ?? {};
+    const flags = this.actor.flags.mka ?? {};
     if ( !this.hasAttack ) throw new Error("You may not place an Attack Roll with this Item.");
-    let title = `${this.name} - ${game.i18n.localize("DND5E.AttackRoll")}`;
+    let title = `${this.name} - ${game.i18n.localize("MKA.AttackRoll")}`;
 
     // Get the parts and rollData for this item's attack
     const {parts, rollData} = this.getAttackToHit();
@@ -1234,7 +1234,7 @@ export default class Item5e extends Item {
 
     // Flags
     const elvenAccuracy = (flags.elvenAccuracy
-      && CONFIG.DND5E.characterFlags.elvenAccuracy.abilities.includes(this.abilityMod)) || undefined;
+      && CONFIG.MKA.characterFlags.elvenAccuracy.abilities.includes(this.abilityMod)) || undefined;
 
     // Compose roll options
     const rollConfig = foundry.utils.mergeObject({
@@ -1251,7 +1251,7 @@ export default class Item5e extends Item {
         left: window.innerWidth - 710
       },
       messageData: {
-        "flags.dnd5e.roll": {type: "attack", itemId: this.id, itemUuid: this.uuid},
+        "flags.mka.roll": {type: "attack", itemId: this.id, itemUuid: this.uuid},
         speaker: ChatMessage.getSpeaker({actor: this.actor})
       }
     }, options);
@@ -1259,26 +1259,26 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires before an attack is rolled for an Item.
-     * @function dnd5e.preRollAttack
+     * @function mka.preRollAttack
      * @memberof hookEvents
-     * @param {Item5e} item                  Item for which the roll is being performed.
+     * @param {ItemMKA} item                  Item for which the roll is being performed.
      * @param {D20RollConfiguration} config  Configuration data for the pending roll.
      * @returns {boolean}                    Explicitly return false to prevent the roll from being performed.
      */
-    if ( Hooks.call("dnd5e.preRollAttack", this, rollConfig) === false ) return;
+    if ( Hooks.call("mka.preRollAttack", this, rollConfig) === false ) return;
 
     const roll = await d20Roll(rollConfig);
     if ( roll === null ) return null;
 
     /**
      * A hook event that fires after an attack has been rolled for an Item.
-     * @function dnd5e.rollAttack
+     * @function mka.rollAttack
      * @memberof hookEvents
-     * @param {Item5e} item          Item for which the roll was performed.
+     * @param {ItemMKA} item          Item for which the roll was performed.
      * @param {D20Roll} roll         The resulting roll.
      * @param {object[]} ammoUpdate  Updates that will be applied to ammo Items as a result of this attack.
      */
-    Hooks.callAll("dnd5e.rollAttack", this, roll, ammoUpdate);
+    Hooks.callAll("mka.rollAttack", this, roll, ammoUpdate);
 
     // Commit ammunition consumption on attack rolls resource consumption if the attack roll was made
     if ( ammoUpdate.length ) await this.actor?.updateEmbeddedDocuments("Item", ammoUpdate);
@@ -1302,7 +1302,7 @@ export default class Item5e extends Item {
   async rollDamage({critical, event=null, spellLevel=null, versatile=false, options={}}={}) {
     if ( !this.hasDamage ) throw new Error("You may not make a Damage Roll with this Item.");
     const messageData = {
-      "flags.dnd5e.roll": {type: "damage", itemId: this.id, itemUuid: this.uuid},
+      "flags.mka.roll": {type: "damage", itemId: this.id, itemUuid: this.uuid},
       speaker: ChatMessage.getSpeaker({actor: this.actor})
     };
 
@@ -1313,7 +1313,7 @@ export default class Item5e extends Item {
     if ( spellLevel ) rollData.item.level = spellLevel;
 
     // Configure the damage roll
-    const actionFlavor = game.i18n.localize(this.system.actionType === "heal" ? "DND5E.Healing" : "DND5E.DamageRoll");
+    const actionFlavor = game.i18n.localize(this.system.actionType === "heal" ? "MKA.Healing" : "MKA.DamageRoll");
     const title = `${this.name} - ${actionFlavor}`;
     const rollConfig = {
       actor: this.actor,
@@ -1333,7 +1333,7 @@ export default class Item5e extends Item {
     // Adjust damage from versatile usage
     if ( versatile && dmg.versatile ) {
       parts[0] = dmg.versatile;
-      messageData["flags.dnd5e.roll"].versatile = true;
+      messageData["flags.mka.roll"].versatile = true;
     }
 
     // Scale damage from up-casting spells
@@ -1367,7 +1367,7 @@ export default class Item5e extends Item {
 
     // Factor in extra critical damage dice from the Barbarian's "Brutal Critical"
     if ( this.system.actionType === "mwak" ) {
-      rollConfig.criticalBonusDice = this.actor.getFlag("dnd5e", "meleeCriticalDamageDice") ?? 0;
+      rollConfig.criticalBonusDice = this.actor.getFlag("mka", "meleeCriticalDamageDice") ?? 0;
     }
 
     // Factor in extra weapon-specific critical damage
@@ -1378,24 +1378,24 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires before a damage is rolled for an Item.
-     * @function dnd5e.preRollDamage
+     * @function mka.preRollDamage
      * @memberof hookEvents
-     * @param {Item5e} item                     Item for which the roll is being performed.
+     * @param {ItemMKA} item                     Item for which the roll is being performed.
      * @param {DamageRollConfiguration} config  Configuration data for the pending roll.
      * @returns {boolean}                       Explicitly return false to prevent the roll from being performed.
      */
-    if ( Hooks.call("dnd5e.preRollDamage", this, rollConfig) === false ) return;
+    if ( Hooks.call("mka.preRollDamage", this, rollConfig) === false ) return;
 
     const roll = await damageRoll(rollConfig);
 
     /**
      * A hook event that fires after a damage has been rolled for an Item.
-     * @function dnd5e.rollDamage
+     * @function mka.rollDamage
      * @memberof hookEvents
-     * @param {Item5e} item      Item for which the roll was performed.
+     * @param {ItemMKA} item      Item for which the roll was performed.
      * @param {DamageRoll} roll  The resulting roll.
      */
-    if ( roll ) Hooks.callAll("dnd5e.rollDamage", this, roll);
+    if ( roll ) Hooks.callAll("mka.rollDamage", this, roll);
 
     // Call the roll helper utility
     return roll;
@@ -1490,36 +1490,36 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires before a formula is rolled for an Item.
-     * @function dnd5e.preRollFormula
+     * @function mka.preRollFormula
      * @memberof hookEvents
-     * @param {Item5e} item                 Item for which the roll is being performed.
+     * @param {ItemMKA} item                 Item for which the roll is being performed.
      * @param {object} config               Configuration data for the pending roll.
      * @param {string} config.formula       Formula that will be rolled.
      * @param {object} config.data          Data used when evaluating the roll.
      * @param {boolean} config.chatMessage  Should a chat message be created for this roll?
      * @returns {boolean}                   Explicitly return false to prevent the roll from being performed.
      */
-    if ( Hooks.call("dnd5e.preRollFormula", this, rollConfig) === false ) return;
+    if ( Hooks.call("mka.preRollFormula", this, rollConfig) === false ) return;
 
     const roll = await new Roll(rollConfig.formula, rollConfig.data).roll({async: true});
 
     if ( rollConfig.chatMessage ) {
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({actor: this.actor}),
-        flavor: `${this.name} - ${game.i18n.localize("DND5E.OtherFormula")}`,
+        flavor: `${this.name} - ${game.i18n.localize("MKA.OtherFormula")}`,
         rollMode: game.settings.get("core", "rollMode"),
-        messageData: {"flags.dnd5e.roll": {type: "other", itemId: this.id, itemUuid: this.uuid}}
+        messageData: {"flags.mka.roll": {type: "other", itemId: this.id, itemUuid: this.uuid}}
       });
     }
 
     /**
      * A hook event that fires after a formula has been rolled for an Item.
-     * @function dnd5e.rollFormula
+     * @function mka.rollFormula
      * @memberof hookEvents
-     * @param {Item5e} item  Item for which the roll was performed.
+     * @param {ItemMKA} item  Item for which the roll was performed.
      * @param {Roll} roll    The resulting roll.
      */
-    Hooks.callAll("dnd5e.rollFormula", this, roll);
+    Hooks.callAll("mka.rollFormula", this, roll);
 
     return roll;
   }
@@ -1543,9 +1543,9 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires before the Item is rolled to recharge.
-     * @function dnd5e.preRollRecharge
+     * @function mka.preRollRecharge
      * @memberof hookEvents
-     * @param {Item5e} item                 Item for which the roll is being performed.
+     * @param {ItemMKA} item                 Item for which the roll is being performed.
      * @param {object} config               Configuration data for the pending roll.
      * @param {string} config.formula       Formula that will be used to roll the recharge.
      * @param {object} config.data          Data used when evaluating the roll.
@@ -1553,28 +1553,28 @@ export default class Item5e extends Item {
      * @param {boolean} config.chatMessage  Should a chat message be created for this roll?
      * @returns {boolean}                   Explicitly return false to prevent the roll from being performed.
      */
-    if ( Hooks.call("dnd5e.preRollRecharge", this, rollConfig) === false ) return;
+    if ( Hooks.call("mka.preRollRecharge", this, rollConfig) === false ) return;
 
     const roll = await new Roll(rollConfig.formula, rollConfig.data).roll({async: true});
     const success = roll.total >= rollConfig.target;
 
     if ( rollConfig.chatMessage ) {
-      const resultMessage = game.i18n.localize(`DND5E.ItemRecharge${success ? "Success" : "Failure"}`);
+      const resultMessage = game.i18n.localize(`MKA.ItemRecharge${success ? "Success" : "Failure"}`);
       roll.toMessage({
-        flavor: `${game.i18n.format("DND5E.ItemRechargeCheck", {name: this.name})} - ${resultMessage}`,
+        flavor: `${game.i18n.format("MKA.ItemRechargeCheck", {name: this.name})} - ${resultMessage}`,
         speaker: ChatMessage.getSpeaker({actor: this.actor, token: this.actor.token})
       });
     }
 
     /**
      * A hook event that fires after the Item has rolled to recharge, but before any changes have been performed.
-     * @function dnd5e.rollRecharge
+     * @function mka.rollRecharge
      * @memberof hookEvents
-     * @param {Item5e} item  Item for which the roll was performed.
+     * @param {ItemMKA} item  Item for which the roll was performed.
      * @param {Roll} roll    The resulting roll.
      * @returns {boolean}    Explicitly return false to prevent the item from being recharged.
      */
-    if ( Hooks.call("dnd5e.rollRecharge", this, roll) === false ) return roll;
+    if ( Hooks.call("mka.rollRecharge", this, roll) === false ) return roll;
 
     // Update the Item data
     if ( success ) this.update({"system.recharge.charged": true});
@@ -1668,10 +1668,10 @@ export default class Item5e extends Item {
     if ( !( isTargetted || game.user.isGM || actor.isOwner ) ) return;
 
     // Get the Item from stored flag data or by the item ID on the Actor
-    const storedData = message.getFlag("dnd5e", "itemData");
+    const storedData = message.getFlag("mka", "itemData");
     const item = storedData ? new this(storedData, {parent: actor}) : actor.items.get(card.dataset.itemId);
     if ( !item ) {
-      const err = game.i18n.format("DND5E.ActionWarningNoItem", {item: card.dataset.itemId, name: actor.name});
+      const err = game.i18n.format("MKA.ActionWarningNoItem", {item: card.dataset.itemId, name: actor.name});
       return ui.notifications.error(err);
     }
     const spellLevel = parseInt(card.dataset.spellLevel) || null;
@@ -1706,10 +1706,10 @@ export default class Item5e extends Item {
         await item.rollToolCheck({event}); break;
       case "placeTemplate":
         try {
-          await dnd5e.canvas.AbilityTemplate.fromItem(item)?.drawPreview();
+          await mka.canvas.AbilityTemplate.fromItem(item)?.drawPreview();
         } catch(err) {
-          Hooks.onError("Item5e._onChatCardAction", err, {
-            msg: game.i18n.localize("DND5E.PlaceTemplateError"),
+          Hooks.onError("ItemMKA._onChatCardAction", err, {
+            msg: game.i18n.localize("MKA.PlaceTemplateError"),
             log: "error",
             notify: "error"
           });
@@ -1776,7 +1776,7 @@ export default class Item5e extends Item {
   static _getChatCardTargets(card) {
     let targets = canvas.tokens.controlled.filter(t => !!t.actor);
     if ( !targets.length && game.user.character ) targets = targets.concat(game.user.character.getActiveTokens());
-    if ( !targets.length ) ui.notifications.warn(game.i18n.localize("DND5E.ActionWarningNoToken"));
+    if ( !targets.length ) ui.notifications.warn(game.i18n.localize("MKA.ActionWarningNoToken"));
     return targets;
   }
 
@@ -1791,14 +1791,14 @@ export default class Item5e extends Item {
    * @param {object} [options]
    * @param {boolean} [options.showConfig=true]    Should the new advancement's configuration application be shown?
    * @param {boolean} [options.source=false]       Should a source-only update be performed?
-   * @returns {Promise<AdvancementConfig>|Item5e}  Promise for advancement config for new advancement if local
+   * @returns {Promise<AdvancementConfig>|ItemMKA}  Promise for advancement config for new advancement if local
    *                                               is `false`, or item with newly added advancement.
    */
   createAdvancement(type, data={}, { showConfig=true, source=false }={}) {
     if ( !this.system.advancement ) return this;
 
-    const Advancement = CONFIG.DND5E.advancementTypes[type];
-    if ( !Advancement ) throw new Error(`${type} not found in CONFIG.DND5E.advancementTypes`);
+    const Advancement = CONFIG.MKA.advancementTypes[type];
+    if ( !Advancement ) throw new Error(`${type} not found in CONFIG.MKA.advancementTypes`);
 
     if ( !Advancement.metadata.validItemTypes.has(this.type) || !Advancement.availableForItem(this) ) {
       throw new Error(`${type} advancement cannot be added to ${this.name}`);
@@ -1823,7 +1823,7 @@ export default class Item5e extends Item {
    * @param {object} updates                  Updates to apply to this advancement.
    * @param {object} [options={}]
    * @param {boolean} [options.source=false]  Should a source-only update be performed?
-   * @returns {Promise<Item5e>|Item5e}        This item with the changes applied, promised if source is `false`.
+   * @returns {Promise<ItemMKA>|ItemMKA}        This item with the changes applied, promised if source is `false`.
    */
   updateAdvancement(id, updates, { source=false }={}) {
     if ( !this.system.advancement ) return this;
@@ -1852,7 +1852,7 @@ export default class Item5e extends Item {
    * @param {string} id                       ID of the advancement to remove.
    * @param {object} [options={}]
    * @param {boolean} [options.source=false]  Should a source-only update be performed?
-   * @returns {Promise<Item5e>|Item5e}        This item with the changes applied.
+   * @returns {Promise<ItemMKA>|ItemMKA}        This item with the changes applied.
    */
   deleteAdvancement(id, { source=false }={}) {
     if ( !this.system.advancement ) return this;
@@ -1870,7 +1870,7 @@ export default class Item5e extends Item {
    * @param {object} [options]
    * @param {boolean} [options.showConfig=true]     Should the new advancement's configuration application be shown?
    * @param {boolean} [options.source=false]        Should a source-only update be performed?
-   * @returns {Promise<AdvancementConfig>|Item5e}   Promise for advancement config for duplicate advancement if source
+   * @returns {Promise<AdvancementConfig>|ItemMKA}   Promise for advancement config for duplicate advancement if source
    *                                                is `false`, or item with newly duplicated advancement.
    */
   duplicateAdvancement(id, options) {
@@ -1954,22 +1954,22 @@ export default class Item5e extends Item {
 
     // Check to make sure the updated class level isn't below zero
     if ( changed.system.levels <= 0 ) {
-      ui.notifications.warn(game.i18n.localize("DND5E.MaxClassLevelMinimumWarn"));
+      ui.notifications.warn(game.i18n.localize("MKA.MaxClassLevelMinimumWarn"));
       changed.system.levels = 1;
     }
 
     // Check to make sure the updated class level doesn't exceed level cap
-    if ( changed.system.levels > CONFIG.DND5E.maxLevel ) {
-      ui.notifications.warn(game.i18n.format("DND5E.MaxClassLevelExceededWarn", {max: CONFIG.DND5E.maxLevel}));
-      changed.system.levels = CONFIG.DND5E.maxLevel;
+    if ( changed.system.levels > CONFIG.MKA.maxLevel ) {
+      ui.notifications.warn(game.i18n.format("MKA.MaxClassLevelExceededWarn", {max: CONFIG.MKA.maxLevel}));
+      changed.system.levels = CONFIG.MKA.maxLevel;
     }
     if ( !this.isEmbedded || (this.parent.type !== "character") ) return;
 
     // Check to ensure the updated character doesn't exceed level cap
     const newCharacterLevel = this.actor.system.details.level + (changed.system.levels - this.system.levels);
-    if ( newCharacterLevel > CONFIG.DND5E.maxLevel ) {
-      ui.notifications.warn(game.i18n.format("DND5E.MaxCharacterLevelExceededWarn", {max: CONFIG.DND5E.maxLevel}));
-      changed.system.levels -= newCharacterLevel - CONFIG.DND5E.maxLevel;
+    if ( newCharacterLevel > CONFIG.MKA.maxLevel ) {
+      ui.notifications.warn(game.i18n.format("MKA.MaxCharacterLevelExceededWarn", {max: CONFIG.MKA.maxLevel}));
+      changed.system.levels -= newCharacterLevel - CONFIG.MKA.maxLevel;
     }
   }
 
@@ -2060,21 +2060,21 @@ export default class Item5e extends Item {
 
   /**
    * Create a consumable spell scroll Item from a spell Item.
-   * @param {Item5e|object} spell     The spell or item data to be made into a scroll
+   * @param {ItemMKA|object} spell     The spell or item data to be made into a scroll
    * @param {object} [options]        Additional options that modify the created scroll
-   * @returns {Item5e}                The created scroll consumable item
+   * @returns {ItemMKA}                The created scroll consumable item
    */
   static async createScrollFromSpell(spell, options={}) {
 
     // Get spell data
-    const itemData = (spell instanceof Item5e) ? spell.toObject() : spell;
+    const itemData = (spell instanceof ItemMKA) ? spell.toObject() : spell;
     let {
       actionType, description, source, activation, duration, target,
       range, damage, formula, save, level, attackBonus, ability, components
     } = itemData.system;
 
     // Get scroll data
-    const scrollUuid = `Compendium.${CONFIG.DND5E.sourcePacks.ITEMS}.${CONFIG.DND5E.spellScrollIds[level]}`;
+    const scrollUuid = `Compendium.${CONFIG.MKA.sourcePacks.ITEMS}.${CONFIG.MKA.spellScrollIds[level]}`;
     const scrollItem = await fromUuid(scrollUuid);
     const scrollData = scrollItem.toObject();
     delete scrollData._id;
@@ -2088,10 +2088,10 @@ export default class Item5e extends Item {
 
     // Create a composite description from the scroll description and the spell details
     const desc = scrollIntro
-    + `<hr><h3>${itemData.name} (${game.i18n.format("DND5E.LevelNumber", {level})})</h3>`
-    + (components.concentration ? `<p><em>${game.i18n.localize("DND5E.ScrollRequiresConcentration")}</em></p>` : "")
+    + `<hr><h3>${itemData.name} (${game.i18n.format("MKA.LevelNumber", {level})})</h3>`
+    + (components.concentration ? `<p><em>${game.i18n.localize("MKA.ScrollRequiresConcentration")}</em></p>` : "")
     + `<hr>${description.value}<hr>`
-    + `<h3>${game.i18n.localize("DND5E.ScrollDetails")}</h3><hr>${scrollDetails}`;
+    + `<h3>${game.i18n.localize("MKA.ScrollDetails")}</h3><hr>${scrollDetails}`;
 
     // Used a fixed attack modifier and saving throw according to the level of spell scroll.
     if ( ["mwak", "rwak", "msak", "rsak"].includes(actionType) ) {
@@ -2105,7 +2105,7 @@ export default class Item5e extends Item {
 
     // Create the spell scroll data
     const spellScrollData = foundry.utils.mergeObject(scrollData, {
-      name: `${game.i18n.localize("DND5E.SpellScroll")}: ${itemData.name}`,
+      name: `${game.i18n.localize("MKA.SpellScroll")}: ${itemData.name}`,
       img: itemData.img,
       system: {
         description: {value: desc.trim()}, source, actionType, activation, duration, target,
@@ -2116,12 +2116,12 @@ export default class Item5e extends Item {
 
     /**
      * A hook event that fires after the item data for a scroll is created but before the item is returned.
-     * @function dnd5e.createScrollFromSpell
+     * @function mka.createScrollFromSpell
      * @memberof hookEvents
-     * @param {Item5e|object} spell       The spell or item data to be made into a scroll.
+     * @param {ItemMKA|object} spell       The spell or item data to be made into a scroll.
      * @param {object} spellScrollData    The final item data used to make the scroll.
      */
-    Hooks.callAll("dnd5e.createScrollFromSpell", spell, spellScrollData);
+    Hooks.callAll("mka.createScrollFromSpell", spell, spellScrollData);
     return new this(spellScrollData);
   }
 
@@ -2136,12 +2136,12 @@ export default class Item5e extends Item {
    * - item document's ammunition (if it has any)
    * - the constant '20'
    * @returns {number|null}  The minimum value that must be rolled to be considered a critical hit.
-   * @deprecated since dnd5e 2.2, targeted for removal in 2.4
+   * @deprecated since mka 2.2, targeted for removal in 2.4
    */
   getCriticalThreshold() {
     foundry.utils.logCompatibilityWarning(
-      "Item5e#getCriticalThreshold has been replaced with the Item5e#criticalThreshold getter.",
-      { since: "DnD5e 2.2", until: "DnD5e 2.4" }
+      "ItemMKA#getCriticalThreshold has been replaced with the ItemMKA#criticalThreshold getter.",
+      { since: "MKA 2.2", until: "MKA 2.4" }
     );
     return this.criticalThreshold;
   }

@@ -8,11 +8,11 @@ import * as Trait from "./trait.mjs";
 /**
  * Extend the base Actor class to implement additional system-specific logic.
  */
-export default class Actor5e extends Actor {
+export default class ActorMKA extends Actor {
 
   /**
-   * The data source for Actor5e.classes allowing it to be lazily computed.
-   * @type {Object<Item5e>}
+   * The data source for ActorMKA.classes allowing it to be lazily computed.
+   * @type {Object<ItemMKA>}
    * @private
    */
   _classes;
@@ -23,7 +23,7 @@ export default class Actor5e extends Actor {
 
   /**
    * A mapping of classes belonging to this Actor.
-   * @type {Object<Item5e>}
+   * @type {Object<ItemMKA>}
    */
   get classes() {
     if ( this._classes !== undefined ) return this._classes;
@@ -41,14 +41,14 @@ export default class Actor5e extends Actor {
    * @type {boolean}
    */
   get isPolymorphed() {
-    return this.getFlag("dnd5e", "isPolymorphed") || false;
+    return this.getFlag("mka", "isPolymorphed") || false;
   }
 
   /* -------------------------------------------- */
 
   /**
    * The Actor's currently equipped armor, if any.
-   * @type {Item5e|null}
+   * @type {ItemMKA|null}
    */
   get armor() {
     return this.system.attributes.ac.equippedArmor ?? null;
@@ -58,7 +58,7 @@ export default class Actor5e extends Actor {
 
   /**
    * The Actor's currently equipped shield, if any.
-   * @type {Item5e|null}
+   * @type {ItemMKA|null}
    */
   get shield() {
     return this.system.attributes.ac.equippedShield ?? null;
@@ -71,9 +71,9 @@ export default class Actor5e extends Actor {
   /** @inheritdoc */
   _initializeSource(source, options={}) {
     source = super._initializeSource(source, options);
-    if ( !source._id || !options.pack || dnd5e.moduleArt.suppressArt ) return source;
+    if ( !source._id || !options.pack || mka.moduleArt.suppressArt ) return source;
     const uuid = `Compendium.${options.pack}.${source._id}`;
-    const art = game.dnd5e.moduleArt.map.get(uuid);
+    const art = game.mka.moduleArt.map.get(uuid);
     if ( art?.actor || art?.token ) {
       if ( art.actor ) source.img = art.actor;
       if ( typeof art.token === "string" ) source.prototypeToken.texture.src = art.token;
@@ -143,7 +143,7 @@ export default class Actor5e extends Actor {
       return this.system._prepareDerivedData();
     }
 
-    const flags = this.flags.dnd5e || {};
+    const flags = this.flags.mka || {};
     this.labels = {};
 
     // Retrieve data for polymorphed actors
@@ -180,7 +180,7 @@ export default class Actor5e extends Actor {
    * @returns {number}      The XP required.
    */
   getLevelExp(level) {
-    const levels = CONFIG.DND5E.CHARACTER_EXP_LEVELS;
+    const levels = CONFIG.MKA.CHARACTER_EXP_LEVELS;
     return levels[Math.min(level, levels.length - 1)];
   }
 
@@ -193,7 +193,7 @@ export default class Actor5e extends Actor {
    */
   getCRExp(cr) {
     if ( cr < 1.0 ) return Math.max(200 * cr, 10);
-    return CONFIG.DND5E.CR_EXP_LEVELS[cr];
+    return CONFIG.MKA.CR_EXP_LEVELS[cr];
   }
 
   /* -------------------------------------------- */
@@ -270,7 +270,7 @@ export default class Actor5e extends Actor {
       }
 
       // Attuned items
-      else if ( item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED ) {
+      else if ( item.system.attunement === CONFIG.MKA.attunementTypes.ATTUNED ) {
         this.system.attributes.attunement.value += 1;
       }
     }
@@ -299,7 +299,7 @@ export default class Actor5e extends Actor {
 
     // Attuned items
     this.system.attributes.attunement.value = this.items.filter(i => {
-      return i.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED;
+      return i.system.attunement === CONFIG.MKA.attunementTypes.ATTUNED;
     }).length;
 
     // Kill Experience
@@ -339,7 +339,7 @@ export default class Actor5e extends Actor {
    * @protected
    */
   _prepareAbilities(bonusData, globalBonuses, checkBonus, originalSaves) {
-    const flags = this.flags.dnd5e ?? {};
+    const flags = this.flags.mka ?? {};
     const dcBonus = simplifyBonus(this.system.bonuses?.spell?.dc, bonusData);
     const saveBonus = simplifyBonus(globalBonuses.save, bonusData);
     for ( const [id, abl] of Object.entries(this.system.abilities) ) {
@@ -359,12 +359,48 @@ export default class Actor5e extends Actor {
       if ( Number.isNumeric(abl.saveProf.term) ) abl.save += abl.saveProf.flat;
       abl.dc = 8 + abl.mod + this.system.attributes.prof + dcBonus;
 
-      if ( !Number.isFinite(abl.max) ) abl.max = CONFIG.DND5E.maxAbilityScore;
+      if ( !Number.isFinite(abl.max) ) abl.max = CONFIG.MKA.maxAbilityScore;
 
       // If we merged saves when transforming, take the highest bonus here.
       if ( originalSaves && abl.proficient ) abl.save = Math.max(abl.save, originalSaves[id].save);
     }
   }
+  /* -------------------------------------------- */
+
+  /**
+   * MKEDIT: Retrieves the best ability from the list available for the given skill, based on its modifiers and bonuses.
+   * @param {object} id      Skill ID.
+   * @returns {string} Returns skill string ID.
+   * @protected
+   */
+  getBestAbilityForSkill(id) {
+    const skl = this.system.skills[id];
+    const abllist = CONFIG.MKA.skills[id].abilitylist;
+    const abllistlen = abllist?.length;
+    let abilityid = skl.ability;
+    let ability = this.system.abilities[abilityid];
+    if (abllistlen > 1) // Skip if it's only one ability
+    {
+      const bonusData = this.getRollData();
+      for (let i = 0; i < abllistlen; ++i)
+      {
+        const abl = abllist[i];
+        const abltest = this.system.abilities[abl];
+        const bonusTest1 = simplifyBonus(abltest?.bonuses?.check, bonusData);
+        const bonusTest2 = simplifyBonus(ability?.bonuses?.check, bonusData);
+        if (abltest.mod + bonusTest1 > ability.mod + bonusTest2)
+        {
+          abilityid = abllist[i];
+          ability = abltest;
+        }
+      }
+    }
+
+    return abilityid;
+  }
+
+  /* -------------------------------------------- */
+
 
   /* -------------------------------------------- */
 
@@ -378,18 +414,20 @@ export default class Actor5e extends Actor {
    */
   _prepareSkills(bonusData, globalBonuses, checkBonus, originalSkills) {
     if ( this.type === "vehicle" ) return;
-    const flags = this.flags.dnd5e ?? {};
+    const flags = this.flags.mka ?? {};
 
     // Skill modifiers
-    const feats = CONFIG.DND5E.characterFlags;
+    const feats = CONFIG.MKA.characterFlags;
     const skillBonus = simplifyBonus(globalBonuses.skill, bonusData);
     for ( const [id, skl] of Object.entries(this.system.skills) ) {
-      const ability = this.system.abilities[skl.ability];
+      // MKEDIT: We pick the best ability available that the character has.
+      skl.bestAbility = this.getBestAbilityForSkill(id);
+      const ability = this.system.abilities[skl.bestAbility];
       const baseBonus = simplifyBonus(skl.bonuses?.check, bonusData);
       let roundDown = true;
 
       // Remarkable Athlete
-      if ( this._isRemarkableAthlete(skl.ability) && (skl.value < 0.5) ) {
+      if ( this._isRemarkableAthlete(ability) && (skl.value < 0.5) ) {
         skl.value = 0.5;
         roundDown = false;
       }
@@ -431,7 +469,7 @@ export default class Actor5e extends Actor {
    */
   _prepareTools(bonusData, globalBonuses, checkBonus) {
     if ( this.type === "vehicle" ) return;
-    const flags = this.flags.dnd5e ?? {};
+    const flags = this.flags.mka ?? {};
     for ( const tool of Object.values(this.system.tools) ) {
       const ability = this.system.abilities[tool.ability];
       const baseBonus = simplifyBonus(tool.bonuses.check, bonusData);
@@ -465,15 +503,15 @@ export default class Actor5e extends Actor {
     const ac = this.system.attributes.ac;
 
     // Apply automatic migrations for older data structures
-    let cfg = CONFIG.DND5E.armorClasses[ac.calc];
+    let cfg = CONFIG.MKA.armorClasses[ac.calc];
     if ( !cfg ) {
       ac.calc = "flat";
       if ( Number.isNumeric(ac.value) ) ac.flat = Number(ac.value);
-      cfg = CONFIG.DND5E.armorClasses.flat;
+      cfg = CONFIG.MKA.armorClasses.flat;
     }
 
     // Identify Equipped Items
-    const armorTypes = new Set(Object.keys(CONFIG.DND5E.armorTypes));
+    const armorTypes = new Set(Object.keys(CONFIG.MKA.armorTypes));
     const {armors, shields} = this.itemTypes.equipment.reduce((obj, equip) => {
       const armor = equip.system.armor;
       if ( !equip.system.equipped || !armorTypes.has(armor?.type) ) return obj;
@@ -499,7 +537,7 @@ export default class Actor5e extends Actor {
         let formula = ac.calc === "custom" ? ac.formula : cfg.formula;
         if ( armors.length ) {
           if ( armors.length > 1 ) this._preparationWarnings.push({
-            message: game.i18n.localize("DND5E.WarnMultipleArmor"), type: "warning"
+            message: game.i18n.localize("MKA.WarnMultipleArmor"), type: "warning"
           });
           const armorData = armors[0].system.armor;
           const isHeavy = armorData.type === "heavy";
@@ -516,9 +554,9 @@ export default class Actor5e extends Actor {
           ac.base = Roll.safeEval(replaced);
         } catch(err) {
           this._preparationWarnings.push({
-            message: game.i18n.localize("DND5E.WarnBadACFormula"), link: "armor", type: "error"
+            message: game.i18n.localize("MKA.WarnBadACFormula"), link: "armor", type: "error"
           });
-          const replaced = Roll.replaceFormulaData(CONFIG.DND5E.armorClasses.default.formula, rollData);
+          const replaced = Roll.replaceFormulaData(CONFIG.MKA.armorClasses.default.formula, rollData);
           ac.base = Roll.safeEval(replaced);
         }
         break;
@@ -527,7 +565,7 @@ export default class Actor5e extends Actor {
     // Equipped Shield
     if ( shields.length ) {
       if ( shields.length > 1 ) this._preparationWarnings.push({
-        message: game.i18n.localize("DND5E.WarnMultipleShields"), type: "warning"
+        message: game.i18n.localize("MKA.WarnMultipleShields"), type: "warning"
       });
       ac.shield = shields[0].system.armor.value ?? 0;
       ac.equippedShield = shields[0];
@@ -559,21 +597,21 @@ export default class Actor5e extends Actor {
 
     // [Optional] add Currency Weight (for non-transformed actors)
     const currency = this.system.currency;
-    if ( game.settings.get("dnd5e", "currencyWeight") && currency ) {
+    if ( game.settings.get("mka", "currencyWeight") && currency ) {
       const numCoins = Object.values(currency).reduce((val, denom) => val + Math.max(denom, 0), 0);
-      const currencyPerWeight = game.settings.get("dnd5e", "metricWeightUnits")
-        ? CONFIG.DND5E.encumbrance.currencyPerWeight.metric
-        : CONFIG.DND5E.encumbrance.currencyPerWeight.imperial;
+      const currencyPerWeight = game.settings.get("mka", "metricWeightUnits")
+        ? CONFIG.MKA.encumbrance.currencyPerWeight.metric
+        : CONFIG.MKA.encumbrance.currencyPerWeight.imperial;
       weight += numCoins / currencyPerWeight;
     }
 
     // Determine the Encumbrance size class
     let mod = {tiny: 0.5, sm: 1, med: 1, lg: 2, huge: 4, grg: 8}[this.system.traits.size] || 1;
-    if ( this.flags.dnd5e?.powerfulBuild ) mod = Math.min(mod * 2, 8);
+    if ( this.flags.mka?.powerfulBuild ) mod = Math.min(mod * 2, 8);
 
-    const strengthMultiplier = game.settings.get("dnd5e", "metricWeightUnits")
-      ? CONFIG.DND5E.encumbrance.strMultiplier.metric
-      : CONFIG.DND5E.encumbrance.strMultiplier.imperial;
+    const strengthMultiplier = game.settings.get("mka", "metricWeightUnits")
+      ? CONFIG.MKA.encumbrance.strMultiplier.metric
+      : CONFIG.MKA.encumbrance.strMultiplier.imperial;
 
     // Populate final Encumbrance values
     encumbrance.value = weight.toNearest(0.1);
@@ -593,7 +631,7 @@ export default class Actor5e extends Actor {
     if ( this.type !== "character" || (this.system._source.attributes.hp.max !== null) ) return;
     const hp = this.system.attributes.hp;
 
-    const abilityId = CONFIG.DND5E.hitPointsAbility || "con";
+    const abilityId = CONFIG.MKA.hitPointsAbility || "con";
     const abilityMod = (this.system.abilities[abilityId]?.mod ?? 0);
     const base = Object.values(this.classes).reduce((total, item) => {
       const advancement = item.advancement.byType.HitPoints?.[0];
@@ -616,10 +654,10 @@ export default class Actor5e extends Actor {
    */
   _prepareInitiative(bonusData, globalCheckBonus=0) {
     const init = this.system.attributes.init ??= {};
-    const flags = this.flags.dnd5e || {};
+    const flags = this.flags.mka || {};
 
     // Compute initiative modifier
-    const abilityId = init.ability || CONFIG.DND5E.initiativeAbility;
+    const abilityId = init.ability || CONFIG.MKA.initiativeAbility;
     const ability = this.system.abilities?.[abilityId] || {};
     init.mod = ability.mod ?? 0;
 
@@ -678,7 +716,7 @@ export default class Actor5e extends Actor {
       );
     }
 
-    for ( const type of Object.keys(CONFIG.DND5E.spellcastingTypes) ) {
+    for ( const type of Object.keys(CONFIG.MKA.spellcastingTypes) ) {
       this.constructor.prepareSpellcastingSlots(this.system.spells, type, progression, { actor: this });
     }
   }
@@ -688,9 +726,9 @@ export default class Actor5e extends Actor {
   /**
    * Contribute to the actor's spellcasting progression.
    * @param {object} progression                             Spellcasting progression data. *Will be mutated.*
-   * @param {Item5e} cls                                     Class for whom this progression is being computed.
+   * @param {ItemMKA} cls                                     Class for whom this progression is being computed.
    * @param {object} [config={}]
-   * @param {Actor5e|null} [config.actor]                    Actor for whom the data is being prepared.
+   * @param {ActorMKA|null} [config.actor]                    Actor for whom the data is being prepared.
    * @param {SpellcastingDescription} [config.spellcasting]  Spellcasting descriptive object.
    * @param {number} [config.count=1]                        Number of classes with this type of spellcasting.
    */
@@ -700,18 +738,18 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires while computing the spellcasting progression for each class on each actor.
-     * The actual hook names include the spellcasting type (e.g. `dnd5e.computeLeveledProgression`).
+     * The actual hook names include the spellcasting type (e.g. `mka.computeLeveledProgression`).
      * @param {object} progression                    Spellcasting progression data. *Will be mutated.*
-     * @param {Actor5e|null} [actor]                  Actor for whom the data is being prepared.
-     * @param {Item5e} cls                            Class for whom this progression is being computed.
+     * @param {ActorMKA|null} [actor]                  Actor for whom the data is being prepared.
+     * @param {ItemMKA} cls                            Class for whom this progression is being computed.
      * @param {SpellcastingDescription} spellcasting  Spellcasting descriptive object.
      * @param {number} count                          Number of classes with this type of spellcasting.
      * @returns {boolean}  Explicitly return false to prevent default progression from being calculated.
-     * @function dnd5e.computeSpellcastingProgression
+     * @function mka.computeSpellcastingProgression
      * @memberof hookEvents
      */
     const allowed = Hooks.call(
-      `dnd5e.compute${type.capitalize()}Progression`, progression, actor, cls, spellcasting, count
+      `mka.compute${type.capitalize()}Progression`, progression, actor, cls, spellcasting, count
     );
 
     if ( allowed && (type === "pact") ) {
@@ -726,13 +764,13 @@ export default class Actor5e extends Actor {
   /**
    * Contribute to the actor's spellcasting progression for a class with leveled spellcasting.
    * @param {object} progression                    Spellcasting progression data. *Will be mutated.*
-   * @param {Actor5e} actor                         Actor for whom the data is being prepared.
-   * @param {Item5e} cls                            Class for whom this progression is being computed.
+   * @param {ActorMKA} actor                         Actor for whom the data is being prepared.
+   * @param {ItemMKA} cls                            Class for whom this progression is being computed.
    * @param {SpellcastingDescription} spellcasting  Spellcasting descriptive object.
    * @param {number} count                          Number of classes with this type of spellcasting.
    */
   static computeLeveledProgression(progression, actor, cls, spellcasting, count) {
-    const prog = CONFIG.DND5E.spellcastingTypes.leveled.progression[spellcasting.progression];
+    const prog = CONFIG.MKA.spellcastingTypes.leveled.progression[spellcasting.progression];
     if ( !prog ) return;
     const rounding = prog.roundUp ? Math.ceil : Math.floor;
     progression.slot += rounding(spellcasting.levels / prog.divisor ?? 1);
@@ -747,8 +785,8 @@ export default class Actor5e extends Actor {
   /**
    * Contribute to the actor's spellcasting progression for a class with pact spellcasting.
    * @param {object} progression                    Spellcasting progression data. *Will be mutated.*
-   * @param {Actor5e} actor                         Actor for whom the data is being prepared.
-   * @param {Item5e} cls                            Class for whom this progression is being computed.
+   * @param {ActorMKA} actor                         Actor for whom the data is being prepared.
+   * @param {ItemMKA} cls                            Class for whom this progression is being computed.
    * @param {SpellcastingDescription} spellcasting  Spellcasting descriptive object.
    * @param {number} count                          Number of classes with this type of spellcasting.
    */
@@ -764,20 +802,20 @@ export default class Actor5e extends Actor {
    * @param {string} type             Type of spellcasting slots being prepared.
    * @param {object} progression      Spellcasting progression data.
    * @param {object} [config]
-   * @param {Actor5e} [config.actor]  Actor for whom the data is being prepared.
+   * @param {ActorMKA} [config.actor]  Actor for whom the data is being prepared.
    */
   static prepareSpellcastingSlots(spells, type, progression, {actor}={}) {
     /**
      * A hook event that fires to convert the provided spellcasting progression into spell slots.
-     * The actual hook names include the spellcasting type (e.g. `dnd5e.prepareLeveledSlots`).
+     * The actual hook names include the spellcasting type (e.g. `mka.prepareLeveledSlots`).
      * @param {object} spells        The `data.spells` object within actor's data. *Will be mutated.*
-     * @param {Actor5e} actor        Actor for whom the data is being prepared.
+     * @param {ActorMKA} actor        Actor for whom the data is being prepared.
      * @param {object} progression   Spellcasting progression data.
      * @returns {boolean}            Explicitly return false to prevent default preparation from being performed.
-     * @function dnd5e.prepareSpellcastingSlots
+     * @function mka.prepareSpellcastingSlots
      * @memberof hookEvents
      */
-    const allowed = Hooks.call(`dnd5e.prepare${type.capitalize()}Slots`, spells, actor, progression);
+    const allowed = Hooks.call(`mka.prepare${type.capitalize()}Slots`, spells, actor, progression);
 
     if ( allowed && (type === "pact") ) this.preparePactSlots(spells, actor, progression);
     else if ( allowed && (type === "leveled") ) this.prepareLeveledSlots(spells, actor, progression);
@@ -788,13 +826,13 @@ export default class Actor5e extends Actor {
   /**
    * Prepare leveled spell slots using progression data.
    * @param {object} spells        The `data.spells` object within actor's data. *Will be mutated.*
-   * @param {Actor5e} actor        Actor for whom the data is being prepared.
+   * @param {ActorMKA} actor        Actor for whom the data is being prepared.
    * @param {object} progression   Spellcasting progression data.
    */
   static prepareLeveledSlots(spells, actor, progression) {
-    const levels = Math.clamped(progression.slot, 0, CONFIG.DND5E.maxLevel);
-    const slots = CONFIG.DND5E.SPELL_SLOT_TABLE[Math.min(levels, CONFIG.DND5E.SPELL_SLOT_TABLE.length) - 1] ?? [];
-    for ( const level of Array.fromRange(Object.keys(CONFIG.DND5E.spellLevels).length - 1, 1) ) {
+    const levels = Math.clamped(progression.slot, 0, CONFIG.MKA.maxLevel);
+    const slots = CONFIG.MKA.SPELL_SLOT_TABLE[Math.min(levels, CONFIG.MKA.SPELL_SLOT_TABLE.length) - 1] ?? [];
+    for ( const level of Array.fromRange(Object.keys(CONFIG.MKA.spellLevels).length - 1, 1) ) {
       const slot = spells[`spell${level}`] ??= { value: 0 };
       slot.max = Number.isNumeric(slot.override) ? Math.max(parseInt(slot.override), 0) : slots[level - 1] ?? 0;
     }
@@ -805,7 +843,7 @@ export default class Actor5e extends Actor {
   /**
    * Prepare pact spell slots using progression data.
    * @param {object} spells        The `data.spells` object within actor's data. *Will be mutated.*
-   * @param {Actor5e} actor        Actor for whom the data is being prepared.
+   * @param {ActorMKA} actor        Actor for whom the data is being prepared.
    * @param {object} progression   Spellcasting progression data.
    */
   static preparePactSlots(spells, actor, progression) {
@@ -815,7 +853,7 @@ export default class Actor5e extends Actor {
     // - pact.value: Currently available pact slots
     // - pact.override: Override number of available spell slots
 
-    let pactLevel = Math.clamped(progression.pact, 0, CONFIG.DND5E.maxLevel);
+    let pactLevel = Math.clamped(progression.pact, 0, CONFIG.MKA.maxLevel);
     spells.pact ??= {};
     const override = Number.isNumeric(spells.pact.override) ? parseInt(spells.pact.override) : null;
 
@@ -824,7 +862,7 @@ export default class Actor5e extends Actor {
       pactLevel = actor.system.details.spellLevel;
     }
 
-    const [, pactConfig] = Object.entries(CONFIG.DND5E.pactCastingProgression)
+    const [, pactConfig] = Object.entries(CONFIG.MKA.pactCastingProgression)
       .reverse().find(([l]) => Number(l) <= pactLevel) ?? [];
     if ( pactConfig ) {
       spells.pact.level = pactConfig.level;
@@ -852,7 +890,7 @@ export default class Actor5e extends Actor {
     // Configure prototype token settings
     const prototypeToken = {};
     if ( "size" in (this.system.traits || {}) ) {
-      const size = CONFIG.DND5E.tokenSizes[this.system.traits.size || "med"];
+      const size = CONFIG.MKA.tokenSizes[this.system.traits.size || "med"];
       if ( !foundry.utils.hasProperty(data, "prototypeToken.width") ) prototypeToken.width = size;
       if ( !foundry.utils.hasProperty(data, "prototypeToken.height") ) prototypeToken.height = size;
     }
@@ -872,7 +910,7 @@ export default class Actor5e extends Actor {
     if ( "size" in (this.system.traits || {}) ) {
       const newSize = foundry.utils.getProperty(changed, "system.traits.size");
       if ( newSize && (newSize !== this.system.traits?.size) ) {
-        let size = CONFIG.DND5E.tokenSizes[newSize];
+        let size = CONFIG.MKA.tokenSizes[newSize];
         if ( !foundry.utils.hasProperty(changed, "prototypeToken.width") ) {
           changed.prototypeToken ||= {};
           changed.prototypeToken.height = size;
@@ -895,7 +933,7 @@ export default class Actor5e extends Actor {
 
   /**
    * Assign a class item as the original class for the Actor based on which class has the most levels.
-   * @returns {Promise<Actor5e>}  Instance of the updated actor.
+   * @returns {Promise<ActorMKA>}  Instance of the updated actor.
    * @protected
    */
   _assignPrimaryClass() {
@@ -924,7 +962,7 @@ export default class Actor5e extends Actor {
    * Apply a certain amount of damage or healing to the health pool for Actor
    * @param {number} amount       An amount of damage (positive) or healing (negative) to sustain
    * @param {number} multiplier   A multiplier which allows for resistance, vulnerability, or healing
-   * @returns {Promise<Actor5e>}  A Promise which resolves once the damage has been applied
+   * @returns {Promise<ActorMKA>}  A Promise which resolves once the damage has been applied
    */
   async applyDamage(amount=0, multiplier=1) {
     amount = Math.floor(parseInt(amount) * multiplier);
@@ -961,7 +999,7 @@ export default class Actor5e extends Actor {
   /**
    * Apply a certain amount of temporary hit point, but only if it's more than the actor currently has.
    * @param {number} amount       An amount of temporary hit points to set
-   * @returns {Promise<Actor5e>}  A Promise which resolves once the temp HP has been applied
+   * @returns {Promise<ActorMKA>}  A Promise which resolves once the temp HP has been applied
    */
   async applyTempHP(amount=0) {
     amount = parseInt(amount);
@@ -994,8 +1032,8 @@ export default class Actor5e extends Actor {
    * @private
    */
   _isRemarkableAthlete(ability) {
-    return this.getFlag("dnd5e", "remarkableAthlete")
-      && CONFIG.DND5E.characterFlags.remarkableAthlete.abilities.includes(ability);
+    return this.getFlag("mka", "remarkableAthlete")
+      && CONFIG.MKA.characterFlags.remarkableAthlete.abilities.includes(ability);
   }
 
   /* -------------------------------------------- */
@@ -1011,14 +1049,15 @@ export default class Actor5e extends Actor {
    */
   async rollSkill(skillId, options={}) {
     const skl = this.system.skills[skillId];
-    const abl = this.system.abilities[skl.ability];
+    const ablID = this.getBestAbilityForSkill(skillId);
+    const abl = this.system.abilities[ablID];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = ["@mod", "@abilityCheckBonus"];
     const data = this.getRollData();
 
     // Add ability modifier
     data.mod = skl.mod;
-    data.defaultAbility = skl.ability;
+    data.defaultAbility = ablID;
 
     // Include proficiency bonus
     if ( skl.prof.hasProficiency ) {
@@ -1050,46 +1089,46 @@ export default class Actor5e extends Actor {
     }
 
     // Reliable Talent applies to any skill check we have full or better proficiency in
-    const reliableTalent = (skl.value >= 1 && this.getFlag("dnd5e", "reliableTalent"));
+    const reliableTalent = (skl.value >= 1 && this.getFlag("mka", "reliableTalent"));
 
     // Roll and return
-    const flavor = game.i18n.format("DND5E.SkillPromptTitle", {skill: CONFIG.DND5E.skills[skillId]?.label ?? ""});
+    const flavor = game.i18n.format("MKA.SkillPromptTitle", {skill: CONFIG.MKA.skills[skillId]?.label ?? ""});
     const rollData = foundry.utils.mergeObject({
       data: data,
       title: `${flavor}: ${this.name}`,
       flavor,
       chooseModifier: true,
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("mka", "halflingLucky"),
       reliableTalent,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "skill", skillId }
+        "flags.mka.roll": {type: "skill", skillId }
       }
     }, options);
     rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before a skill check is rolled for an Actor.
-     * @function dnd5e.preRollSkill
+     * @function mka.preRollSkill
      * @memberof hookEvents
-     * @param {Actor5e} actor                Actor for which the skill check is being rolled.
+     * @param {ActorMKA} actor                Actor for which the skill check is being rolled.
      * @param {D20RollConfiguration} config  Configuration data for the pending roll.
-     * @param {string} skillId               ID of the skill being rolled as defined in `DND5E.skills`.
+     * @param {string} skillId               ID of the skill being rolled as defined in `MKA.skills`.
      * @returns {boolean}                    Explicitly return `false` to prevent skill check from being rolled.
      */
-    if ( Hooks.call("dnd5e.preRollSkill", this, rollData, skillId) === false ) return;
+    if ( Hooks.call("mka.preRollSkill", this, rollData, skillId) === false ) return;
 
     const roll = await d20Roll(rollData);
 
     /**
      * A hook event that fires after a skill check has been rolled for an Actor.
-     * @function dnd5e.rollSkill
+     * @function mka.rollSkill
      * @memberof hookEvents
-     * @param {Actor5e} actor   Actor for which the skill check has been rolled.
+     * @param {ActorMKA} actor   Actor for which the skill check has been rolled.
      * @param {D20Roll} roll    The resulting roll.
-     * @param {string} skillId  ID of the skill that was rolled as defined in `DND5E.skills`.
+     * @param {string} skillId  ID of the skill that was rolled as defined in `MKA.skills`.
      */
-    if ( roll ) Hooks.callAll("dnd5e.rollSkill", this, roll, skillId);
+    if ( roll ) Hooks.callAll("mka.rollSkill", this, roll, skillId);
 
     return roll;
   }
@@ -1141,41 +1180,41 @@ export default class Actor5e extends Actor {
       data.toolBonus = bonus.join(" + ");
     }
 
-    const flavor = game.i18n.format("DND5E.ToolPromptTitle", {tool: Trait.keyLabel("tool", toolId) ?? ""});
+    const flavor = game.i18n.format("MKA.ToolPromptTitle", {tool: Trait.keyLabel("tool", toolId) ?? ""});
     const rollData = foundry.utils.mergeObject({
       data, flavor,
       title: `${flavor}: ${this.name}`,
       chooseModifier: true,
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("mka", "halflingLucky"),
       messageData: {
         speaker: options.speaker || ChatMessage.implementation.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "tool", toolId}
+        "flags.mka.roll": {type: "tool", toolId}
       }
     }, options);
     rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before a tool check is rolled for an Actor.
-     * @function dnd5e.preRollRool
+     * @function mka.preRollRool
      * @memberof hookEvents
-     * @param {Actor5e} actor                Actor for which the tool check is being rolled.
+     * @param {ActorMKA} actor                Actor for which the tool check is being rolled.
      * @param {D20RollConfiguration} config  Configuration data for the pending roll.
      * @param {string} toolId                Identifier of the tool being rolled.
      * @returns {boolean}                    Explicitly return `false` to prevent skill check from being rolled.
      */
-    if ( Hooks.call("dnd5e.preRollToolCheck", this, rollData, toolId) === false ) return;
+    if ( Hooks.call("mka.preRollToolCheck", this, rollData, toolId) === false ) return;
 
     const roll = await d20Roll(rollData);
 
     /**
      * A hook event that fires after a tool check has been rolled for an Actor.
-     * @function dnd5e.rollTool
+     * @function mka.rollTool
      * @memberof hookEvents
-     * @param {Actor5e} actor   Actor for which the tool check has been rolled.
+     * @param {ActorMKA} actor   Actor for which the tool check has been rolled.
      * @param {D20Roll} roll    The resulting roll.
      * @param {string} toolId   Identifier of the tool that was rolled.
      */
-    if ( roll ) Hooks.callAll("dnd5e.rollToolCheck", this, roll, toolId);
+    if ( roll ) Hooks.callAll("mka.rollToolCheck", this, roll, toolId);
 
     return roll;
   }
@@ -1189,17 +1228,17 @@ export default class Actor5e extends Actor {
    * @param {object} options      Options which configure how ability tests or saving throws are rolled
    */
   rollAbility(abilityId, options={}) {
-    const label = CONFIG.DND5E.abilities[abilityId]?.label ?? "";
+    const label = CONFIG.MKA.abilities[abilityId]?.label ?? "";
     new Dialog({
-      title: `${game.i18n.format("DND5E.AbilityPromptTitle", {ability: label})}: ${this.name}`,
-      content: `<p>${game.i18n.format("DND5E.AbilityPromptText", {ability: label})}</p>`,
+      title: `${game.i18n.format("MKA.AbilityPromptTitle", {ability: label})}: ${this.name}`,
+      content: `<p>${game.i18n.format("MKA.AbilityPromptText", {ability: label})}</p>`,
       buttons: {
         test: {
-          label: game.i18n.localize("DND5E.ActionAbil"),
+          label: game.i18n.localize("MKA.ActionAbil"),
           callback: () => this.rollAbilityTest(abilityId, options)
         },
         save: {
-          label: game.i18n.localize("DND5E.ActionSave"),
+          label: game.i18n.localize("MKA.ActionSave"),
           callback: () => this.rollAbilitySave(abilityId, options)
         }
       }
@@ -1216,7 +1255,7 @@ export default class Actor5e extends Actor {
    * @returns {Promise<D20Roll>}  A Promise which resolves to the created Roll instance
    */
   async rollAbilityTest(abilityId, options={}) {
-    const label = CONFIG.DND5E.abilities[abilityId]?.label ?? "";
+    const label = CONFIG.MKA.abilities[abilityId]?.label ?? "";
     const abl = this.system.abilities[abilityId];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = [];
@@ -1246,41 +1285,41 @@ export default class Actor5e extends Actor {
     }
 
     // Roll and return
-    const flavor = game.i18n.format("DND5E.AbilityPromptTitle", {ability: label});
+    const flavor = game.i18n.format("MKA.AbilityPromptTitle", {ability: label});
     const rollData = foundry.utils.mergeObject({
       data,
       title: `${flavor}: ${this.name}`,
       flavor,
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("mka", "halflingLucky"),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "ability", abilityId }
+        "flags.mka.roll": {type: "ability", abilityId }
       }
     }, options);
     rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before an ability test is rolled for an Actor.
-     * @function dnd5e.preRollAbilityTest
+     * @function mka.preRollAbilityTest
      * @memberof hookEvents
-     * @param {Actor5e} actor                Actor for which the ability test is being rolled.
+     * @param {ActorMKA} actor                Actor for which the ability test is being rolled.
      * @param {D20RollConfiguration} config  Configuration data for the pending roll.
-     * @param {string} abilityId             ID of the ability being rolled as defined in `DND5E.abilities`.
+     * @param {string} abilityId             ID of the ability being rolled as defined in `MKA.abilities`.
      * @returns {boolean}                    Explicitly return `false` to prevent ability test from being rolled.
      */
-    if ( Hooks.call("dnd5e.preRollAbilityTest", this, rollData, abilityId) === false ) return;
+    if ( Hooks.call("mka.preRollAbilityTest", this, rollData, abilityId) === false ) return;
 
     const roll = await d20Roll(rollData);
 
     /**
      * A hook event that fires after an ability test has been rolled for an Actor.
-     * @function dnd5e.rollAbilityTest
+     * @function mka.rollAbilityTest
      * @memberof hookEvents
-     * @param {Actor5e} actor     Actor for which the ability test has been rolled.
+     * @param {ActorMKA} actor     Actor for which the ability test has been rolled.
      * @param {D20Roll} roll      The resulting roll.
-     * @param {string} abilityId  ID of the ability that was rolled as defined in `DND5E.abilities`.
+     * @param {string} abilityId  ID of the ability that was rolled as defined in `MKA.abilities`.
      */
-    if ( roll ) Hooks.callAll("dnd5e.rollAbilityTest", this, roll, abilityId);
+    if ( roll ) Hooks.callAll("mka.rollAbilityTest", this, roll, abilityId);
 
     return roll;
   }
@@ -1295,7 +1334,7 @@ export default class Actor5e extends Actor {
    * @returns {Promise<D20Roll>}  A Promise which resolves to the created Roll instance
    */
   async rollAbilitySave(abilityId, options={}) {
-    const label = CONFIG.DND5E.abilities[abilityId]?.label ?? "";
+    const label = CONFIG.MKA.abilities[abilityId]?.label ?? "";
     const abl = this.system.abilities[abilityId];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = [];
@@ -1325,41 +1364,41 @@ export default class Actor5e extends Actor {
     }
 
     // Roll and return
-    const flavor = game.i18n.format("DND5E.SavePromptTitle", {ability: label});
+    const flavor = game.i18n.format("MKA.SavePromptTitle", {ability: label});
     const rollData = foundry.utils.mergeObject({
       data,
       title: `${flavor}: ${this.name}`,
       flavor,
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("mka", "halflingLucky"),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.dnd5e.roll": {type: "save", abilityId }
+        "flags.mka.roll": {type: "save", abilityId }
       }
     }, options);
     rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before an ability save is rolled for an Actor.
-     * @function dnd5e.preRollAbilitySave
+     * @function mka.preRollAbilitySave
      * @memberof hookEvents
-     * @param {Actor5e} actor                Actor for which the ability save is being rolled.
+     * @param {ActorMKA} actor                Actor for which the ability save is being rolled.
      * @param {D20RollConfiguration} config  Configuration data for the pending roll.
-     * @param {string} abilityId             ID of the ability being rolled as defined in `DND5E.abilities`.
+     * @param {string} abilityId             ID of the ability being rolled as defined in `MKA.abilities`.
      * @returns {boolean}                    Explicitly return `false` to prevent ability save from being rolled.
      */
-    if ( Hooks.call("dnd5e.preRollAbilitySave", this, rollData, abilityId) === false ) return;
+    if ( Hooks.call("mka.preRollAbilitySave", this, rollData, abilityId) === false ) return;
 
     const roll = await d20Roll(rollData);
 
     /**
      * A hook event that fires after an ability save has been rolled for an Actor.
-     * @function dnd5e.rollAbilitySave
+     * @function mka.rollAbilitySave
      * @memberof hookEvents
-     * @param {Actor5e} actor     Actor for which the ability save has been rolled.
+     * @param {ActorMKA} actor     Actor for which the ability save has been rolled.
      * @param {D20Roll} roll      The resulting roll.
-     * @param {string} abilityId  ID of the ability that was rolled as defined in `DND5E.abilities`.
+     * @param {string} abilityId  ID of the ability that was rolled as defined in `MKA.abilities`.
      */
-    if ( roll ) Hooks.callAll("dnd5e.rollAbilitySave", this, roll, abilityId);
+    if ( roll ) Hooks.callAll("mka.rollAbilitySave", this, roll, abilityId);
 
     return roll;
   }
@@ -1376,7 +1415,7 @@ export default class Actor5e extends Actor {
 
     // Display a warning if we are not at zero HP or if we already have reached 3
     if ( (this.system.attributes.hp.value > 0) || (death.failure >= 3) || (death.success >= 3) ) {
-      ui.notifications.warn(game.i18n.localize("DND5E.DeathSaveUnnecessary"));
+      ui.notifications.warn(game.i18n.localize("MKA.DeathSaveUnnecessary"));
       return null;
     }
 
@@ -1387,7 +1426,7 @@ export default class Actor5e extends Actor {
     const data = this.getRollData();
 
     // Diamond Soul adds proficiency
-    if ( this.getFlag("dnd5e", "diamondSoul") ) {
+    if ( this.getFlag("mka", "diamondSoul") ) {
       parts.push("@prof");
       data.prof = new Proficiency(this.system.attributes.prof, 1).term;
     }
@@ -1399,29 +1438,29 @@ export default class Actor5e extends Actor {
     }
 
     // Evaluate the roll
-    const flavor = game.i18n.localize("DND5E.DeathSavingThrow");
+    const flavor = game.i18n.localize("MKA.DeathSavingThrow");
     const rollData = foundry.utils.mergeObject({
       data,
       title: `${flavor}: ${this.name}`,
       flavor,
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("mka", "halflingLucky"),
       targetValue: 10,
       messageData: {
         speaker: speaker,
-        "flags.dnd5e.roll": {type: "death"}
+        "flags.mka.roll": {type: "death"}
       }
     }, options);
     rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before a death saving throw is rolled for an Actor.
-     * @function dnd5e.preRollDeathSave
+     * @function mka.preRollDeathSave
      * @memberof hookEvents
-     * @param {Actor5e} actor                Actor for which the death saving throw is being rolled.
+     * @param {ActorMKA} actor                Actor for which the death saving throw is being rolled.
      * @param {D20RollConfiguration} config  Configuration data for the pending roll.
      * @returns {boolean}                    Explicitly return `false` to prevent death saving throw from being rolled.
      */
-    if ( Hooks.call("dnd5e.preRollDeathSave", this, rollData) === false ) return;
+    if ( Hooks.call("mka.preRollDeathSave", this, rollData) === false ) return;
 
     const roll = await d20Roll(rollData);
     if ( !roll ) return null;
@@ -1440,7 +1479,7 @@ export default class Actor5e extends Actor {
           "system.attributes.death.failure": 0,
           "system.attributes.hp.value": 1
         };
-        details.chatString = "DND5E.DeathSaveCriticalSuccess";
+        details.chatString = "MKA.DeathSaveCriticalSuccess";
       }
 
       // 3 Successes = survive and reset checks
@@ -1449,7 +1488,7 @@ export default class Actor5e extends Actor {
           "system.attributes.death.success": 0,
           "system.attributes.death.failure": 0
         };
-        details.chatString = "DND5E.DeathSaveSuccess";
+        details.chatString = "MKA.DeathSaveSuccess";
       }
 
       // Increment successes
@@ -1461,16 +1500,16 @@ export default class Actor5e extends Actor {
       let failures = (death.failure || 0) + (roll.isFumble ? 2 : 1);
       details.updates = {"system.attributes.death.failure": Math.clamped(failures, 0, 3)};
       if ( failures >= 3 ) {  // 3 Failures = death
-        details.chatString = "DND5E.DeathSaveFailure";
+        details.chatString = "MKA.DeathSaveFailure";
       }
     }
 
     /**
      * A hook event that fires after a death saving throw has been rolled for an Actor, but before
      * updates have been performed.
-     * @function dnd5e.rollDeathSave
+     * @function mka.rollDeathSave
      * @memberof hookEvents
-     * @param {Actor5e} actor              Actor for which the death saving throw has been rolled.
+     * @param {ActorMKA} actor              Actor for which the death saving throw has been rolled.
      * @param {D20Roll} roll               The resulting roll.
      * @param {object} details
      * @param {object} details.updates     Updates that will be applied to the actor as a result of this save.
@@ -1478,7 +1517,7 @@ export default class Actor5e extends Actor {
      *                                     no chat message will be displayed.
      * @returns {boolean}                  Explicitly return `false` to prevent updates from being performed.
      */
-    if ( Hooks.call("dnd5e.rollDeathSave", this, roll, details) === false ) return roll;
+    if ( Hooks.call("mka.rollDeathSave", this, roll, details) === false ) return roll;
 
     if ( !foundry.utils.isEmpty(details.updates) ) await this.update(details.updates);
 
@@ -1509,10 +1548,10 @@ export default class Actor5e extends Actor {
 
     // Obtain required data
     const init = this.system.attributes?.init;
-    const abilityId = init?.ability || CONFIG.DND5E.initiativeAbility;
+    const abilityId = init?.ability || CONFIG.MKA.initiativeAbility;
     const data = this.getRollData();
-    const flags = this.flags.dnd5e || {};
-    if ( flags.initiativeAdv ) options.advantageMode ??= dnd5e.dice.D20Roll.ADV_MODE.ADVANTAGE;
+    const flags = this.flags.mka || {};
+    if ( flags.initiativeAdv ) options.advantageMode ??= mka.dice.D20Roll.ADV_MODE.ADVANTAGE;
 
     // Standard initiative formula
     const parts = ["1d20"];
@@ -1555,14 +1594,14 @@ export default class Actor5e extends Actor {
     }
 
     // Ability score tiebreaker
-    const tiebreaker = game.settings.get("dnd5e", "initiativeDexTiebreaker");
+    const tiebreaker = game.settings.get("mka", "initiativeDexTiebreaker");
     if ( tiebreaker && ("abilities" in this.system) ) {
       const abilityValue = this.system.abilities[abilityId]?.value;
       if ( Number.isNumeric(abilityValue) ) parts.push(String(abilityValue / 100));
     }
 
     options = foundry.utils.mergeObject({
-      flavor: options.flavor ?? game.i18n.localize("DND5E.Initiative"),
+      flavor: options.flavor ?? game.i18n.localize("MKA.Initiative"),
       halflingLucky: flags.halflingLucky ?? false,
       critical: null,
       fumble: null
@@ -1585,9 +1624,9 @@ export default class Actor5e extends Actor {
     const roll = this.getInitiativeRoll(rollOptions);
     const choice = await roll.configureDialog({
       defaultRollMode: game.settings.get("core", "rollMode"),
-      title: `${game.i18n.localize("DND5E.InitiativeRoll")}: ${this.name}`,
+      title: `${game.i18n.localize("MKA.InitiativeRoll")}: ${this.name}`,
       chooseModifier: false,
-      defaultAction: rollOptions.advantageMode ?? dnd5e.dice.D20Roll.ADV_MODE.NORMAL
+      defaultAction: rollOptions.advantageMode ?? mka.dice.D20Roll.ADV_MODE.NORMAL
     });
     if ( choice === null ) return; // Closed dialog
 
@@ -1603,12 +1642,12 @@ export default class Actor5e extends Actor {
   async rollInitiative(options={}) {
     /**
      * A hook event that fires before initiative is rolled for an Actor.
-     * @function dnd5e.preRollInitiative
+     * @function mka.preRollInitiative
      * @memberof hookEvents
-     * @param {Actor5e} actor  The Actor that is rolling initiative.
+     * @param {ActorMKA} actor  The Actor that is rolling initiative.
      * @param {D20Roll} roll   The initiative roll.
      */
-    if ( Hooks.call("dnd5e.preRollInitiative", this, this._cachedInitiativeRoll) === false ) return;
+    if ( Hooks.call("mka.preRollInitiative", this, this._cachedInitiativeRoll) === false ) return;
 
     const combat = await super.rollInitiative(options);
     const combatants = this.isToken ? this.getActiveTokens(false, true).reduce((arr, t) => {
@@ -1619,12 +1658,12 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires after an Actor has rolled for initiative.
-     * @function dnd5e.rollInitiative
+     * @function mka.rollInitiative
      * @memberof hookEvents
-     * @param {Actor5e} actor           The Actor that rolled initiative.
+     * @param {ActorMKA} actor           The Actor that rolled initiative.
      * @param {Combatant[]} combatants  The associated Combatants in the Combat.
      */
-    Hooks.callAll("dnd5e.rollInitiative", this, combatants);
+    Hooks.callAll("mka.rollInitiative", this, combatants);
     return combat;
   }
 
@@ -1653,12 +1692,12 @@ export default class Actor5e extends Actor {
 
     // If no class is available, display an error notification
     if ( !cls ) {
-      ui.notifications.error(game.i18n.format("DND5E.HitDiceWarn", {name: this.name, formula: denomination}));
+      ui.notifications.error(game.i18n.format("MKA.HitDiceWarn", {name: this.name, formula: denomination}));
       return null;
     }
 
     // Prepare roll data
-    const flavor = game.i18n.localize("DND5E.HitDiceRoll");
+    const flavor = game.i18n.localize("MKA.HitDiceRoll");
     const rollConfig = foundry.utils.mergeObject({
       formula: `max(0, 1${denomination} + @abilities.con.mod)`,
       data: this.getRollData(),
@@ -1668,15 +1707,15 @@ export default class Actor5e extends Actor {
         flavor,
         title: `${flavor}: ${this.name}`,
         rollMode: game.settings.get("core", "rollMode"),
-        "flags.dnd5e.roll": {type: "hitDie"}
+        "flags.mka.roll": {type: "hitDie"}
       }
     }, options);
 
     /**
      * A hook event that fires before a hit die is rolled for an Actor.
-     * @function dnd5e.preRollHitDie
+     * @function mka.preRollHitDie
      * @memberof hookEvents
-     * @param {Actor5e} actor               Actor for which the hit die is to be rolled.
+     * @param {ActorMKA} actor               Actor for which the hit die is to be rolled.
      * @param {object} config               Configuration data for the pending roll.
      * @param {string} config.formula       Formula that will be rolled.
      * @param {object} config.data          Data used when evaluating the roll.
@@ -1685,7 +1724,7 @@ export default class Actor5e extends Actor {
      * @param {string} denomination         Size of hit die to be rolled.
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
-    if ( Hooks.call("dnd5e.preRollHitDie", this, rollConfig, denomination) === false ) return;
+    if ( Hooks.call("mka.preRollHitDie", this, rollConfig, denomination) === false ) return;
 
     const roll = await new Roll(rollConfig.formula, rollConfig.data).roll({async: true});
     if ( rollConfig.chatMessage ) roll.toMessage(rollConfig.messageData);
@@ -1699,16 +1738,16 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires after a hit die has been rolled for an Actor, but before updates have been performed.
-     * @function dnd5e.rollHitDie
+     * @function mka.rollHitDie
      * @memberof hookEvents
-     * @param {Actor5e} actor         Actor for which the hit die has been rolled.
+     * @param {ActorMKA} actor         Actor for which the hit die has been rolled.
      * @param {Roll} roll             The resulting roll.
      * @param {object} updates
      * @param {object} updates.actor  Updates that will be applied to the actor.
      * @param {object} updates.class  Updates that will be applied to the class.
      * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
      */
-    if ( Hooks.call("dnd5e.rollHitDie", this, roll, updates) === false ) return roll;
+    if ( Hooks.call("mka.rollHitDie", this, roll, updates) === false ) return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook
     const updateOptions = { dhp: (updates.actor?.["system.attributes.hp.value"] ?? hp.value) - hp.value };
@@ -1724,11 +1763,11 @@ export default class Actor5e extends Actor {
 
   /**
    * Roll hit points for a specific class as part of a level-up workflow.
-   * @param {Item5e} item                         The class item whose hit dice to roll.
+   * @param {ItemMKA} item                         The class item whose hit dice to roll.
    * @param {object} options
    * @param {boolean} [options.chatMessage=true]  Display the chat message for this roll.
    * @returns {Promise<Roll>}                     The completed roll.
-   * @see {@link dnd5e.preRollClassHitPoints}
+   * @see {@link mka.preRollClassHitPoints}
    */
   async rollClassHitPoints(item, { chatMessage=true }={}) {
     if ( item.type !== "class" ) throw new Error("Hit points can only be rolled for a class item.");
@@ -1737,38 +1776,38 @@ export default class Actor5e extends Actor {
       data: item.getRollData(),
       chatMessage
     };
-    const flavor = game.i18n.format("DND5E.AdvancementHitPointsRollMessage", { class: item.name });
+    const flavor = game.i18n.format("MKA.AdvancementHitPointsRollMessage", { class: item.name });
     const messageData = {
       title: `${flavor}: ${this.name}`,
       flavor,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      "flags.dnd5e.roll": { type: "hitPoints" }
+      "flags.mka.roll": { type: "hitPoints" }
     };
 
     /**
      * A hook event that fires before hit points are rolled for a character's class.
-     * @function dnd5e.preRollClassHitPoints
+     * @function mka.preRollClassHitPoints
      * @memberof hookEvents
-     * @param {Actor5e} actor            Actor for which the hit points are being rolled.
-     * @param {Item5e} item              The class item whose hit dice will be rolled.
+     * @param {ActorMKA} actor            Actor for which the hit points are being rolled.
+     * @param {ItemMKA} item              The class item whose hit dice will be rolled.
      * @param {object} rollData
      * @param {string} rollData.formula  The string formula to parse.
      * @param {object} rollData.data     The data object against which to parse attributes within the formula.
      * @param {object} messageData       The data object to use when creating the message.
      */
-    Hooks.callAll("dnd5e.preRollClassHitPoints", this, item, rollData, messageData);
+    Hooks.callAll("mka.preRollClassHitPoints", this, item, rollData, messageData);
 
     const roll = new Roll(rollData.formula, rollData.data);
     await roll.evaluate({async: true});
 
     /**
      * A hook event that fires after hit points haven been rolled for a character's class.
-     * @function dnd5e.rollClassHitPoints
+     * @function mka.rollClassHitPoints
      * @memberof hookEvents
-     * @param {Actor5e} actor  Actor for which the hit points have been rolled.
+     * @param {ActorMKA} actor  Actor for which the hit points have been rolled.
      * @param {Roll} roll      The resulting roll.
      */
-    Hooks.callAll("dnd5e.rollClassHitPoints", this, roll);
+    Hooks.callAll("mka.rollClassHitPoints", this, roll);
 
     if ( rollData.chatMessage ) await roll.toMessage(messageData);
     return roll;
@@ -1781,7 +1820,7 @@ export default class Actor5e extends Actor {
    * @param {object} options
    * @param {boolean} [options.chatMessage=true]  Display the chat message for this roll.
    * @returns {Promise<Roll>}                     The completed roll.
-   * @see {@link dnd5e.preRollNPCHitPoints}
+   * @see {@link mka.preRollNPCHitPoints}
    */
   async rollNPCHitPoints({ chatMessage=true }={}) {
     if ( this.type !== "npc" ) throw new Error("NPC hit points can only be rolled for NPCs");
@@ -1790,37 +1829,37 @@ export default class Actor5e extends Actor {
       data: this.getRollData(),
       chatMessage
     };
-    const flavor = game.i18n.format("DND5E.HPFormulaRollMessage");
+    const flavor = game.i18n.format("MKA.HPFormulaRollMessage");
     const messageData = {
       title: `${flavor}: ${this.name}`,
       flavor,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      "flags.dnd5e.roll": { type: "hitPoints" }
+      "flags.mka.roll": { type: "hitPoints" }
     };
 
     /**
      * A hook event that fires before hit points are rolled for an NPC.
-     * @function dnd5e.preRollNPCHitPoints
+     * @function mka.preRollNPCHitPoints
      * @memberof hookEvents
-     * @param {Actor5e} actor            Actor for which the hit points are being rolled.
+     * @param {ActorMKA} actor            Actor for which the hit points are being rolled.
      * @param {object} rollData
      * @param {string} rollData.formula  The string formula to parse.
      * @param {object} rollData.data     The data object against which to parse attributes within the formula.
      * @param {object} messageData       The data object to use when creating the message.
      */
-    Hooks.callAll("dnd5e.preRollNPCHitPoints", this, rollData, messageData);
+    Hooks.callAll("mka.preRollNPCHitPoints", this, rollData, messageData);
 
     const roll = new Roll(rollData.formula, rollData.data);
     await roll.evaluate({async: true});
 
     /**
      * A hook event that fires after hit points are rolled for an NPC.
-     * @function dnd5e.rollNPCHitPoints
+     * @function mka.rollNPCHitPoints
      * @memberof hookEvents
-     * @param {Actor5e} actor  Actor for which the hit points have been rolled.
+     * @param {ActorMKA} actor  Actor for which the hit points have been rolled.
      * @param {Roll} roll      The resulting roll.
      */
-    Hooks.callAll("dnd5e.rollNPCHitPoints", this, roll);
+    Hooks.callAll("mka.rollNPCHitPoints", this, roll);
 
     if ( rollData.chatMessage ) await roll.toMessage(messageData);
     return roll;
@@ -1870,13 +1909,13 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires before a short rest is started.
-     * @function dnd5e.preShortRest
+     * @function mka.preShortRest
      * @memberof hookEvents
-     * @param {Actor5e} actor             The actor that is being rested.
+     * @param {ActorMKA} actor             The actor that is being rested.
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if ( Hooks.call("dnd5e.preShortRest", this, config) === false ) return;
+    if ( Hooks.call("mka.preShortRest", this, config) === false ) return;
 
     // Take note of the initial hit points and number of hit dice the Actor has
     const hd0 = this.system.attributes.hd;
@@ -1911,13 +1950,13 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires before a long rest is started.
-     * @function dnd5e.preLongRest
+     * @function mka.preLongRest
      * @memberof hookEvents
-     * @param {Actor5e} actor             The actor that is being rested.
+     * @param {ActorMKA} actor             The actor that is being rested.
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if ( Hooks.call("dnd5e.preLongRest", this, config) === false ) return;
+    if ( Hooks.call("mka.preLongRest", this, config) === false ) return;
 
     if ( config.dialog ) {
       try { config.newDay = await LongRestDialog.longRestDialog({actor: this}); }
@@ -1973,13 +2012,13 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires after rest result is calculated, but before any updates are performed.
-     * @function dnd5e.preRestCompleted
+     * @function mka.preRestCompleted
      * @memberof hookEvents
-     * @param {Actor5e} actor      The actor that is being rested.
+     * @param {ActorMKA} actor      The actor that is being rested.
      * @param {RestResult} result  Details on the rest to be completed.
      * @returns {boolean}          Explicitly return `false` to prevent the rest updates from being performed.
      */
-    if ( Hooks.call("dnd5e.preRestCompleted", this, result) === false ) return result;
+    if ( Hooks.call("mka.preRestCompleted", this, result) === false ) return result;
 
     // Perform updates
     await this.update(result.updateData);
@@ -1990,12 +2029,12 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires when the rest process is completed for an actor.
-     * @function dnd5e.restCompleted
+     * @function mka.restCompleted
      * @memberof hookEvents
-     * @param {Actor5e} actor      The actor that just completed resting.
+     * @param {ActorMKA} actor      The actor that just completed resting.
      * @param {RestResult} result  Details on the rest completed.
      */
-    Hooks.callAll("dnd5e.restCompleted", this, result);
+    Hooks.callAll("mka.restCompleted", this, result);
 
     // Return data summarizing the rest effects
     return result;
@@ -2019,24 +2058,24 @@ export default class Actor5e extends Actor {
 
     // Summarize the rest duration
     let restFlavor;
-    switch (game.settings.get("dnd5e", "restVariant")) {
+    switch (game.settings.get("mka", "restVariant")) {
       case "normal":
-        restFlavor = (longRest && newDay) ? "DND5E.LongRestOvernight" : `DND5E.${length}RestNormal`;
+        restFlavor = (longRest && newDay) ? "MKA.LongRestOvernight" : `MKA.${length}RestNormal`;
         break;
       case "gritty":
-        restFlavor = (!longRest && newDay) ? "DND5E.ShortRestOvernight" : `DND5E.${length}RestGritty`;
+        restFlavor = (!longRest && newDay) ? "MKA.ShortRestOvernight" : `MKA.${length}RestGritty`;
         break;
       case "epic":
-        restFlavor = `DND5E.${length}RestEpic`;
+        restFlavor = `MKA.${length}RestEpic`;
         break;
     }
 
     // Determine the chat message to display
     let message;
-    if ( diceRestored && healthRestored ) message = `DND5E.${length}RestResult`;
-    else if ( longRest && !diceRestored && healthRestored ) message = "DND5E.LongRestResultHitPoints";
-    else if ( longRest && diceRestored && !healthRestored ) message = "DND5E.LongRestResultHitDice";
-    else message = `DND5E.${length}RestResultShort`;
+    if ( diceRestored && healthRestored ) message = `MKA.${length}RestResult`;
+    else if ( longRest && !diceRestored && healthRestored ) message = "MKA.LongRestResultHitPoints";
+    else if ( longRest && diceRestored && !healthRestored ) message = "MKA.LongRestResultHitDice";
+    else message = `MKA.${length}RestResultShort`;
 
     // Create a chat message
     let chatData = {
@@ -2204,7 +2243,7 @@ export default class Actor5e extends Actor {
       // Items that roll to gain charges on a new day
       if ( recoverDailyUses && uses?.recovery && (uses?.per === "charges") ) {
         const roll = new Roll(uses.recovery, item.getRollData());
-        if ( recoverLongRestUses && (game.settings.get("dnd5e", "restVariant") === "gritty") ) {
+        if ( recoverLongRestUses && (game.settings.get("mka", "restVariant") === "gritty") ) {
           roll.alter(7, 0, {multiplyNumeric: true});
         }
 
@@ -2212,7 +2251,7 @@ export default class Actor5e extends Actor {
         try {
           total = (await roll.evaluate({async: true})).total;
         } catch(err) {
-          ui.notifications.warn(game.i18n.format("DND5E.ItemRecoveryFormulaWarning", {
+          ui.notifications.warn(game.i18n.format("MKA.ItemRecoveryFormulaWarning", {
             name: item.name,
             formula: uses.recovery
           }));
@@ -2222,7 +2261,7 @@ export default class Actor5e extends Actor {
         if ( newValue !== uses.value ) {
           const diff = newValue - uses.value;
           const isMax = newValue === uses.max;
-          const locKey = `DND5E.Item${diff < 0 ? "Loss" : "Recovery"}Roll${isMax ? "Max" : ""}`;
+          const locKey = `MKA.Item${diff < 0 ? "Loss" : "Recovery"}Roll${isMax ? "Max" : ""}`;
           updates.push({_id: item.id, "system.uses.value": newValue});
           rolls.push(roll);
           await roll.toMessage({
@@ -2242,12 +2281,12 @@ export default class Actor5e extends Actor {
 
   /**
    * Convert all carried currency to the highest possible denomination using configured conversion rates.
-   * See CONFIG.DND5E.currencies for configuration.
-   * @returns {Promise<Actor5e>}
+   * See CONFIG.MKA.currencies for configuration.
+   * @returns {Promise<ActorMKA>}
    */
   convertCurrency() {
     const currency = foundry.utils.deepClone(this.system.currency);
-    const currencies = Object.entries(CONFIG.DND5E.currencies);
+    const currencies = Object.entries(CONFIG.MKA.currencies);
     currencies.sort((a, b) => a[1].conversion - b[1].conversion);
 
     // Count total converted units of the base currency
@@ -2302,7 +2341,7 @@ export default class Actor5e extends Actor {
   /**
    * Transform this Actor into another one.
    *
-   * @param {Actor5e} target                      The target Actor.
+   * @param {ActorMKA} target                      The target Actor.
    * @param {TransformationOptions} [options={}]  Options that determine how the transformation is performed.
    * @param {boolean} [options.renderSheet=true]  Render the sheet of the transformed actor after the polymorph
    * @returns {Promise<Array<Token>>|null}        Updated token if the transformation was performed.
@@ -2314,20 +2353,20 @@ export default class Actor5e extends Actor {
     transformTokens=true}={}, {renderSheet=true}={}) {
 
     // Ensure the player is allowed to polymorph
-    const allowed = game.settings.get("dnd5e", "allowPolymorphing");
+    const allowed = game.settings.get("mka", "allowPolymorphing");
     if ( !allowed && !game.user.isGM ) {
-      return ui.notifications.warn(game.i18n.localize("DND5E.PolymorphWarn"));
+      return ui.notifications.warn(game.i18n.localize("MKA.PolymorphWarn"));
     }
 
     // Get the original Actor data and the new source data
     const o = this.toObject();
-    o.flags.dnd5e = o.flags.dnd5e || {};
-    o.flags.dnd5e.transformOptions = {mergeSkills, mergeSaves};
+    o.flags.mka = o.flags.mka || {};
+    o.flags.mka.transformOptions = {mergeSkills, mergeSaves};
     const source = target.toObject();
 
     if ( keepSelf ) {
       o.img = source.img;
-      o.name = `${o.name} (${game.i18n.localize("DND5E.PolymorphSelf")})`;
+      o.name = `${o.name} (${game.i18n.localize("MKA.PolymorphSelf")})`;
     }
 
     // Prepare new data to merge from the source
@@ -2380,7 +2419,7 @@ export default class Actor5e extends Actor {
       for ( let k of Object.keys(abilities) ) {
         const oa = o.system.abilities[k];
         const prof = abilities[k].proficient;
-        const type = CONFIG.DND5E.abilities[k]?.type;
+        const type = CONFIG.MKA.abilities[k]?.type;
         if ( keepPhysical && (type === "physical") ) abilities[k] = oa;
         else if ( keepMental && (type === "mental") ) abilities[k] = oa;
 
@@ -2408,10 +2447,10 @@ export default class Actor5e extends Actor {
 
       // Transfer classes for NPCs
       if ( !keepClass && d.system.details.cr ) {
-        const cls = new dnd5e.dataModels.item.ClassData({levels: d.system.details.cr});
+        const cls = new mka.dataModels.item.ClassData({levels: d.system.details.cr});
         d.items.push({
           type: "class",
-          name: game.i18n.localize("DND5E.PolymorphTmpClass"),
+          name: game.i18n.localize("MKA.PolymorphTmpClass"),
           system: cls.toObject()
         });
       }
@@ -2450,27 +2489,27 @@ export default class Actor5e extends Actor {
     }
 
     // Set new data flags
-    if ( !this.isPolymorphed || !d.flags.dnd5e.originalActor ) d.flags.dnd5e.originalActor = this.id;
-    d.flags.dnd5e.isPolymorphed = true;
+    if ( !this.isPolymorphed || !d.flags.mka.originalActor ) d.flags.mka.originalActor = this.id;
+    d.flags.mka.isPolymorphed = true;
 
     // Gather previous actor data
-    const previousActorIds = this.getFlag("dnd5e", "previousActorIds") || [];
+    const previousActorIds = this.getFlag("mka", "previousActorIds") || [];
     previousActorIds.push(this._id);
-    foundry.utils.setProperty(d.flags, "dnd5e.previousActorIds", previousActorIds);
+    foundry.utils.setProperty(d.flags, "mka.previousActorIds", previousActorIds);
 
     // Update unlinked Tokens, and grab a copy of any actorData adjustments to re-apply
     if ( this.isToken ) {
       const tokenData = d.prototypeToken;
       delete d.prototypeToken;
       let previousActorData;
-      if ( game.dnd5e.isV10 ) {
+      if ( game.mka.isV10 ) {
         tokenData.actorData = d;
         previousActorData = this.token.toObject().actorData;
       } else {
         tokenData.delta = d;
         previousActorData = this.token.delta.toObject();
       }
-      foundry.utils.setProperty(tokenData, "flags.dnd5e.previousActorData", previousActorData);
+      foundry.utils.setProperty(tokenData, "flags.mka.previousActorData", previousActorData);
       await this.sheet?.close();
       const update = await this.token.update(tokenData);
       if ( renderSheet ) this.sheet?.render(true);
@@ -2482,15 +2521,15 @@ export default class Actor5e extends Actor {
 
     /**
      * A hook event that fires just before the actor is transformed.
-     * @function dnd5e.transformActor
+     * @function mka.transformActor
      * @memberof hookEvents
-     * @param {Actor5e} actor                  The original actor before transformation.
-     * @param {Actor5e} target                 The target actor into which to transform.
+     * @param {ActorMKA} actor                  The original actor before transformation.
+     * @param {ActorMKA} target                 The target actor into which to transform.
      * @param {object} data                    The data that will be used to create the new transformed actor.
      * @param {TransformationOptions} options  Options that determine how the transformation is performed.
      * @param {object} [options]
      */
-    Hooks.callAll("dnd5e.transformActor", this, target, d, {
+    Hooks.callAll("mka.transformActor", this, target, d, {
       keepPhysical, keepMental, keepSaves, keepSkills, mergeSaves, mergeSkills, keepClass, keepFeats, keepSpells,
       keepItems, keepBio, keepVision, keepSelf, keepAE, keepOriginAE, keepOtherOriginAE, keepSpellAE,
       keepEquipmentAE, keepFeatAE, keepClassAE, keepBackgroundAE, transformTokens
@@ -2508,9 +2547,9 @@ export default class Actor5e extends Actor {
       newTokenData.actorId = newActor.id;
       newTokenData.actorLink = true;
 
-      const dOriginalActor = foundry.utils.getProperty(d, "flags.dnd5e.originalActor");
-      foundry.utils.setProperty(newTokenData, "flags.dnd5e.originalActor", dOriginalActor);
-      foundry.utils.setProperty(newTokenData, "flags.dnd5e.isPolymorphed", true);
+      const dOriginalActor = foundry.utils.getProperty(d, "flags.mka.originalActor");
+      foundry.utils.setProperty(newTokenData, "flags.mka.originalActor", dOriginalActor);
+      foundry.utils.setProperty(newTokenData, "flags.mka.isPolymorphed", true);
       return newTokenData;
     });
     return canvas.scene?.updateEmbeddedDocuments("Token", updates);
@@ -2528,36 +2567,36 @@ export default class Actor5e extends Actor {
    */
   async revertOriginalForm({renderSheet=true}={}) {
     if ( !this.isPolymorphed ) return;
-    if ( !this.isOwner ) return ui.notifications.warn(game.i18n.localize("DND5E.PolymorphRevertWarn"));
+    if ( !this.isOwner ) return ui.notifications.warn(game.i18n.localize("MKA.PolymorphRevertWarn"));
 
     /**
      * A hook event that fires just before the actor is reverted to original form.
-     * @function dnd5e.revertOriginalForm
+     * @function mka.revertOriginalForm
      * @memberof hookEvents
      * @param {Actor} this                 The original actor before transformation.
      * @param {object} [options]
      */
-    Hooks.callAll("dnd5e.revertOriginalForm", this, {renderSheet});
-    const previousActorIds = this.getFlag("dnd5e", "previousActorIds") ?? [];
+    Hooks.callAll("mka.revertOriginalForm", this, {renderSheet});
+    const previousActorIds = this.getFlag("mka", "previousActorIds") ?? [];
     const isOriginalActor = !previousActorIds.length;
     const isRendered = this.sheet.rendered;
 
     // Obtain a reference to the original actor
-    const original = game.actors.get(this.getFlag("dnd5e", "originalActor"));
+    const original = game.actors.get(this.getFlag("mka", "originalActor"));
 
     // If we are reverting an unlinked token, grab the previous actorData, and create a new token
     if ( this.isToken ) {
       const baseActor = original ? original : game.actors.get(this.token.actorId);
       if ( !baseActor ) {
-        ui.notifications.warn(game.i18n.format("DND5E.PolymorphRevertNoOriginalActorWarn", {
-          reference: this.getFlag("dnd5e", "originalActor")
+        ui.notifications.warn(game.i18n.format("MKA.PolymorphRevertNoOriginalActorWarn", {
+          reference: this.getFlag("mka", "originalActor")
         }));
         return;
       }
       const prototypeTokenData = await baseActor.getTokenDocument();
-      const actorData = this.token.getFlag("dnd5e", "previousActorData");
+      const actorData = this.token.getFlag("mka", "previousActorData");
       const tokenUpdate = this.token.toObject();
-      if ( game.dnd5e.isV10 ) tokenUpdate.actorData = actorData ?? {};
+      if ( game.mka.isV10 ) tokenUpdate.actorData = actorData ?? {};
       else {
         actorData._id = tokenUpdate.delta._id;
         tokenUpdate.delta = actorData;
@@ -2578,17 +2617,17 @@ export default class Actor5e extends Actor {
         parent: canvas.scene, keepId: true, render: true
       });
       if ( isOriginalActor ) {
-        await this.unsetFlag("dnd5e", "isPolymorphed");
-        await this.unsetFlag("dnd5e", "previousActorIds");
-        await this.token.unsetFlag("dnd5e", "previousActorData");
+        await this.unsetFlag("mka", "isPolymorphed");
+        await this.unsetFlag("mka", "previousActorIds");
+        await this.token.unsetFlag("mka", "previousActorData");
       }
       if ( isRendered && renderSheet ) token.actor?.sheet?.render(true);
       return token;
     }
 
     if ( !original ) {
-      ui.notifications.warn(game.i18n.format("DND5E.PolymorphRevertNoOriginalActorWarn", {
-        reference: this.getFlag("dnd5e", "originalActor")
+      ui.notifications.warn(game.i18n.format("MKA.PolymorphRevertNoOriginalActorWarn", {
+        reference: this.getFlag("mka", "originalActor")
       }));
       return;
     }
@@ -2607,8 +2646,8 @@ export default class Actor5e extends Actor {
       await canvas.scene.updateEmbeddedDocuments("Token", tokenUpdates);
     }
     if ( isOriginalActor ) {
-      await this.unsetFlag("dnd5e", "isPolymorphed");
-      await this.unsetFlag("dnd5e", "previousActorIds");
+      await this.unsetFlag("mka", "isPolymorphed");
+      await this.unsetFlag("mka", "previousActorIds");
     }
 
     // Delete the polymorphed version(s) of the actor, if possible
@@ -2635,14 +2674,14 @@ export default class Actor5e extends Actor {
    */
   static addDirectoryContextOptions(html, entryOptions) {
     entryOptions.push({
-      name: "DND5E.PolymorphRestoreTransformation",
+      name: "MKA.PolymorphRestoreTransformation",
       icon: '<i class="fas fa-backward"></i>',
       callback: li => {
         const actor = game.actors.get(li.data("documentId"));
         return actor.revertOriginalForm();
       },
       condition: li => {
-        const allowed = game.settings.get("dnd5e", "allowPolymorphing");
+        const allowed = game.settings.get("mka", "allowPolymorphing");
         if ( !allowed && !game.user.isGM ) return false;
         const actor = game.actors.get(li.data("documentId"));
         return actor && actor.isPolymorphed;
@@ -2663,13 +2702,13 @@ export default class Actor5e extends Actor {
     if ( typeData.value === "custom" ) {
       localizedType = typeData.custom;
     } else {
-      let code = CONFIG.DND5E.creatureTypes[typeData.value];
+      let code = CONFIG.MKA.creatureTypes[typeData.value];
       localizedType = game.i18n.localize(typeData.swarm ? `${code}Pl` : code);
     }
     let type = localizedType;
     if ( typeData.swarm ) {
-      type = game.i18n.format("DND5E.CreatureSwarmPhrase", {
-        size: game.i18n.localize(CONFIG.DND5E.actorSizes[typeData.swarm]),
+      type = game.i18n.format("MKA.CreatureSwarmPhrase", {
+        size: game.i18n.localize(CONFIG.MKA.actorSizes[typeData.swarm]),
         type: localizedType
       });
     }
@@ -2705,7 +2744,7 @@ export default class Actor5e extends Actor {
       canvas.interface.createScrollingText(t.center, dhp.signedString(), {
         anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
         fontSize: 16 + (32 * pct), // Range between [16, 48]
-        fill: CONFIG.DND5E.tokenHPColors[dhp < 0 ? "damage" : "healing"],
+        fill: CONFIG.MKA.tokenHPColors[dhp < 0 ? "damage" : "healing"],
         stroke: 0x000000,
         strokeThickness: 4,
         jitter: 0.25

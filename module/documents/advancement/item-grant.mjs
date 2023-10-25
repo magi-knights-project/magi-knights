@@ -16,9 +16,9 @@ export default class ItemGrantAdvancement extends Advancement {
         configuration: ItemGrantConfigurationData
       },
       order: 40,
-      icon: "systems/dnd5e/icons/svg/item-grant.svg",
-      title: game.i18n.localize("DND5E.AdvancementItemGrantTitle"),
-      hint: game.i18n.localize("DND5E.AdvancementItemGrantHint"),
+      icon: "systems/mka/icons/svg/item-grant.svg",
+      title: game.i18n.localize("MKA.AdvancementItemGrantTitle"),
+      hint: game.i18n.localize("MKA.AdvancementItemGrantHint"),
       apps: {
         config: ItemGrantConfig,
         flow: ItemGrantFlow
@@ -49,7 +49,7 @@ export default class ItemGrantAdvancement extends Advancement {
   summaryForLevel(level, { configMode=false }={}) {
     // Link to compendium items
     if ( !this.value.added || configMode ) {
-      return this.configuration.items.reduce((html, uuid) => html + dnd5e.utils.linkForUuid(uuid), "");
+      return this.configuration.items.reduce((html, uuid) => html + mka.utils.linkForUuid(uuid), "");
     }
 
     // Link to items on the actor
@@ -96,8 +96,8 @@ export default class ItemGrantAdvancement extends Advancement {
         if ( !source ) continue;
         itemData = source.clone({
           _id: foundry.utils.randomID(),
-          "flags.dnd5e.sourceId": uuid,
-          "flags.dnd5e.advancementOrigin": `${this.item.id}.${this.id}`
+          "flags.mka.sourceId": uuid,
+          "flags.mka.advancementOrigin": `${this.item.id}.${this.id}`
         }, {keepId: true}).toObject();
       }
       if ( itemData.type === "spell" ) foundry.utils.mergeObject(itemData, spellChanges);
@@ -116,7 +116,7 @@ export default class ItemGrantAdvancement extends Advancement {
     const updates = {};
     for ( const item of data.items ) {
       this.actor.updateSource({items: [item]});
-      updates[item._id] = item.flags.dnd5e.sourceId;
+      updates[item._id] = item.flags.mka.sourceId;
     }
     this.updateSource({[this.storagePath(level)]: updates});
   }
@@ -140,7 +140,7 @@ export default class ItemGrantAdvancement extends Advancement {
 
   /**
    * Verify that the provided item can be used with this advancement based on the configuration.
-   * @param {Item5e} item                   Item that needs to be tested.
+   * @param {ItemMKA} item                   Item that needs to be tested.
    * @param {object} config
    * @param {boolean} [config.strict=true]  Should an error be thrown when an invalid type is encountered?
    * @returns {boolean}                     Is this type valid?
@@ -149,7 +149,7 @@ export default class ItemGrantAdvancement extends Advancement {
   _validateItemType(item, { strict=true }={}) {
     if ( this.constructor.VALID_TYPES.has(item.type) ) return true;
     const type = game.i18n.localize(CONFIG.Item.typeLabels[item.type]);
-    if ( strict ) throw new Error(game.i18n.format("DND5E.AdvancementItemTypeInvalidWarning", {type}));
+    if ( strict ) throw new Error(game.i18n.format("MKA.AdvancementItemTypeInvalidWarning", {type}));
     return false;
   }
 }
