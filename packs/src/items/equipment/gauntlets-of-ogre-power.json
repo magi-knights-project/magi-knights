@@ -1,5 +1,4 @@
 {
-  "_id": "3TWT5bv3z5zGUZCe",
   "name": "Gauntlets of Ogre Power",
   "type": "equipment",
   "img": "icons/magic/unholy/strike-hand-glow-pink.webp",
@@ -9,23 +8,28 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "DMG pg. 171",
+    "source": "SRD 5.1",
     "quantity": 1,
     "weight": 2,
-    "price": 8000,
-    "attunement": 0,
+    "price": {
+      "value": 8000,
+      "denomination": "gp"
+    },
+    "attunement": 1,
     "equipped": false,
     "rarity": "uncommon",
     "identified": true,
     "activation": {
       "type": "",
-      "cost": 0,
+      "cost": null,
       "condition": ""
     },
     "duration": {
-      "value": null,
+      "value": "",
       "units": ""
     },
+    "cover": null,
+    "crewed": false,
     "target": {
       "value": null,
       "width": null,
@@ -40,7 +44,8 @@
     "uses": {
       "value": null,
       "max": "",
-      "per": null
+      "per": null,
+      "recovery": ""
     },
     "consume": {
       "type": "",
@@ -49,7 +54,7 @@
     },
     "ability": null,
     "actionType": "",
-    "attackBonus": 0,
+    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -81,26 +86,53 @@
       "value": null,
       "conditions": ""
     },
-    "strength": 0,
+    "strength": null,
     "stealth": false,
-    "proficient": false,
-    "attributes": {
-      "spelldc": 10
-    }
+    "proficient": 0
   },
-  "effects": [],
-  "folder": null,
-  "sort": 1600000,
+  "effects": [
+    {
+      "label": "Gauntlets of Ogre Power",
+      "icon": "icons/magic/unholy/strike-hand-glow-pink.webp",
+      "origin": "Compendium.dnd5e.items.3TWT5bv3z5zGUZCe",
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "disabled": false,
+      "_id": "m7FoXVGKT7C9X7aq",
+      "changes": [
+        {
+          "key": "system.abilities.str.value",
+          "mode": 4,
+          "value": "19",
+          "priority": null
+        }
+      ],
+      "tint": null,
+      "transfer": true,
+      "flags": {},
+      "sort": 0
+    }
+  ],
   "ownership": {
     "default": 0
   },
   "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.2.2",
+    "coreVersion": "10.303",
     "createdTime": 1661787233454,
-    "modifiedTime": 1661787233454,
+    "modifiedTime": 1691500120771,
     "lastModifiedBy": "dnd5ebuilder0000"
-  }
+  },
+  "folder": null,
+  "sort": 0,
+  "_id": "3TWT5bv3z5zGUZCe"
 }

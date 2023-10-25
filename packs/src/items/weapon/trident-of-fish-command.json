@@ -9,10 +9,13 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "DMG pg. 209",
+    "source": "SRD 5.1",
     "quantity": 1,
     "weight": 4,
-    "price": 800,
+    "price": {
+      "value": 800,
+      "denomination": "gp"
+    },
     "attunement": 1,
     "equipped": false,
     "rarity": "uncommon",
@@ -23,9 +26,10 @@
       "condition": ""
     },
     "duration": {
-      "value": null,
+      "value": "",
       "units": ""
     },
+    "cover": null,
     "target": {
       "value": null,
       "width": null,
@@ -39,8 +43,9 @@
     },
     "uses": {
       "value": 3,
-      "max": 3,
-      "per": "charges"
+      "max": "3",
+      "per": "charges",
+      "recovery": "1d3"
     },
     "consume": {
       "type": "",
@@ -49,7 +54,7 @@
     },
     "ability": null,
     "actionType": "mwak",
-    "attackBonus": 0,
+    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -98,24 +103,21 @@
       "ver": true,
       "mgc": true
     },
-    "proficient": false,
-    "attributes": {
-      "spelldc": 10
-    }
+    "proficient": false
   },
   "effects": [],
   "folder": null,
-  "sort": 1800000,
+  "sort": 0,
   "ownership": {
     "default": 0
   },
   "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.1.0",
+    "coreVersion": "10.291",
     "createdTime": 1661787233866,
-    "modifiedTime": 1661787233866,
+    "modifiedTime": 1671220964253,
     "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

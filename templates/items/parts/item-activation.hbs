@@ -2,15 +2,13 @@
 <div class="form-group input-select">
     <label>{{ localize "DND5E.ItemActivationCost" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.activation.cost"
-            value="{{system.activation.cost}}" placeholder="&mdash;">
-        <select name="system.activation.type">
-            {{#select system.activation.type}}
-            <option value=""></option>
-            {{#each config.abilityActivationTypes as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+        {{#if system.activation.type}}
+            <input type="number" step="any" name="system.activation.cost"
+                   value="{{system.activation.cost}}" placeholder="&mdash;">
+        {{/if}}
+        <select name="system.activation.type" data-tooltip="DND5E.ItemActivationType">
+            {{selectOptions config.abilityActivationTypes selected=system.activation.type
+                blank=(localize "DND5E.None")}}
         </select>
     </div>
 </div>
@@ -20,21 +18,16 @@
 <div class="form-group">
     <label>{{ localize "DND5E.ItemActivationCondition" }}</label>
     <div class="form-fields">
-        <input type="text" name="system.activation.condition" value="{{system.activation.condition}}"/>
+        <input type="text" name="system.activation.condition" value="{{system.activation.condition}}">
     </div>
 </div>
 
 {{#if isCrewed}}
 <div class="form-group">
-    <label>{{localize 'DND5E.Cover'}}</label>
+    <label>{{ localize "DND5E.Cover" }}</label>
     <div class="form-fields">
         <select name="system.cover" data-dtype="Number">
-            {{#select system.cover}}
-                <option value="">&mdash;</option>
-                {{#each config.cover as |v k|}}
-                    <option value="{{k}}">{{v}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions config.cover selected=system.cover blank=""}}
         </select>
     </div>
 </div>
@@ -44,22 +37,24 @@
 <div class="form-group input-select-select">
     <label>{{ localize "DND5E.Target" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.target.value"
-            value="{{system.target.value}}" placeholder="&mdash;">
-        <select name="system.target.units">
-            {{#select system.target.units}}
-            <option value=""></option>
-            {{#each config.distanceUnits as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <select name="system.target.type">
+        {{#if system.hasScalarTarget}}
+            <input type="number" step="any" name="system.target.value"
+                   value="{{system.target.value}}" placeholder="&mdash;">
+        {{/if}}
+        {{#if system.hasAreaTarget}}
+            <select name="system.target.units" data-tooltip="DND5E.TargetUnits">
+                {{selectOptions config.movementUnits selected=system.target.units blank=""}}
+            </select>
+        {{/if}}
+        <select name="system.target.type" data-tooltip="DND5E.TargetType">
             {{#select system.target.type}}
-            <option value=""></option>
-            {{#each config.targetTypes as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
+                 <option value="">{{localize "DND5E.None"}}</option>
+                 <optgroup label="{{localize 'DND5E.TargetTypeIndividual'}}">
+                     {{selectOptions config.individualTargetTypes}}
+                 </optgroup>
+                 <optgroup label="{{localize 'DND5E.TargetTypeArea'}}">
+                     {{selectOptions config.areaTargetTypes labelAttr="label"}}
+                 </optgroup>
             {{/select}}
         </select>
     </div>
@@ -80,17 +75,20 @@
 <div class="form-group input-select">
     <label>{{ localize "DND5E.Range" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.range.value"
-            value="{{system.range.value}}" placeholder="{{localize 'DND5E.Normal'}}">
-        <span class="sep">/</span>
-        <input type="number" step="any" name="system.range.long"
-            value="{{system.range.long}}" placeholder="{{localize 'DND5E.Max'}}">
-        <select name="system.range.units">
+        {{#if system.hasScalarRange}}
+            <input type="number" step="any" name="system.range.value" value="{{system.range.value}}"
+                   placeholder="{{localize 'DND5E.Normal'}}" data-tooltip="DND5E.RangeNormal">
+            <span class="sep">/</span>
+            <input type="number" step="any" name="system.range.long" value="{{system.range.long}}"
+                   placeholder="{{localize 'DND5E.Long'}}" data-tooltip="DND5E.RangeLong">
+        {{/if}}
+        <select name="system.range.units" data-tooltip="DND5E.RangeUnits">
             {{#select system.range.units}}
-            <option value=""></option>
-            {{#each config.distanceUnits as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
+                <option value="">{{localize "DND5E.None"}}</option>
+                <optgroup label="{{localize 'DND5E.RangeDistance'}}">
+                    {{selectOptions config.movementUnits}}
+                </optgroup>
+                {{selectOptions config.rangeTypes}}
             {{/select}}
         </select>
     </div>
@@ -100,14 +98,20 @@
 <div class="form-group input-select">
     <label>{{ localize "DND5E.Duration" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.duration.value" value="{{system.duration.value}}"
-            placeholder="&mdash;">
-        <select name="system.duration.units">
+        {{#if system.hasScalarDuration}}
+            <input type="text" name="system.duration.value" value="{{source.duration.value}}"
+                   placeholder="&mdash;" data-tooltip="DND5E.DurationValue" data-formula-editor>
+        {{/if}}
+        <select name="system.duration.units" data-tooltip="DND5E.DurationType">
             {{#select system.duration.units}}
-            <option value=""></option>
-            {{#each config.timePeriods as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
+                <option value="">{{localize "DND5E.None"}}</option>
+                <optgroup label="{{localize 'DND5E.DurationTime'}}">
+                    {{selectOptions config.scalarTimePeriods}}
+                </optgroup>
+                <optgroup label="{{localize 'DND5E.DurationPermanent'}}">
+                    {{selectOptions config.permanentTimePeriods}}
+                </optgroup>
+                {{selectOptions config.specialTimePeriods}}
             {{/select}}
         </select>
     </div>
@@ -117,42 +121,41 @@
 <div class="form-group uses-per">
     <label>{{ localize "DND5E.LimitedUses" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.uses.value" value="{{system.uses.value}}">
-        <span class="sep">{{ localize "DND5E.of" }}</span>
-        <input type="text" name="system.uses.max" value="{{source.uses.max}}">
-        <span class="sep">{{ localize "DND5E.per" }}</span>
-        <select name="system.uses.per">
-            {{#select system.uses.per}}
-            <option value=""></option>
-            {{#each config.limitedUsePeriods as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+        <input type="number" step="any" name="system.uses.value"
+               value="{{system.uses.value}}" data-tooltip="DND5E.UsesAvailable">
+        <span class="sep">{{localize "DND5E.of"}}</span>
+        <input type="text" name="system.uses.max" value="{{source.uses.max}}"
+               data-tooltip="DND5E.UsesMax" data-formula-editor>
+        <span class="sep">{{localize "DND5E.per"}}</span>
+        <select name="system.uses.per" data-tooltip="DND5E.UsesPeriod">
+            {{selectOptions config.limitedUsePeriods selected=system.uses.per blank=""}}
         </select>
     </div>
 </div>
 
+{{#if (eq system.uses.per "charges")}}
+<div class="form-group">
+    <label>{{localize "DND5E.RecoveryFormula"}}</label>
+    <div class="form-fields">
+        <input type="text" name="system.uses.recovery" value="{{system.uses.recovery}}" data-formula-editor>
+    </div>
+</div>
+{{/if}}
+
 {{!-- Consumption --}}
-<div class="form-group uses-per">
+<div class="form-group consumption">
     <label>{{ localize "DND5E.ConsumeTitle" }}</label>
     <div class="form-fields">
-        <select name="system.consume.type">
-            {{#select system.consume.type}}
-            <option value=""></option>
-            {{#each config.abilityConsumptionTypes as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+        {{#if system.consume.type}}
+            <input type="number" step="any" name="system.consume.amount"
+                   value="{{system.consume.amount}}" data-tooltip="DND5E.ConsumeQuanity">
+            <select name="system.consume.target" data-tooltip="DND5E.ConsumeTarget">
+                {{selectOptions abilityConsumptionTargets selected=system.consume.target blank=""}}
+            </select>
+        {{/if}}
+        <select name="system.consume.type" data-tooltip="DND5E.ConsumeType">
+            {{selectOptions config.abilityConsumptionTypes selected=system.consume.type blank=(localize "DND5E.None")}}
         </select>
-        <select name="system.consume.target">
-            {{#select system.consume.target}}
-            <option value=""></option>
-            {{#each abilityConsumptionTargets as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <input type="number" step="any" name="system.consume.amount" value="{{system.consume.amount}}">
     </div>
 </div>
 {{/if}}

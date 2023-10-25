@@ -1,9 +1,5 @@
 {
   "name": "Disclaimer",
-  "ownership": {
-    "default": 0
-  },
-  "flags": {},
   "pages": [
     {
       "name": "Disclaimer",
@@ -14,7 +10,7 @@
       },
       "text": {
         "format": 1,
-        "content": "<blockquote>\n<p>This work was adapted from the <a href=\"https://dnd.wizards.com/articles/features/systems-reference-document-srd\">System Reference Document</a> under the OGL (license available in the User Data/systems/dnd5e folder).</p>\n<p>Some additional information , like character creation, is available in the <a href=\"https://dnd.wizards.com/articles/features/basicrules\">Basic Rules</a> which \"Wizards\" makes available for free.</p>\n</blockquote>",
+        "content": "<blockquote><p>This work includes material taken from the System Reference Document 5.1 (\"SRD 5.1\") by Wizards of the Coast LLC and available at <a href=\"https://dnd.wizards.com/resources/systems-reference-document\">https://dnd.wizards.com/resources/systems-reference-document</a>. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at <a href=\"https://creativecommons.org/licenses/by/4.0/legalcode\">https://creativecommons.org/licenses/by/4.0/legalcode</a>.</p></blockquote>",
         "markdown": ""
       },
       "_id": "9iCIjvYzMdxWPtd1",
@@ -32,12 +28,16 @@
       "flags": {}
     }
   ],
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
-    "createdTime": 1660925115431,
-    "modifiedTime": 1661787234675,
+    "systemVersion": "2.0.2",
+    "coreVersion": "10.285",
+    "createdTime": 1660925148884,
+    "modifiedTime": 1663018863337,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "folder": null,

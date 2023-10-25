@@ -41,13 +41,12 @@ export default class PropertyAttribution extends Application {
 
   /**
    * Render this view as a tooltip rather than a whole window.
-   * @returns {jQuery}  HTML of the rendered tooltip.
+   * @param {HTMLElement} element  The element to which the tooltip should be attached.
    */
-  async renderTooltip() {
+  async renderTooltip(element) {
     const data = this.getData(this.options);
-    let html = await this._renderInner(data);
-    html[0].classList.add("tooltip");
-    return html;
+    const text = (await this._renderInner(data))[0].outerHTML;
+    game.tooltip.activate(element, { text, cssClass: "property-attribution" });
   }
 
   /* -------------------------------------------- */
@@ -60,6 +59,7 @@ export default class PropertyAttribution extends Application {
     else if ( typeof property === "object" && Number.isNumeric(property.value) ) total = property.value;
     const sources = foundry.utils.duplicate(this.attributions);
     return {
+      caption: this.options.title,
       sources: sources.map(entry => {
         if ( entry.label.startsWith("@") ) entry.label = this.getPropertyLabel(entry.label.slice(1));
         if ( (entry.mode === CONST.ACTIVE_EFFECT_MODES.ADD) && (entry.value < 0) ) {
@@ -82,9 +82,9 @@ export default class PropertyAttribution extends Application {
   getPropertyLabel(property) {
     const parts = property.split(".");
     if ( parts[0] === "abilities" && parts[1] ) {
-      return CONFIG.DND5E.abilities[parts[1]] ?? property;
+      return CONFIG.DND5E.abilities[parts[1]]?.label ?? property;
     } else if ( (property === "attributes.ac.dex") && CONFIG.DND5E.abilities.dex ) {
-      return CONFIG.DND5E.abilities.dex;
+      return CONFIG.DND5E.abilities.dex.label;
     } else if ( (parts[0] === "prof") || (property === "attributes.prof") ) {
       return game.i18n.localize("DND5E.Proficiency");
     }

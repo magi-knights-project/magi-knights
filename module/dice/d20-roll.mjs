@@ -16,9 +16,6 @@
 export default class D20Roll extends Roll {
   constructor(formula, data, options) {
     super(formula, data, options);
-    if ( !((this.terms[0] instanceof Die) && (this.terms[0].faces === 20)) ) {
-      throw new Error(`Invalid D20Roll formula provided ${this._formula}`);
-    }
     if ( !this.options.configured ) this.configureModifiers();
   }
 
@@ -33,6 +30,26 @@ export default class D20Roll extends Roll {
     const newRoll = new this(roll.formula, roll.data, roll.options);
     Object.assign(newRoll, roll);
     return newRoll;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Determine whether a d20 roll should be fast-forwarded, and whether advantage or disadvantage should be applied.
+   * @param {object} [options]
+   * @param {Event} [options.event]                               The Event that triggered the roll.
+   * @param {boolean} [options.advantage]                         Is something granting this roll advantage?
+   * @param {boolean} [options.disadvantage]                      Is something granting this roll disadvantage?
+   * @param {boolean} [options.fastForward]                       Should the roll dialog be skipped?
+   * @returns {{advantageMode: D20Roll.ADV_MODE, isFF: boolean}}  Whether the roll is fast-forwarded, and its advantage
+   *                                                              mode.
+   */
+  static determineAdvantageMode({event, advantage=false, disadvantage=false, fastForward}={}) {
+    const isFF = fastForward ?? (event?.shiftKey || event?.altKey || event?.ctrlKey || event?.metaKey);
+    let advantageMode = this.ADV_MODE.NORMAL;
+    if ( advantage || event?.altKey ) advantageMode = this.ADV_MODE.ADVANTAGE;
+    else if ( disadvantage || event?.ctrlKey || event?.metaKey ) advantageMode = this.ADV_MODE.DISADVANTAGE;
+    return {isFF: !!isFF, advantageMode};
   }
 
   /* -------------------------------------------- */
@@ -54,6 +71,16 @@ export default class D20Roll extends Roll {
    * @type {string}
    */
   static EVALUATION_TEMPLATE = "systems/dnd5e/templates/chat/roll-dialog.hbs";
+
+  /* -------------------------------------------- */
+
+  /**
+   * Does this roll start with a d20?
+   * @type {boolean}
+   */
+  get validD20Roll() {
+    return (this.terms[0] instanceof Die) && (this.terms[0].faces === 20);
+  }
 
   /* -------------------------------------------- */
 
@@ -82,7 +109,7 @@ export default class D20Roll extends Roll {
    * @type {boolean|void}
    */
   get isCritical() {
-    if ( !this._evaluated ) return undefined;
+    if ( !this.validD20Roll || !this._evaluated ) return undefined;
     if ( !Number.isNumeric(this.options.critical) ) return false;
     return this.dice[0].total >= this.options.critical;
   }
@@ -94,7 +121,7 @@ export default class D20Roll extends Roll {
    * @type {boolean|void}
    */
   get isFumble() {
-    if ( !this._evaluated ) return undefined;
+    if ( !this.validD20Roll || !this._evaluated ) return undefined;
     if ( !Number.isNumeric(this.options.fumble) ) return false;
     return this.dice[0].total <= this.options.fumble;
   }
@@ -108,6 +135,8 @@ export default class D20Roll extends Roll {
    * @private
    */
   configureModifiers() {
+    if ( !this.validD20Roll ) return;
+
     const d20 = this.terms[0];
     d20.modifiers = [];
 
@@ -156,7 +185,7 @@ export default class D20Roll extends Roll {
     else if ( this.hasDisadvantage ) messageData.flavor += ` (${game.i18n.localize("DND5E.Disadvantage")})`;
 
     // Add reliable talent to the d20-term flavor text if it applied
-    if ( this.options.reliableTalent ) {
+    if ( this.validD20Roll && this.options.reliableTalent ) {
       const d20 = this.dice[0];
       const isRT = d20.results.every(r => !r.active || (r.result < 10));
       const label = `(${game.i18n.localize("DND5E.FlagsReliableTalent")})`;
@@ -260,7 +289,7 @@ export default class D20Roll extends Roll {
         }
         return t;
       });
-      this.options.flavor += ` (${CONFIG.DND5E.abilities[form.ability.value]})`;
+      this.options.flavor += ` (${CONFIG.DND5E.abilities[form.ability.value]?.label ?? ""})`;
     }
 
     // Apply advantage or disadvantage

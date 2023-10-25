@@ -2,7 +2,7 @@
 
     {{!-- Item Sheet Header --}}
     <header class="sheet-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
 
         <div class="header-details flexrow">
             <h1 class="charname">
@@ -61,18 +61,14 @@
             <div class="form-group">
                 <label>{{ localize "DND5E.SpellSchool" }}</label>
                 <select name="system.school">
-                    {{#select system.school}}
-                    {{#each config.spellSchools as |name sch|}}
-                    <option value="{{sch}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{selectOptions config.spellSchools selected=system.school blank=""}}
                 </select>
             </div>
 
             {{!-- Spell Components --}}
             <div class="spell-components form-group stacked">
                 <label>{{ localize "DND5E.SpellComponents" }}</label>
-                {{#each config.spellComponents as |component key|}}
+                {{#each spellComponents as |component key|}}
                 <label class="checkbox">
                     <input type="checkbox" name="system.components.{{key}}" {{checked (lookup ../system.components key)}}>
                     {{component.label}}
@@ -130,7 +126,8 @@
                         {{/each}}
                         {{/select}}
                     </select>
-                    <input type="text" name="system.scaling.formula" value="{{system.scaling.formula}}" placeholder="{{ localize 'DND5E.ScalingFormula' }}"/>
+                    <input type="text" name="system.scaling.formula" value="{{system.scaling.formula}}"
+                           placeholder="{{ localize 'DND5E.ScalingFormula' }}" data-formula-editor/>
                 </div>
             </div>
         </div>

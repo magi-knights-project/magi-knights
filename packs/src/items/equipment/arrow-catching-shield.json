@@ -2,17 +2,20 @@
   "_id": "uWUD93jwuO2Jxkti",
   "name": "Arrow-Catching Shield",
   "type": "equipment",
-  "img": "icons/equipment/shield/oval-wooden-boss-steel.webp",
+  "img": "icons/equipment/shield/wardoor-wooden-boss-brown.webp",
   "system": {
     "description": {
       "value": "<p>You gain a +2 bonus to AC against ranged attacks while you wield this shield. This bonus is in addition to the shield's normal bonus to AC. In addition, whenever an attacker makes a ranged attack against a target within 5 feet of you, you can use your reaction to become the target of the attack instead.</p>",
       "chat": "",
       "unidentified": ""
     },
-    "source": "DMG pg. 152",
+    "source": "SRD 5.1",
     "quantity": 1,
     "weight": 6,
-    "price": 6000,
+    "price": {
+      "value": 6000,
+      "denomination": "gp"
+    },
     "attunement": 0,
     "equipped": false,
     "rarity": "rare",
@@ -20,16 +23,18 @@
     "activation": {
       "type": "reaction",
       "cost": 1,
-      "condition": "A ranged attack within 5 ft. "
+      "condition": "A ranged attack within 5 ft."
     },
     "duration": {
-      "value": 0,
+      "value": "",
       "units": ""
     },
+    "cover": null,
+    "crewed": false,
     "target": {
       "value": null,
       "width": null,
-      "units": null,
+      "units": "",
       "type": "self"
     },
     "range": {
@@ -40,7 +45,8 @@
     "uses": {
       "value": null,
       "max": "",
-      "per": ""
+      "per": null,
+      "recovery": ""
     },
     "consume": {
       "type": "",
@@ -49,7 +55,7 @@
     },
     "ability": null,
     "actionType": "",
-    "attackBonus": 0,
+    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -81,23 +87,23 @@
       "value": null,
       "conditions": ""
     },
-    "strength": 0,
+    "strength": null,
     "stealth": false,
     "proficient": false
   },
   "effects": [],
   "folder": null,
-  "sort": 4200000,
+  "sort": 0,
   "ownership": {
     "default": 0
   },
   "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.2.2",
+    "coreVersion": "10.291",
     "createdTime": 1661787233920,
-    "modifiedTime": 1661787233920,
+    "modifiedTime": 1690539658859,
     "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

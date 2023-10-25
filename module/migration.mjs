@@ -9,29 +9,35 @@ export const migrateWorld = async function() {
   const migrationData = await getMigrationData();
 
   // Migrate World Actors
-  for ( let a of game.actors ) {
+  const actors = game.actors.map(a => [a, true])
+    .concat(Array.from(game.actors.invalidDocumentIds).map(id => [game.actors.getInvalid(id), false]));
+  for ( const [actor, valid] of actors ) {
     try {
-      const updateData = migrateActorData(a.toObject(), migrationData);
+      const source = valid ? actor.toObject() : game.data.actors.find(a => a._id === actor.id);
+      const updateData = migrateActorData(source, migrationData);
       if ( !foundry.utils.isEmpty(updateData) ) {
-        console.log(`Migrating Actor document ${a.name}`);
-        await a.update(updateData, {enforceTypes: false});
+        console.log(`Migrating Actor document ${actor.name}`);
+        await actor.update(updateData, {enforceTypes: false, diff: valid});
       }
     } catch(err) {
-      err.message = `Failed dnd5e system migration for Actor ${a.name}: ${err.message}`;
+      err.message = `Failed dnd5e system migration for Actor ${actor.name}: ${err.message}`;
       console.error(err);
     }
   }
 
   // Migrate World Items
-  for ( let i of game.items ) {
+  const items = game.items.map(i => [i, true])
+    .concat(Array.from(game.items.invalidDocumentIds).map(id => [game.items.getInvalid(id), false]));
+  for ( const [item, valid] of items ) {
     try {
-      const updateData = migrateItemData(i.toObject(), migrationData);
+      const source = valid ? item.toObject() : game.data.items.find(i => i._id === item.id);
+      const updateData = migrateItemData(source, migrationData);
       if ( !foundry.utils.isEmpty(updateData) ) {
-        console.log(`Migrating Item document ${i.name}`);
-        await i.update(updateData, {enforceTypes: false});
+        console.log(`Migrating Item document ${item.name}`);
+        await item.update(updateData, {enforceTypes: false, diff: valid});
       }
     } catch(err) {
-      err.message = `Failed dnd5e system migration for Item ${i.name}: ${err.message}`;
+      err.message = `Failed dnd5e system migration for Item ${item.name}: ${err.message}`;
       console.error(err);
     }
   }
@@ -46,6 +52,20 @@ export const migrateWorld = async function() {
       }
     } catch(err) {
       err.message = `Failed dnd5e system migration for Macro ${m.name}: ${err.message}`;
+      console.error(err);
+    }
+  }
+
+  // Migrate World Roll Tables
+  for ( const table of game.tables ) {
+    try {
+      const updateData = migrateRollTableData(table.toObject(), migrationData);
+      if ( !foundry.utils.isEmpty(updateData) ) {
+        console.log(`Migrating RollTable document ${table.name}`);
+        await table.update(updateData, { enforceTypes: false });
+      }
+    } catch ( err ) {
+      err.message = `Failed dnd5e system migration for RollTable ${table.name}: ${err.message}`;
       console.error(err);
     }
   }
@@ -69,7 +89,7 @@ export const migrateWorld = async function() {
 
   // Migrate World Compendium Packs
   for ( let p of game.packs ) {
-    if ( p.metadata.package !== "world" ) continue;
+    if ( p.metadata.packageType !== "world" ) continue;
     if ( !["Actor", "Item", "Scene"].includes(p.documentName) ) continue;
     await migrateCompendium(p);
   }
@@ -134,6 +154,45 @@ export const migrateCompendium = async function(pack) {
   console.log(`Migrated all ${documentName} documents from Compendium ${pack.collection}`);
 };
 
+/* -------------------------------------------- */
+
+/**
+ * Update all compendium packs using the new system data model.
+ */
+export async function refreshAllCompendiums() {
+  for ( const pack of game.packs ) {
+    await refreshCompendium(pack);
+  }
+}
+
+/* -------------------------------------------- */
+
+/**
+ * Update all Documents in a compendium using the new system data model.
+ * @param {CompendiumCollection} pack  Pack to refresh.
+ */
+export async function refreshCompendium(pack) {
+  if ( !pack?.documentName ) return;
+  dnd5e.moduleArt.suppressArt = true;
+  const DocumentClass = CONFIG[pack.documentName].documentClass;
+  const wasLocked = pack.locked;
+  await pack.configure({locked: false});
+  await pack.migrate();
+
+  ui.notifications.info(`Beginning to refresh Compendium ${pack.collection}`);
+  const documents = await pack.getDocuments();
+  for ( const doc of documents ) {
+    const data = doc.toObject();
+    await doc.delete();
+    await DocumentClass.create(data, {keepId: true, keepEmbeddedIds: true, pack: pack.collection});
+  }
+  await pack.configure({locked: wasLocked});
+  dnd5e.moduleArt.suppressArt = false;
+  ui.notifications.info(`Refreshed all documents from Compendium ${pack.collection}`);
+}
+
+/* -------------------------------------------- */
+
 /**
  * Apply 'smart' AC migration to a given Actor compendium. This will perform the normal AC migration but additionally
  * check to see if the actor has armor already equipped, and opt to use that instead.
@@ -157,6 +216,7 @@ export const migrateArmorClass = async function(pack) {
 
       // Perform the normal migration.
       _migrateActorAC(src, update);
+      // TODO: See if AC migration within DataModel is enough to handle this
       updates.push(update);
 
       // CASE 1: Armor is equipped
@@ -192,11 +252,6 @@ export const migrateArmorClass = async function(pack) {
 export const migrateActorData = function(actor, migrationData) {
   const updateData = {};
   _migrateTokenImage(actor, updateData);
-
-  // Actor Data Updates
-  _migrateActorMovement(actor, updateData);
-  _migrateActorSenses(actor, updateData);
-  _migrateActorType(actor, updateData);
   _migrateActorAC(actor, updateData);
 
   // Migrate embedded effects
@@ -216,13 +271,20 @@ export const migrateActorData = function(actor, migrationData) {
     if ( actor.type === "npc" ) {
       if (foundry.utils.getProperty(itemData.system, "preparation.prepared") === false) itemUpdate["system.preparation.prepared"] = true;
       if (foundry.utils.getProperty(itemData.system, "equipped") === false) itemUpdate["system.equipped"] = true;
-      if (foundry.utils.getProperty(itemData.system, "proficient") === false) itemUpdate["system.proficient"] = true;
     }
 
     // Update the Owned Item
     if ( !foundry.utils.isEmpty(itemUpdate) ) {
       itemUpdate._id = itemData._id;
       arr.push(foundry.utils.expandObject(itemUpdate));
+    }
+
+    // Update tool expertise.
+    if ( actor.system.tools ) {
+      const hasToolProf = itemData.system.baseItem in actor.system.tools;
+      if ( (itemData.type === "tool") && (itemData.system.proficient > 1) && hasToolProf ) {
+        updateData[`system.tools.${itemData.system.baseItem}.value`] = itemData.system.proficient;
+      }
     }
 
     return arr;
@@ -235,46 +297,14 @@ export const migrateActorData = function(actor, migrationData) {
 /* -------------------------------------------- */
 
 /**
- * Scrub an Actor's system data, removing all keys which are not explicitly defined in the system template
- * @param {object} actorData    The data object for an Actor
- * @returns {object}            The scrubbed Actor data
- */
-function cleanActorData(actorData) {
-
-  // Scrub system data
-  const model = game.system.model.Actor[actorData.type];
-  actorData.system = foundry.utils.filterObject(actorData.system, model);
-
-  // Scrub system flags
-  const allowedFlags = CONFIG.DND5E.allowedActorFlags.reduce((obj, f) => {
-    obj[f] = null;
-    return obj;
-  }, {});
-  if ( actorData.flags.dnd5e ) {
-    actorData.flags.dnd5e = foundry.utils.filterObject(actorData.flags.dnd5e, allowedFlags);
-  }
-
-  // Return the scrubbed data
-  return actorData;
-}
-
-
-/* -------------------------------------------- */
-
-/**
  * Migrate a single Item document to incorporate latest data model changes
  *
  * @param {object} item             Item data to migrate
  * @param {object} [migrationData]  Additional data to perform the migration
  * @returns {object}                The updateData to apply
  */
-export const migrateItemData = function(item, migrationData) {
+export function migrateItemData(item, migrationData) {
   const updateData = {};
-  _migrateItemAttunement(item, updateData);
-  _migrateItemRarity(item, updateData);
-  _migrateItemSpellcasting(item, updateData);
-  _migrateArmorType(item, updateData);
-  _migrateItemCriticalData(item, updateData);
   _migrateDocumentIcon(item, updateData, migrationData);
 
   // Migrate embedded effects
@@ -284,7 +314,7 @@ export const migrateItemData = function(item, migrationData) {
   }
 
   return updateData;
-};
+}
 
 /* -------------------------------------------- */
 
@@ -340,6 +370,31 @@ export const migrateMacroData = function(macro, migrationData) {
 /* -------------------------------------------- */
 
 /**
+ * Migrate a single RollTable document to incorporate the latest data model changes.
+ * @param {object} table            Roll table data to migrate.
+ * @param {object} [migrationData]  Additional data to perform the migration.
+ * @returns {object}                The update delta to apply.
+ */
+export function migrateRollTableData(table, migrationData) {
+  const updateData = {};
+  _migrateDocumentIcon(table, updateData, migrationData);
+  if ( !table.results?.length ) return updateData;
+  const results = table.results.reduce((arr, result) => {
+    const resultUpdate = {};
+    _migrateDocumentIcon(result, resultUpdate, migrationData);
+    if ( !foundry.utils.isEmpty(resultUpdate) ) {
+      resultUpdate._id = result._id;
+      arr.push(foundry.utils.expandObject(resultUpdate));
+    }
+    return arr;
+  }, []);
+  if ( results.length ) updateData.results = results;
+  return updateData;
+}
+
+/* -------------------------------------------- */
+
+/**
  * Migrate a single Scene document to incorporate changes to the data model of it's actor data overrides
  * Return an Object of updateData to be applied
  * @param {object} scene            The Scene data to Update
@@ -348,32 +403,29 @@ export const migrateMacroData = function(macro, migrationData) {
  */
 export const migrateSceneData = function(scene, migrationData) {
   const tokens = scene.tokens.map(token => {
-    const t = token.toObject();
+    const t = token instanceof foundry.abstract.DataModel ? token.toObject() : token;
     const update = {};
     _migrateTokenImage(t, update);
     if ( Object.keys(update).length ) foundry.utils.mergeObject(t, update);
-    if ( !t.actorId || t.actorLink ) {
-      t.actorData = {};
-    }
-    else if ( !game.actors.has(t.actorId) ) {
-      t.actorId = null;
-      t.actorData = {};
-    }
+    if ( !game.actors.has(t.actorId) ) t.actorId = null;
+    if ( !t.actorId || t.actorLink ) t.actorData = {};
     else if ( !t.actorLink ) {
-      const actorData = duplicate(t.actorData);
+      const actorData = token.delta?.toObject() ?? foundry.utils.deepClone(t.actorData);
       actorData.type = token.actor?.type;
       const update = migrateActorData(actorData, migrationData);
-      ["items", "effects"].forEach(embeddedName => {
-        if (!update[embeddedName]?.length) return;
-        const updates = new Map(update[embeddedName].map(u => [u._id, u]));
-        t.actorData[embeddedName].forEach(original => {
-          const update = updates.get(original._id);
-          if (update) foundry.utils.mergeObject(original, update);
+      if ( game.dnd5e.isV10 ) {
+        ["items", "effects"].forEach(embeddedName => {
+          if ( !update[embeddedName]?.length ) return;
+          const updates = new Map(update[embeddedName].map(u => [u._id, u]));
+          t.actorData[embeddedName].forEach(original => {
+            const update = updates.get(original._id);
+            if ( update ) foundry.utils.mergeObject(original, update);
+          });
+          delete update[embeddedName];
         });
-        delete update[embeddedName];
-      });
-
-      foundry.utils.mergeObject(t.actorData, update);
+        foundry.utils.mergeObject(t.actorData, update);
+      }
+      else t.delta = update;
     }
     return t;
   });
@@ -403,139 +455,6 @@ export const getMigrationData = async function() {
 /* -------------------------------------------- */
 
 /**
- * Migrate the actor speed string to movement object
- * @param {object} actorData   Actor data being migrated.
- * @param {object} updateData  Existing updates being applied to actor. *Will be mutated.*
- * @returns {object}           Modified version of update data.
- * @private
- */
-function _migrateActorMovement(actorData, updateData) {
-  const attrs = actorData.system.attributes || {};
-
-  // Work is needed if old data is present
-  const old = actorData.type === "vehicle" ? attrs.speed : attrs.speed?.value;
-  const hasOld = old !== undefined;
-  if ( hasOld ) {
-
-    // If new data is not present, migrate the old data
-    const hasNew = attrs.movement?.walk !== undefined;
-    if ( !hasNew && (typeof old === "string") ) {
-      const s = (old || "").split(" ");
-      if ( s.length > 0 ) updateData["system.attributes.movement.walk"] = Number.isNumeric(s[0]) ? parseInt(s[0]) : null;
-    }
-
-    // Remove the old attribute
-    updateData["system.attributes.-=speed"] = null;
-  }
-  return updateData;
-}
-
-/* -------------------------------------------- */
-
-/**
- * Migrate the actor traits.senses string to attributes.senses object
- * @param {object} actor       Actor data being migrated.
- * @param {object} updateData  Existing updates being applied to actor. *Will be mutated.*
- * @returns {object}           Modified version of update data.
- * @private
- */
-function _migrateActorSenses(actor, updateData) {
-  const oldSenses = actor.system.traits?.senses;
-  if ( oldSenses === undefined ) return;
-  if ( typeof oldSenses !== "string" ) return;
-
-  // Try to match old senses with the format like "Darkvision 60 ft, Blindsight 30 ft"
-  const pattern = /([A-z]+)\s?([0-9]+)\s?([A-z]+)?/;
-  let wasMatched = false;
-
-  // Match each comma-separated term
-  for ( let s of oldSenses.split(",") ) {
-    s = s.trim();
-    const match = s.match(pattern);
-    if ( !match ) continue;
-    const type = match[1].toLowerCase();
-    if ( type in CONFIG.DND5E.senses ) {
-      updateData[`system.attributes.senses.${type}`] = Number(match[2]).toNearest(0.5);
-      wasMatched = true;
-    }
-  }
-
-  // If nothing was matched, but there was an old string - put the whole thing in "special"
-  if ( !wasMatched && oldSenses ) {
-    updateData["system.attributes.senses.special"] = oldSenses;
-  }
-
-  // Remove the old traits.senses string once the migration is complete
-  updateData["system.traits.-=senses"] = null;
-  return updateData;
-}
-
-/* -------------------------------------------- */
-
-/**
- * Migrate the actor details.type string to object
- * @param {object} actor       Actor data being migrated.
- * @param {object} updateData  Existing updates being applied to actor. *Will be mutated.*
- * @returns {object}           Modified version of update data.
- * @private
- */
-function _migrateActorType(actor, updateData) {
-  const original = actor.system.details?.type;
-  if ( typeof original !== "string" ) return;
-
-  // New default data structure
-  let actorTypeData = {
-    value: "",
-    subtype: "",
-    swarm: "",
-    custom: ""
-  };
-
-  // Match the existing string
-  const pattern = /^(?:swarm of (?<size>[\w-]+) )?(?<type>[^(]+?)(?:\((?<subtype>[^)]+)\))?$/i;
-  const match = original.trim().match(pattern);
-  if ( match ) {
-
-    // Match a known creature type
-    const typeLc = match.groups.type.trim().toLowerCase();
-    const typeMatch = Object.entries(CONFIG.DND5E.creatureTypes).find(([k, v]) => {
-      return (typeLc === k)
-        || (typeLc === game.i18n.localize(v).toLowerCase())
-        || (typeLc === game.i18n.localize(`${v}Pl`).toLowerCase());
-    });
-    if (typeMatch) actorTypeData.value = typeMatch[0];
-    else {
-      actorTypeData.value = "custom";
-      actorTypeData.custom = match.groups.type.trim().titleCase();
-    }
-    actorTypeData.subtype = match.groups.subtype?.trim().titleCase() || "";
-
-    // Match a swarm
-    const isNamedSwarm = actor.name.startsWith(game.i18n.localize("DND5E.CreatureSwarm"));
-    if ( match.groups.size || isNamedSwarm ) {
-      const sizeLc = match.groups.size ? match.groups.size.trim().toLowerCase() : "tiny";
-      const sizeMatch = Object.entries(CONFIG.DND5E.actorSizes).find(([k, v]) => {
-        return (sizeLc === k) || (sizeLc === game.i18n.localize(v).toLowerCase());
-      });
-      actorTypeData.swarm = sizeMatch ? sizeMatch[0] : "tiny";
-    }
-    else actorTypeData.swarm = "";
-  }
-
-  // No match found
-  else {
-    actorTypeData.value = "custom";
-    actorTypeData.custom = original;
-  }
-
-  // Update the actor data
-  updateData["system.details.type"] = actorTypeData;
-  return updateData;
-}
-
-/* -------------------------------------------- */
-
-/**
  * Migrate the actor attributes.ac.value to the new ac.flat override field.
  * @param {object} actorData   Actor data being migrated.
  * @param {object} updateData  Existing updates being applied to actor. *Will be mutated.*
@@ -560,6 +479,16 @@ function _migrateActorAC(actorData, updateData) {
   // Protect against string values created by character sheets or importers that don't enforce data types
   if ( (typeof ac?.flat === "string") && Number.isNumeric(ac.flat) ) {
     updateData["system.attributes.ac.flat"] = parseInt(ac.flat);
+  }
+
+  // Remove invalid AC formula strings.
+  if ( ac?.formula ) {
+    try {
+      const roll = new Roll(ac.formula);
+      Roll.safeEval(roll.formula);
+    } catch( e ) {
+      updateData["system.attributes.ac.formula"] = "";
+    }
   }
 
   return updateData;
@@ -589,92 +518,6 @@ function _migrateTokenImage(actorData, updateData) {
 /* -------------------------------------------- */
 
 /**
- * Delete the old data.attuned boolean.
- * @param {object} item        Item data to migrate
- * @param {object} updateData  Existing update to expand upon
- * @returns {object}           The updateData to apply
- * @private
- */
-function _migrateItemAttunement(item, updateData) {
-  if ( item.system?.attuned === undefined ) return updateData;
-  updateData["system.attunement"] = CONFIG.DND5E.attunementTypes.NONE;
-  updateData["system.-=attuned"] = null;
-  return updateData;
-}
-
-/* -------------------------------------------- */
-
-/**
- * Attempt to migrate item rarity from freeform string to enum value.
- * @param {object} item        Item data to migrate.
- * @param {object} updateData  Existing update to expand upon.
- * @returns {object}           The updateData to apply.
- * @private
- */
-function _migrateItemRarity(item, updateData) {
-  if ( item.system?.rarity === undefined ) return updateData;
-  const rarity = Object.keys(CONFIG.DND5E.itemRarity).find(key =>
-    (CONFIG.DND5E.itemRarity[key].toLowerCase() === item.system.rarity.toLowerCase()) || (key === item.system.rarity)
-  );
-  updateData["system.rarity"] = rarity ?? "";
-  return updateData;
-}
-
-/* -------------------------------------------- */
-
-/**
- * Replace class spellcasting string to object.
- * @param {object} item        Item data to migrate.
- * @param {object} updateData  Existing update to expand upon.
- * @returns {object}           The updateData to apply.
- * @private
- */
-function _migrateItemSpellcasting(item, updateData) {
-  if ( item.type !== "class" || (foundry.utils.getType(item.system.spellcasting) === "Object") ) return updateData;
-  updateData["system.spellcasting"] = {
-    progression: item.system.spellcasting,
-    ability: ""
-  };
-  return updateData;
-}
-
-/* --------------------------------------------- */
-
-/**
- * Convert equipment items of type 'bonus' to 'trinket'.
- * @param {object} item        Item data to migrate.
- * @param {object} updateData  Existing update to expand upon.
- * @returns {object}           The updateData to apply.
- * @private
- */
-function _migrateArmorType(item, updateData) {
-  if ( item.type !== "equipment" ) return updateData;
-  if ( item.system?.armor?.type === "bonus" ) updateData["system.armor.type"] = "trinket";
-  return updateData;
-}
-
-/* -------------------------------------------- */
-
-/**
- * Set the item's `critical` property to a proper object value.
- * @param {object} item        Item data to migrate.
- * @param {object} updateData  Existing update to expand upon.
- * @returns {object}           The updateData to apply.
- * @private
- */
-function _migrateItemCriticalData(item, updateData) {
-  const hasCritData = game.system.template.Item[item.type]?.templates?.includes("action");
-  if ( !hasCritData || (foundry.utils.getType(item.system.critical) === "Object") ) return updateData;
-  updateData["system.critical"] = {
-    threshold: null,
-    damage: null
-  };
-  return updateData;
-}
-
-/* -------------------------------------------- */
-
-/**
  * Convert system icons to use bundled core webp icons.
  * @param {object} document                                 Document data to migrate
  * @param {object} updateData                               Existing update to expand upon
@@ -685,8 +528,12 @@ function _migrateItemCriticalData(item, updateData) {
  * @private
  */
 function _migrateDocumentIcon(document, updateData, {iconMap, field="img"}={}) {
-  const rename = iconMap?.[document?.[field]];
-  if ( rename ) updateData[field] = rename;
+  let path = document?.[field];
+  if ( path && iconMap ) {
+    if ( path.startsWith("/") || path.startsWith("\\") ) path = path.substring(1);
+    const rename = iconMap[path];
+    if ( rename ) updateData[field] = rename;
+  }
   return updateData;
 }
 
@@ -700,7 +547,7 @@ function _migrateDocumentIcon(document, updateData, {iconMap, field="img"}={}) {
  */
 function _migrateEffectArmorClass(effect, updateData) {
   let containsUpdates = false;
-  const changes = effect.changes.map(c => {
+  const changes = (effect.changes || []).map(c => {
     if ( c.key !== "system.attributes.ac.base" ) return c;
     c.key = "system.attributes.ac.armor";
     containsUpdates = true;
@@ -753,26 +600,4 @@ export async function purgeFlags(pack) {
     console.log(`Purged flags from ${doc.name}`);
   }
   await pack.configure({locked: true});
-}
-
-/* -------------------------------------------- */
-
-
-/**
- * Purge the data model of any inner objects which have been flagged as _deprecated.
- * @param {object} data   The data to clean.
- * @returns {object}      Cleaned data.
- * @private
- */
-export function removeDeprecatedObjects(data) {
-  for ( let [k, v] of Object.entries(data) ) {
-    if ( getType(v) === "Object" ) {
-      if (v._deprecated === true) {
-        console.log(`Deleting deprecated object key ${k}`);
-        delete data[k];
-      }
-      else removeDeprecatedObjects(v);
-    }
-  }
-  return data;
 }
