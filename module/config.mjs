@@ -429,6 +429,20 @@ preLocalize("itemCapacityTypes", { sort: true });
  */
 MKA.itemRarity = {
   soul: "MKA.ItemRaritySoul",
+  r1: "MKA.ItemRarity1",
+  r2: "MKA.ItemRarity2",
+  r3: "MKA.ItemRarity3",
+  r4: "MKA.ItemRarity4",
+  r5: "MKA.ItemRarity5",
+  r6: "MKA.ItemRarity6",
+  r7: "MKA.ItemRarity7",
+  r8: "MKA.ItemRarity8",
+  r9: "MKA.ItemRarity9",
+  r10: "MKA.ItemRarity10",
+  cheap: "MKA.ItemRarityCheap",
+  standard: "MKA.ItemRarityStandard",
+  valuable: "MKA.ItemRarityValuable",
+  luxurious: "MKA.ItemRarityLuxurious",
   common: "MKA.ItemRarityCommon",
   uncommon: "MKA.ItemRarityUncommon",
   rare: "MKA.ItemRarityRare",
@@ -619,6 +633,7 @@ preLocalize("armorClasses", { key: "label" });
 MKA.consumableTypes = {
   ammo: "MKA.ConsumableAmmunition",
   potion: "MKA.ConsumablePotion",
+  shard: "MKA.ConsumableShard",
   poison: "MKA.ConsumablePoison",
   food: "MKA.ConsumableFood",
   scroll: "MKA.ConsumableScroll",
@@ -639,29 +654,13 @@ preLocalize("consumableTypes", { sort: true });
  * }}
  */
 MKA.currencies = {
-  pp: {
-    label: "MKA.CurrencyPP",
-    abbreviation: "MKA.CurrencyAbbrPP"
+  gg: {
+    label: "MKA.CurrencyGG",
+    abbreviation: "MKA.CurrencyAbbrGG"
   },
-  gp: {
-    label: "MKA.CurrencyGP",
-    abbreviation: "MKA.CurrencyAbbrGP",
-    conversion: {into: "pp", each: 10}
-  },
-  ep: {
-    label: "MKA.CurrencyEP",
-    abbreviation: "MKA.CurrencyAbbrEP",
-    conversion: {into: "gp", each: 2}
-  },
-  sp: {
-    label: "MKA.CurrencySP",
-    abbreviation: "MKA.CurrencyAbbrSP",
-    conversion: {into: "ep", each: 5}
-  },
-  cp: {
-    label: "MKA.CurrencyCP",
-    abbreviation: "MKA.CurrencyAbbrCP",
-    conversion: {into: "sp", each: 10}
+  bt: {
+    label: "MKA.CurrencyBT",
+    abbreviation: "MKA.CurrencyAbbrBT"
   }
 };
 preLocalize("currencies", { keys: ["label", "abbreviation"] });

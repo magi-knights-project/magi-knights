@@ -23,98 +23,98 @@
   "packs": [
     {
       "name": "magiknightdeck",
-      "label": "Magi Knight Spell Deck (MK)",
+      "label": "Magi Knight Spell Deck (MKA)",
       "system": "mka",
       "path": "./packs/mkspelldeck.db",
       "type": "Cards"
     },
     {
       "name": "studenttypes",
-      "label": "Student Types (MK)",
+      "label": "Student Types (MKA)",
       "system": "mka",
       "path": "./packs/studenttypes.db",
       "type": "Item"
     },
     {
       "name": "magicstyles",
-      "label": "Magic Styles (MK)",
+      "label": "Magic Styles (MKA)",
       "system": "mka",
       "path": "./packs/magicstyles.db",
       "type": "Item"
     },
     {
       "name": "elementalaffinities",
-      "label": "Elemental Affinities (MK)",
+      "label": "Elemental Affinities (MKA)",
       "system": "mka",
       "path": "./packs/elementalaffinities.db",
       "type": "Item"
     },
     {
       "name": "spellpaths",
-      "label": "Spell Paths (MK)",
+      "label": "Spell Paths (MKA)",
       "system": "mka",
       "path": "./packs/spellpaths.db",
       "type": "Item"
     },
     {
       "name": "soulweapons",
-      "label": "Soul Weapons (MK)",
+      "label": "Soul Weapons (MKA)",
       "system": "mka",
       "path": "./packs/soulweapons.db",
       "type": "Item"
     },
     {
       "name": "battletechniques",
-      "label": "Battle Techniques (MK)",
+      "label": "Battle Techniques (MKA)",
       "system": "mka",
       "path": "./packs/battletechniques.db",
       "type": "Item"
     },
     {
       "name": "combattactics",
-      "label": "Combat Tactics (MK)",
+      "label": "Combat Tactics (MKA)",
       "system": "mka",
       "path": "./packs/combattactics.db",
       "type": "Item"
     },
     {
       "name": "socialtactics",
-      "label": "Social Tactics (MK)",
+      "label": "Social Tactics (MKA)",
       "system": "mka",
       "path": "./packs/socialtactics.db",
       "type": "Item"
     },
     {
       "name": "armamentssoulweaves",
-      "label": "Armaments, Soul Weaves (MK)",
+      "label": "Armaments, Soul Weaves (MKA)",
       "system": "mka",
-      "path": "./packs/socialtactics.db",
+      "path": "./packs/armaments.db",
       "type": "Item"
     },
     {
       "name": "shards",
-      "label": "Shards (MK)",
+      "label": "Shards (MKA)",
       "system": "mka",
       "path": "./packs/shards.db",
       "type": "Item"
     },
     {
       "name": "weaponrunes",
-      "label": "Weapon Runes (MK)",
+      "label": "Weapon Runes (MKA)",
       "system": "mka",
       "path": "./packs/weaponrunes.db",
       "type": "Item"
     },
     {
       "name": "armorrunes",
-      "label": "Armor Runes (MK)",
+      "label": "Armor Runes (MKA)",
       "system": "mka",
       "path": "./packs/armorrunes.db",
       "type": "Item"
     },
     {
       "name": "enemies",
-      "label": "Enemies (MK)",
+      "label": "Enemies (MKA)",
       "system": "mka",
       "path": "./packs/enemies.db",
       "type": "Actor"
