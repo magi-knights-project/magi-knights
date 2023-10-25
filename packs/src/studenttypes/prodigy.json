@@ -11,7 +11,7 @@
     "source": "",
     "activation": {
       "type": "",
-      "cost": 0,
+      "cost": null,
       "condition": ""
     },
     "duration": {
@@ -74,7 +74,7 @@
     "coreVersion": "10.287",
     "createdTime": 1670403764040,
     "modifiedTime": 1670403959249,
-    "lastModifiedBy": "RJIYZv8z53QKqobo"
+    "lastModifiedBy": "mkabuilder0000"
   },
   "folder": null,
   "sort": 0,

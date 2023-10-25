@@ -1,4 +1,4 @@
-![](https://github.com/foundryvtt/mka/blob/v10-dev/media/repo-mka.jpg?raw=true)
+![](https://github.com/foundryvtt/magi-knights-project/magi-knights/master/media/repo-dnd5e.jpg)
 
 # Foundry Virtual Tabletop - MKA Game System
 

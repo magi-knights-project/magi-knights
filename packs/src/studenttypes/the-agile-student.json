@@ -11,7 +11,7 @@
     "source": "MK CH2 P.20",
     "activation": {
       "type": "",
-      "cost": 0,
+      "cost": null,
       "condition": ""
     },
     "duration": {
@@ -74,7 +74,7 @@
     "coreVersion": "10.287",
     "createdTime": 1670279654934,
     "modifiedTime": 1670404083582,
-    "lastModifiedBy": "RJIYZv8z53QKqobo"
+    "lastModifiedBy": "mkabuilder0000"
   },
   "folder": null,
   "sort": 0,

@@ -94,8 +94,6 @@ Any feature request should be considered from the lens of "Does this belong in t
 
 ## Content
 
-All Content released with this system must come from the WotC [MKA System Reference Document](https://dnd.wizards.com/articles/features/systems-reference-document-srd) (aka SRD).
-
 If there is missing content, please open an issue detailing what is missing.
 
 In general, content contributions will take the shape of fixing typos or bugs in the configuration of the existing items in the included compendia JSON files, which are then compiled into the appropriate db file.
