@@ -1,11 +1,9 @@
 import Proficiency from "./proficiency.mjs";
-import { d20Roll, damageRoll } from "../../dice/dice.mjs";
+import { d20Roll } from "../../dice/dice.mjs";
 import { simplifyBonus } from "../../utils.mjs";
 import ShortRestDialog from "../../applications/actor/short-rest.mjs";
 import LongRestDialog from "../../applications/actor/long-rest.mjs";
-import ProficiencySelector from "../../applications/proficiency-selector.mjs";
-import ItemMKA from "../item.mjs";
-import SelectItemsPrompt from "../../applications/select-items-prompt.mjs";
+import * as Trait from "./trait.mjs";
 
 /**
  * Extend the base Actor class to implement additional system-specific logic.
@@ -70,8 +68,31 @@ export default class ActorMKA extends Actor {
   /*  Methods                                     */
   /* -------------------------------------------- */
 
+  /** @inheritdoc */
+  _initializeSource(source, options={}) {
+    source = super._initializeSource(source, options);
+    if ( !source._id || !options.pack || mka.moduleArt.suppressArt ) return source;
+    const uuid = `Compendium.${options.pack}.${source._id}`;
+    const art = game.mka.moduleArt.map.get(uuid);
+    if ( art?.actor || art?.token ) {
+      if ( art.actor ) source.img = art.actor;
+      if ( typeof art.token === "string" ) source.prototypeToken.texture.src = art.token;
+      else if ( art.token ) foundry.utils.mergeObject(source.prototypeToken, art.token);
+      const biography = source.system.details?.biography;
+      if ( art.credit && biography ) {
+        if ( typeof biography.value !== "string" ) biography.value = "";
+        biography.value += `<p>${art.credit}</p>`;
+      }
+    }
+    return source;
+  }
+
+  /* -------------------------------------------- */
+
   /** @inheritDoc */
   prepareData() {
+    // Do not attempt to prepare non-system types.
+    if ( !game.template.Actor.types.includes(this.type) ) return;
     this._classes = undefined;
     this._preparationWarnings = [];
     super.prepareData();
@@ -82,15 +103,15 @@ export default class ActorMKA extends Actor {
 
   /** @inheritDoc */
   prepareBaseData() {
-    const updates = {};
-    this._prepareBaseAbilities(updates);
-    this._prepareBaseSkills(updates);
-    if ( !foundry.utils.isEmpty(updates) ) {
-      if ( !this.id ) this.updateSource(updates);
-      else this.update(updates);
+
+    // Delegate preparation to type-subclass
+    if ( this.type === "group" ) {  // Eventually other types will also support this
+      return this.system._prepareBaseData();
     }
 
     this._prepareBaseArmorClass();
+
+    // Type-specific preparation
     switch ( this.type ) {
       case "character":
         return this._prepareCharacterData();
@@ -105,6 +126,7 @@ export default class ActorMKA extends Actor {
 
   /** @inheritDoc */
   applyActiveEffects() {
+    this._prepareScaleValues();
     // The Active Effects do not have access to their parent at preparation time, so we wait until this stage to
     // determine whether they are suppressed or not.
     this.effects.forEach(e => e.determineSuppression());
@@ -115,6 +137,12 @@ export default class ActorMKA extends Actor {
 
   /** @inheritDoc */
   prepareDerivedData() {
+
+    // Delegate preparation to type-subclass
+    if ( this.type === "group" ) {  // Eventually other types will also support this
+      return this.system._prepareDerivedData();
+    }
+
     const flags = this.flags.mka || {};
     this.labels = {};
 
@@ -132,14 +160,15 @@ export default class ActorMKA extends Actor {
 
     // Prepare abilities, skills, & everything else
     const globalBonuses = this.system.bonuses?.abilities ?? {};
-    const bonusData = this.getRollData();
-    const checkBonus = simplifyBonus(globalBonuses?.check, bonusData);
-    this._prepareAbilities(bonusData, globalBonuses, checkBonus, originalSaves);
-    this._prepareSkills(bonusData, globalBonuses, checkBonus, originalSkills);
+    const rollData = this.getRollData();
+    const checkBonus = simplifyBonus(globalBonuses?.check, rollData);
+    this._prepareAbilities(rollData, globalBonuses, checkBonus, originalSaves);
+    this._prepareSkills(rollData, globalBonuses, checkBonus, originalSkills);
+    this._prepareTools(rollData, globalBonuses, checkBonus);
     this._prepareArmorClass();
     this._prepareEncumbrance();
-    this._prepareInitiative(bonusData, checkBonus);
-    this._prepareScaleValues();
+    this._prepareHitPoints(rollData);
+    this._prepareInitiative(rollData, checkBonus);
     this._prepareSpellcasting();
   }
 
@@ -176,13 +205,15 @@ export default class ActorMKA extends Actor {
    *                                            either a die term or a flat term.
    */
   getRollData({ deterministic=false }={}) {
-    const data = foundry.utils.deepClone(super.getRollData());
+    const data = {...super.getRollData()};
+    if ( this.type === "group" ) return data;
     data.prof = new Proficiency(this.system.attributes.prof, 1);
     if ( deterministic ) data.prof = data.prof.flat;
-
+    data.attributes = foundry.utils.deepClone(data.attributes);
+    data.attributes.spellmod = data.abilities[data.attributes.spellcasting || "int"]?.mod ?? 0;
     data.classes = {};
     for ( const [identifier, cls] of Object.entries(this.classes) ) {
-      data.classes[identifier] = cls.system;
+      data.classes[identifier] = {...cls.system};
       if ( cls.subclass ) data.classes[identifier].subclass = cls.subclass.system;
     }
     return data;
@@ -190,62 +221,6 @@ export default class ActorMKA extends Actor {
 
   /* -------------------------------------------- */
   /*  Base Data Preparation Helpers               */
-  /* -------------------------------------------- */
-
-  /**
-   * Update the actor's abilities list to match the abilities configured in `MKA.abilities`.
-   * Mutates the system.abilities object.
-   * @param {object} updates  Updates to be applied to the actor. *Will be mutated.*
-   * @protected
-   */
-  _prepareBaseAbilities(updates) {
-    const abilities = {};
-    for ( const key of Object.keys(CONFIG.MKA.abilities) ) {
-      abilities[key] = this.system.abilities[key];
-      if ( !abilities[key] ) {
-        abilities[key] = foundry.utils.deepClone(game.system.template.Actor.templates.common.abilities.cha);
-
-        // Honor: Charisma for NPC, 0 for vehicles
-        if ( key === "hon" ) {
-          if ( this.type === "vehicle" ) abilities[key].value = 0;
-          else if ( this.type === "npc" ) abilities[key].value = this.system.abilities.cha?.value ?? 10;
-        }
-
-        // Sanity: Wisdom for NPC, 0 for vehicles
-        else if ( key === "san" ) {
-          if ( this.type === "vehicle" ) abilities[key].value = 0;
-          else if ( this.type === "npc" ) abilities[key].value = this.system.abilities.wis?.value ?? 10;
-        }
-
-        updates[`system.abilities.${key}`] = foundry.utils.deepClone(abilities[key]);
-      }
-    }
-    this.system.abilities = abilities;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Update the actor's skill list to match the skills configured in `MKA.skills`.
-   * Mutates the system.skills object.
-   * @param {object} updates  Updates to be applied to the actor. *Will be mutated*.
-   * @private
-   */
-  _prepareBaseSkills(updates) {
-    if ( this.type === "vehicle") return;
-    const skills = {};
-    for ( const [key, skill] of Object.entries(CONFIG.MKA.skills) ) {
-      skills[key] = this.system.skills[key];
-      if ( !skills[key] ) {
-        skills[key] = foundry.utils.deepClone(game.system.template.Actor.templates.creature.skills.acr);
-        skills[key].ability = skill.ability;
-        skills[key].abilitylist = skill.abilitylist;
-        updates[`data.skills.${key}`] = foundry.utils.deepClone(skills[key]);
-      }
-    }
-    this.system.skills = skills;
-  }
-
   /* -------------------------------------------- */
 
   /**
@@ -257,6 +232,21 @@ export default class ActorMKA extends Actor {
     const ac = this.system.attributes.ac;
     ac.armor = 10;
     ac.shield = ac.bonus = ac.cover = 0;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Derive any values that have been scaled by the Advancement system.
+   * Mutates the value of the `system.scale` object.
+   * @protected
+   */
+  _prepareScaleValues() {
+    this.system.scale = Object.entries(this.classes).reduce((scale, [identifier, cls]) => {
+      scale[identifier] = cls.scaleValues;
+      if ( cls.subclass ) scale[cls.subclass.identifier] = cls.subclass.scaleValues;
+      return scale;
+    }, {});
   }
 
   /* -------------------------------------------- */
@@ -286,7 +276,7 @@ export default class ActorMKA extends Actor {
     }
 
     // Character proficiency bonus
-    this.system.attributes.prof = Math.floor((this.system.details.level + 7) / 4);
+    this.system.attributes.prof = Proficiency.calculateMod(this.system.details.level);
 
     // Experience required for next level
     const xp = this.system.details.xp;
@@ -313,10 +303,11 @@ export default class ActorMKA extends Actor {
     }).length;
 
     // Kill Experience
+    this.system.details.xp ??= {};
     this.system.details.xp.value = this.getCRExp(cr);
 
     // Proficiency
-    this.system.attributes.prof = Math.floor((Math.max(cr, 1) + 7) / 4);
+    this.system.attributes.prof = Proficiency.calculateMod(Math.max(cr, 1));
 
     // Spellcaster Level
     if ( this.system.attributes.spellcasting && !Number.isNumeric(this.system.details.spellLevel) ) {
@@ -367,6 +358,8 @@ export default class ActorMKA extends Actor {
       abl.save = abl.mod + abl.saveBonus;
       if ( Number.isNumeric(abl.saveProf.term) ) abl.save += abl.saveProf.flat;
       abl.dc = 8 + abl.mod + this.system.attributes.prof + dcBonus;
+
+      if ( !Number.isFinite(abl.max) ) abl.max = CONFIG.MKA.maxAbilityScore;
 
       // If we merged saves when transforming, take the highest bonus here.
       if ( originalSaves && abl.proficient ) abl.save = Math.max(abl.save, originalSaves[id].save);
@@ -427,12 +420,9 @@ export default class ActorMKA extends Actor {
     const feats = CONFIG.MKA.characterFlags;
     const skillBonus = simplifyBonus(globalBonuses.skill, bonusData);
     for ( const [id, skl] of Object.entries(this.system.skills) ) {
-
       // MKEDIT: We pick the best ability available that the character has.
       skl.bestAbility = this.getBestAbilityForSkill(id);
       const ability = this.system.abilities[skl.bestAbility];
-
-      skl.value = Math.clamped(Number(skl.value).toNearest(0.5), 0, 2) ?? 0;
       const baseBonus = simplifyBonus(skl.bonuses?.check, bonusData);
       let roundDown = true;
 
@@ -465,6 +455,41 @@ export default class ActorMKA extends Actor {
       const passive = flags.observantFeat && (feats.observantFeat.skills.includes(id)) ? 5 : 0;
       const passiveBonus = simplifyBonus(skl.bonuses?.passive, bonusData);
       skl.passive = 10 + skl.mod + skl.bonus + skl.prof.flat + passive + passiveBonus;
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare tool checks. Mutates the values of system.tools.
+   * @param {object} bonusData       Data produced by `getRollData` to be applied to bonus formulae.
+   * @param {object} globalBonuses   Global bonus data.
+   * @param {number} checkBonus      Global ability check bonus.
+   * @protected
+   */
+  _prepareTools(bonusData, globalBonuses, checkBonus) {
+    if ( this.type === "vehicle" ) return;
+    const flags = this.flags.mka ?? {};
+    for ( const tool of Object.values(this.system.tools) ) {
+      const ability = this.system.abilities[tool.ability];
+      const baseBonus = simplifyBonus(tool.bonuses.check, bonusData);
+      let roundDown = true;
+
+      // Remarkable Athlete.
+      if ( this._isRemarkableAthlete(tool.ability) && (tool.value < 0.5) ) {
+        tool.value = 0.5;
+        roundDown = false;
+      }
+
+      // Jack of All Trades.
+      else if ( flags.jackOfAllTrades && (tool.value < 0.5) ) tool.value = 0.5;
+
+      const checkBonusAbl = simplifyBonus(ability?.bonuses?.check, bonusData);
+      tool.bonus = baseBonus + checkBonus + checkBonusAbl;
+      tool.mod = ability?.mod ?? 0;
+      tool.prof = new Proficiency(this.system.attributes.prof, tool.value, roundDown);
+      tool.total = tool.mod + tool.bonus;
+      if ( Number.isNumeric(tool.prof.term) ) tool.total += tool.prof.flat;
     }
   }
 
@@ -511,7 +536,9 @@ export default class ActorMKA extends Actor {
       default:
         let formula = ac.calc === "custom" ? ac.formula : cfg.formula;
         if ( armors.length ) {
-          if ( armors.length > 1 ) this._preparationWarnings.push("MKA.WarnMultipleArmor");
+          if ( armors.length > 1 ) this._preparationWarnings.push({
+            message: game.i18n.localize("MKA.WarnMultipleArmor"), type: "warning"
+          });
           const armorData = armors[0].system.armor;
           const isHeavy = armorData.type === "heavy";
           ac.armor = armorData.value ?? ac.armor;
@@ -526,7 +553,9 @@ export default class ActorMKA extends Actor {
           const replaced = Roll.replaceFormulaData(formula, rollData);
           ac.base = Roll.safeEval(replaced);
         } catch(err) {
-          this._preparationWarnings.push("MKA.WarnBadACFormula");
+          this._preparationWarnings.push({
+            message: game.i18n.localize("MKA.WarnBadACFormula"), link: "armor", type: "error"
+          });
           const replaced = Roll.replaceFormulaData(CONFIG.MKA.armorClasses.default.formula, rollData);
           ac.base = Roll.safeEval(replaced);
         }
@@ -535,7 +564,9 @@ export default class ActorMKA extends Actor {
 
     // Equipped Shield
     if ( shields.length ) {
-      if ( shields.length > 1 ) this._preparationWarnings.push("MKA.WarnMultipleShields");
+      if ( shields.length > 1 ) this._preparationWarnings.push({
+        message: game.i18n.localize("MKA.WarnMultipleShields"), type: "warning"
+      });
       ac.shield = shields[0].system.armor.value ?? 0;
       ac.equippedShield = shields[0];
     }
@@ -592,45 +623,59 @@ export default class ActorMKA extends Actor {
   /* -------------------------------------------- */
 
   /**
-   * Prepare the initiative data for an actor.
-   * Mutates the value of the `system.attributes.init` object.
-   * @param {object} bonusData         Data produced by `getRollData` to be applied to bonus formulas.
-   * @param {number} globalCheckBonus  Global ability check bonus.
+   * Prepare hit points for characters.
+   * @param {object} rollData  Data produced by `getRollData` to be applied to bonus formulas.
    * @protected
    */
-  _prepareInitiative(bonusData, globalCheckBonus) {
-    const init = this.system.attributes.init ??= {};
-    const { initiativeAlert, jackOfAllTrades, remarkableAthlete } = this.flags.mka ?? {};
+  _prepareHitPoints(rollData) {
+    if ( this.type !== "character" || (this.system._source.attributes.hp.max !== null) ) return;
+    const hp = this.system.attributes.hp;
 
-    // Initiative modifiers
-    const dexCheckBonus = simplifyBonus(this.system.abilities.dex?.bonuses?.check, bonusData);
+    const abilityId = CONFIG.MKA.hitPointsAbility || "con";
+    const abilityMod = (this.system.abilities[abilityId]?.mod ?? 0);
+    const base = Object.values(this.classes).reduce((total, item) => {
+      const advancement = item.advancement.byType.HitPoints?.[0];
+      return total + (advancement?.getAdjustedTotal(abilityMod) ?? 0);
+    }, 0);
+    const levelBonus = simplifyBonus(hp.bonuses.level, rollData) * this.system.details.level;
+    const overallBonus = simplifyBonus(hp.bonuses.overall, rollData);
 
-    // Compute initiative modifier
-    init.mod = this.system.abilities.dex?.mod ?? 0;
-    init.prof = new Proficiency(
-      this.system.attributes.prof, (jackOfAllTrades || remarkableAthlete) ? 0.5 : 0, !remarkableAthlete
-    );
-    init.value = init.value ?? 0;
-    init.bonus = init.value + (initiativeAlert ? 5 : 0);
-    init.total = init.mod + init.bonus + dexCheckBonus + globalCheckBonus;
-    if ( Number.isNumeric(init.prof.term) ) init.total += init.prof.flat;
+    hp.max = base + levelBonus + overallBonus;
   }
 
   /* -------------------------------------------- */
 
   /**
-   * Derive any values that have been scaled by the Advancement system.
-   * Mutates the value of the `system.scale` object.
+   * Prepare the initiative data for an actor.
+   * Mutates the value of the system.attributes.init object.
+   * @param {object} bonusData         Data produced by getRollData to be applied to bonus formulas
+   * @param {number} globalCheckBonus  Global ability check bonus
    * @protected
    */
-  _prepareScaleValues() {
-    this.system.scale = Object.entries(this.classes).reduce((scale, [identifier, cls]) => {
-      scale[identifier] = cls.scaleValues;
-      if ( cls.subclass ) scale[cls.subclass.identifier] = cls.subclass.scaleValues;
-      return scale;
-    }, {});
+  _prepareInitiative(bonusData, globalCheckBonus=0) {
+    const init = this.system.attributes.init ??= {};
+    const flags = this.flags.mka || {};
+
+    // Compute initiative modifier
+    const abilityId = init.ability || CONFIG.MKA.initiativeAbility;
+    const ability = this.system.abilities?.[abilityId] || {};
+    init.mod = ability.mod ?? 0;
+
+    // Initiative proficiency
+    const prof = this.system.attributes.prof ?? 0;
+    const ra = flags.remarkableAthlete && ["str", "dex", "con"].includes(abilityId);
+    init.prof = new Proficiency(prof, (flags.jackOfAllTrades || ra) ? 0.5 : 0, !ra);
+
+    // Total initiative includes all numeric terms
+    const initBonus = simplifyBonus(init.bonus, bonusData);
+    const abilityBonus = simplifyBonus(ability.bonuses?.check, bonusData);
+    init.total = init.mod + initBonus + abilityBonus + globalCheckBonus
+      + (flags.initiativeAlert ? 5 : 0)
+      + (Number.isNumeric(init.prof.term) ? init.prof.flat : 0);
   }
 
+  /* -------------------------------------------- */
+  /*  Spellcasting Preparation                    */
   /* -------------------------------------------- */
 
   /**
@@ -639,74 +684,195 @@ export default class ActorMKA extends Actor {
    * @protected
    */
   _prepareSpellcasting() {
-    if ( this.type === "vehicle" ) return;
-    const isNPC = this.type === "npc";
-    const spells = this.system.spells;
+    if ( !this.system.spells ) return;
 
     // Spellcasting DC
     const spellcastingAbility = this.system.abilities[this.system.attributes.spellcasting];
     this.system.attributes.spelldc = spellcastingAbility ? spellcastingAbility.dc : 8 + this.system.attributes.prof;
 
-    // Translate the list of classes into spell-casting progression
-    const progression = {total: 0, slot: 0, pact: 0};
+    // Translate the list of classes into spellcasting progression
+    const progression = { slot: 0, pact: 0 };
+    const types = {};
 
-    // Keep track of the last seen caster in case we're in a single-caster situation.
-    let caster = null;
-
-    // Tabulate the total spell-casting progression
-    for ( let cls of Object.values(this.classes) ) {
-      const prog = cls.spellcasting.progression;
-      if ( prog === "none" ) continue;
-      const levels = cls.system.levels;
-
-      // Accumulate levels
-      if ( prog !== "pact" ) {
-        caster = cls;
-        progression.total++;
-      }
-      switch (prog) {
-        case "third": progression.slot += Math.floor(levels / 3); break;
-        case "half": progression.slot += Math.floor(levels / 2); break;
-        case "full": progression.slot += levels; break;
-        case "artificer": progression.slot += Math.ceil(levels / 2); break;
-        case "pact": progression.pact += levels; break;
-      }
+    // NPCs don't get spell levels from classes
+    if ( this.type === "npc" ) {
+      progression.slot = this.system.details.spellLevel ?? 0;
+      types.leveled = 1;
     }
 
-    // EXCEPTION: single-classed non-full progression rounds up, rather than down
-    const isSingleClass = (progression.total === 1) && (progression.slot > 0);
-    if ( !isNPC && isSingleClass && ["half", "third"].includes(caster.spellcasting.progression) ) {
-      const denom = caster.spellcasting.progression === "third" ? 3 : 2;
-      progression.slot = Math.ceil(caster.system.levels / denom);
+    else {
+      // Grab all classes with spellcasting
+      const classes = this.items.filter(cls => {
+        if ( cls.type !== "class" ) return false;
+        const type = cls.spellcasting.type;
+        if ( !type ) return false;
+        types[type] ??= 0;
+        types[type] += 1;
+        return true;
+      });
+
+      for ( const cls of classes ) this.constructor.computeClassProgression(
+        progression, cls, { actor: this, count: types[cls.spellcasting.type] }
+      );
     }
 
-    // EXCEPTION: NPC with an explicit spell-caster level
-    if ( isNPC && this.system.details.spellLevel ) progression.slot = this.system.details.spellLevel;
+    for ( const type of Object.keys(CONFIG.MKA.spellcastingTypes) ) {
+      this.constructor.prepareSpellcastingSlots(this.system.spells, type, progression, { actor: this });
+    }
+  }
 
-    // Look up the number of slots per level from the progression table
+  /* -------------------------------------------- */
+
+  /**
+   * Contribute to the actor's spellcasting progression.
+   * @param {object} progression                             Spellcasting progression data. *Will be mutated.*
+   * @param {ItemMKA} cls                                     Class for whom this progression is being computed.
+   * @param {object} [config={}]
+   * @param {ActorMKA|null} [config.actor]                    Actor for whom the data is being prepared.
+   * @param {SpellcastingDescription} [config.spellcasting]  Spellcasting descriptive object.
+   * @param {number} [config.count=1]                        Number of classes with this type of spellcasting.
+   */
+  static computeClassProgression(progression, cls, {actor, spellcasting, count=1}={}) {
+    const type = cls.spellcasting.type;
+    spellcasting = spellcasting ?? cls.spellcasting;
+
+    /**
+     * A hook event that fires while computing the spellcasting progression for each class on each actor.
+     * The actual hook names include the spellcasting type (e.g. `mka.computeLeveledProgression`).
+     * @param {object} progression                    Spellcasting progression data. *Will be mutated.*
+     * @param {ActorMKA|null} [actor]                  Actor for whom the data is being prepared.
+     * @param {ItemMKA} cls                            Class for whom this progression is being computed.
+     * @param {SpellcastingDescription} spellcasting  Spellcasting descriptive object.
+     * @param {number} count                          Number of classes with this type of spellcasting.
+     * @returns {boolean}  Explicitly return false to prevent default progression from being calculated.
+     * @function mka.computeSpellcastingProgression
+     * @memberof hookEvents
+     */
+    const allowed = Hooks.call(
+      `mka.compute${type.capitalize()}Progression`, progression, actor, cls, spellcasting, count
+    );
+
+    if ( allowed && (type === "pact") ) {
+      this.computePactProgression(progression, actor, cls, spellcasting, count);
+    } else if ( allowed && (type === "leveled") ) {
+      this.computeLeveledProgression(progression, actor, cls, spellcasting, count);
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Contribute to the actor's spellcasting progression for a class with leveled spellcasting.
+   * @param {object} progression                    Spellcasting progression data. *Will be mutated.*
+   * @param {ActorMKA} actor                         Actor for whom the data is being prepared.
+   * @param {ItemMKA} cls                            Class for whom this progression is being computed.
+   * @param {SpellcastingDescription} spellcasting  Spellcasting descriptive object.
+   * @param {number} count                          Number of classes with this type of spellcasting.
+   */
+  static computeLeveledProgression(progression, actor, cls, spellcasting, count) {
+    const prog = CONFIG.MKA.spellcastingTypes.leveled.progression[spellcasting.progression];
+    if ( !prog ) return;
+    const rounding = prog.roundUp ? Math.ceil : Math.floor;
+    progression.slot += rounding(spellcasting.levels / prog.divisor ?? 1);
+    // Single-classed, non-full progression rounds up, rather than down.
+    if ( (count === 1) && (prog.divisor > 1) && progression.slot ) {
+      progression.slot = Math.ceil(spellcasting.levels / prog.divisor);
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Contribute to the actor's spellcasting progression for a class with pact spellcasting.
+   * @param {object} progression                    Spellcasting progression data. *Will be mutated.*
+   * @param {ActorMKA} actor                         Actor for whom the data is being prepared.
+   * @param {ItemMKA} cls                            Class for whom this progression is being computed.
+   * @param {SpellcastingDescription} spellcasting  Spellcasting descriptive object.
+   * @param {number} count                          Number of classes with this type of spellcasting.
+   */
+  static computePactProgression(progression, actor, cls, spellcasting, count) {
+    progression.pact += spellcasting.levels;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare actor's spell slots using progression data.
+   * @param {object} spells           The `data.spells` object within actor's data. *Will be mutated.*
+   * @param {string} type             Type of spellcasting slots being prepared.
+   * @param {object} progression      Spellcasting progression data.
+   * @param {object} [config]
+   * @param {ActorMKA} [config.actor]  Actor for whom the data is being prepared.
+   */
+  static prepareSpellcastingSlots(spells, type, progression, {actor}={}) {
+    /**
+     * A hook event that fires to convert the provided spellcasting progression into spell slots.
+     * The actual hook names include the spellcasting type (e.g. `mka.prepareLeveledSlots`).
+     * @param {object} spells        The `data.spells` object within actor's data. *Will be mutated.*
+     * @param {ActorMKA} actor        Actor for whom the data is being prepared.
+     * @param {object} progression   Spellcasting progression data.
+     * @returns {boolean}            Explicitly return false to prevent default preparation from being performed.
+     * @function mka.prepareSpellcastingSlots
+     * @memberof hookEvents
+     */
+    const allowed = Hooks.call(`mka.prepare${type.capitalize()}Slots`, spells, actor, progression);
+
+    if ( allowed && (type === "pact") ) this.preparePactSlots(spells, actor, progression);
+    else if ( allowed && (type === "leveled") ) this.prepareLeveledSlots(spells, actor, progression);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare leveled spell slots using progression data.
+   * @param {object} spells        The `data.spells` object within actor's data. *Will be mutated.*
+   * @param {ActorMKA} actor        Actor for whom the data is being prepared.
+   * @param {object} progression   Spellcasting progression data.
+   */
+  static prepareLeveledSlots(spells, actor, progression) {
     const levels = Math.clamped(progression.slot, 0, CONFIG.MKA.maxLevel);
-    const slots = CONFIG.MKA.SPELL_SLOT_TABLE[Math.min(levels, CONFIG.MKA.SPELL_SLOT_TABLE.length) - 1] || [];
-    for ( let [n, lvl] of Object.entries(spells) ) {
-      let i = parseInt(n.slice(-1));
-      if ( Number.isNaN(i) ) continue;
-      if ( Number.isNumeric(lvl.override) ) lvl.max = Math.max(parseInt(lvl.override), 0);
-      else lvl.max = slots[i-1] || 0;
-      lvl.value = parseInt(lvl.value);
+    const slots = CONFIG.MKA.SPELL_SLOT_TABLE[Math.min(levels, CONFIG.MKA.SPELL_SLOT_TABLE.length) - 1] ?? [];
+    for ( const level of Array.fromRange(Object.keys(CONFIG.MKA.spellLevels).length - 1, 1) ) {
+      const slot = spells[`spell${level}`] ??= { value: 0 };
+      slot.max = Number.isNumeric(slot.override) ? Math.max(parseInt(slot.override), 0) : slots[level - 1] ?? 0;
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare pact spell slots using progression data.
+   * @param {object} spells        The `data.spells` object within actor's data. *Will be mutated.*
+   * @param {ActorMKA} actor        Actor for whom the data is being prepared.
+   * @param {object} progression   Spellcasting progression data.
+   */
+  static preparePactSlots(spells, actor, progression) {
+    // Pact spell data:
+    // - pact.level: Slot level for pact casting
+    // - pact.max: Total number of pact slots
+    // - pact.value: Currently available pact slots
+    // - pact.override: Override number of available spell slots
+
+    let pactLevel = Math.clamped(progression.pact, 0, CONFIG.MKA.maxLevel);
+    spells.pact ??= {};
+    const override = Number.isNumeric(spells.pact.override) ? parseInt(spells.pact.override) : null;
+
+    // Pact slot override
+    if ( (pactLevel === 0) && (actor.type === "npc") && (override !== null) ) {
+      pactLevel = actor.system.details.spellLevel;
     }
 
-    // Determine the Actor's pact magic level (if any)
-    let pl = Math.clamped(progression.pact, 0, CONFIG.MKA.maxLevel);
-    spells.pact = spells.pact || {};
-    if ( (pl === 0) && isNPC && Number.isNumeric(spells.pact.override) ) pl = this.system.details.spellLevel;
-
-    // Determine the number of Warlock pact slots per level
-    if ( pl > 0 ) {
-      spells.pact.level = Math.ceil(Math.min(10, pl) / 2);
-      if ( Number.isNumeric(spells.pact.override) ) spells.pact.max = Math.max(parseInt(spells.pact.override), 1);
-      else spells.pact.max = Math.max(1, Math.min(pl, 2), Math.min(pl - 8, 3), Math.min(pl - 13, 4));
+    const [, pactConfig] = Object.entries(CONFIG.MKA.pactCastingProgression)
+      .reverse().find(([l]) => Number(l) <= pactLevel) ?? [];
+    if ( pactConfig ) {
+      spells.pact.level = pactConfig.level;
+      if ( override === null ) spells.pact.max = pactConfig.slots;
+      else spells.pact.max = Math.max(override, 1);
       spells.pact.value = Math.min(spells.pact.value, spells.pact.max);
-    } else {
-      spells.pact.max = parseInt(spells.pact.override) || 0;
+    }
+
+    else {
+      spells.pact.max = override || 0;
       spells.pact.level = spells.pact.max > 0 ? 1 : 0;
     }
   }
@@ -722,10 +888,16 @@ export default class ActorMKA extends Actor {
     if ( sourceId?.startsWith("Compendium.") ) return;
 
     // Configure prototype token settings
-    const s = CONFIG.MKA.tokenSizes[this.system.traits.size || "med"];
-    const prototypeToken = {width: s, height: s};
-    if ( this.type === "character" ) Object.assign(prototypeToken, {vision: true, actorLink: true, disposition: 1});
-    this.updateSource({prototypeToken});
+    const prototypeToken = {};
+    if ( "size" in (this.system.traits || {}) ) {
+      const size = CONFIG.MKA.tokenSizes[this.system.traits.size || "med"];
+      if ( !foundry.utils.hasProperty(data, "prototypeToken.width") ) prototypeToken.width = size;
+      if ( !foundry.utils.hasProperty(data, "prototypeToken.height") ) prototypeToken.height = size;
+    }
+    if ( this.type === "character" ) Object.assign(prototypeToken, {
+      sight: { enabled: true }, actorLink: true, disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY
+    });
+    this.updateSource({ prototypeToken });
   }
 
   /* -------------------------------------------- */
@@ -735,21 +907,25 @@ export default class ActorMKA extends Actor {
     await super._preUpdate(changed, options, user);
 
     // Apply changes in Actor size to Token width/height
-    const newSize = foundry.utils.getProperty(changed, "system.traits.size");
-    if ( newSize && (newSize !== this.system.traits?.size) ) {
-      let size = CONFIG.MKA.tokenSizes[newSize];
-      if ( !foundry.utils.hasProperty(changed, "prototypeToken.width") ) {
-        changed.prototypeToken ||= {};
-        changed.prototypeToken.height = size;
-        changed.prototypeToken.width = size;
+    if ( "size" in (this.system.traits || {}) ) {
+      const newSize = foundry.utils.getProperty(changed, "system.traits.size");
+      if ( newSize && (newSize !== this.system.traits?.size) ) {
+        let size = CONFIG.MKA.tokenSizes[newSize];
+        if ( !foundry.utils.hasProperty(changed, "prototypeToken.width") ) {
+          changed.prototypeToken ||= {};
+          changed.prototypeToken.height = size;
+          changed.prototypeToken.width = size;
+        }
       }
     }
 
     // Reset death save counters
-    const isDead = this.system.attributes.hp.value <= 0;
-    if ( isDead && (foundry.utils.getProperty(changed, "system.attributes.hp.value") > 0) ) {
-      foundry.utils.setProperty(changed, "system.attributes.death.success", 0);
-      foundry.utils.setProperty(changed, "system.attributes.death.failure", 0);
+    if ( "hp" in (this.system.attributes || {}) ) {
+      const isDead = this.system.attributes.hp.value <= 0;
+      if ( isDead && (foundry.utils.getProperty(changed, "system.attributes.hp.value") > 0) ) {
+        foundry.utils.setProperty(changed, "system.attributes.death.success", 0);
+        foundry.utils.setProperty(changed, "system.attributes.death.failure", 0);
+      }
     }
   }
 
@@ -791,6 +967,7 @@ export default class ActorMKA extends Actor {
   async applyDamage(amount=0, multiplier=1) {
     amount = Math.floor(parseInt(amount) * multiplier);
     const hp = this.system.attributes.hp;
+    if ( !hp ) return this; // Group actors don't have HP at the moment
 
     // Deduct damage from temp HP first
     const tmp = parseInt(hp.temp) || 0;
@@ -798,7 +975,7 @@ export default class ActorMKA extends Actor {
 
     // Remaining goes to health
     const tmpMax = parseInt(hp.tempmax) || 0;
-    const dh = Math.clamped(hp.value - (amount - dt), 0, hp.max + tmpMax);
+    const dh = Math.clamped(hp.value - (amount - dt), 0, Math.max(0, hp.max + tmpMax));
 
     // Update the Actor
     const updates = {
@@ -836,6 +1013,19 @@ export default class ActorMKA extends Actor {
   /* -------------------------------------------- */
 
   /**
+   * Get a color used to represent the current hit points of an Actor.
+   * @param {number} current        The current HP value
+   * @param {number} max            The maximum HP value
+   * @returns {Color}               The color used to represent the HP percentage
+   */
+  static getHPColor(current, max) {
+    const pct = Math.clamped(current, 0, max) / max;
+    return Color.fromRGB([(1-(pct/2)), pct, 0]);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
    * Determine whether the provided ability is usable for remarkable athlete.
    * @param {string} ability  Ability type to check.
    * @returns {boolean}       Whether the actor has the remarkable athlete flag and the ability is physical.
@@ -846,6 +1036,8 @@ export default class ActorMKA extends Actor {
       && CONFIG.MKA.characterFlags.remarkableAthlete.abilities.includes(ability);
   }
 
+  /* -------------------------------------------- */
+  /*  Rolling                                     */
   /* -------------------------------------------- */
 
   /**
@@ -896,16 +1088,12 @@ export default class ActorMKA extends Actor {
       data.skillBonus = Roll.replaceFormulaData(globalBonuses.skill, data);
     }
 
-    // Add provided extra roll parts now because they will get clobbered by mergeObject below
-    if ( options.parts?.length > 0 ) parts.push(...options.parts);
-
     // Reliable Talent applies to any skill check we have full or better proficiency in
     const reliableTalent = (skl.value >= 1 && this.getFlag("mka", "reliableTalent"));
 
     // Roll and return
     const flavor = game.i18n.format("MKA.SkillPromptTitle", {skill: CONFIG.MKA.skills[skillId]?.label ?? ""});
     const rollData = foundry.utils.mergeObject({
-      parts: parts,
       data: data,
       title: `${flavor}: ${this.name}`,
       flavor,
@@ -917,6 +1105,7 @@ export default class ActorMKA extends Actor {
         "flags.mka.roll": {type: "skill", skillId }
       }
     }, options);
+    rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before a skill check is rolled for an Actor.
@@ -947,13 +1136,99 @@ export default class ActorMKA extends Actor {
   /* -------------------------------------------- */
 
   /**
+   * Roll a Tool Check.
+   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonuses.
+   * @param {string} toolId       The identifier of the tool being rolled.
+   * @param {object} options      Options which configure how the tool check is rolled.
+   * @returns {Promise<D20Roll>}  A Promise which resolves to the created Roll instance.
+   */
+  async rollToolCheck(toolId, options={}) {
+    // Prepare roll data.
+    const tool = this.system.tools[toolId];
+    const ability = this.system.abilities[options.ability || (tool?.ability ?? "int")];
+    const globalBonuses = this.system.bonuses?.abilities ?? {};
+    const parts = ["@mod", "@abilityCheckBonus"];
+    const data = this.getRollData();
+
+    // Add ability modifier.
+    data.mod = tool?.mod ?? 0;
+    data.defaultAbility = options.ability || (tool?.ability ?? "int");
+
+    // Add proficiency.
+    const prof = options.prof ?? tool?.prof;
+    if ( prof?.hasProficiency ) {
+      parts.push("@prof");
+      data.prof = prof.term;
+    }
+
+    // Global ability check bonus.
+    if ( globalBonuses.check ) {
+      parts.push("@checkBonus");
+      data.checkBonus = Roll.replaceFormulaData(globalBonuses.check, data);
+    }
+
+    // Ability-specific check bonus.
+    if ( ability?.bonuses.check ) data.abilityCheckBonus = Roll.replaceFormulaData(ability.bonuses.check, data);
+    else data.abilityCheckBonus = 0;
+
+    // Tool-specific check bonus.
+    if ( tool?.bonuses.check || options.bonus ) {
+      parts.push("@toolBonus");
+      const bonus = [];
+      if ( tool?.bonuses.check ) bonus.push(Roll.replaceFormulaData(tool.bonuses.check, data));
+      if ( options.bonus ) bonus.push(Roll.replaceFormulaData(options.bonus, data));
+      data.toolBonus = bonus.join(" + ");
+    }
+
+    const flavor = game.i18n.format("MKA.ToolPromptTitle", {tool: Trait.keyLabel("tool", toolId) ?? ""});
+    const rollData = foundry.utils.mergeObject({
+      data, flavor,
+      title: `${flavor}: ${this.name}`,
+      chooseModifier: true,
+      halflingLucky: this.getFlag("mka", "halflingLucky"),
+      messageData: {
+        speaker: options.speaker || ChatMessage.implementation.getSpeaker({actor: this}),
+        "flags.mka.roll": {type: "tool", toolId}
+      }
+    }, options);
+    rollData.parts = parts.concat(options.parts ?? []);
+
+    /**
+     * A hook event that fires before a tool check is rolled for an Actor.
+     * @function mka.preRollRool
+     * @memberof hookEvents
+     * @param {ActorMKA} actor                Actor for which the tool check is being rolled.
+     * @param {D20RollConfiguration} config  Configuration data for the pending roll.
+     * @param {string} toolId                Identifier of the tool being rolled.
+     * @returns {boolean}                    Explicitly return `false` to prevent skill check from being rolled.
+     */
+    if ( Hooks.call("mka.preRollToolCheck", this, rollData, toolId) === false ) return;
+
+    const roll = await d20Roll(rollData);
+
+    /**
+     * A hook event that fires after a tool check has been rolled for an Actor.
+     * @function mka.rollTool
+     * @memberof hookEvents
+     * @param {ActorMKA} actor   Actor for which the tool check has been rolled.
+     * @param {D20Roll} roll    The resulting roll.
+     * @param {string} toolId   Identifier of the tool that was rolled.
+     */
+    if ( roll ) Hooks.callAll("mka.rollToolCheck", this, roll, toolId);
+
+    return roll;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
    * Roll a generic ability test or saving throw.
    * Prompt the user for input on which variety of roll they want to do.
    * @param {string} abilityId    The ability id (e.g. "str")
    * @param {object} options      Options which configure how ability tests or saving throws are rolled
    */
   rollAbility(abilityId, options={}) {
-    const label = CONFIG.MKA.abilities[abilityId] ?? "";
+    const label = CONFIG.MKA.abilities[abilityId]?.label ?? "";
     new Dialog({
       title: `${game.i18n.format("MKA.AbilityPromptTitle", {ability: label})}: ${this.name}`,
       content: `<p>${game.i18n.format("MKA.AbilityPromptText", {ability: label})}</p>`,
@@ -980,7 +1255,7 @@ export default class ActorMKA extends Actor {
    * @returns {Promise<D20Roll>}  A Promise which resolves to the created Roll instance
    */
   async rollAbilityTest(abilityId, options={}) {
-    const label = CONFIG.MKA.abilities[abilityId] ?? "";
+    const label = CONFIG.MKA.abilities[abilityId]?.label ?? "";
     const abl = this.system.abilities[abilityId];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = [];
@@ -1009,13 +1284,9 @@ export default class ActorMKA extends Actor {
       data.checkBonus = Roll.replaceFormulaData(globalBonuses.check, data);
     }
 
-    // Add provided extra roll parts now because they will get clobbered by mergeObject below
-    if ( options.parts?.length > 0 ) parts.push(...options.parts);
-
     // Roll and return
     const flavor = game.i18n.format("MKA.AbilityPromptTitle", {ability: label});
     const rollData = foundry.utils.mergeObject({
-      parts,
       data,
       title: `${flavor}: ${this.name}`,
       flavor,
@@ -1025,6 +1296,7 @@ export default class ActorMKA extends Actor {
         "flags.mka.roll": {type: "ability", abilityId }
       }
     }, options);
+    rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before an ability test is rolled for an Actor.
@@ -1062,7 +1334,7 @@ export default class ActorMKA extends Actor {
    * @returns {Promise<D20Roll>}  A Promise which resolves to the created Roll instance
    */
   async rollAbilitySave(abilityId, options={}) {
-    const label = CONFIG.MKA.abilities[abilityId] ?? "";
+    const label = CONFIG.MKA.abilities[abilityId]?.label ?? "";
     const abl = this.system.abilities[abilityId];
     const globalBonuses = this.system.bonuses?.abilities ?? {};
     const parts = [];
@@ -1091,13 +1363,9 @@ export default class ActorMKA extends Actor {
       data.saveBonus = Roll.replaceFormulaData(globalBonuses.save, data);
     }
 
-    // Add provided extra roll parts now because they will get clobbered by mergeObject below
-    if ( options.parts?.length > 0 ) parts.push(...options.parts);
-
     // Roll and return
     const flavor = game.i18n.format("MKA.SavePromptTitle", {ability: label});
     const rollData = foundry.utils.mergeObject({
-      parts,
       data,
       title: `${flavor}: ${this.name}`,
       flavor,
@@ -1107,6 +1375,7 @@ export default class ActorMKA extends Actor {
         "flags.mka.roll": {type: "save", abilityId }
       }
     }, options);
+    rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before an ability save is rolled for an Actor.
@@ -1171,7 +1440,6 @@ export default class ActorMKA extends Actor {
     // Evaluate the roll
     const flavor = game.i18n.localize("MKA.DeathSavingThrow");
     const rollData = foundry.utils.mergeObject({
-      parts,
       data,
       title: `${flavor}: ${this.name}`,
       flavor,
@@ -1182,6 +1450,7 @@ export default class ActorMKA extends Actor {
         "flags.mka.roll": {type: "death"}
       }
     }, options);
+    rollData.parts = parts.concat(options.parts ?? []);
 
     /**
      * A hook event that fires before a death saving throw is rolled for an Actor.
@@ -1266,14 +1535,148 @@ export default class ActorMKA extends Actor {
   /* -------------------------------------------- */
 
   /**
-   * Roll a hit die of the appropriate type, gaining hit points equal to the die roll plus your CON modifier
-   * @param {string} [denomination]       The hit denomination of hit die to roll. Example "d8".
-   *                                      If no denomination is provided, the first available HD will be used
-   * @param {object} options              Additional options which modify the roll.
-   * @returns {Promise<DamageRoll|null>}  The created Roll instance, or null if no hit die was rolled
+   * Get an un-evaluated D20Roll instance used to roll initiative for this Actor.
+   * @param {object} [options]                        Options which modify the roll
+   * @param {D20Roll.ADV_MODE} [options.advantageMode]    A specific advantage mode to apply
+   * @param {string} [options.flavor]                     Special flavor text to apply
+   * @returns {D20Roll}                               The constructed but unevaluated D20Roll
+   */
+  getInitiativeRoll(options={}) {
+
+    // Use a temporarily cached initiative roll
+    if ( this._cachedInitiativeRoll ) return this._cachedInitiativeRoll.clone();
+
+    // Obtain required data
+    const init = this.system.attributes?.init;
+    const abilityId = init?.ability || CONFIG.MKA.initiativeAbility;
+    const data = this.getRollData();
+    const flags = this.flags.mka || {};
+    if ( flags.initiativeAdv ) options.advantageMode ??= mka.dice.D20Roll.ADV_MODE.ADVANTAGE;
+
+    // Standard initiative formula
+    const parts = ["1d20"];
+
+    // Special initiative bonuses
+    if ( init ) {
+      parts.push(init.mod);
+      if ( init.prof.term !== "0" ) {
+        parts.push("@prof");
+        data.prof = init.prof.term;
+      }
+      if ( init.bonus ) {
+        parts.push("@bonus");
+        data.bonus = Roll.replaceFormulaData(init.bonus, data);
+      }
+    }
+
+    // Ability check bonuses
+    if ( "abilities" in this.system ) {
+      const abilityBonus = this.system.abilities[abilityId]?.bonuses?.check;
+      if ( abilityBonus ) {
+        parts.push("@abilityBonus");
+        data.abilityBonus = Roll.replaceFormulaData(abilityBonus, data);
+      }
+    }
+
+    // Global check bonus
+    if ( "bonuses" in this.system ) {
+      const globalCheckBonus = this.system.bonuses.abilities?.check;
+      if ( globalCheckBonus ) {
+        parts.push("@globalBonus");
+        data.globalBonus = Roll.replaceFormulaData(globalCheckBonus, data);
+      }
+    }
+
+    // Alert feat
+    if ( flags.initiativeAlert ) {
+      parts.push("@alertBonus");
+      data.alertBonus = 5;
+    }
+
+    // Ability score tiebreaker
+    const tiebreaker = game.settings.get("mka", "initiativeDexTiebreaker");
+    if ( tiebreaker && ("abilities" in this.system) ) {
+      const abilityValue = this.system.abilities[abilityId]?.value;
+      if ( Number.isNumeric(abilityValue) ) parts.push(String(abilityValue / 100));
+    }
+
+    options = foundry.utils.mergeObject({
+      flavor: options.flavor ?? game.i18n.localize("MKA.Initiative"),
+      halflingLucky: flags.halflingLucky ?? false,
+      critical: null,
+      fumble: null
+    }, options);
+
+    // Create the d20 roll
+    const formula = parts.join(" + ");
+    return new CONFIG.Dice.D20Roll(formula, data, options);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Roll initiative for this Actor with a dialog that provides an opportunity to elect advantage or other bonuses.
+   * @param {object} [rollOptions]      Options forwarded to the Actor#getInitiativeRoll method
+   * @returns {Promise<void>}           A promise which resolves once initiative has been rolled for the Actor
+   */
+  async rollInitiativeDialog(rollOptions={}) {
+    // Create and configure the Initiative roll
+    const roll = this.getInitiativeRoll(rollOptions);
+    const choice = await roll.configureDialog({
+      defaultRollMode: game.settings.get("core", "rollMode"),
+      title: `${game.i18n.localize("MKA.InitiativeRoll")}: ${this.name}`,
+      chooseModifier: false,
+      defaultAction: rollOptions.advantageMode ?? mka.dice.D20Roll.ADV_MODE.NORMAL
+    });
+    if ( choice === null ) return; // Closed dialog
+
+    // Temporarily cache the configured roll and use it to roll initiative for the Actor
+    this._cachedInitiativeRoll = roll;
+    await this.rollInitiative({createCombatants: true});
+    delete this._cachedInitiativeRoll;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritdoc */
+  async rollInitiative(options={}) {
+    /**
+     * A hook event that fires before initiative is rolled for an Actor.
+     * @function mka.preRollInitiative
+     * @memberof hookEvents
+     * @param {ActorMKA} actor  The Actor that is rolling initiative.
+     * @param {D20Roll} roll   The initiative roll.
+     */
+    if ( Hooks.call("mka.preRollInitiative", this, this._cachedInitiativeRoll) === false ) return;
+
+    const combat = await super.rollInitiative(options);
+    const combatants = this.isToken ? this.getActiveTokens(false, true).reduce((arr, t) => {
+      const combatant = game.combat.getCombatantByToken(t.id);
+      if ( combatant ) arr.push(combatant);
+      return arr;
+    }, []) : [game.combat.getCombatantByActor(this.id)];
+
+    /**
+     * A hook event that fires after an Actor has rolled for initiative.
+     * @function mka.rollInitiative
+     * @memberof hookEvents
+     * @param {ActorMKA} actor           The Actor that rolled initiative.
+     * @param {Combatant[]} combatants  The associated Combatants in the Combat.
+     */
+    Hooks.callAll("mka.rollInitiative", this, combatants);
+    return combat;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Roll a hit die of the appropriate type, gaining hit points equal to the die roll plus your CON modifier.
+   * @param {string} [denomination]  The hit denomination of hit die to roll. Example "d8".
+   *                                 If no denomination is provided, the first available HD will be used
+   * @param {object} options         Additional options which modify the roll.
+   * @returns {Promise<Roll|null>}   The created Roll instance, or null if no hit die was rolled
    */
   async rollHitDie(denomination, options={}) {
-
     // If no denomination was provided, choose the first available
     let cls = null;
     if ( !denomination ) {
@@ -1295,17 +1698,15 @@ export default class ActorMKA extends Actor {
 
     // Prepare roll data
     const flavor = game.i18n.localize("MKA.HitDiceRoll");
-    if ( options.fastForward === undefined ) options.fastForward = !options.dialog;
-    const rollData = foundry.utils.mergeObject({
-      event: new Event("hitDie"),
-      parts: [`1${denomination}`, "@abilities.con.mod"],
+    const rollConfig = foundry.utils.mergeObject({
+      formula: `max(0, 1${denomination} + @abilities.con.mod)`,
       data: this.getRollData(),
-      title: `${flavor}: ${this.name}`,
-      flavor,
-      allowCritical: false,
-      dialogOptions: {width: 350},
+      chatMessage: true,
       messageData: {
         speaker: ChatMessage.getSpeaker({actor: this}),
+        flavor,
+        title: `${flavor}: ${this.name}`,
+        rollMode: game.settings.get("core", "rollMode"),
         "flags.mka.roll": {type: "hitDie"}
       }
     }, options);
@@ -1314,18 +1715,22 @@ export default class ActorMKA extends Actor {
      * A hook event that fires before a hit die is rolled for an Actor.
      * @function mka.preRollHitDie
      * @memberof hookEvents
-     * @param {ActorMKA} actor                   Actor for which the hit die is to be rolled.
-     * @param {DamageRollConfiguration} config  Configuration data for the pending roll.
-     * @param {string} denomination             Size of hit die to be rolled.
-     * @returns {boolean}                       Explicitly return `false` to prevent hit die from being rolled.
+     * @param {ActorMKA} actor               Actor for which the hit die is to be rolled.
+     * @param {object} config               Configuration data for the pending roll.
+     * @param {string} config.formula       Formula that will be rolled.
+     * @param {object} config.data          Data used when evaluating the roll.
+     * @param {boolean} config.chatMessage  Should a chat message be created for this roll?
+     * @param {object} config.messageData   Data used to create the chat message.
+     * @param {string} denomination         Size of hit die to be rolled.
+     * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
-    if ( Hooks.call("mka.preRollHitDie", this, rollData, denomination) === false ) return;
+    if ( Hooks.call("mka.preRollHitDie", this, rollConfig, denomination) === false ) return;
 
-    const roll = await damageRoll(rollData);
-    if ( !roll ) return roll;
+    const roll = await new Roll(rollConfig.formula, rollConfig.data).roll({async: true});
+    if ( rollConfig.chatMessage ) roll.toMessage(rollConfig.messageData);
 
     const hp = this.system.attributes.hp;
-    const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
+    const dhp = Math.min(Math.max(0, hp.max + (hp.tempmax ?? 0)) - hp.value, roll.total);
     const updates = {
       actor: {"system.attributes.hp.value": hp.value + dhp},
       class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
@@ -1336,7 +1741,7 @@ export default class ActorMKA extends Actor {
      * @function mka.rollHitDie
      * @memberof hookEvents
      * @param {ActorMKA} actor         Actor for which the hit die has been rolled.
-     * @param {DamageRoll} roll       The resulting roll.
+     * @param {Roll} roll             The resulting roll.
      * @param {object} updates
      * @param {object} updates.actor  Updates that will be applied to the actor.
      * @param {object} updates.class  Updates that will be applied to the class.
@@ -1344,8 +1749,11 @@ export default class ActorMKA extends Actor {
      */
     if ( Hooks.call("mka.rollHitDie", this, roll, updates) === false ) return roll;
 
+    // Re-evaluate dhp in the event that it was changed in the previous hook
+    const updateOptions = { dhp: (updates.actor?.["system.attributes.hp.value"] ?? hp.value) - hp.value };
+
     // Perform updates
-    if ( !foundry.utils.isEmpty(updates.actor) ) await this.update(updates.actor);
+    if ( !foundry.utils.isEmpty(updates.actor) ) await this.update(updates.actor, updateOptions);
     if ( !foundry.utils.isEmpty(updates.class) ) await cls.update(updates.class);
 
     return roll;
@@ -1355,13 +1763,19 @@ export default class ActorMKA extends Actor {
 
   /**
    * Roll hit points for a specific class as part of a level-up workflow.
-   * @param {ItemMKA} item      The class item whose hit dice to roll.
-   * @returns {Promise<Roll>}  The completed roll.
+   * @param {ItemMKA} item                         The class item whose hit dice to roll.
+   * @param {object} options
+   * @param {boolean} [options.chatMessage=true]  Display the chat message for this roll.
+   * @returns {Promise<Roll>}                     The completed roll.
    * @see {@link mka.preRollClassHitPoints}
    */
-  async rollClassHitPoints(item) {
+  async rollClassHitPoints(item, { chatMessage=true }={}) {
     if ( item.type !== "class" ) throw new Error("Hit points can only be rolled for a class item.");
-    const rollData = { formula: `1${item.system.hitDice}`, data: item.getRollData() };
+    const rollData = {
+      formula: `1${item.system.hitDice}`,
+      data: item.getRollData(),
+      chatMessage
+    };
     const flavor = game.i18n.format("MKA.AdvancementHitPointsRollMessage", { class: item.name });
     const messageData = {
       title: `${flavor}: ${this.name}`,
@@ -1384,7 +1798,70 @@ export default class ActorMKA extends Actor {
     Hooks.callAll("mka.preRollClassHitPoints", this, item, rollData, messageData);
 
     const roll = new Roll(rollData.formula, rollData.data);
-    await roll.toMessage(messageData);
+    await roll.evaluate({async: true});
+
+    /**
+     * A hook event that fires after hit points haven been rolled for a character's class.
+     * @function mka.rollClassHitPoints
+     * @memberof hookEvents
+     * @param {ActorMKA} actor  Actor for which the hit points have been rolled.
+     * @param {Roll} roll      The resulting roll.
+     */
+    Hooks.callAll("mka.rollClassHitPoints", this, roll);
+
+    if ( rollData.chatMessage ) await roll.toMessage(messageData);
+    return roll;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Roll hit points for an NPC based on the HP formula.
+   * @param {object} options
+   * @param {boolean} [options.chatMessage=true]  Display the chat message for this roll.
+   * @returns {Promise<Roll>}                     The completed roll.
+   * @see {@link mka.preRollNPCHitPoints}
+   */
+  async rollNPCHitPoints({ chatMessage=true }={}) {
+    if ( this.type !== "npc" ) throw new Error("NPC hit points can only be rolled for NPCs");
+    const rollData = {
+      formula: this.system.attributes.hp.formula,
+      data: this.getRollData(),
+      chatMessage
+    };
+    const flavor = game.i18n.format("MKA.HPFormulaRollMessage");
+    const messageData = {
+      title: `${flavor}: ${this.name}`,
+      flavor,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      "flags.mka.roll": { type: "hitPoints" }
+    };
+
+    /**
+     * A hook event that fires before hit points are rolled for an NPC.
+     * @function mka.preRollNPCHitPoints
+     * @memberof hookEvents
+     * @param {ActorMKA} actor            Actor for which the hit points are being rolled.
+     * @param {object} rollData
+     * @param {string} rollData.formula  The string formula to parse.
+     * @param {object} rollData.data     The data object against which to parse attributes within the formula.
+     * @param {object} messageData       The data object to use when creating the message.
+     */
+    Hooks.callAll("mka.preRollNPCHitPoints", this, rollData, messageData);
+
+    const roll = new Roll(rollData.formula, rollData.data);
+    await roll.evaluate({async: true});
+
+    /**
+     * A hook event that fires after hit points are rolled for an NPC.
+     * @function mka.rollNPCHitPoints
+     * @memberof hookEvents
+     * @param {ActorMKA} actor  Actor for which the hit points have been rolled.
+     * @param {Roll} roll      The resulting roll.
+     */
+    Hooks.callAll("mka.rollNPCHitPoints", this, roll);
+
+    if ( rollData.chatMessage ) await roll.toMessage(messageData);
     return roll;
   }
 
@@ -1415,6 +1892,7 @@ export default class ActorMKA extends Actor {
    * @property {object[]} updateItems  Updates applied to actor's items.
    * @property {boolean} longRest      Whether the rest type was a long rest.
    * @property {boolean} newDay        Whether a new day occurred during the rest.
+   * @property {Roll[]} rolls          Any rolls that occurred during the rest process, not including hit dice.
    */
 
   /* -------------------------------------------- */
@@ -1506,6 +1984,7 @@ export default class ActorMKA extends Actor {
     let hitPointUpdates = {};
     let hitDiceRecovered = 0;
     let hitDiceUpdates = [];
+    const rolls = [];
 
     // Recover hit points & hit dice on long rest
     if ( longRest ) {
@@ -1524,11 +2003,12 @@ export default class ActorMKA extends Actor {
       },
       updateItems: [
         ...hitDiceUpdates,
-        ...this._getRestItemUsesRecovery({ recoverLongRestUses: longRest, recoverDailyUses: newDay })
+        ...(await this._getRestItemUsesRecovery({ recoverLongRestUses: longRest, recoverDailyUses: newDay, rolls }))
       ],
       longRest,
       newDay
     };
+    result.rolls = rolls;
 
     /**
      * A hook event that fires after rest result is calculated, but before any updates are performed.
@@ -1546,13 +2026,6 @@ export default class ActorMKA extends Actor {
 
     // Display a Chat Message summarizing the rest effects
     if ( chat ) await this._displayRestResultMessage(result, longRest);
-
-    if ( Hooks.events.restCompleted?.length ) foundry.utils.logCompatibilityWarning(
-      "The restCompleted hook has been deprecated in favor of mka.restCompleted.",
-      { since: "MKA 1.6", until: "MKA 2.1" }
-    );
-    /** @deprecated since 1.6, targeted for removal in 2.1 */
-    Hooks.callAll("restCompleted", this, result);
 
     /**
      * A hook event that fires when the rest process is completed for an actor.
@@ -1586,9 +2059,15 @@ export default class ActorMKA extends Actor {
     // Summarize the rest duration
     let restFlavor;
     switch (game.settings.get("mka", "restVariant")) {
-      case "normal": restFlavor = (longRest && newDay) ? "MKA.LongRestOvernight" : `MKA.${length}RestNormal`; break;
-      case "gritty": restFlavor = (!longRest && newDay) ? "MKA.ShortRestOvernight" : `MKA.${length}RestGritty`; break;
-      case "epic": restFlavor = `MKA.${length}RestEpic`; break;
+      case "normal":
+        restFlavor = (longRest && newDay) ? "MKA.LongRestOvernight" : `MKA.${length}RestNormal`;
+        break;
+      case "gritty":
+        restFlavor = (!longRest && newDay) ? "MKA.ShortRestOvernight" : `MKA.${length}RestGritty`;
+        break;
+      case "epic":
+        restFlavor = `MKA.${length}RestEpic`;
+        break;
     }
 
     // Determine the chat message to display
@@ -1603,6 +2082,7 @@ export default class ActorMKA extends Actor {
       user: game.user.id,
       speaker: {actor: this, alias: this.name},
       flavor: game.i18n.localize(restFlavor),
+      rolls: result.rolls,
       content: game.i18n.format(message, {
         name: this.name,
         dice: longRest ? dhd : -dhd,
@@ -1623,10 +2103,10 @@ export default class ActorMKA extends Actor {
    */
   async autoSpendHitDice({ threshold=3 }={}) {
     const hp = this.system.attributes.hp;
-    const max = hp.max + hp.tempmax;
+    const max = Math.max(0, hp.max + hp.tempmax);
     let diceRolled = 0;
     while ( (this.system.attributes.hp.value + threshold) <= max ) {
-      const r = await this.rollHitDie(undefined, {dialog: false});
+      const r = await this.rollHitDie();
       if ( r === null ) break;
       diceRolled += 1;
     }
@@ -1648,7 +2128,7 @@ export default class ActorMKA extends Actor {
     let max = hp.max;
     let updates = {};
     if ( recoverTempMax ) updates["system.attributes.hp.tempmax"] = 0;
-    else max += hp.tempmax;
+    else max = Math.max(0, max + (hp.tempmax || 0));
     updates["system.attributes.hp.value"] = max;
     if ( recoverTemp ) updates["system.attributes.hp.temp"] = 0;
     return { updates, hitPointsRecovered: max - hp.value };
@@ -1684,7 +2164,7 @@ export default class ActorMKA extends Actor {
    * @returns {object}                               Updates to the actor.
    * @protected
    */
-  _getRestSpellRecovery({ recoverPact=true, recoverSpells=true }={}) {
+  _getRestSpellRecovery({recoverPact=true, recoverSpells=true}={}) {
     const spells = this.system.spells;
     let updates = {};
     if ( recoverPact ) {
@@ -1709,8 +2189,7 @@ export default class ActorMKA extends Actor {
    * @returns {object}                     Array of item updates and number of hit dice recovered.
    * @protected
    */
-  _getRestHitDiceRecovery({maxHitDice=undefined}={}) {
-
+  _getRestHitDiceRecovery({maxHitDice}={}) {
     // Determine the number of hit dice which may be recovered
     if ( maxHitDice === undefined ) maxHitDice = Math.max(Math.floor(this.system.details.level / 2), 1);
 
@@ -1737,26 +2216,60 @@ export default class ActorMKA extends Actor {
 
   /**
    * Recovers item uses during short or long rests.
-   *
    * @param {object} [options]
    * @param {boolean} [options.recoverShortRestUses=true]  Recover uses for items that recharge after a short rest.
    * @param {boolean} [options.recoverLongRestUses=true]   Recover uses for items that recharge after a long rest.
    * @param {boolean} [options.recoverDailyUses=true]      Recover uses for items that recharge on a new day.
-   * @returns {Array<object>}                              Array of item updates.
+   * @param {Roll[]} [options.rolls]                       Rolls that have been performed as part of this rest.
+   * @returns {Promise<object[]>}                          Array of item updates.
    * @protected
    */
-  _getRestItemUsesRecovery({ recoverShortRestUses=true, recoverLongRestUses=true, recoverDailyUses=true }={}) {
+  async _getRestItemUsesRecovery({recoverShortRestUses=true, recoverLongRestUses=true,
+    recoverDailyUses=true, rolls}={}) {
     let recovery = [];
     if ( recoverShortRestUses ) recovery.push("sr");
     if ( recoverLongRestUses ) recovery.push("lr");
     if ( recoverDailyUses ) recovery.push("day");
     let updates = [];
     for ( let item of this.items ) {
-      if ( recovery.includes(item.system.uses?.per) ) {
-        updates.push({_id: item.id, "system.uses.value": item.system.uses.max});
+      const uses = item.system.uses;
+      if ( recovery.includes(uses?.per) ) {
+        updates.push({_id: item.id, "system.uses.value": uses.max});
       }
       if ( recoverLongRestUses && item.system.recharge?.value ) {
         updates.push({_id: item.id, "system.recharge.charged": true});
+      }
+
+      // Items that roll to gain charges on a new day
+      if ( recoverDailyUses && uses?.recovery && (uses?.per === "charges") ) {
+        const roll = new Roll(uses.recovery, item.getRollData());
+        if ( recoverLongRestUses && (game.settings.get("mka", "restVariant") === "gritty") ) {
+          roll.alter(7, 0, {multiplyNumeric: true});
+        }
+
+        let total = 0;
+        try {
+          total = (await roll.evaluate({async: true})).total;
+        } catch(err) {
+          ui.notifications.warn(game.i18n.format("MKA.ItemRecoveryFormulaWarning", {
+            name: item.name,
+            formula: uses.recovery
+          }));
+        }
+
+        const newValue = Math.clamped(uses.value + total, 0, uses.max);
+        if ( newValue !== uses.value ) {
+          const diff = newValue - uses.value;
+          const isMax = newValue === uses.max;
+          const locKey = `MKA.Item${diff < 0 ? "Loss" : "Recovery"}Roll${isMax ? "Max" : ""}`;
+          updates.push({_id: item.id, "system.uses.value": newValue});
+          rolls.push(roll);
+          await roll.toMessage({
+            user: game.user.id,
+            speaker: {actor: this, alias: this.name},
+            flavor: game.i18n.format(locKey, {name: item.name, count: Math.abs(diff)})
+          });
+        }
       }
     }
     return updates;
@@ -1767,22 +2280,31 @@ export default class ActorMKA extends Actor {
   /* -------------------------------------------- */
 
   /**
-   * Convert all carried currency to the highest possible denomination to reduce the number of raw coins being
-   * carried by an Actor.
+   * Convert all carried currency to the highest possible denomination using configured conversion rates.
+   * See CONFIG.MKA.currencies for configuration.
    * @returns {Promise<ActorMKA>}
    */
   convertCurrency() {
-    const curr = foundry.utils.deepClone(this.system.currency);
-    const conversion = Object.entries(CONFIG.MKA.currencies);
-    conversion.reverse();
-    for ( let [c, data] of conversion ) {
-      const t = data.conversion;
-      if ( !t ) continue;
-      let change = Math.floor(curr[c] / t.each);
-      curr[c] -= (change * t.each);
-      curr[t.into] += change;
+    const currency = foundry.utils.deepClone(this.system.currency);
+    const currencies = Object.entries(CONFIG.MKA.currencies);
+    currencies.sort((a, b) => a[1].conversion - b[1].conversion);
+
+    // Count total converted units of the base currency
+    let basis = currencies.reduce((change, [denomination, config]) => {
+      if ( !config.conversion ) return change;
+      return change + (currency[denomination] / config.conversion);
+    }, 0);
+
+    // Convert base units into the highest denomination possible
+    for ( const [denomination, config] of currencies) {
+      if ( !config.conversion ) continue;
+      const amount = Math.floor(basis * config.conversion);
+      currency[denomination] = amount;
+      basis -= (amount / config.conversion);
     }
-    return this.update({"system.currency": curr});
+
+    // Save the updated currency object
+    return this.update({"system.currency": currency});
   }
 
   /* -------------------------------------------- */
@@ -1792,19 +2314,28 @@ export default class ActorMKA extends Actor {
    * the target actor.
    *
    * @typedef {object} TransformationOptions
-   * @property {boolean} [keepPhysical=false]    Keep physical abilities (str, dex, con)
-   * @property {boolean} [keepMental=false]      Keep mental abilities (int, wis, cha)
-   * @property {boolean} [keepSaves=false]       Keep saving throw proficiencies
-   * @property {boolean} [keepSkills=false]      Keep skill proficiencies
-   * @property {boolean} [mergeSaves=false]      Take the maximum of the save proficiencies
-   * @property {boolean} [mergeSkills=false]     Take the maximum of the skill proficiencies
-   * @property {boolean} [keepClass=false]       Keep proficiency bonus
-   * @property {boolean} [keepFeats=false]       Keep features
-   * @property {boolean} [keepSpells=false]      Keep spells
-   * @property {boolean} [keepItems=false]       Keep items
-   * @property {boolean} [keepBio=false]         Keep biography
-   * @property {boolean} [keepVision=false]      Keep vision
-   * @property {boolean} [transformTokens=true]  Transform linked tokens too
+   * @property {boolean} [keepPhysical=false]       Keep physical abilities (str, dex, con)
+   * @property {boolean} [keepMental=false]         Keep mental abilities (int, wis, cha)
+   * @property {boolean} [keepSaves=false]          Keep saving throw proficiencies
+   * @property {boolean} [keepSkills=false]         Keep skill proficiencies
+   * @property {boolean} [mergeSaves=false]         Take the maximum of the save proficiencies
+   * @property {boolean} [mergeSkills=false]        Take the maximum of the skill proficiencies
+   * @property {boolean} [keepClass=false]          Keep proficiency bonus
+   * @property {boolean} [keepFeats=false]          Keep features
+   * @property {boolean} [keepSpells=false]         Keep spells and spellcasting ability
+   * @property {boolean} [keepItems=false]          Keep items
+   * @property {boolean} [keepBio=false]            Keep biography
+   * @property {boolean} [keepVision=false]         Keep vision
+   * @property {boolean} [keepSelf=false]           Keep self
+   * @property {boolean} [keepAE=false]             Keep all effects
+   * @property {boolean} [keepOriginAE=true]        Keep effects which originate on this actor
+   * @property {boolean} [keepOtherOriginAE=true]   Keep effects which originate on another actor
+   * @property {boolean} [keepSpellAE=true]         Keep effects which originate from actors spells
+   * @property {boolean} [keepFeatAE=true]          Keep effects which originate from actors features
+   * @property {boolean} [keepEquipmentAE=true]     Keep effects which originate on actors equipment
+   * @property {boolean} [keepClassAE=true]         Keep effects which originate from actors class/subclass
+   * @property {boolean} [keepBackgroundAE=true]    Keep effects which originate from actors background
+   * @property {boolean} [transformTokens=true]     Transform linked tokens too
    */
 
   /**
@@ -1812,11 +2343,14 @@ export default class ActorMKA extends Actor {
    *
    * @param {ActorMKA} target                      The target Actor.
    * @param {TransformationOptions} [options={}]  Options that determine how the transformation is performed.
+   * @param {boolean} [options.renderSheet=true]  Render the sheet of the transformed actor after the polymorph
    * @returns {Promise<Array<Token>>|null}        Updated token if the transformation was performed.
    */
   async transformInto(target, { keepPhysical=false, keepMental=false, keepSaves=false, keepSkills=false,
-    mergeSaves=false, mergeSkills=false, keepClass=false, keepFeats=false, keepSpells=false,
-    keepItems=false, keepBio=false, keepVision=false, transformTokens=true }={}) {
+    mergeSaves=false, mergeSkills=false, keepClass=false, keepFeats=false, keepSpells=false, keepItems=false,
+    keepBio=false, keepVision=false, keepSelf=false, keepAE=false, keepOriginAE=true, keepOtherOriginAE=true,
+    keepSpellAE=true, keepEquipmentAE=true, keepFeatAE=true, keepClassAE=true, keepBackgroundAE=true,
+    transformTokens=true}={}, {renderSheet=true}={}) {
 
     // Ensure the player is allowed to polymorph
     const allowed = game.settings.get("mka", "allowPolymorphing");
@@ -1830,8 +2364,13 @@ export default class ActorMKA extends Actor {
     o.flags.mka.transformOptions = {mergeSkills, mergeSaves};
     const source = target.toObject();
 
+    if ( keepSelf ) {
+      o.img = source.img;
+      o.name = `${o.name} (${game.i18n.localize("MKA.PolymorphSelf")})`;
+    }
+
     // Prepare new data to merge from the source
-    const d = {
+    const d = foundry.utils.mergeObject(foundry.utils.deepClone({
       type: o.type, // Remain the same actor type
       name: `${o.name} (${source.name})`, // Append the new shape to your old name
       system: source.system, // Get the systemdata model of your new form
@@ -1840,13 +2379,15 @@ export default class ActorMKA extends Actor {
       img: source.img, // New appearance
       ownership: o.ownership, // Use the original actor permissions
       folder: o.folder, // Be displayed in the same sidebar folder
-      flags: o.flags // Use the original actor flags
-    };
+      flags: o.flags, // Use the original actor flags
+      prototypeToken: { name: `${o.name} (${source.name})`, texture: {}, sight: {}, detectionModes: [] } // Set a new empty token
+    }), keepSelf ? o : {}); // Keeps most of original actor
 
     // Specifically delete some data attributes
     delete d.system.resources; // Don't change your resource pools
     delete d.system.currency; // Don't lose currency
     delete d.system.bonuses; // Don't lose global bonuses
+    if ( keepSpells ) delete d.system.attributes.spellcasting; // Keep spellcasting ability if retaining spells.
 
     // Specific additional adjustments
     d.system.details.alignment = o.system.details.alignment; // Don't change alignment
@@ -1856,78 +2397,127 @@ export default class ActorMKA extends Actor {
     d.system.attributes.ac.flat = target.system.attributes.ac.value; // Override AC
 
     // Token appearance updates
-    d.prototypeToken = {name: d.name, texture: {}};
     for ( const k of ["width", "height", "alpha", "lockRotation"] ) {
       d.prototypeToken[k] = source.prototypeToken[k];
     }
     for ( const k of ["offsetX", "offsetY", "scaleX", "scaleY", "src", "tint"] ) {
       d.prototypeToken.texture[k] = source.prototypeToken.texture[k];
     }
-    const vision = keepVision ? o.prototypeToken : source.prototypeToken;
-    for ( const k of ["dimSight", "brightSight", "dimLight", "brightLight", "vision", "sightAngle"] ) {
-      d.prototypeToken[k] = vision[k];
+    for ( const k of ["bar1", "bar2", "displayBars", "displayName", "disposition", "rotation", "elevation"] ) {
+      d.prototypeToken[k] = o.prototypeToken[k];
     }
+
+    if ( !keepSelf ) {
+      const sightSource = keepVision ? o.prototypeToken : source.prototypeToken;
+      for ( const k of ["range", "angle", "visionMode", "color", "attenuation", "brightness", "saturation", "contrast", "enabled"] ) {
+        d.prototypeToken.sight[k] = sightSource.sight[k];
+      }
+      d.prototypeToken.detectionModes = sightSource.detectionModes;
+
+      // Transfer ability scores
+      const abilities = d.system.abilities;
+      for ( let k of Object.keys(abilities) ) {
+        const oa = o.system.abilities[k];
+        const prof = abilities[k].proficient;
+        const type = CONFIG.MKA.abilities[k]?.type;
+        if ( keepPhysical && (type === "physical") ) abilities[k] = oa;
+        else if ( keepMental && (type === "mental") ) abilities[k] = oa;
+
+        // Set saving throw proficiencies.
+        if ( keepSaves ) abilities[k].proficient = oa.proficient;
+        else if ( mergeSaves ) abilities[k].proficient = Math.max(prof, oa.proficient);
+        else abilities[k].proficient = source.system.abilities[k].proficient;
+      }
+
+      // Transfer skills
+      if ( keepSkills ) d.system.skills = o.system.skills;
+      else if ( mergeSkills ) {
+        for ( let [k, s] of Object.entries(d.system.skills) ) {
+          s.value = Math.max(s.value, o.system.skills[k].value);
+        }
+      }
+
+      // Keep specific items from the original data
+      d.items = d.items.concat(o.items.filter(i => {
+        if ( ["class", "subclass"].includes(i.type) ) return keepClass;
+        else if ( i.type === "feat" ) return keepFeats;
+        else if ( i.type === "spell" ) return keepSpells;
+        else return keepItems;
+      }));
+
+      // Transfer classes for NPCs
+      if ( !keepClass && d.system.details.cr ) {
+        const cls = new mka.dataModels.item.ClassData({levels: d.system.details.cr});
+        d.items.push({
+          type: "class",
+          name: game.i18n.localize("MKA.PolymorphTmpClass"),
+          system: cls.toObject()
+        });
+      }
+
+      // Keep biography
+      if ( keepBio ) d.system.details.biography = o.system.details.biography;
+
+      // Keep senses
+      if ( keepVision ) d.system.traits.senses = o.system.traits.senses;
+
+      // Remove active effects
+      const oEffects = foundry.utils.deepClone(d.effects);
+      const originEffectIds = new Set(oEffects.filter(effect => {
+        return !effect.origin || effect.origin === this.uuid;
+      }).map(e => e._id));
+      d.effects = d.effects.filter(e => {
+        if ( keepAE ) return true;
+        const origin = e.origin?.startsWith("Actor") || e.origin?.startsWith("Item") ? fromUuidSync(e.origin) : {};
+        const originIsSelf = origin?.parent?.uuid === this.uuid;
+        const isOriginEffect = originEffectIds.has(e._id);
+        if ( isOriginEffect ) return keepOriginAE;
+        if ( !isOriginEffect && !originIsSelf ) return keepOtherOriginAE;
+        if ( origin.type === "spell" ) return keepSpellAE;
+        if ( origin.type === "feat" ) return keepFeatAE;
+        if ( origin.type === "background" ) return keepBackgroundAE;
+        if ( ["subclass", "class"].includes(origin.type) ) return keepClassAE;
+        if ( ["equipment", "weapon", "tool", "loot", "backpack"].includes(origin.type) ) return keepEquipmentAE;
+        return true;
+      });
+    }
+
+    // Set a random image if source is configured that way
     if ( source.prototypeToken.randomImg ) {
       const images = await target.getTokenImages();
       d.prototypeToken.texture.src = images[Math.floor(Math.random() * images.length)];
     }
 
-    // Transfer ability scores
-    const abilities = d.system.abilities;
-    for ( let k of Object.keys(abilities) ) {
-      const oa = o.system.abilities[k];
-      const prof = abilities[k].proficient;
-      if ( keepPhysical && ["str", "dex", "con"].includes(k) ) abilities[k] = oa;
-      else if ( keepMental && ["int", "wis", "cha"].includes(k) ) abilities[k] = oa;
-      if ( keepSaves ) abilities[k].proficient = oa.proficient;
-      else if ( mergeSaves ) abilities[k].proficient = Math.max(prof, oa.proficient);
-    }
-
-    // Transfer skills
-    if ( keepSkills ) d.system.skills = o.system.skills;
-    else if ( mergeSkills ) {
-      for ( let [k, s] of Object.entries(d.system.skills) ) {
-        s.value = Math.max(s.value, o.system.skills[k].value);
-      }
-    }
-
-    // Keep specific items from the original data
-    d.items = d.items.concat(o.items.filter(i => {
-      if ( ["class", "subclass"].includes(i.type) ) return keepClass;
-      else if ( i.type === "feat" ) return keepFeats;
-      else if ( i.type === "spell" ) return keepSpells;
-      else return keepItems;
-    }));
-
-    // Transfer classes for NPCs
-    if ( !keepClass && d.system.details.cr ) {
-      d.items.push({
-        type: "class",
-        name: game.i18n.localize("MKA.PolymorphTmpClass"),
-        data: { levels: d.system.details.cr }
-      });
-    }
-
-    // Keep biography
-    if ( keepBio ) d.system.details.biography = o.system.details.biography;
-
-    // Keep senses
-    if ( keepVision ) d.system.traits.senses = o.system.traits.senses;
-
     // Set new data flags
     if ( !this.isPolymorphed || !d.flags.mka.originalActor ) d.flags.mka.originalActor = this.id;
     d.flags.mka.isPolymorphed = true;
 
-    // Update unlinked Tokens in place since they can simply be re-dropped from the base actor
+    // Gather previous actor data
+    const previousActorIds = this.getFlag("mka", "previousActorIds") || [];
+    previousActorIds.push(this._id);
+    foundry.utils.setProperty(d.flags, "mka.previousActorIds", previousActorIds);
+
+    // Update unlinked Tokens, and grab a copy of any actorData adjustments to re-apply
     if ( this.isToken ) {
       const tokenData = d.prototypeToken;
       delete d.prototypeToken;
-      tokenData.actorData = d;
-      return this.token.update(tokenData);
+      let previousActorData;
+      if ( game.mka.isV10 ) {
+        tokenData.actorData = d;
+        previousActorData = this.token.toObject().actorData;
+      } else {
+        tokenData.delta = d;
+        previousActorData = this.token.delta.toObject();
+      }
+      foundry.utils.setProperty(tokenData, "flags.mka.previousActorData", previousActorData);
+      await this.sheet?.close();
+      const update = await this.token.update(tokenData);
+      if ( renderSheet ) this.sheet?.render(true);
+      return update;
     }
 
     // Close sheet for non-transformed Actor
-    await this.sheet.close();
+    await this.sheet?.close();
 
     /**
      * A hook event that fires just before the actor is transformed.
@@ -1937,14 +2527,16 @@ export default class ActorMKA extends Actor {
      * @param {ActorMKA} target                 The target actor into which to transform.
      * @param {object} data                    The data that will be used to create the new transformed actor.
      * @param {TransformationOptions} options  Options that determine how the transformation is performed.
+     * @param {object} [options]
      */
     Hooks.callAll("mka.transformActor", this, target, d, {
-      keepPhysical, keepMental, keepSaves, keepSkills, mergeSaves, mergeSkills,
-      keepClass, keepFeats, keepSpells, keepItems, keepBio, keepVision, transformTokens
-    });
+      keepPhysical, keepMental, keepSaves, keepSkills, mergeSaves, mergeSkills, keepClass, keepFeats, keepSpells,
+      keepItems, keepBio, keepVision, keepSelf, keepAE, keepOriginAE, keepOtherOriginAE, keepSpellAE,
+      keepEquipmentAE, keepFeatAE, keepClassAE, keepBackgroundAE, transformTokens
+    }, {renderSheet});
 
     // Create new Actor with transformed data
-    const newActor = await this.constructor.create(d, {renderSheet: true});
+    const newActor = await this.constructor.create(d, {renderSheet});
 
     // Update placed Token instances
     if ( !transformTokens ) return;
@@ -1954,6 +2546,10 @@ export default class ActorMKA extends Actor {
       newTokenData._id = t.id;
       newTokenData.actorId = newActor.id;
       newTokenData.actorLink = true;
+
+      const dOriginalActor = foundry.utils.getProperty(d, "flags.mka.originalActor");
+      foundry.utils.setProperty(newTokenData, "flags.mka.originalActor", dOriginalActor);
+      foundry.utils.setProperty(newTokenData, "flags.mka.isPolymorphed", true);
       return newTokenData;
     });
     return canvas.scene?.updateEmbeddedDocuments("Token", updates);
@@ -1965,37 +2561,81 @@ export default class ActorMKA extends Actor {
    * If this actor was transformed with transformTokens enabled, then its
    * active tokens need to be returned to their original state. If not, then
    * we can safely just delete this actor.
+   * @param {object} [options]
+   * @param {boolean} [options.renderSheet=true]  Render Sheet after revert the transformation.
    * @returns {Promise<Actor>|null}  Original actor if it was reverted.
    */
-  async revertOriginalForm() {
+  async revertOriginalForm({renderSheet=true}={}) {
     if ( !this.isPolymorphed ) return;
-    if ( !this.isOwner ) {
-      return ui.notifications.warn(game.i18n.localize("MKA.PolymorphRevertWarn"));
-    }
+    if ( !this.isOwner ) return ui.notifications.warn(game.i18n.localize("MKA.PolymorphRevertWarn"));
 
-    // If we are reverting an unlinked token, simply replace it with the base actor prototype
-    if ( this.isToken ) {
-      const baseActor = game.actors.get(this.token.actorId);
-      const prototypeTokenData = await baseActor.getTokenData();
-      const tokenUpdate = {actorData: {}};
-      for ( let k of ["width", "height", "scale", "img", "mirrorX", "mirrorY", "tint", "alpha", "lockRotation", "name"] ) {
-        tokenUpdate[k] = prototypeTokenData[k];
-      }
-      await this.token.update(tokenUpdate, {recursive: false});
-      await this.sheet.close();
-      const actor = this.token.getActor();
-      actor.sheet.render(true);
-      return actor;
-    }
+    /**
+     * A hook event that fires just before the actor is reverted to original form.
+     * @function mka.revertOriginalForm
+     * @memberof hookEvents
+     * @param {Actor} this                 The original actor before transformation.
+     * @param {object} [options]
+     */
+    Hooks.callAll("mka.revertOriginalForm", this, {renderSheet});
+    const previousActorIds = this.getFlag("mka", "previousActorIds") ?? [];
+    const isOriginalActor = !previousActorIds.length;
+    const isRendered = this.sheet.rendered;
 
     // Obtain a reference to the original actor
     const original = game.actors.get(this.getFlag("mka", "originalActor"));
-    if ( !original ) return;
+
+    // If we are reverting an unlinked token, grab the previous actorData, and create a new token
+    if ( this.isToken ) {
+      const baseActor = original ? original : game.actors.get(this.token.actorId);
+      if ( !baseActor ) {
+        ui.notifications.warn(game.i18n.format("MKA.PolymorphRevertNoOriginalActorWarn", {
+          reference: this.getFlag("mka", "originalActor")
+        }));
+        return;
+      }
+      const prototypeTokenData = await baseActor.getTokenDocument();
+      const actorData = this.token.getFlag("mka", "previousActorData");
+      const tokenUpdate = this.token.toObject();
+      if ( game.mka.isV10 ) tokenUpdate.actorData = actorData ?? {};
+      else {
+        actorData._id = tokenUpdate.delta._id;
+        tokenUpdate.delta = actorData;
+      }
+
+      for ( const k of ["width", "height", "alpha", "lockRotation", "name"] ) {
+        tokenUpdate[k] = prototypeTokenData[k];
+      }
+      for ( const k of ["offsetX", "offsetY", "scaleX", "scaleY", "src", "tint"] ) {
+        tokenUpdate.texture[k] = prototypeTokenData.texture[k];
+      }
+      tokenUpdate.sight = prototypeTokenData.sight;
+      tokenUpdate.detectionModes = prototypeTokenData.detectionModes;
+
+      await this.sheet.close();
+      await canvas.scene?.deleteEmbeddedDocuments("Token", [this.token._id]);
+      const token = await TokenDocument.implementation.create(tokenUpdate, {
+        parent: canvas.scene, keepId: true, render: true
+      });
+      if ( isOriginalActor ) {
+        await this.unsetFlag("mka", "isPolymorphed");
+        await this.unsetFlag("mka", "previousActorIds");
+        await this.token.unsetFlag("mka", "previousActorData");
+      }
+      if ( isRendered && renderSheet ) token.actor?.sheet?.render(true);
+      return token;
+    }
+
+    if ( !original ) {
+      ui.notifications.warn(game.i18n.format("MKA.PolymorphRevertNoOriginalActorWarn", {
+        reference: this.getFlag("mka", "originalActor")
+      }));
+      return;
+    }
 
     // Get the Tokens which represent this actor
     if ( canvas.ready ) {
       const tokens = this.getActiveTokens(true);
-      const tokenData = await original.getTokenData();
+      const tokenData = await original.getTokenDocument();
       const tokenUpdates = tokens.map(t => {
         const update = duplicate(tokenData);
         update._id = t.id;
@@ -2003,14 +2643,25 @@ export default class ActorMKA extends Actor {
         delete update.y;
         return update;
       });
-      canvas.scene.updateEmbeddedDocuments("Token", tokenUpdates);
+      await canvas.scene.updateEmbeddedDocuments("Token", tokenUpdates);
+    }
+    if ( isOriginalActor ) {
+      await this.unsetFlag("mka", "isPolymorphed");
+      await this.unsetFlag("mka", "previousActorIds");
     }
 
-    // Delete the polymorphed version of the actor, if possible
-    const isRendered = this.sheet.rendered;
-    if ( game.user.isGM ) await this.delete();
-    else if ( isRendered ) this.sheet.close();
-    if ( isRendered ) original.sheet.render(isRendered);
+    // Delete the polymorphed version(s) of the actor, if possible
+    if ( game.user.isGM ) {
+      const idsToDelete = previousActorIds.filter(id =>
+        id !== original.id // Is not original Actor Id
+        && game.actors?.get(id) // Actor still exists
+      ).concat([this.id]); // Add this id
+
+      await Actor.implementation.deleteDocuments(idsToDelete);
+    } else if ( isRendered ) {
+      this.sheet?.close();
+    }
+    if ( isRendered && renderSheet ) original.sheet?.render(isRendered);
     return original;
   }
 
@@ -2066,40 +2717,6 @@ export default class ActorMKA extends Actor {
   }
 
   /* -------------------------------------------- */
-
-  /**
-   * Populate a proficiency object with a `selected` field containing a combination of
-   * localizable group & individual proficiencies from `value` and the contents of `custom`.
-   *
-   * @param {object} data          Object containing proficiency data.
-   * @param {string[]} data.value  Array of standard proficiency keys.
-   * @param {string} data.custom   Semicolon-separated string of custom proficiencies.
-   * @param {string} type          "armor", "weapon", or "tool"
-   */
-  static prepareProficiencies(data, type) {
-    const profs = CONFIG.MKA[`${type}Proficiencies`];
-    const itemTypes = CONFIG.MKA[`${type}Ids`];
-
-    let values = [];
-    if ( data.value ) values = data.value instanceof Array ? data.value : [data.value];
-
-    data.selected = {};
-    for ( const key of values ) {
-      if ( profs[key] ) {
-        data.selected[key] = profs[key];
-      } else if ( itemTypes && itemTypes[key] ) {
-        const item = ProficiencySelector.getBaseItem(itemTypes[key], { indexOnly: true });
-        if ( item ) data.selected[key] = item.name;
-      } else if ( type === "tool" && CONFIG.MKA.vehicleTypes[key] ) {
-        data.selected[key] = CONFIG.MKA.vehicleTypes[key];
-      }
-    }
-
-    // Add custom entries
-    if ( data.custom ) data.custom.split(";").forEach((c, i) => data.selected[`custom${i+1}`] = c.trim());
-  }
-
-  /* -------------------------------------------- */
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
 
@@ -2122,6 +2739,7 @@ export default class ActorMKA extends Actor {
     dhp = Number(dhp);
     const tokens = this.isToken ? [this.token?.object] : this.getActiveTokens(true);
     for ( const t of tokens ) {
+      if ( !t.visible || !t.renderable ) continue;
       const pct = Math.clamped(Math.abs(dhp) / this.system.attributes.hp.max, 0, 1);
       canvas.interface.createScrollingText(t.center, dhp.signedString(), {
         anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
@@ -2132,199 +2750,5 @@ export default class ActorMKA extends Actor {
         jitter: 0.25
       });
     }
-  }
-
-  /* -------------------------------------------- */
-  /*  DEPRECATED METHODS                          */
-  /* -------------------------------------------- */
-
-  /**
-   * Given a list of items to add to the Actor, optionally prompt the user for which they would like to add.
-   * @param {ItemMKA[]} items         The items being added to the Actor.
-   * @param {boolean} [prompt=true]  Whether or not to prompt the user.
-   * @returns {Promise<ItemMKA[]>}
-   * @deprecated since mka 1.6, targeted for removal in 2.1
-   */
-  async addEmbeddedItems(items, prompt=true) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorMKA#addEmbeddedItems has been deprecated.", { since: "MKA 1.6", until: "MKA 2.1" }
-    );
-    let itemsToAdd = items;
-    if ( !items.length ) return [];
-
-    // Obtain the array of item creation data
-    let toCreate = [];
-    if (prompt) {
-      const itemIdsToAdd = await SelectItemsPrompt.create(items, {
-        hint: game.i18n.localize("MKA.AddEmbeddedItemPromptHint")
-      });
-      for (let item of items) {
-        if (itemIdsToAdd.includes(item.id)) toCreate.push(item.toObject());
-      }
-    }
-    else toCreate = items.map(item => item.toObject());
-
-    // Create the requested items
-    if (itemsToAdd.length === 0) return [];
-    return ItemMKA.createDocuments(toCreate, {parent: this});
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Get a list of features to add to the Actor when a class item is updated.
-   * Optionally prompt the user for which they would like to add.
-   * @param {object} [options]
-   * @param {string} [options.classIdentifier] Identifier slug of the class if it has been changed.
-   * @param {string} [options.subclassName]    Name of the selected subclass if it has been changed.
-   * @param {number} [options.level]           New class level if it has been changed.
-   * @returns {Promise<ItemMKA[]>}              Any new items that should be added to the actor.
-   * @deprecated since mka 1.6, targeted for removal in 2.1
-   */
-  async getClassFeatures({classIdentifier, subclassName, level}={}) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorMKA#getClassFeatures has been deprecated. Please refer to the Advancement API for its replacement.",
-      { since: "MKA 1.6", until: "MKA 2.1" }
-    );
-    const existing = new Set(this.items.map(i => i.name));
-    const features = await ActorMKA.loadClassFeatures({classIdentifier, subclassName, level});
-    return features.filter(f => !existing.has(f.name)) || [];
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Return the features which a character is awarded for each class level.
-   * @param {object} [options]
-   * @param {string} [options.classIdentifier] Identifier slug of the class being added or updated.
-   * @param {string} [options.subclassName]    Name of the subclass of the class being added, if any.
-   * @param {number} [options.level]           The number of levels in the added class.
-   * @param {number} [options.priorLevel]      The previous level of the added class.
-   * @returns {Promise<ItemMKA[]>}              Items that should be added based on the changes made.
-   * @deprecated since mka 1.6, targeted for removal in 2.1
-   */
-  static async loadClassFeatures({classIdentifier="", subclassName="", level=1, priorLevel=0}={}) {
-    foundry.utils.logCompatibilityWarning(
-      "ActorMKA#loadClassFeatures has been deprecated. Please refer to the Advancement API for its replacement.",
-      { since: "MKA 1.6", until: "MKA 2.1" }
-    );
-    subclassName = subclassName.slugify();
-
-    // Get the configuration of features which may be added
-    const clsConfig = CONFIG.MKA.classFeatures[classIdentifier];
-    if (!clsConfig) return [];
-
-    // Acquire class features
-    let ids = [];
-    for ( let [l, f] of Object.entries(clsConfig.features || {}) ) {
-      l = parseInt(l);
-      if ( (l <= level) && (l > priorLevel) ) ids = ids.concat(f);
-    }
-
-    // Acquire subclass features
-    const subConfig = clsConfig.subclasses[subclassName] || {};
-    for ( let [l, f] of Object.entries(subConfig.features || {}) ) {
-      l = parseInt(l);
-      if ( (l <= level) && (l > priorLevel) ) ids = ids.concat(f);
-    }
-
-    // Load item data for all identified features
-    const features = [];
-    for ( let id of ids ) {
-      features.push(await fromUuid(id));
-    }
-
-    // Class spells should always be prepared
-    for ( const feature of features ) {
-      if ( feature.type === "spell" ) {
-        const preparation = feature.system.preparation;
-        preparation.mode = "always";
-        preparation.prepared = true;
-      }
-    }
-    return features;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Determine a character's AC value from their equipped armor and shield.
-   * @returns {object}
-   * @private
-   * @deprecated since mka 2.0, targeted for removal in 2.2
-   */
-  _computeArmorClass() {
-    foundry.utils.logCompatibilityWarning(
-      "ActorMKA#_computeArmorClass has been renamed ActorMKA#_prepareArmorClass.",
-      { since: "MKA 2.0", until: "MKA 2.2" }
-    );
-    this._prepareArmorClass();
-    return this.system.attributes.ac;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Compute the level and percentage of encumbrance for an Actor.
-   * @returns {object}  An object describing the character's encumbrance level
-   * @private
-   * @deprecated since mka 2.0, targeted for removal in 2.2
-   */
-  _computeEncumbrance() {
-    foundry.utils.logCompatibilityWarning(
-      "ActorMKA#_computeEncumbrance has been renamed ActorMKA#_prepareEncumbrance.",
-      { since: "MKA 2.0", until: "MKA 2.2" }
-    );
-    this._prepareEncumbrance();
-    return this.system.attributes.encumbrance;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Calculate the initiative bonus to display on a character sheet.
-   * @private
-   * @deprecated since mka 2.0, targeted for removal in 2.2
-   */
-  _computeInitiativeModifier() {
-    foundry.utils.logCompatibilityWarning(
-      "ActorMKA#_computeInitiativeModifier has been renamed ActorMKA#_prepareInitiative.",
-      { since: "MKA 2.0", until: "MKA 2.2" }
-    );
-    this._prepareInitiative();
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare data related to the spell-casting capabilities of the Actor.
-   * Mutates the value of the system.spells object.
-   * @private
-   * @deprecated since mka 2.0, targeted for removal in 2.2
-   */
-  _computeSpellcastingProgression() {
-    foundry.utils.logCompatibilityWarning(
-      "ActorMKA#_computeSpellcastingProgression has been renamed ActorMKA#_prepareSpellcasting.",
-      { since: "MKA 2.0", until: "MKA 2.2" }
-    );
-    this._prepareSpellcasting();
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Convert a bonus value to a simple integer for displaying on the sheet.
-   * @param {number|string|null} bonus  Actor's bonus value.
-   * @param {object} data               Actor data to use for replacing @ strings.
-   * @returns {number}                  Simplified bonus as an integer.
-   * @protected
-   * @deprecated since mka 2.0, targeted for removal in 2.2
-   */
-  _simplifyBonus(bonus, data) {
-    foundry.utils.logCompatibilityWarning(
-      "Actor#_simplifyBonus has been made a utility function and can be accessed at mka.utils.simplifyBonus.",
-      { since: "MKA 2.0", until: "MKA 2.2" }
-    );
-    return simplifyBonus(bonus, data);
   }
 }

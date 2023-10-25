@@ -1,7 +1,20 @@
 /**
- * A specialized form used to select from a checklist of attributes, traits, or properties
+ * A specialized form used to select from a checklist of attributes, traits, or properties.
+ * @deprecated since mka 2.1, targeted for removal in 2.3
  */
 export default class TraitSelector extends DocumentSheet {
+  constructor(...args) {
+    super(...args);
+
+    if ( !this.options.suppressWarning ) foundry.utils.logCompatibilityWarning(
+      `${this.constructor.name} has been deprecated in favor of a more specialized TraitSelector `
+      + "available at 'mka.applications.actor.TraitSelector'. Support for the old application will "
+      + "be removed in a future version.",
+      { since: "MKA 2.1", until: "MKA 2.3" }
+    );
+  }
+
+  /* -------------------------------------------- */
 
   /** @inheritDoc */
   static get defaultOptions() {
@@ -58,23 +71,25 @@ export default class TraitSelector extends DocumentSheet {
 
     // Return data
     return {
-      allowCustom: o.allowCustom,
       choices: choices,
-      custom: custom
+      custom: custom,
+      customPath: o.allowCustom ? "custom" : null
     };
   }
 
   /* -------------------------------------------- */
 
-  /** @override */
-  async _updateObject(event, formData) {
+  /**
+   * Prepare the update data to include choices in the provided object.
+   * @param {object} formData  Form data to search for choices.
+   * @returns {object}         Updates to apply to target.
+   */
+  _prepareUpdateData(formData) {
     const o = this.options;
+    formData = foundry.utils.expandObject(formData);
 
     // Obtain choices
-    const chosen = [];
-    for ( let [k, v] of Object.entries(formData) ) {
-      if ( (k !== "custom") && v ) chosen.push(k);
-    }
+    const chosen = Object.entries(formData.choices).filter(([, v]) => v).map(([k]) => k);
 
     // Object including custom data
     const updateData = {};
@@ -90,7 +105,14 @@ export default class TraitSelector extends DocumentSheet {
       return ui.notifications.error(`You may choose no more than ${o.maximum} options`);
     }
 
-    // Update the object
-    this.object.update(updateData);
+    return updateData;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  async _updateObject(event, formData) {
+    const updateData = this._prepareUpdateData(formData);
+    if ( updateData ) this.object.update(updateData);
   }
 }

@@ -7,44 +7,46 @@
   "type": "feat",
   "system": {
     "description": {
-      "value": "<p>Your mystical connection to the land infuses you with the ability to cast certain spells. At 3rd, 5th, 7th, and 9th level you gain access to circle spells connected to the land where you became a druid. Choose that land - arctic, coast, desert, forest, grassland, mountain, or swamp - and consult the associated list of spells.</p><p>Once you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.</p>\n<table border=\"1\"><caption>\n<h3>Arctic</h3>\n</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.3Lo9boi7P2ro6QV4]{Hold Person}, @Compendium[mka.spells.9gYGkrL6qFTsE6fw]{Spike Growth}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.dhqBY4TvVjxVmOZd]{Sleet Storm}, @Compendium[mka.spells.yqUDoxk4x0NWG5Bz]{Slow}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}, @Compendium[mka.spells.WN2LWEljYU6QqnRH]{Ice Storm}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.d54VDyFulD9xxY7J]{Commune}, @Compendium[mka.spells.RpKjTlYASrfqUPVA]{Cone of Cold}</td>\n</tr>\n</tbody>\n</table>\n<table border=\"1\"><caption>\n<h3>Coast</h3>\n</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.X4c8xCkmF8U9HUMz]{Mirror Image}, @Compendium[mka.spells.wqfAVANuQonNBgnL]{Misty Step}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.13uVuBQP6VaiSPvC]{Water Breathing}, @Compendium[mka.spells.YBda6nLKjxdT1LbS]{Water Walk}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.7fFHlBk3UNX8gPKL]{Control Water}, @Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.1LkZvINag7KqBmDR]{Conjure Elemental}, @Compendium[mka.spells.fVbCxFRaORalHB20]{Scrying}</td>\n</tr>\n</tbody>\n</table>\n<table border=\"1\"><caption>\n<h3>Desert</h3>\n</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.UDUnlfPsOAbq2RSE]{Blur}, @Compendium[mka.spells.5VhqFROQYjr1P9lp]{Silence}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.BV0mpbHh29IbbIj5]{Create Food and Water}, @Compendium[mka.spells.j8NtLXOOJ3GAKF8I]{Protection from Energy}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.pybg5MNc3lkerH4Y]{Blight}, @Compendium[mka.spells.sTIkQK7KuQNOyY0C]{Hallucinatory Terrain}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.OVikYmSdHliAG2YD]{Insect Plague}, @Compendium[mka.spells.NmoRmM1mhuM3pqnY]{Wall of Stone}</td>\n</tr>\n</tbody>\n</table>\n<table border=\"1\"><caption>\n<h3>Forest</h3>\n</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.JPwIEfgUPVebr5AH]{Barkskin}, @Compendium[mka.spells.KJRVzeMQXPj8Gtyx]{Spider Climb}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.ehvmg9U9fcMEhE4z]{Call Lightning}, @Compendium[mka.spells.YWtwzp6ZnQJMEmVW]{Plant Growth}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.XqzXSKNR75ZdYTA9]{Divination}, @Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.dp6xny4v8PDoIGjh]{Commune with Nature}, @Compendium[mka.spells.DUBgwHPakcLDkB6W]{Tree Stride}</td>\n</tr>\n</tbody>\n</table>\n<h4></h4>\n<table border=\"1\"><caption>\n<h3>Grassland</h3>\n</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.1N8dDMMgZ1h1YJ3B]{Invisibility}, @Compendium[mka.spells.pRMvmknwLf2tdMTj]{Pass without Trace}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.BP3GCwa66IAw1yTG]{Daylight}, @Compendium[mka.spells.Szvk5FEVQW3uhJi5]{Haste}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.XqzXSKNR75ZdYTA9]{Divination}, @Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.kSPRpeIx3w3nihrF]{Dream}, @Compendium[mka.spells.OVikYmSdHliAG2YD]{Insect Plague}</td>\n</tr>\n</tbody>\n</table>\n<table border=\"1\"><caption>\n<h3>Mountain</h3>\n</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong><strong>Mountain</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.KJRVzeMQXPj8Gtyx]{Spider Climb}, @Compendium[mka.spells.9gYGkrL6qFTsE6fw]{Spike Growth}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.IyikgTEOTv701jgQ]{Lightning Bolt}, @Compendium[mka.spells.64uo4fHriHLjRUrX]{Meld into Stone}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.QvGcdRUSNRKEQJlK]{Stone Shape}, @Compendium[mka.spells.ReMbjfeOKoSj3O79]{Stoneskin}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.d9MwcXi7Il3HROXd]{Passwall}, @Compendium[mka.spells.NmoRmM1mhuM3pqnY]{Wall of Stone}</td>\n</tr>\n</tbody>\n</table>\n<table border=\"1\"><caption>\n<h3>Swamp</h3>\n</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.4H6YgYdKgnX6ZQ8M]{Acid Arrow}, @Compendium[mka.spells.S7VbUetIfVT7B6Eq]{Darkness}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.YBda6nLKjxdT1LbS]{Water Walk}, @Compendium[mka.spells.TwlD4PLcltv7Xh7j]{Stinking Cloud}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}, @Compendium[mka.spells.gXtzz9t1DTzJeLr4]{Locate Creature}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.OVikYmSdHliAG2YD]{Insect Plague}, @Compendium[mka.spells.fVbCxFRaORalHB20]{Scrying}</td>\n</tr>\n</tbody>\n</table>",
+      "value": "<p>Your mystical connection to the land infuses you with the ability to cast certain spells. At 3rd, 5th, 7th, and 9th level you gain access to circle spells connected to the land where you became a druid. Choose that land—arctic, coast, desert, forest, grassland, mountain, or swamp—and consult the associated list of spells.</p>\n<p>Once you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.</p>\n<table><caption>Arctic</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.3Lo9boi7P2ro6QV4]{Hold Person}, @Compendium[mka.spells.9gYGkrL6qFTsE6fw]{Spike Growth}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.dhqBY4TvVjxVmOZd]{Sleet Storm}, @Compendium[mka.spells.yqUDoxk4x0NWG5Bz]{Slow}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}, @Compendium[mka.spells.WN2LWEljYU6QqnRH]{Ice Storm}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.d54VDyFulD9xxY7J]{Commune}, @Compendium[mka.spells.RpKjTlYASrfqUPVA]{Cone of Cold}</td>\n</tr>\n</tbody>\n</table>\n<table><caption>Coast</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.X4c8xCkmF8U9HUMz]{Mirror Image}, @Compendium[mka.spells.wqfAVANuQonNBgnL]{Misty Step}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.13uVuBQP6VaiSPvC]{Water Breathing}, @Compendium[mka.spells.YBda6nLKjxdT1LbS]{Water Walk}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.7fFHlBk3UNX8gPKL]{Control Water}, @Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.1LkZvINag7KqBmDR]{Conjure Elemental}, @Compendium[mka.spells.fVbCxFRaORalHB20]{Scrying}</td>\n</tr>\n</tbody>\n</table>\n<table><caption>Desert</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.UDUnlfPsOAbq2RSE]{Blur}, @Compendium[mka.spells.5VhqFROQYjr1P9lp]{Silence}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.BV0mpbHh29IbbIj5]{Create Food and Water}, @Compendium[mka.spells.j8NtLXOOJ3GAKF8I]{Protection from Energy}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.pybg5MNc3lkerH4Y]{Blight}, @Compendium[mka.spells.sTIkQK7KuQNOyY0C]{Hallucinatory Terrain}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.OVikYmSdHliAG2YD]{Insect Plague}, @Compendium[mka.spells.NmoRmM1mhuM3pqnY]{Wall of Stone}</td>\n</tr>\n</tbody>\n</table>\n<table><caption>Forest</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.JPwIEfgUPVebr5AH]{Barkskin}, @Compendium[mka.spells.KJRVzeMQXPj8Gtyx]{Spider Climb}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.ehvmg9U9fcMEhE4z]{Call Lightning}, @Compendium[mka.spells.YWtwzp6ZnQJMEmVW]{Plant Growth}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.XqzXSKNR75ZdYTA9]{Divination}, @Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.dp6xny4v8PDoIGjh]{Commune with Nature}, @Compendium[mka.spells.DUBgwHPakcLDkB6W]{Tree Stride}</td>\n</tr>\n</tbody>\n</table>\n<table><caption>Grassland</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.1N8dDMMgZ1h1YJ3B]{Invisibility}, @Compendium[mka.spells.pRMvmknwLf2tdMTj]{Pass without Trace}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.BP3GCwa66IAw1yTG]{Daylight}, @Compendium[mka.spells.Szvk5FEVQW3uhJi5]{Haste}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.XqzXSKNR75ZdYTA9]{Divination}, @Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.kSPRpeIx3w3nihrF]{Dream}, @Compendium[mka.spells.OVikYmSdHliAG2YD]{Insect Plague}</td>\n</tr>\n</tbody>\n</table>\n<table><caption>Mountain</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.KJRVzeMQXPj8Gtyx]{Spider Climb}, @Compendium[mka.spells.9gYGkrL6qFTsE6fw]{Spike Growth}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.IyikgTEOTv701jgQ]{Lightning Bolt}, @Compendium[mka.spells.64uo4fHriHLjRUrX]{Meld into Stone}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.QvGcdRUSNRKEQJlK]{Stone Shape}, @Compendium[mka.spells.ReMbjfeOKoSj3O79]{Stoneskin}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.d9MwcXi7Il3HROXd]{Passwall}, @Compendium[mka.spells.NmoRmM1mhuM3pqnY]{Wall of Stone}</td>\n</tr>\n</tbody>\n</table>\n<table><caption>Swamp</caption>\n<thead>\n<tr>\n<td><strong>Druid Level</strong></td>\n<td><strong>Circle Spells</strong></td>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>3rd</td>\n<td>@Compendium[mka.spells.4H6YgYdKgnX6ZQ8M]{Acid Arrow}, @Compendium[mka.spells.S7VbUetIfVT7B6Eq]{Darkness}</td>\n</tr>\n<tr>\n<td>5th</td>\n<td>@Compendium[mka.spells.YBda6nLKjxdT1LbS]{Water Walk}, @Compendium[mka.spells.TwlD4PLcltv7Xh7j]{Stinking Cloud}</td>\n</tr>\n<tr>\n<td>7th</td>\n<td>@Compendium[mka.spells.da0a1t2FqaTjRZGT]{Freedom of Movement}, @Compendium[mka.spells.gXtzz9t1DTzJeLr4]{Locate Creature}</td>\n</tr>\n<tr>\n<td>9th</td>\n<td>@Compendium[mka.spells.OVikYmSdHliAG2YD]{Insect Plague}, @Compendium[mka.spells.fVbCxFRaORalHB20]{Scrying}</td>\n</tr>\n</tbody>\n</table>",
       "chat": "",
       "unidentified": ""
     },
-    "source": "PHB pg. 68",
+    "source": "SRD 5.1",
     "activation": {
       "type": "",
-      "cost": 0,
+      "cost": null,
       "condition": ""
     },
     "duration": {
       "value": "",
       "units": ""
     },
+    "cover": null,
     "target": {
-      "value": "",
+      "value": null,
       "width": null,
       "units": "",
       "type": ""
     },
     "range": {
-      "value": "",
+      "value": null,
       "long": null,
       "units": ""
     },
     "uses": {
       "value": null,
       "max": "",
-      "per": null
+      "per": null,
+      "recovery": ""
     },
     "consume": {
       "type": "",
-      "target": "",
+      "target": null,
       "amount": null
     },
     "ability": "",
     "actionType": "",
-    "attackBonus": 0,
+    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -60,23 +62,27 @@
       "dc": null,
       "scaling": "spell"
     },
+    "type": {
+      "value": "class",
+      "subtype": ""
+    },
     "requirements": "Circle of the Land 3",
     "recharge": {
       "value": null,
       "charged": false
     }
   },
-  "sort": 400001,
+  "sort": 0,
   "flags": {},
   "img": "icons/magic/water/projectile-ice-teardrop.webp",
   "effects": [],
   "folder": null,
   "_stats": {
     "systemId": "mka",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.1.0",
+    "coreVersion": "10.291",
     "createdTime": 1661787234388,
-    "modifiedTime": 1661787234388,
-    "lastModifiedBy": "mkabuilder0000"
+    "modifiedTime": 1672334339276,
+    "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

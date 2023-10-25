@@ -2,7 +2,7 @@
 
     {{!-- Item Sheet Header --}}
     <header class="sheet-header flexrow">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
 
         <div class="header-details flexrow">
             <h1 class="charname">
@@ -20,7 +20,7 @@
                 </li>
                 <li>
                     <select name="system.rarity">
-                        {{selectOptions config.itemRarity selected=system.rarity blank="&nbsp;"}}
+                        {{selectOptions config.itemRarity selected=system.rarity blank=""}}
                     </select>
                 </li>
                 <li>
@@ -62,7 +62,7 @@
                 </select>
             </div>
 
-            {{#unless isMountable}}
+            {{#unless system.isMountable}}
             <div class="form-group">
                 <label>{{localize "MKA.Attunement"}}</label>
                 <select name="system.attunement" data-dtype="Number">
@@ -70,13 +70,18 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label>{{localize "MKA.Proficiency"}}</label>
+                <select name="system.proficient" data-dtype="Number">
+                    {{selectOptions config.weaponAndArmorProficiencyLevels selected=system.proficient
+                                    blank=(localize "MKA.Automatic")}}
+                </select>
+            </div>
+
             {{!-- Weapon Status --}}
             <div class="form-group stacked">
                 <label>{{ localize "MKA.ItemWeaponStatus" }}</label>
                 <div class="form-fields">
-                    <label class="checkbox">
-                        <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{ localize "MKA.Proficient" }}
-                    </label>
                     <label class="checkbox">
                         <input type="checkbox" name="system.equipped" {{checked system.equipped}}/> {{ localize "MKA.Equipped" }}
                     </label>
@@ -97,7 +102,7 @@
                 {{/each}}
             </div>
 
-            {{#if isMountable}}
+            {{#if system.isMountable}}
             <div class="form-group">
                 <label>{{localize 'MKA.ArmorClass'}}</label>
                 <div class="form-fields">

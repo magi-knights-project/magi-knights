@@ -102,7 +102,7 @@ export default class ShortRestDialog extends Dialog {
             label: game.i18n.localize("MKA.Rest"),
             callback: html => {
               let newDay = false;
-              if (game.settings.get("mka", "restVariant") === "gritty") {
+              if ( game.settings.get("mka", "restVariant") !== "epic" ) {
                 newDay = html.find('input[name="newDay"]')[0].checked;
               }
               resolve(newDay);

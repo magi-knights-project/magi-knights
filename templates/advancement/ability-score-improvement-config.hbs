@@ -1,0 +1,13 @@
+<form autocomplete="off" data-id="{{_id}}" data-type="{{type}}">
+  {{> "mka.advancement-controls"}}
+
+  <ul class="ability-scores">
+    {{> "mka.advancement-ability-score-control" points canAdjust=true}}
+    <li class="hint">
+      {{localize "MKA.AdvancementAbilityScoreImprovementPointsHint"}}
+    </li>
+    {{#each abilities}}
+      {{> "mka.advancement-ability-score-control" this canAdjust=true}}
+    {{/each}}
+  </ul>
+</form>

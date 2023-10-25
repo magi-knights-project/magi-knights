@@ -1,3 +1,5 @@
+import { ModuleArtConfig } from "./module-art.mjs";
+
 /**
  * Register all of the system's settings.
  */
@@ -54,6 +56,16 @@ export default function registerSystemSettings() {
       bonus: "SETTINGS.MKAProfBonus",
       dice: "SETTINGS.MKAProfDice"
     }
+  });
+
+  // Allow feats during Ability Score Improvements
+  game.settings.register("mka", "allowFeats", {
+    name: "SETTINGS.MKAFeatsN",
+    hint: "SETTINGS.MKAFeatsL",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean
   });
 
   // Use Honor ability score
@@ -157,6 +169,15 @@ export default function registerSystemSettings() {
       keepItems: false,
       keepBio: false,
       keepVision: true,
+      keepSelf: false,
+      keepAE: false,
+      keepOriginAE: true,
+      keepOtherOriginAE: true,
+      keepFeatAE: true,
+      keepSpellAE: true,
+      keepEquipmentAE: true,
+      keepClassAE: true,
+      keepBackgroundAE: true,
       transformTokens: true
     }
   });
@@ -189,5 +210,36 @@ export default function registerSystemSettings() {
     config: true,
     type: Boolean,
     default: false
+  });
+
+  // Strict validation
+  game.settings.register("mka", "strictValidation", {
+    scope: "world",
+    config: false,
+    type: Boolean,
+    default: true
+  });
+
+  // Dynamic art.
+  game.settings.registerMenu("mka", "moduleArtConfiguration", {
+    name: "MKA.ModuleArtConfigN",
+    label: "MKA.ModuleArtConfigL",
+    hint: "MKA.ModuleArtConfigH",
+    icon: "fa-solid fa-palette",
+    type: ModuleArtConfig,
+    restricted: true
+  });
+
+  game.settings.register("mka", "moduleArtConfiguration", {
+    name: "Module Art Configuration",
+    scope: "world",
+    config: false,
+    type: Object,
+    default: {
+      mka: {
+        portraits: true,
+        tokens: true
+      }
+    }
   });
 }

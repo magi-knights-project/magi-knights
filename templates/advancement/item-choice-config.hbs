@@ -1,0 +1,104 @@
+<form autocomplete="off">
+  <div class="left-column">
+    {{> "mka.advancement-controls"}}
+    <div class="form-group">
+      <label>{{localize "MKA.AdvancementHint"}}</label>
+      <textarea name="configuration.hint">{{configuration.hint}}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "MKA.AdvancementConfigureAllowDrops"}}</label>
+      <div class="form-fields">
+        <input type="checkbox" name="configuration.allowDrops" {{checked configuration.allowDrops}}>
+      </div>
+      <p class="hint">{{localize "MKA.AdvancementConfigureAllowDropsHint"}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "MKA.AdvancementItemChoiceType"}}</label>
+      <div class="form-fields">
+        <select name="configuration.type">
+          {{selectOptions validTypes selected=configuration.type
+            blank=(localize "MKA.AdvancementItemChoiceTypeAny")}}
+        </select>
+      </div>
+      <p class="hint">{{localize "MKA.AdvancementItemChoiceTypeHint"}}</p>
+    </div>
+
+    {{#if typeRestriction}}
+      <div class="form-group">
+        <label>{{typeRestriction.typeLabel}}</label>
+        <div class="form-fields">
+          <select name="configuration.restriction.type">
+            {{selectOptions typeRestriction.typeOptions selected=configuration.restriction.type
+              labelAttr="label" blank="—"}}
+          </select>
+        </div>
+      </div>
+
+      {{#if typeRestriction.subtypeOptions}}
+        <div class="form-group">
+          <label>{{typeRestriction.subtypeLabel}}</label>
+          <div class="form-fields">
+            <select name="configuration.restriction.subtype">
+              {{selectOptions typeRestriction.subtypeOptions selected=configuration.restriction.subtype blank="—"}}
+            </select>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
+
+    {{#if showSpellConfig}}
+      <div class="form-group">
+        <label>{{localize "MKA.SpellLevel"}}</label>
+        <div class="form-fields">
+          <select name="configuration.restriction.level">
+            {{#select configuration.restriction.level}}
+              <option value="">&mdash;</option>
+              {{#each CONFIG.spellLevels as |label key|}}
+                <option value="{{key}}">{{label}}</option>
+              {{/each}}
+              <option value="available">{{localize "MKA.AdvancementItemChoiceSpellLevelAvailable"}}</option>
+            {{/select}}
+          </select>
+        </div>
+        <p class="hint">{{localize "MKA.AdvancementItemChoiceSpellLevelHint"}}</p>
+      </div>
+
+      {{> "mka.advancement-spell-config"}}
+    {{/if}}
+
+    <div class="drop-target">
+      <ol class="items-list">
+        <li class="items-header flexrow"><h3 class="item-name">{{localize "DOCUMENT.Items"}}</h3></li>
+        <ol class="item-list">
+        {{#each configuration.pool}}
+          <li class="item flexrow" data-item-uuid="{{this}}">
+            <div class="item-name">{{{mka-linkForUuid this}}}</div>
+            <div class="item-controls flexrow">
+              <a class="item-control item-action" data-action="delete" title="{{localize 'MKA.ItemDelete'}}">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </li>
+        {{/each}}
+        </ol>
+      </ol>
+
+      <p class="hint centered">{{localize "MKA.AdvancementConfigureDropAreaHint"}}</p>
+    </div>
+  </div>
+
+  <div class="right-column level-list">
+    <p class="hint">{{localize "MKA.AdvancementItemChoiceLevelsHint"}}</p>
+    {{#each levels as |label level|}}
+      <div class="form-group">
+        <label>{{label}}</label>
+        <div class="form-fields">
+          {{numberInput (lookup ../configuration.choices level) placeholder="0"
+            name=(concat "configuration.choices." level) min=1 step=1}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</form>

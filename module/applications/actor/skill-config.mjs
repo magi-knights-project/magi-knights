@@ -1,14 +1,21 @@
+import BaseConfigSheet from "./base-config.mjs";
+
 /**
  * A simple form to set skill configuration for a given skill.
  *
  * @param {Actor} actor                 The Actor instance being displayed within the sheet.
  * @param {ApplicationOptions} options  Additional application configuration options.
  * @param {string} skillId              The skill key as defined in CONFIG.MKA.skills.
+ * @deprecated since mka 2.2, targeted for removal in 2.4
  */
-export default class ActorSkillConfig extends DocumentSheet {
+export default class ActorSkillConfig extends BaseConfigSheet {
   constructor(actor, options, skillId) {
     super(actor, options);
     this._skillId = skillId;
+
+    foundry.utils.logCompatibilityWarning("ActorSkillConfig has been deprecated in favor of the more general "
+      + "ProficiencyConfig available at 'mka.applications.actor.ProficiencyConfig'. Support for the old application "
+      + "will be removed in a future version.", {since: "MKA 2.2", until: "MKA 2.4"});
   }
 
   /* -------------------------------------------- */
@@ -37,10 +44,11 @@ export default class ActorSkillConfig extends DocumentSheet {
   getData(options) {
     const src = this.document.toObject();
     return {
-      skill: src.system.skills?.[this._skillId] || {},
+      abilities: CONFIG.MKA.abilities,
+      skill: src.system.skills?.[this._skillId] ?? this.document.system.skills[this._skillId] ?? {},
       skillId: this._skillId,
       proficiencyLevels: CONFIG.MKA.proficiencyLevels,
-      bonusGlobal: src.system.bonuses?.skill
+      bonusGlobal: src.system.bonuses?.abilities.skill
     };
   }
 

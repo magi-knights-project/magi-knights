@@ -1,114 +1,84 @@
 {
   "name": "Randal (Human Fighter)",
   "type": "character",
-  "img": "systems/mka/tokens/heroes/FighterShield.webp",
+  "img": "",
   "system": {
     "abilities": {
       "str": {
         "value": 16,
         "proficient": 1,
+        "max": null,
         "bonuses": {
           "check": "",
           "save": ""
-        },
-        "mod": 3,
-        "save": 5,
-        "prof": 2,
-        "saveBonus": 0,
-        "checkBonus": 0,
-        "dc": 13
+        }
       },
       "dex": {
         "value": 14,
         "proficient": 0,
+        "max": null,
         "bonuses": {
           "check": "",
           "save": ""
-        },
-        "mod": 2,
-        "save": 2,
-        "prof": 0,
-        "saveBonus": 0,
-        "checkBonus": 0,
-        "dc": 12
+        }
       },
       "con": {
         "value": 15,
         "proficient": 1,
+        "max": null,
         "bonuses": {
           "check": "",
           "save": ""
-        },
-        "mod": 2,
-        "save": 4,
-        "prof": 2,
-        "saveBonus": 0,
-        "checkBonus": 0,
-        "dc": 12
+        }
       },
       "int": {
         "value": 9,
         "proficient": 0,
+        "max": null,
         "bonuses": {
           "check": "",
           "save": ""
-        },
-        "mod": -1,
-        "save": -1,
-        "prof": 0,
-        "saveBonus": 0,
-        "checkBonus": 0,
-        "dc": 9
+        }
       },
       "wis": {
         "value": 13,
         "proficient": 0,
+        "max": null,
         "bonuses": {
           "check": "",
           "save": ""
-        },
-        "mod": 1,
-        "save": 1,
-        "prof": 0,
-        "saveBonus": 0,
-        "checkBonus": 0,
-        "dc": 11
+        }
       },
       "cha": {
         "value": 11,
         "proficient": 0,
+        "max": null,
         "bonuses": {
           "check": "",
           "save": ""
-        },
-        "mod": 0,
-        "save": 0,
-        "prof": 0,
-        "saveBonus": 0,
-        "checkBonus": 0,
-        "dc": 10
+        }
       }
     },
     "attributes": {
       "ac": {
         "flat": null,
         "calc": "default",
-        "formula": "",
-        "min": 0
+        "formula": ""
       },
       "hp": {
         "value": 12,
-        "min": 0,
-        "max": 12,
+        "max": null,
         "temp": null,
-        "tempmax": null
+        "tempmax": null,
+        "bonuses": {
+          "level": "",
+          "overall": ""
+        },
+        "min": 0
       },
       "init": {
-        "value": 0,
-        "bonus": 0,
-        "mod": 2,
-        "prof": 0,
-        "total": 2
+        "ability": "",
+        "bonus": "0"
       },
       "movement": {
         "burrow": 0,
@@ -136,54 +106,41 @@
         "failure": 0
       },
       "exhaustion": 0,
-      "inspiration": false,
-      "encumbrance": {
-        "value": 144.7,
-        "max": 240,
-        "pct": 60.29166666666666,
-        "encumbered": true
-      },
-      "hd": 1,
-      "prof": 2,
-      "spelldc": 9
+      "inspiration": false
     },
     "details": {
       "biography": {
-        "value": "<p>Randal worked his way through the ranks of his hometown's guard, ultimately growing restless with city life and wandering off in search of adventure.</p>\n<blockquote>Actor artwork provided by <a href=\"https://www.forgotten-adventures.net/\" target=\"_blank\" rel=\"noopener\">Forgotten Adventures</a></blockquote>",
+        "value": "<p>Randal worked his way through the ranks of his hometown's guard, ultimately growing restless with city life and wandering off in search of adventure.</p>\n",
         "public": ""
       },
       "alignment": "Neutral Good",
       "race": "Variant Human",
-      "background": "Watchman",
-      "originalClass": "z1xtuix2w8sjskct",
+      "background": "",
+      "originalClass": "TixRV4Wr5ruxXRpf",
       "xp": {
-        "value": 0,
-        "min": 0,
-        "max": 300,
-        "pct": 0
+        "value": 0
       },
       "appearance": "",
       "trait": "",
       "ideal": "",
       "bond": "",
-      "flaw": "",
-      "level": 1,
-      "hd": {
-        "_deprecated": true
-      }
+      "flaw": ""
     },
     "traits": {
       "size": "med",
       "di": {
         "value": [],
+        "bypasses": [],
         "custom": ""
       },
       "dr": {
         "value": [],
+        "bypasses": [],
         "custom": ""
       },
       "dv": {
         "value": [],
+        "bypasses": [],
         "custom": ""
       },
       "ci": {
@@ -218,9 +175,6 @@
       "toolProf": {
         "value": [],
         "custom": ""
-      },
-      "perception": {
-        "_deprecated": true
       }
     },
     "currency": {
@@ -237,12 +191,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 2,
-        "passive": 14,
-        "prof": 2,
-        "total": 4
+        }
       },
       "ani": {
         "value": 0,
@@ -250,12 +199,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 1,
-        "passive": 11,
-        "prof": 0,
-        "total": 1
+        }
       },
       "arc": {
         "value": 0,
@@ -263,12 +207,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": -1,
-        "passive": 9,
-        "prof": 0,
-        "total": -1
+        }
       },
       "ath": {
         "value": 1,
@@ -276,12 +215,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 3,
-        "passive": 15,
-        "prof": 2,
-        "total": 5
+        }
       },
       "dec": {
         "value": 0,
@@ -289,12 +223,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 0,
-        "passive": 10,
-        "prof": 0,
-        "total": 0
+        }
       },
       "his": {
         "value": 0,
@@ -302,12 +231,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": -1,
-        "passive": 9,
-        "prof": 0,
-        "total": -1
+        }
       },
       "ins": {
         "value": 1,
@@ -315,12 +239,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 1,
-        "passive": 13,
-        "prof": 2,
-        "total": 3
+        }
       },
       "itm": {
         "value": 1,
@@ -328,12 +247,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 0,
-        "passive": 12,
-        "prof": 2,
-        "total": 2
+        }
       },
       "inv": {
         "value": 0,
@@ -341,12 +255,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": -1,
-        "passive": 9,
-        "prof": 0,
-        "total": -1
+        }
       },
       "med": {
         "value": 0,
@@ -354,12 +263,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 1,
-        "passive": 11,
-        "prof": 0,
-        "total": 1
+        }
       },
       "nat": {
         "value": 0,
@@ -367,12 +271,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": -1,
-        "passive": 9,
-        "prof": 0,
-        "total": -1
+        }
       },
       "prc": {
         "value": 0,
@@ -380,12 +279,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 1,
-        "passive": 11,
-        "prof": 0,
-        "total": 1
+        }
       },
       "prf": {
         "value": 0,
@@ -393,12 +287,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 0,
-        "passive": 10,
-        "prof": 0,
-        "total": 0
+        }
       },
       "per": {
         "value": 1,
@@ -406,12 +295,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 0,
-        "passive": 12,
-        "prof": 2,
-        "total": 2
+        }
       },
       "rel": {
         "value": 0,
@@ -419,12 +303,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": -1,
-        "passive": 9,
-        "prof": 0,
-        "total": -1
+        }
       },
       "slt": {
         "value": 0,
@@ -432,12 +311,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 2,
-        "passive": 12,
-        "prof": 0,
-        "total": 2
+        }
       },
       "ste": {
         "value": 0,
@@ -445,12 +319,7 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 2,
-        "passive": 12,
-        "prof": 0,
-        "total": 2
+        }
       },
       "sur": {
         "value": 0,
@@ -458,70 +327,54 @@
         "bonuses": {
           "check": "",
           "passive": ""
-        },
-        "bonus": 0,
-        "mod": 1,
-        "passive": 11,
-        "prof": 0,
-        "total": 1
+        }
       }
     },
+    "tools": {},
     "spells": {
       "spell1": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell2": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell3": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell4": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell5": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell6": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell7": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell8": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "spell9": {
         "value": 0,
-        "override": null,
-        "max": 0
+        "override": null
       },
       "pact": {
         "value": 0,
-        "override": null,
-        "level": 0,
-        "max": 0
+        "override": null
       },
       "spell0": {
-        "_deprecated": true,
-        "max": 0,
-        "value": null
+        "value": 0,
+        "override": null
       }
     },
     "bonuses": {
@@ -617,7 +470,7 @@
       "attenuation": 0.5
     },
     "texture": {
-      "src": "systems/mka/tokens/heroes/FighterShield.webp",
+      "src": "",
       "tint": null,
       "scaleX": 1,
       "scaleY": 1,
@@ -640,104 +493,6 @@
   },
   "items": [
     {
-      "_id": "j3Vs0e3IZYBTGRik",
-      "name": "Background: Watchman",
-      "type": "feat",
-      "system": {
-        "description": {
-          "value": "<ul>\n<li>Skill Proficiencies: Athletics, Insight</li>\n<li>Languages: Two of your choice</li>\n<li>Equipment: A guard's uniform, a horn with which to summon help, and a pouch containing 10 gp</li>\n</ul>",
-          "chat": "",
-          "unidentified": ""
-        },
-        "source": "",
-        "activation": {
-          "type": "",
-          "cost": 0,
-          "condition": ""
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": null,
-          "width": null,
-          "units": "",
-          "type": ""
-        },
-        "range": {
-          "value": null,
-          "long": null,
-          "units": ""
-        },
-        "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null
-        },
-        "consume": {
-          "type": "",
-          "target": null,
-          "amount": null
-        },
-        "ability": null,
-        "actionType": "",
-        "attackBonus": 0,
-        "chatFlavor": "",
-        "critical": {
-          "threshold": null,
-          "damage": ""
-        },
-        "damage": {
-          "parts": [],
-          "versatile": ""
-        },
-        "formula": "",
-        "save": {
-          "ability": "",
-          "dc": null,
-          "scaling": "spell"
-        },
-        "requirements": "",
-        "recharge": {
-          "value": null,
-          "charged": false
-        },
-        "featType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "time": {
-          "value": "",
-          "_deprecated": true
-        },
-        "damageType": {
-          "value": "",
-          "_deprecated": true
-        },
-        "attributes": {
-          "spelldc": 10
-        },
-        "attunement": 0
-      },
-      "sort": 4350001,
-      "flags": {},
-      "img": "icons/magic/defensive/shield-barrier-glowing-blue.webp",
-      "effects": [],
-      "folder": null,
-      "ownership": {
-        "default": 0
-      },
-      "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
-      }
-    },
-    {
       "_id": "qy0pVLQWv8tjWJPR",
       "name": "Horn",
       "type": "tool",
@@ -747,29 +502,30 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 2,
-        "price": 5,
+        "price": {
+          "value": 5,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "toolType": "",
         "baseItem": "",
         "ability": "cha",
         "chatFlavor": "",
         "proficient": 1,
-        "bonus": "",
-        "damage": {
-          "parts": []
-        },
-        "attributes": {
-          "spelldc": 10
+        "bonus": ""
+      },
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.aa9KuBy4dst7WIW9"
         }
       },
-      "sort": 1100000,
-      "flags": {},
       "img": "icons/tools/instruments/flute-simple-wood.webp",
       "effects": [],
       "folder": null,
@@ -795,32 +551,34 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 72; 73; 85; 91",
+        "source": "SRD 5.1",
         "activation": {
           "type": "",
-          "cost": 0,
+          "cost": null,
           "condition": ""
         },
         "duration": {
           "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
-          "value": "",
+          "value": null,
           "width": null,
           "units": "",
           "type": ""
         },
         "range": {
-          "value": "",
+          "value": null,
           "long": null,
           "units": ""
         },
         "uses": {
-          "value": 0,
-          "max": 0,
+          "value": null,
+          "max": "",
           "per": null,
-          "type": ""
+          "recovery": ""
         },
         "consume": {
           "type": "",
@@ -829,7 +587,7 @@
         },
         "ability": "",
         "actionType": "",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -837,25 +595,30 @@
         },
         "damage": {
           "parts": [],
-          "versatile": "",
-          "value": ""
+          "versatile": ""
         },
         "formula": "",
         "save": {
           "ability": "",
           "dc": null,
-          "scaling": "spell",
-          "value": ""
+          "scaling": "spell"
+        },
+        "type": {
+          "value": "",
+          "subtype": ""
         },
         "requirements": "Fighter 1, Champion 10, Paladin 2, Ranger 2",
         "recharge": {
           "value": null,
           "charged": false
-        },
-        "attunement": 0
+        }
       },
-      "sort": 4325001,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.classfeatures.zSlV0O2rQMdoq6pB"
+        }
+      },
       "img": "icons/equipment/shield/heater-stone-orange.webp",
       "effects": [],
       "folder": null,
@@ -881,16 +644,18 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 167",
+        "source": "SRD 5.1",
         "activation": {
           "type": "",
-          "cost": 0,
+          "cost": null,
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -903,9 +668,10 @@
           "units": ""
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
@@ -914,7 +680,7 @@
         },
         "ability": null,
         "actionType": "",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -930,15 +696,22 @@
           "dc": null,
           "scaling": "spell"
         },
+        "type": {
+          "value": "",
+          "subtype": ""
+        },
         "requirements": "STR 13 or higher",
         "recharge": {
           "value": null,
           "charged": false
-        },
-        "attunement": 0
+        }
       },
-      "sort": 400000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.monsterfeatures.kP9t6MAeUvBBmoM3"
+        }
+      },
       "img": "icons/skills/melee/unarmed-punch-fist.webp",
       "effects": [],
       "folder": null,
@@ -964,13 +737,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 150",
+        "source": "SRD 5.1",
         "quantity": 20,
         "weight": 0.05,
-        "price": 0.05,
+        "price": {
+          "value": 5,
+          "denomination": "cp"
+        },
         "attunement": 0,
         "equipped": true,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -978,9 +754,11 @@
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -994,18 +772,19 @@
         },
         "uses": {
           "value": null,
-          "max": null,
-          "per": "",
+          "max": "",
+          "per": null,
+          "recovery": "",
           "autoDestroy": false
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "",
         "actionType": "rwak",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1018,8 +797,7 @@
               "piercing"
             ]
           ],
-          "versatile": "",
-          "value": ""
+          "versatile": ""
         },
         "formula": "",
         "save": {
@@ -1027,12 +805,9 @@
           "dc": null,
           "scaling": "spell"
         },
-        "consumableType": "ammo",
-        "attributes": {
-          "spelldc": 10
-        }
+        "consumableType": "ammo"
       },
-      "sort": 600000,
+      "sort": 0,
       "flags": {},
       "img": "icons/containers/ammunition/arrows-quiver-black.webp",
       "effects": [],
@@ -1041,12 +816,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011647487,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -1059,13 +834,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 149",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 2,
-        "price": 50,
+        "price": {
+          "value": 50,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -1073,11 +851,13 @@
           "condition": ""
         },
         "duration": {
-          "value": 0,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
-          "value": 0,
+          "value": null,
           "width": null,
           "units": "",
           "type": ""
@@ -1088,9 +868,10 @@
           "units": "ft"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": ""
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "ammo",
@@ -1099,7 +880,7 @@
         },
         "ability": "",
         "actionType": "rwak",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1149,8 +930,12 @@
         },
         "proficient": true
       },
-      "sort": 300000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.3cymOVja8jXbzrdT"
+        }
+      },
       "img": "icons/weapons/bows/longbow-leather-green.webp",
       "effects": [],
       "folder": null,
@@ -1176,13 +961,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 149",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 3,
-        "price": 15,
+        "price": {
+          "value": 15,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": true,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -1190,9 +978,11 @@
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -1205,18 +995,19 @@
           "units": "ft"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": ""
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "",
         "actionType": "mwak",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1266,8 +1057,12 @@
         },
         "proficient": true
       },
-      "sort": 100000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.10ZP2Bu3vnCuYMIB"
+        }
+      },
       "img": "icons/weapons/swords/greatsword-crossguard-steel.webp",
       "effects": [],
       "folder": null,
@@ -1293,13 +1088,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 149",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 2,
-        "price": 5,
+        "price": {
+          "value": 5,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -1307,9 +1105,11 @@
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -1322,18 +1122,19 @@
           "units": "ft"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": ""
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "",
         "actionType": "mwak",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1381,12 +1182,9 @@
           "two": false,
           "ver": false
         },
-        "proficient": true,
-        "attributes": {
-          "spelldc": 10
-        }
+        "proficient": true
       },
-      "sort": 200000,
+      "sort": 0,
       "flags": {},
       "img": "icons/weapons/axes/axe-broad-black.webp",
       "effects": [],
@@ -1413,23 +1211,28 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 145",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 55,
-        "price": 75,
+        "price": {
+          "value": 75,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": true,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "",
-          "cost": 0,
+          "cost": null,
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -1442,9 +1245,10 @@
           "units": ""
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
@@ -1453,7 +1257,7 @@
         },
         "ability": null,
         "actionType": "",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1489,7 +1293,7 @@
         "stealth": true,
         "proficient": true
       },
-      "sort": 800000,
+      "sort": 0,
       "flags": {},
       "img": "icons/equipment/chest/breastplate-metal-scaled-grey.webp",
       "effects": [],
@@ -1516,23 +1320,28 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 144",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 6,
-        "price": 10,
+        "price": {
+          "value": 10,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": true,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "",
-          "cost": 0,
+          "cost": null,
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -1545,9 +1354,10 @@
           "units": ""
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
@@ -1556,7 +1366,7 @@
         },
         "ability": null,
         "actionType": "",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1592,8 +1402,12 @@
         "stealth": false,
         "proficient": true
       },
-      "sort": 4600000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.monsterfeatures.yHcr3vlkmtInELj2"
+        }
+      },
       "img": "icons/equipment/shield/oval-wooden-boss-steel.webp",
       "effects": [],
       "folder": null,
@@ -1619,13 +1433,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 5,
-        "price": 2,
+        "price": {
+          "value": 2,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "capacity": {
           "type": "weight",
@@ -1638,13 +1455,14 @@
           "ep": 0,
           "gp": 0,
           "pp": 0
-        },
-        "damage": {
-          "parts": []
         }
       },
-      "sort": 300001,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.H8YCd689ezlD26aT"
+        }
+      },
       "img": "icons/containers/bags/pack-simple-leather.webp",
       "effects": [],
       "folder": null,
@@ -1670,13 +1488,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 1,
-        "price": 0.5,
+        "price": {
+          "value": 5,
+          "denomination": "sp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "capacity": {
           "type": "weight",
@@ -1689,13 +1510,14 @@
           "ep": 0,
           "gp": 0,
           "pp": 0
-        },
-        "damage": {
-          "parts": []
         }
       },
-      "sort": 2300001,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.9bWTRRDym06PzSAf"
+        }
+      },
       "img": "icons/containers/bags/coinpouch-simple-tan.webp",
       "effects": [],
       "folder": null,
@@ -1703,12 +1525,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011640341,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -1721,20 +1543,24 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 150",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 3,
-        "price": 1,
+        "price": {
+          "value": 1,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
-        "identified": true,
-        "damage": {
-          "parts": []
+        "rarity": "",
+        "identified": true
+      },
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.14pNRT4sZy9rgvhb"
         }
       },
-      "sort": 3600000,
-      "flags": {},
       "img": "icons/tools/smithing/hammer-sledge-steel-grey.webp",
       "effects": [],
       "folder": null,
@@ -1760,20 +1586,24 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 1,
-        "price": 0.5,
+        "price": {
+          "value": 5,
+          "denomination": "sp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
-        "identified": true,
-        "damage": {
-          "parts": []
+        "rarity": "",
+        "identified": true
+      },
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.DNOSEAvF4Oh1DlWy"
         }
       },
-      "sort": 4800000,
-      "flags": {},
       "img": "icons/sundries/lights/torch-black.webp",
       "effects": [],
       "folder": null,
@@ -1781,12 +1611,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011640351,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -1799,13 +1629,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 5,
-        "price": 0.2,
+        "price": {
+          "value": 2,
+          "denomination": "sp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -1813,11 +1646,13 @@
           "condition": ""
         },
         "duration": {
-          "value": 0,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
-          "value": 0,
+          "value": null,
           "width": null,
           "units": "",
           "type": ""
@@ -1829,10 +1664,10 @@
         },
         "uses": {
           "value": 4,
-          "max": 4,
+          "max": "4",
           "per": "charges",
-          "autoDestroy": false,
-          "autoUse": true
+          "recovery": "",
+          "autoDestroy": false
         },
         "consume": {
           "type": "",
@@ -1841,7 +1676,7 @@
         },
         "ability": "",
         "actionType": "util",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1859,8 +1694,12 @@
         },
         "consumableType": "food"
       },
-      "sort": 1900000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.Uv0ilmzbWvqmlCVH"
+        }
+      },
       "img": "icons/sundries/survival/wetskin-leather-purple.webp",
       "effects": [],
       "folder": null,
@@ -1868,12 +1707,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011640358,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -1886,13 +1725,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 10,
-        "price": 1,
+        "price": {
+          "value": 1,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -1900,9 +1742,11 @@
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -1916,10 +1760,10 @@
         },
         "uses": {
           "value": 1,
-          "max": 1,
+          "max": "1",
           "per": "charges",
-          "autoDestroy": false,
-          "autoUse": true
+          "recovery": "",
+          "autoDestroy": false
         },
         "consume": {
           "type": "",
@@ -1928,7 +1772,7 @@
         },
         "ability": "",
         "actionType": "abil",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -1946,8 +1790,12 @@
         },
         "consumableType": "trinket"
       },
-      "sort": 4000000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.QXmaarJ4X8P0C1HV"
+        }
+      },
       "img": "icons/sundries/survival/rope-wrapped-brown.webp",
       "effects": [],
       "folder": null,
@@ -1973,13 +1821,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 1,
-        "price": 1,
+        "price": {
+          "value": 1,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": true,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "capacity": {
           "type": "items",
@@ -1992,13 +1843,14 @@
           "ep": 0,
           "gp": 0,
           "pp": 0
-        },
-        "damage": {
-          "parts": []
         }
       },
-      "sort": 2400001,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.4MtQKPn9qMWCFjDA"
+        }
+      },
       "img": "icons/containers/ammunition/arrows-quiver-black.webp",
       "effects": [],
       "folder": null,
@@ -2024,20 +1876,24 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 150",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 7,
-        "price": 1,
+        "price": {
+          "value": 1,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
-        "identified": true,
-        "damage": {
-          "parts": []
+        "rarity": "",
+        "identified": true
+      },
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.DVXmyetZuvxbzAwW"
         }
       },
-      "sort": 3600000,
-      "flags": {},
       "img": "icons/sundries/flags/banner-worn-blue.webp",
       "effects": [],
       "folder": null,
@@ -2063,20 +1919,24 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 152",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 1,
-        "price": 0.2,
+        "price": {
+          "value": 2,
+          "denomination": "sp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
-        "identified": true,
-        "damage": {
-          "parts": []
+        "rarity": "",
+        "identified": true
+      },
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.V13fjV5oSmvbRdgP"
         }
       },
-      "sort": 3600000,
-      "flags": {},
       "img": "icons/tools/cooking/fork-steel-grey.webp",
       "effects": [],
       "folder": null,
@@ -2084,12 +1944,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011640365,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -2102,13 +1962,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 149",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 2,
-        "price": 5,
+        "price": {
+          "value": 5,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -2116,9 +1979,11 @@
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -2131,18 +1996,19 @@
           "units": "ft"
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": ""
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "",
         "actionType": "mwak",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -2190,13 +2056,14 @@
           "two": false,
           "ver": false
         },
-        "proficient": true,
-        "attributes": {
-          "spelldc": 10
+        "proficient": true
+      },
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.eO7Fbv5WBk5zvGOc"
         }
       },
-      "sort": 150000,
-      "flags": {},
       "img": "icons/weapons/axes/axe-broad-black.webp",
       "effects": [],
       "folder": null,
@@ -2222,13 +2089,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 10,
         "weight": 2,
-        "price": 0.5,
+        "price": {
+          "value": 5,
+          "denomination": "sp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -2236,9 +2106,11 @@
           "condition": ""
         },
         "duration": {
-          "value": 0,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": 1,
           "width": null,
@@ -2252,19 +2124,19 @@
         },
         "uses": {
           "value": 1,
-          "max": 1,
+          "max": "1",
           "per": "charges",
-          "autoDestroy": true,
-          "autoUse": true
+          "recovery": "",
+          "autoDestroy": true
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "",
         "actionType": "util",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -2282,8 +2154,12 @@
         },
         "consumableType": "food"
       },
-      "sort": 1800000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.f4w4GxBi0nYXmhX4"
+        }
+      },
       "img": "icons/consumables/meat/hock-leg-pink-brown.webp",
       "effects": [],
       "folder": null,
@@ -2291,12 +2167,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011640371,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -2309,13 +2185,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 150",
+        "source": "SRD 5.1",
         "quantity": 10,
         "weight": 0.25,
-        "price": 0.05,
+        "price": {
+          "value": 5,
+          "denomination": "cp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -2323,9 +2202,11 @@
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -2339,19 +2220,19 @@
         },
         "uses": {
           "value": 1,
-          "max": 1,
+          "max": "1",
           "per": "charges",
-          "autoDestroy": true,
-          "autoUse": true
+          "recovery": "",
+          "autoDestroy": true
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "",
         "actionType": "util",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -2369,8 +2250,12 @@
         },
         "consumableType": "trinket"
       },
-      "sort": 4300000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.TqyvIglHDj5kfohR"
+        }
+      },
       "img": "icons/sundries/survival/stake-rough-simple-brown.webp",
       "effects": [],
       "folder": null,
@@ -2378,12 +2263,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011647493,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -2396,13 +2281,16 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 153",
+        "source": "SRD 5.1",
         "quantity": 10,
         "weight": 1,
-        "price": 0.01,
+        "price": {
+          "value": 1,
+          "denomination": "cp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true,
         "activation": {
           "type": "action",
@@ -2410,9 +2298,11 @@
           "condition": ""
         },
         "duration": {
-          "value": 1,
+          "value": "1",
           "units": "hour"
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": 40,
           "width": null,
@@ -2426,19 +2316,19 @@
         },
         "uses": {
           "value": 1,
-          "max": 1,
+          "max": "1",
           "per": "charges",
-          "autoDestroy": true,
-          "autoUse": true
+          "recovery": "",
+          "autoDestroy": true
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "str",
         "actionType": "mwak",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -2461,8 +2351,12 @@
         },
         "consumableType": "trinket"
       },
-      "sort": 4700000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.BnOCLuNWhVvzHLjl"
+        }
+      },
       "img": "icons/sundries/lights/torch-black.webp",
       "effects": [],
       "folder": null,
@@ -2470,12 +2364,12 @@
         "default": 0
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
+        "systemId": "mka",
+        "systemVersion": "2.0.3",
+        "coreVersion": "10.290",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1670011647502,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
@@ -2488,17 +2382,24 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 151",
+        "source": "SRD 5.1",
         "quantity": 1,
         "weight": 5,
-        "price": 2,
+        "price": {
+          "value": 2,
+          "denomination": "gp"
+        },
         "attunement": 0,
         "equipped": false,
-        "rarity": "common",
+        "rarity": "",
         "identified": true
       },
-      "sort": 100001,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.items.V5UAjT3ed6sDNtgm"
+        }
+      },
       "img": "icons/tools/hand/pickaxe-steel-white.webp",
       "effects": [],
       "folder": null,
@@ -2524,16 +2425,18 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 31",
+        "source": "SRD 5.1",
         "activation": {
           "type": "",
-          "cost": 0,
+          "cost": null,
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -2546,9 +2449,10 @@
           "units": ""
         },
         "uses": {
-          "value": 0,
-          "max": 0,
-          "per": null
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
@@ -2557,7 +2461,7 @@
         },
         "ability": null,
         "actionType": "",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -2573,15 +2477,22 @@
           "dc": null,
           "scaling": "spell"
         },
+        "type": {
+          "value": "",
+          "subtype": ""
+        },
         "requirements": "",
         "recharge": {
           "value": null,
           "charged": false
-        },
-        "attunement": 0
+        }
       },
-      "sort": 5000000,
-      "flags": {},
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.mka.races.ydP3QzCmur55mtY2"
+        }
+      },
       "img": "icons/magic/light/explosion-star-large-orange.webp",
       "effects": [],
       "folder": null,
@@ -2598,7 +2509,37 @@
       }
     },
     {
-      "_id": "z1xtuix2w8sjskct",
+      "name": "Watchman",
+      "type": "background",
+      "system": {
+        "description": {
+          "value": "<ul><li><strong>Skill Proficiencies:</strong> Athletics, Insight</li><li><strong>Languages:</strong> Two of your choice</li><li><strong>Equipment:</strong> A guard's uniform, a horn with which to summon help, and a pouch containing 10 gp</li></ul>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "",
+        "advancement": []
+      },
+      "img": "icons/environment/settlement/watchtower-stone.webp",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "systemId": "mka",
+        "systemVersion": "2.1.0",
+        "coreVersion": "10.291",
+        "createdTime": 1673040183979,
+        "modifiedTime": 1673040617213,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      },
+      "_id": "iODPoFlvprdu59Ga"
+    },
+    {
+      "_id": "TixRV4Wr5ruxXRpf",
       "name": "Fighter",
       "type": "class",
       "img": "icons/skills/melee/hand-grip-sword-red.webp",
@@ -2608,105 +2549,188 @@
           "chat": "",
           "unidentified": ""
         },
-        "source": "",
+        "source": "SRD 5.1",
         "identifier": "fighter",
         "levels": 1,
         "hitDice": "d10",
         "hitDiceUsed": 0,
         "advancement": [
           {
-            "_id": "mlcvcu7p2jfwxwa3",
-            "type": "ItemGrant",
-            "configuration": {
-              "items": [
-                "Compendium.mka.classfeatures.fbExzwNwEAl2kW9c",
-                "Compendium.mka.classfeatures.nTjmWbyHweXuIqwc"
-              ]
-            },
-            "value": {
-              "added": {
-                "8esd96grt1e7ct4k": "Compendium.mka.classfeatures.fbExzwNwEAl2kW9c",
-                "pszansgr88j2t9wz": "Compendium.mka.classfeatures.nTjmWbyHweXuIqwc"
-              }
-            },
-            "level": 1,
-            "title": "Features",
-            "icon": "",
-            "classRestriction": ""
-          },
-          {
-            "_id": "0u1lokzkujbw3yp0",
-            "type": "ItemGrant",
-            "configuration": {
-              "items": [
-                "Compendium.mka.classfeatures.xF1VTcJ3AdkbTsdQ"
-              ]
-            },
-            "value": {},
-            "level": 2,
-            "title": "Features",
-            "icon": "",
-            "classRestriction": ""
-          },
-          {
-            "_id": "6vyztxepntp4zeku",
-            "type": "ItemGrant",
-            "configuration": {
-              "items": [
-                "Compendium.mka.classfeatures.ax8M0X0q1GGWM26j"
-              ]
-            },
-            "value": {},
-            "level": 3,
-            "title": "Features",
-            "icon": "",
-            "classRestriction": ""
-          },
-          {
-            "_id": "q2xwt7zc4sl0dufv",
-            "type": "ItemGrant",
-            "configuration": {
-              "items": [
-                "Compendium.mka.classfeatures.q9g1MLXuLZyxjQMg"
-              ]
-            },
-            "value": {},
-            "level": 5,
-            "title": "Features",
-            "icon": "",
-            "classRestriction": ""
-          },
-          {
-            "_id": "gcaoecqaltbqlcw9",
-            "type": "ItemGrant",
-            "configuration": {
-              "items": [
-                "Compendium.mka.classfeatures.653ZHbNcmm7ZGXbw"
-              ]
-            },
-            "value": {},
-            "level": 9,
-            "title": "Features",
-            "icon": "",
-            "classRestriction": ""
-          },
-          {
-            "_id": "o6jij5xwl7jkaob6",
             "type": "HitPoints",
             "configuration": {},
             "value": {
               "1": "max"
             },
-            "title": "",
-            "icon": "",
-            "classRestriction": ""
+            "title": "Hit Points",
+            "icon": "systems/mka/icons/svg/hit-points.svg",
+            "_id": "yhZd0KJPJERAWGgA"
           },
           {
-            "_id": "sk4yn2giu0mx48u8",
+            "type": "ItemGrant",
+            "configuration": {
+              "items": [
+                "Compendium.mka.classfeatures.fbExzwNwEAl2kW9c",
+                "Compendium.mka.classfeatures.nTjmWbyHweXuIqwc"
+              ],
+              "optional": false,
+              "spell": {
+                "ability": "",
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": ""
+                }
+              }
+            },
+            "value": {
+              "added": {
+                "xBoN1auJaGal3hva": "Compendium.mka.classfeatures.fbExzwNwEAl2kW9c",
+                "QYbinNgLV2ZYxX2c": "Compendium.mka.classfeatures.nTjmWbyHweXuIqwc"
+              }
+            },
+            "level": 1,
+            "title": "Features",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
+            "_id": "PwWJCRoUIftcpy47"
+          },
+          {
+            "type": "ItemGrant",
+            "configuration": {
+              "items": [
+                "Compendium.mka.classfeatures.xF1VTcJ3AdkbTsdQ"
+              ],
+              "optional": false,
+              "spell": {
+                "ability": "",
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": ""
+                }
+              }
+            },
+            "value": {},
+            "level": 2,
+            "title": "Features",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
+            "_id": "pxHWfZrwT5tdCH61"
+          },
+          {
+            "type": "ItemGrant",
+            "configuration": {
+              "items": [
+                "Compendium.mka.classfeatures.ax8M0X0q1GGWM26j"
+              ],
+              "optional": false,
+              "spell": {
+                "ability": "",
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": ""
+                }
+              }
+            },
+            "value": {},
+            "level": 3,
+            "title": "Features",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
+            "_id": "tdk8Hj5vUKl7Uz2a"
+          },
+          {
+            "type": "ItemGrant",
+            "configuration": {
+              "items": [
+                "Compendium.mka.classfeatures.q9g1MLXuLZyxjQMg"
+              ],
+              "optional": false,
+              "spell": {
+                "ability": "",
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": ""
+                }
+              }
+            },
+            "value": {},
+            "level": 5,
+            "title": "Features",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
+            "_id": "1UqvFqvQRr0Mzk3K"
+          },
+          {
+            "type": "ItemGrant",
+            "configuration": {
+              "items": [
+                "Compendium.mka.classfeatures.653ZHbNcmm7ZGXbw"
+              ],
+              "optional": false,
+              "spell": {
+                "ability": "",
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": ""
+                }
+              }
+            },
+            "value": {},
+            "level": 9,
+            "title": "Features",
+            "icon": "systems/mka/icons/svg/item-grant.svg",
+            "_id": "hu99eLBFUHiOOKdl"
+          },
+          {
+            "type": "ItemChoice",
+            "configuration": {
+              "hint": "You adopt a particular style of fighting as your specialty. Choose one of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.",
+              "choices": {
+                "1": 1
+              },
+              "allowDrops": true,
+              "type": "feat",
+              "pool": [
+                "Compendium.mka.classfeatures.8YwPFv3UAPjWVDNf",
+                "Compendium.mka.classfeatures.zSlV0O2rQMdoq6pB",
+                "Compendium.mka.classfeatures.hCop9uJrWhF1QPb4",
+                "Compendium.mka.classfeatures.3Nc6u9pyStByuJsm",
+                "Compendium.mka.classfeatures.06NVMYf58Z76O85O",
+                "Compendium.mka.classfeatures.mHcSjcHJ8oZu3hkb"
+              ],
+              "spell": {
+                "ability": "",
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": ""
+                }
+              },
+              "restriction": {
+                "type": "class",
+                "subtype": "fightingStyle",
+                "level": ""
+              }
+            },
+            "value": {
+              "added": {
+                "1": {
+                  "dpXCnkmf6mF4qivf": "Compendium.mka.classfeatures.zSlV0O2rQMdoq6pB"
+                }
+              }
+            },
+            "title": "Fighting Style",
+            "icon": "systems/mka/icons/svg/item-choice.svg",
+            "_id": "3hmYTgl5rz8Y5Z0I"
+          },
+          {
             "type": "ScaleValue",
             "configuration": {
               "identifier": "indomitable",
               "type": "number",
+              "distance": {
+                "units": ""
+              },
               "scale": {
                 "9": {
                   "value": 1
@@ -2721,15 +2745,17 @@
             },
             "value": {},
             "title": "Indomitable Uses",
-            "icon": "",
-            "classRestriction": ""
+            "icon": "systems/mka/icons/svg/scale-value.svg",
+            "_id": "B7YpSu4cVsEbHbrv"
           },
           {
-            "_id": "sh0ih4vmnv6qsjwp",
             "type": "ScaleValue",
             "configuration": {
               "identifier": "action-surge",
               "type": "number",
+              "distance": {
+                "units": ""
+              },
               "scale": {
                 "2": {
                   "value": 1
@@ -2741,8 +2767,152 @@
             },
             "value": {},
             "title": "Action Surge Uses",
-            "icon": "",
-            "classRestriction": ""
+            "icon": "systems/mka/icons/svg/scale-value.svg",
+            "_id": "kxiasN1v8KFm9nse"
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 4,
+            "title": "Ability Score Improvement",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
+            "_id": "rvfuW71lYEeJW7HS"
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 8,
+            "title": "Ability Score Improvement",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
+            "_id": "g49SXigwmpaZW0Hm"
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 12,
+            "title": "Ability Score Improvement",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
+            "_id": "gXVE2mfohi6iErff"
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 16,
+            "title": "Ability Score Improvement",
+            "icon": "systems/mka/icons/svg/ability-score-improvement.svg",
+            "_id": "GdBOLIPXmNSWRSmO"
+          },
+          {
+            "_id": "puDaUsYrlks0z5gm",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 19,
+            "title": ""
+          },
+          {
+            "_id": "ZvTgE4hnO4clYc0z",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 6,
+            "title": ""
+          },
+          {
+            "_id": "zw1ftiHmlUeHRTdc",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 14,
+            "title": ""
           }
         ],
         "saves": [
@@ -2766,11 +2936,7 @@
         "spellcasting": {
           "progression": "none",
           "ability": ""
-        },
-        "damage": {
-          "parts": []
-        },
-        "attunement": null
+        }
       },
       "effects": [],
       "folder": null,
@@ -2784,35 +2950,39 @@
         }
       },
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "systemId": "mka",
+        "systemVersion": "2.2.2",
+        "coreVersion": "10.303",
+        "createdTime": 1661787234279,
+        "modifiedTime": 1691519178768,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
-      "_id": "8esd96grt1e7ct4k",
-      "name": "Fighting Style",
+      "_id": "xBoN1auJaGal3hva",
+      "name": "Fighting Style (Fighter)",
+      "ownership": {
+        "default": 0
+      },
       "type": "feat",
-      "img": "icons/skills/melee/weapons-crossed-daggers-orange.webp",
       "system": {
         "description": {
-          "value": "<p>You adopt a particular style of fighting as your specialty. Choose one of the following options from the appropriate class list. You can't take a Fighting Style option more than once, even if you later get to choose again.</p>\n<h3>Fighter Options</h3>\n<p>@Compendium[mka.classfeatures.8YwPFv3UAPjWVDNf]{Archery}</p><p>@Compendium[mka.classfeatures.zSlV0O2rQMdoq6pB]{Defense}</p><p>@Compendium[mka.classfeatures.hCop9uJrWhF1QPb4]{Dueling}</p><p>@Compendium[mka.classfeatures.3Nc6u9pyStByuJsm]{Great Weapon Fighting}</p><p>@Compendium[mka.classfeatures.06NVMYf58Z76O85O]{Protection}</p><p>@Compendium[mka.classfeatures.mHcSjcHJ8oZu3hkb]{Two Weapon Fighting}</p>\n<h3>Paladin Options</h3>\n<p>@Compendium[mka.classfeatures.zSlV0O2rQMdoq6pB]{Defense}</p><p>@Compendium[mka.classfeatures.hCop9uJrWhF1QPb4]{Dueling}</p><p>@Compendium[mka.classfeatures.3Nc6u9pyStByuJsm]{Great Weapon Fighting}</p><p>@Compendium[mka.classfeatures.06NVMYf58Z76O85O]{Protection}</p>\n<h3>Ranger Options</h3>\n<p>@Compendium[mka.classfeatures.8YwPFv3UAPjWVDNf]{Archery}</p><p>@Compendium[mka.classfeatures.zSlV0O2rQMdoq6pB]{Defense}</p><p>@Compendium[mka.classfeatures.hCop9uJrWhF1QPb4]{Dueling}</p><p>@Compendium[mka.classfeatures.mHcSjcHJ8oZu3hkb]{Two Weapon Fighting}</p>",
+          "value": "<p>You adopt a particular style of fighting as your specialty. Choose one of the following options from the appropriate class list. You can't take a Fighting Style option more than once, even if you later get to choose again.</p>\n<p>@Compendium[mka.classfeatures.8YwPFv3UAPjWVDNf]{Archery}</p>\n<p>@Compendium[mka.classfeatures.zSlV0O2rQMdoq6pB]{Defense}</p>\n<p>@Compendium[mka.classfeatures.hCop9uJrWhF1QPb4]{Dueling}</p>\n<p>@Compendium[mka.classfeatures.3Nc6u9pyStByuJsm]{Great Weapon Fighting}</p>\n<p>@Compendium[mka.classfeatures.06NVMYf58Z76O85O]{Protection}</p>\n<p>@Compendium[mka.classfeatures.mHcSjcHJ8oZu3hkb]{Two Weapon Fighting}</p>",
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 72; 84; 91",
+        "source": "SRD 5.1",
         "activation": {
           "type": "",
-          "cost": 0,
+          "cost": null,
           "condition": ""
         },
         "duration": {
-          "value": null,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
@@ -2827,7 +2997,8 @@
         "uses": {
           "value": null,
           "max": "",
-          "per": null
+          "per": null,
+          "recovery": ""
         },
         "consume": {
           "type": "",
@@ -2836,7 +3007,7 @@
         },
         "ability": null,
         "actionType": "",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -2852,58 +3023,64 @@
           "dc": null,
           "scaling": "spell"
         },
-        "requirements": "Fighter 1, Paladin 2, Ranger 2",
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "requirements": "Fighter 1",
         "recharge": {
           "value": null,
           "charged": false
         }
       },
-      "effects": [],
-      "folder": null,
-      "sort": 500001,
-      "ownership": {
-        "default": 0
-      },
+      "sort": 0,
       "flags": {
         "mka": {
           "sourceId": "Compendium.mka.classfeatures.fbExzwNwEAl2kW9c",
-          "advancementOrigin": "z1xtuix2w8sjskct.mlcvcu7p2jfwxwa3"
+          "advancementOrigin": "TixRV4Wr5ruxXRpf.PwWJCRoUIftcpy47"
         }
       },
+      "img": "icons/skills/melee/weapons-crossed-daggers-orange.webp",
+      "effects": [],
+      "folder": null,
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "systemId": "mka",
+        "systemVersion": "2.2.2",
+        "coreVersion": "10.303",
+        "createdTime": 1661787234404,
+        "modifiedTime": 1691519178770,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     },
     {
-      "_id": "pszansgr88j2t9wz",
+      "_id": "QYbinNgLV2ZYxX2c",
       "name": "Second Wind",
+      "ownership": {
+        "default": 0
+      },
       "type": "feat",
-      "img": "icons/magic/life/heart-glowing-red.webp",
       "system": {
         "description": {
           "value": "<p>You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level.</p><p>Once you use this feature, you must finish a short or long rest before you can use it again.</p>",
           "chat": "",
           "unidentified": ""
         },
-        "source": "PHB pg. 72",
+        "source": "SRD 5.1",
         "activation": {
           "type": "bonus",
           "cost": 1,
           "condition": ""
         },
         "duration": {
-          "value": 0,
+          "value": "",
           "units": ""
         },
+        "cover": null,
+        "crewed": false,
         "target": {
           "value": null,
           "width": null,
-          "units": null,
+          "units": "",
           "type": "self"
         },
         "range": {
@@ -2913,17 +3090,18 @@
         },
         "uses": {
           "value": 1,
-          "max": 1,
-          "per": "sr"
+          "max": "1",
+          "per": "sr",
+          "recovery": ""
         },
         "consume": {
           "type": "",
-          "target": "",
+          "target": null,
           "amount": null
         },
         "ability": "",
         "actionType": "heal",
-        "attackBonus": 0,
+        "attackBonus": "",
         "chatFlavor": "",
         "critical": {
           "threshold": null,
@@ -2944,61 +3122,187 @@
           "dc": null,
           "scaling": "spell"
         },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
         "requirements": "Fighter 1",
         "recharge": {
-          "value": 0,
+          "value": null,
           "charged": false
         }
       },
-      "effects": [],
       "folder": null,
-      "sort": 200000,
-      "ownership": {
-        "default": 0
-      },
+      "sort": 0,
       "flags": {
         "mka": {
           "sourceId": "Compendium.mka.classfeatures.nTjmWbyHweXuIqwc",
-          "advancementOrigin": "z1xtuix2w8sjskct.mlcvcu7p2jfwxwa3"
+          "advancementOrigin": "TixRV4Wr5ruxXRpf.PwWJCRoUIftcpy47"
         }
       },
+      "img": "icons/magic/life/heart-glowing-red.webp",
+      "effects": [],
       "_stats": {
-        "systemId": null,
-        "systemVersion": null,
-        "coreVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "systemId": "mka",
+        "systemVersion": "2.2.2",
+        "coreVersion": "10.303",
+        "createdTime": 1661787234421,
+        "modifiedTime": 1691519178770,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      }
+    },
+    {
+      "_id": "dpXCnkmf6mF4qivf",
+      "name": "Fighting Style: Defense",
+      "ownership": {
+        "default": 0
+      },
+      "type": "feat",
+      "system": {
+        "description": {
+          "value": "<p>While you are wearing armor, you gain a +1 bonus to AC</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "SRD 5.1",
+        "activation": {
+          "type": "",
+          "cost": null,
+          "condition": ""
+        },
+        "duration": {
+          "value": "",
+          "units": ""
+        },
+        "cover": null,
+        "crewed": false,
+        "target": {
+          "value": null,
+          "width": null,
+          "units": "",
+          "type": ""
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": ""
+        },
+        "uses": {
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "",
+        "attackBonus": "",
+        "chatFlavor": "",
+        "critical": {
+          "threshold": null,
+          "damage": ""
+        },
+        "damage": {
+          "parts": [],
+          "versatile": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell"
+        },
+        "type": {
+          "value": "class",
+          "subtype": "fightingStyle"
+        },
+        "requirements": "Fighter 1, Champion 10, Paladin 2, Ranger 2",
+        "recharge": {
+          "value": null,
+          "charged": false
+        }
+      },
+      "flags": {
+        "mka": {
+          "sourceId": "Compendium.mka.classfeatures.zSlV0O2rQMdoq6pB",
+          "advancementOrigin": "TixRV4Wr5ruxXRpf.3hmYTgl5rz8Y5Z0I"
+        }
+      },
+      "img": "icons/equipment/shield/heater-stone-orange.webp",
+      "effects": [
+        {
+          "_id": "U3so0zDcVt4sIBRz",
+          "flags": {},
+          "changes": [
+            {
+              "key": "system.attributes.ac.bonus",
+              "value": "+1",
+              "mode": 2,
+              "priority": null
+            }
+          ],
+          "disabled": false,
+          "duration": {
+            "startTime": null,
+            "seconds": null,
+            "combat": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null
+          },
+          "icon": "icons/equipment/shield/heater-stone-orange.webp",
+          "label": "Fighting Style: Defense",
+          "origin": "Item.4mQUDmiDBePkQD6Y",
+          "tint": null,
+          "transfer": true,
+          "sort": 0
+        }
+      ],
+      "folder": null,
+      "sort": 0,
+      "_stats": {
+        "systemId": "mka",
+        "systemVersion": "2.2.2",
+        "coreVersion": "10.303",
+        "createdTime": 1661787234445,
+        "modifiedTime": 1691519178770,
+        "lastModifiedBy": "dnd5ebuilder0000"
       }
     }
   ],
   "effects": [
     {
-      "_id": "4K6IBJnngJs6qjpa",
+      "_id": "U3so0zDcVt4sIBRz",
+      "flags": {},
       "changes": [
         {
           "key": "system.attributes.ac.bonus",
+          "value": "+1",
           "mode": 2,
-          "value": "1",
           "priority": null
         }
       ],
       "disabled": false,
       "duration": {
         "startTime": 0,
-        "startRound": 0,
-        "startTurn": 0,
         "seconds": null,
         "combat": null,
         "rounds": null,
-        "turns": null
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
       },
       "icon": "icons/equipment/shield/heater-stone-orange.webp",
-      "label": "+1 to AC",
-      "origin": "Compendium.mka.heroes.K5XFMOiiM9WufwYO.Item.xhSq81g4w9vTE0nK",
+      "label": "Fighting Style: Defense",
+      "origin": "Compendium.mka.heroes.2Pdtnswo8Nj2nafY.Item.dpXCnkmf6mF4qivf",
+      "tint": null,
       "transfer": false,
-      "flags": {},
-      "tint": null
+      "sort": 0
     }
   ],
   "folder": null,
@@ -3010,10 +3314,10 @@
   "_id": "2Pdtnswo8Nj2nafY",
   "_stats": {
     "systemId": "mka",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.2.2",
+    "coreVersion": "10.303",
     "createdTime": 1661787232150,
-    "modifiedTime": 1661878142218,
-    "lastModifiedBy": "mkabuilder0000"
+    "modifiedTime": 1691519178818,
+    "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

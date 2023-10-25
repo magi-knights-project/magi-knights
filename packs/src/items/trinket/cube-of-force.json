@@ -9,10 +9,13 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "DMG pg. 159",
+    "source": "SRD 5.1",
     "quantity": 1,
     "weight": 0.1,
-    "price": 16000,
+    "price": {
+      "value": 16000,
+      "denomination": "gp"
+    },
     "attunement": 1,
     "equipped": false,
     "rarity": "rare",
@@ -23,9 +26,10 @@
       "condition": "Must have enough charges for the face pressed otherwise the Action is lost."
     },
     "duration": {
-      "value": 1,
+      "value": "1",
       "units": "minute"
     },
+    "cover": null,
     "target": {
       "value": 15,
       "width": null,
@@ -39,10 +43,10 @@
     },
     "uses": {
       "value": 36,
-      "max": 36,
+      "max": "36",
       "per": "charges",
-      "autoDestroy": false,
-      "autoUse": false
+      "recovery": "1d20",
+      "autoDestroy": false
     },
     "consume": {
       "type": "",
@@ -51,7 +55,7 @@
     },
     "ability": "",
     "actionType": "util",
-    "attackBonus": 0,
+    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -67,24 +71,21 @@
       "dc": null,
       "scaling": "spell"
     },
-    "consumableType": "trinket",
-    "attributes": {
-      "spelldc": 10
-    }
+    "consumableType": "trinket"
   },
   "effects": [],
   "folder": null,
-  "sort": 4025000,
+  "sort": 0,
   "ownership": {
     "default": 0
   },
   "flags": {},
   "_stats": {
     "systemId": "mka",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.1.0",
+    "coreVersion": "10.291",
     "createdTime": 1661787233895,
-    "modifiedTime": 1661787233895,
-    "lastModifiedBy": "mkabuilder0000"
+    "modifiedTime": 1671220964662,
+    "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

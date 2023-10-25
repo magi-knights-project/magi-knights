@@ -5,14 +5,17 @@
   "img": "icons/consumables/potions/potion-flask-corked-orange.webp",
   "system": {
     "description": {
-      "value": "<p><em>Wondrous item</em></p>\n<p>This painted brass bottle weighs 1 pound. When you use an action to remove the stopper, a cloud of thick smoke flows out of the bottle. At the end of your turn, the smoke disappears with a flash of harmless fire, and an @Compendium[mka.monsters.LTomFUTBrkRi0Pj5]{Efreeti} appears in an unoccupied space within 30 feet of you.</p>\n<p>The first time the bottle is opened, the GM rolls to determine what happens.</p>\n<table border=\"1\">\n<tbody>\n<tr>\n<td><strong>d100</strong></td>\n<td><strong>Effect</strong></td>\n</tr>\n<tr>\n<td>01-10</td>\n<td>The efreeti attacks you. After fighting for 5 rounds, the efreeti disappears, and the bottle loses its magic.</td>\n</tr>\n<tr>\n<td>11-90</td>\n<td>The efreeti serves you for 1 hour, doing as you command. Then the efreeti returns to the bottle, and a new stopper contains it. The stopper can't be removed for 24 hours. The next two times the bottle is opened, the same effect occurs. If the bottle is opened a fourth time, the efreeti escapes and disappears, and the bottle loses its magic.</td>\n</tr>\n<tr>\n<td>91-00</td>\n<td>The efreeti can cast the wish spell three times for you. It disappears when it grants the final wish or after 1 hour, and the bottle loses its magic.</td>\n</tr>\n</tbody>\n</table>",
+      "value": "<p><em>Wondrous item</em></p>\n<p>This painted brass bottle weighs 1 pound. When you use an action to remove the stopper, a cloud of thick smoke flows out of the bottle. At the end of your turn, the smoke disappears with a flash of harmless fire, and an @Compendium[mka.monsters.LTomFUTBrkRi0Pj5]{Efreeti} appears in an unoccupied space within 30 feet of you.</p>\n<p>The first time the bottle is opened, the GM rolls to determine what happens from the @Compendium[mka.tables.yZMFNfocj5qyVuOC]{Efreeti Bottle} table.</p>",
       "chat": "",
       "unidentified": ""
     },
-    "source": "",
+    "source": "SRD 5.1",
     "quantity": 1,
     "weight": 1,
-    "price": 40000,
+    "price": {
+      "value": 40000,
+      "denomination": "gp"
+    },
     "attunement": 0,
     "equipped": false,
     "rarity": "veryRare",
@@ -23,9 +26,10 @@
       "condition": ""
     },
     "duration": {
-      "value": 0,
+      "value": "",
       "units": ""
     },
+    "cover": null,
     "target": {
       "value": 10,
       "width": null,
@@ -34,24 +38,24 @@
     },
     "range": {
       "value": 30,
-      "long": 0,
+      "long": null,
       "units": "ft"
     },
     "uses": {
       "value": 4,
-      "max": 4,
+      "max": "4",
       "per": "charges",
-      "autoDestroy": true,
-      "autoUse": true
+      "recovery": "",
+      "autoDestroy": true
     },
     "consume": {
       "type": "",
-      "target": "",
+      "target": null,
       "amount": null
     },
     "ability": null,
     "actionType": "",
-    "attackBonus": 0,
+    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -67,24 +71,21 @@
       "dc": null,
       "scaling": "spell"
     },
-    "consumableType": "trinket",
-    "attributes": {
-      "spelldc": 10
-    }
+    "consumableType": "trinket"
   },
   "effects": [],
   "folder": null,
-  "sort": 2100000,
+  "sort": 0,
   "ownership": {
     "default": 0
   },
   "flags": {},
   "_stats": {
     "systemId": "mka",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.1.0",
+    "coreVersion": "10.291",
     "createdTime": 1661787233799,
-    "modifiedTime": 1661787233799,
-    "lastModifiedBy": "mkabuilder0000"
+    "modifiedTime": 1671220962866,
+    "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

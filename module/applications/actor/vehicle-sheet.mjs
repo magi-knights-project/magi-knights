@@ -70,27 +70,28 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
 
   /**
    * Prepare items that are mounted to a vehicle and require one or more crew to operate.
-   * @param {object} item  Copy of the item data being prepared for display. *Will be mutated.*
-   * @private
+   * @param {object} item     Copy of the item data being prepared for display.
+   * @param {object} context  Display context for the item.
+   * @protected
    */
-  _prepareCrewedItem(item) {
+  _prepareCrewedItem(item, context) {
 
     // Determine crewed status
     const isCrewed = item.system.crewed;
-    item.toggleClass = isCrewed ? "active" : "";
-    item.toggleTitle = game.i18n.localize(`MKA.${isCrewed ? "Crewed" : "Uncrewed"}`);
+    context.toggleClass = isCrewed ? "active" : "";
+    context.toggleTitle = game.i18n.localize(`MKA.${isCrewed ? "Crewed" : "Uncrewed"}`);
 
     // Handle crew actions
-    if (item.type === "feat" && item.system.activation.type === "crew") {
-      item.cover = game.i18n.localize(`MKA.${item.system.cover ? "CoverTotal" : "None"}`);
-      if (item.system.cover === .5) item.cover = "½";
-      else if (item.system.cover === .75) item.cover = "¾";
-      else if (item.system.cover === null) item.cover = "—";
+    if ( item.type === "feat" && item.system.activation.type === "crew" ) {
+      context.cover = game.i18n.localize(`MKA.${item.system.cover ? "CoverTotal" : "None"}`);
+      if ( item.system.cover === .5 ) context.cover = "½";
+      else if ( item.system.cover === .75 ) context.cover = "¾";
+      else if ( item.system.cover === null ) context.cover = "—";
     }
 
     // Prepare vehicle weapons
     if ( (item.type === "equipment") || (item.type === "weapon") ) {
-      item.threshold = item.system.hp.dt ? item.system.hp.dt : "—";
+      context.threshold = item.system.hp.dt ? item.system.hp.dt : "—";
     }
   }
 
@@ -139,7 +140,7 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
         }]
       },
       equipment: {
-        label: game.i18n.localize("MKA.ItemTypeEquipment"),
+        label: game.i18n.localize(CONFIG.Item.typeLabels.equipment),
         items: [],
         crewable: true,
         dataset: {type: "equipment", "armor.type": "vehicle"},
@@ -156,7 +157,7 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
         dataset: {type: "feat", "activation.type": "reaction"}
       },
       weapons: {
-        label: game.i18n.localize("MKA.ItemTypeWeaponPl"),
+        label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
         items: [],
         crewable: true,
         dataset: {type: "weapon", "weapon-type": "siege"},
@@ -166,9 +167,12 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
 
     context.items.forEach(item => {
       const {uses, recharge} = item.system;
-      item.hasUses = uses && (uses.max > 0);
-      item.isOnCooldown = recharge && !!recharge.value && (recharge.charged === false);
-      item.isDepleted = item.isOnCooldown && (uses.per && (uses.value > 0));
+      const ctx = context.itemContext[item.id] ??= {};
+      ctx.canToggle = false;
+      ctx.isExpanded = this._expanded.has(item.id);
+      ctx.hasUses = uses && (uses.max > 0);
+      ctx.isOnCooldown = recharge && !!recharge.value && (recharge.charged === false);
+      ctx.isDepleted = item.isOnCooldown && (uses.per && (uses.value > 0));
     });
 
     const cargo = {
@@ -200,7 +204,7 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
         }, {
           label: game.i18n.localize("MKA.Price"),
           css: "item-price",
-          property: "system.price",
+          property: "system.price.value",
           editable: "Number"
         }, {
           label: game.i18n.localize("MKA.Weight"),
@@ -213,8 +217,9 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
 
     // Classify items owned by the vehicle and compute total cargo weight
     let totalWeight = 0;
-    for (const item of context.items) {
-      this._prepareCrewedItem(item);
+    for ( const item of context.items ) {
+      const ctx = context.itemContext[item.id] ??= {};
+      this._prepareCrewedItem(item, ctx);
 
       // Handle cargo explicitly
       const isCargo = item.flags.mka?.vehicleCargo === true;
@@ -245,9 +250,10 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
     }
 
     // Update the rendering context data
+    context.inventoryFilters = false;
     context.features = Object.values(features);
     context.cargo = Object.values(cargo);
-    context.system.attributes.encumbrance = this._computeEncumbrance(totalWeight, context);
+    context.encumbrance = this._computeEncumbrance(totalWeight, context);
   }
 
   /* -------------------------------------------- */
@@ -388,8 +394,8 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
     event.preventDefault();
     const itemID = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemID);
-    const hp = Math.clamped(0, parseInt(event.currentTarget.value), item.system.hp.max);
-    event.currentTarget.value = hp;
+    let hp = Math.clamped(0, parseInt(event.currentTarget.value), item.system.hp.max);
+    if ( Number.isNaN(hp) ) hp = 0;
     return item.update({"system.hp.value": hp});
   }
 
@@ -405,8 +411,8 @@ export default class ActorSheetMKAVehicle extends ActorSheetMKA {
     event.preventDefault();
     const itemID = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemID);
-    const qty = parseInt(event.currentTarget.value);
-    event.currentTarget.value = qty;
+    let qty = parseInt(event.currentTarget.value);
+    if ( Number.isNaN(qty) ) qty = 0;
     return item.update({"system.quantity": qty});
   }
 

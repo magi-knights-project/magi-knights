@@ -8,7 +8,7 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "PHB pg. 93",
+    "source": "SRD 5.1",
     "identifier": "hunter",
     "classIdentifier": "ranger",
     "advancement": [
@@ -18,12 +18,20 @@
         "configuration": {
           "items": [
             "Compendium.mka.classfeatures.wrxIW5sDfmGr3u5s"
-          ]
+          ],
+          "optional": false,
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          }
         },
         "value": {},
         "level": 3,
-        "title": "Features",
-        "icon": ""
+        "title": "Features"
       },
       {
         "_id": "gia6u4kb86to8zu2",
@@ -31,12 +39,20 @@
         "configuration": {
           "items": [
             "Compendium.mka.classfeatures.WgQrqjmeyMqDzVt3"
-          ]
+          ],
+          "optional": false,
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          }
         },
         "value": {},
         "level": 7,
-        "title": "Features",
-        "icon": ""
+        "title": "Features"
       },
       {
         "_id": "nd466kbxtd1mqg97",
@@ -44,12 +60,20 @@
         "configuration": {
           "items": [
             "Compendium.mka.classfeatures.7zlTRRXT1vWSBGjX"
-          ]
+          ],
+          "optional": false,
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          }
         },
         "value": {},
         "level": 11,
-        "title": "Features",
-        "icon": ""
+        "title": "Features"
       },
       {
         "_id": "7l3aayc87oepree4",
@@ -57,12 +81,147 @@
         "configuration": {
           "items": [
             "Compendium.mka.classfeatures.a0Sq88dgnREcIMfl"
-          ]
+          ],
+          "optional": false,
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          }
         },
         "value": {},
         "level": 15,
-        "title": "Features",
-        "icon": ""
+        "title": "Features"
+      },
+      {
+        "_id": "Xr04szY7gFqZKBxP",
+        "type": "ItemChoice",
+        "configuration": {
+          "hint": "",
+          "choices": {
+            "3": 1
+          },
+          "allowDrops": false,
+          "type": "feat",
+          "pool": [
+            "Compendium.mka.classfeatures.5gx1O0sxK08awEO9",
+            "Compendium.mka.classfeatures.StfmqK1twVfukpa0",
+            "Compendium.mka.classfeatures.C6sHdDGmCMo0cYHd"
+          ],
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          },
+          "restriction": {
+            "type": "class",
+            "subtype": "huntersPrey",
+            "level": ""
+          }
+        },
+        "value": {},
+        "title": "Hunter's Prey"
+      },
+      {
+        "_id": "3UE5ZrBP2hCi52mC",
+        "type": "ItemChoice",
+        "configuration": {
+          "hint": "",
+          "choices": {
+            "7": 1
+          },
+          "allowDrops": false,
+          "type": "feat",
+          "pool": [
+            "Compendium.mka.classfeatures.pAQMJU5R9SGUmzHU",
+            "Compendium.mka.classfeatures.slelvrm83v9UAKZU",
+            "Compendium.mka.classfeatures.zbHu0NvHuII8lR7W"
+          ],
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          },
+          "restriction": {
+            "type": "class",
+            "subtype": "defensiveTactic",
+            "level": ""
+          }
+        },
+        "value": {},
+        "title": "Defensive Tactics"
+      },
+      {
+        "_id": "rKt0QvE4kJO06u9c",
+        "type": "ItemChoice",
+        "configuration": {
+          "hint": "",
+          "choices": {
+            "11": 1
+          },
+          "allowDrops": false,
+          "type": "feat",
+          "pool": [
+            "Compendium.mka.classfeatures.l7W6JB9yWLLLtQKP",
+            "Compendium.mka.classfeatures.1DY8w3CXeD7PHDXF"
+          ],
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          },
+          "restriction": {
+            "type": "class",
+            "subtype": "multiattack",
+            "level": ""
+          }
+        },
+        "value": {},
+        "title": "Multiattack"
+      },
+      {
+        "_id": "8Ssyn9fPrW1TgBN5",
+        "type": "ItemChoice",
+        "configuration": {
+          "hint": "",
+          "choices": {
+            "15": 1
+          },
+          "allowDrops": false,
+          "type": "feat",
+          "pool": [
+            "Compendium.mka.classfeatures.laVHAIOKIsUeezWd",
+            "Compendium.mka.classfeatures.Xf763cJoDHPPWSGG",
+            "Compendium.mka.classfeatures.7pyZjz5vlUWV01qQ"
+          ],
+          "spell": {
+            "ability": "",
+            "preparation": "",
+            "uses": {
+              "max": "",
+              "per": ""
+            }
+          },
+          "restriction": {
+            "type": "class",
+            "subtype": "",
+            "level": ""
+          }
+        },
+        "value": {},
+        "title": "Superior Hunter's Defense"
       }
     ],
     "spellcasting": {
@@ -80,10 +239,10 @@
   "_id": "uqd2q6WjVfcsaaGb",
   "_stats": {
     "systemId": "mka",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.1.2",
+    "coreVersion": "10.291",
     "createdTime": 1661787234297,
-    "modifiedTime": 1661787234297,
-    "lastModifiedBy": "mkabuilder0000"
+    "modifiedTime": 1674435665133,
+    "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

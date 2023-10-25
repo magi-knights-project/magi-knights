@@ -11,20 +11,21 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "PHB pg. 79",
+    "source": "SRD 5.1",
     "activation": {
       "type": "action",
       "cost": 1,
       "condition": ""
     },
     "duration": {
-      "value": null,
+      "value": "",
       "units": ""
     },
+    "cover": null,
     "target": {
       "value": null,
       "width": null,
-      "units": null,
+      "units": "",
       "type": "self"
     },
     "range": {
@@ -34,8 +35,9 @@
     },
     "uses": {
       "value": 1,
-      "max": 1,
-      "per": "lr"
+      "max": "1",
+      "per": "lr",
+      "recovery": ""
     },
     "consume": {
       "type": "",
@@ -44,7 +46,7 @@
     },
     "ability": "",
     "actionType": "heal",
-    "attackBonus": 0,
+    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -53,7 +55,7 @@
     "damage": {
       "parts": [
         [
-          "3* @classes.monk.levels",
+          "3 * @classes.monk.levels",
           "healing"
         ]
       ],
@@ -64,6 +66,10 @@
       "ability": "",
       "dc": null,
       "scaling": "spell"
+    },
+    "type": {
+      "value": "class",
+      "subtype": ""
     },
     "requirements": "Way of the Open Hand 6",
     "recharge": {
@@ -78,10 +84,10 @@
   "sort": 0,
   "_stats": {
     "systemId": "mka",
-    "systemVersion": "2.0.0",
-    "coreVersion": "10.279",
+    "systemVersion": "2.1.2",
+    "coreVersion": "10.291",
     "createdTime": 1661787234372,
-    "modifiedTime": 1661787234372,
-    "lastModifiedBy": "mkabuilder0000"
+    "modifiedTime": 1674436155963,
+    "lastModifiedBy": "dnd5ebuilder0000"
   }
 }

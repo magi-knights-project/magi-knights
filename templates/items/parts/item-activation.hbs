@@ -2,15 +2,13 @@
 <div class="form-group input-select">
     <label>{{ localize "MKA.ItemActivationCost" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.activation.cost"
-            value="{{system.activation.cost}}" placeholder="&mdash;">
-        <select name="system.activation.type">
-            {{#select system.activation.type}}
-            <option value=""></option>
-            {{#each config.abilityActivationTypes as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+        {{#if system.activation.type}}
+            <input type="number" step="any" name="system.activation.cost"
+                   value="{{system.activation.cost}}" placeholder="&mdash;">
+        {{/if}}
+        <select name="system.activation.type" data-tooltip="MKA.ItemActivationType">
+            {{selectOptions config.abilityActivationTypes selected=system.activation.type
+                blank=(localize "MKA.None")}}
         </select>
     </div>
 </div>
@@ -20,21 +18,16 @@
 <div class="form-group">
     <label>{{ localize "MKA.ItemActivationCondition" }}</label>
     <div class="form-fields">
-        <input type="text" name="system.activation.condition" value="{{system.activation.condition}}"/>
+        <input type="text" name="system.activation.condition" value="{{system.activation.condition}}">
     </div>
 </div>
 
 {{#if isCrewed}}
 <div class="form-group">
-    <label>{{localize 'MKA.Cover'}}</label>
+    <label>{{ localize "MKA.Cover" }}</label>
     <div class="form-fields">
         <select name="system.cover" data-dtype="Number">
-            {{#select system.cover}}
-                <option value="">&mdash;</option>
-                {{#each config.cover as |v k|}}
-                    <option value="{{k}}">{{v}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions config.cover selected=system.cover blank=""}}
         </select>
     </div>
 </div>
@@ -44,22 +37,24 @@
 <div class="form-group input-select-select">
     <label>{{ localize "MKA.Target" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.target.value"
-            value="{{system.target.value}}" placeholder="&mdash;">
-        <select name="system.target.units">
-            {{#select system.target.units}}
-            <option value=""></option>
-            {{#each config.distanceUnits as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <select name="system.target.type">
+        {{#if system.hasScalarTarget}}
+            <input type="number" step="any" name="system.target.value"
+                   value="{{system.target.value}}" placeholder="&mdash;">
+        {{/if}}
+        {{#if system.hasAreaTarget}}
+            <select name="system.target.units" data-tooltip="MKA.TargetUnits">
+                {{selectOptions config.movementUnits selected=system.target.units blank=""}}
+            </select>
+        {{/if}}
+        <select name="system.target.type" data-tooltip="MKA.TargetType">
             {{#select system.target.type}}
-            <option value=""></option>
-            {{#each config.targetTypes as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
+                 <option value="">{{localize "MKA.None"}}</option>
+                 <optgroup label="{{localize 'MKA.TargetTypeIndividual'}}">
+                     {{selectOptions config.individualTargetTypes}}
+                 </optgroup>
+                 <optgroup label="{{localize 'MKA.TargetTypeArea'}}">
+                     {{selectOptions config.areaTargetTypes labelAttr="label"}}
+                 </optgroup>
             {{/select}}
         </select>
     </div>
@@ -80,17 +75,20 @@
 <div class="form-group input-select">
     <label>{{ localize "MKA.Range" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.range.value"
-            value="{{system.range.value}}" placeholder="{{localize 'MKA.Normal'}}">
-        <span class="sep">/</span>
-        <input type="number" step="any" name="system.range.long"
-            value="{{system.range.long}}" placeholder="{{localize 'MKA.Max'}}">
-        <select name="system.range.units">
+        {{#if system.hasScalarRange}}
+            <input type="number" step="any" name="system.range.value" value="{{system.range.value}}"
+                   placeholder="{{localize 'MKA.Normal'}}" data-tooltip="MKA.RangeNormal">
+            <span class="sep">/</span>
+            <input type="number" step="any" name="system.range.long" value="{{system.range.long}}"
+                   placeholder="{{localize 'MKA.Long'}}" data-tooltip="MKA.RangeLong">
+        {{/if}}
+        <select name="system.range.units" data-tooltip="MKA.RangeUnits">
             {{#select system.range.units}}
-            <option value=""></option>
-            {{#each config.distanceUnits as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
+                <option value="">{{localize "MKA.None"}}</option>
+                <optgroup label="{{localize 'MKA.RangeDistance'}}">
+                    {{selectOptions config.movementUnits}}
+                </optgroup>
+                {{selectOptions config.rangeTypes}}
             {{/select}}
         </select>
     </div>
@@ -100,14 +98,20 @@
 <div class="form-group input-select">
     <label>{{ localize "MKA.Duration" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.duration.value" value="{{system.duration.value}}"
-            placeholder="&mdash;">
-        <select name="system.duration.units">
+        {{#if system.hasScalarDuration}}
+            <input type="text" name="system.duration.value" value="{{source.duration.value}}"
+                   placeholder="&mdash;" data-tooltip="MKA.DurationValue" data-formula-editor>
+        {{/if}}
+        <select name="system.duration.units" data-tooltip="MKA.DurationType">
             {{#select system.duration.units}}
-            <option value=""></option>
-            {{#each config.timePeriods as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
+                <option value="">{{localize "MKA.None"}}</option>
+                <optgroup label="{{localize 'MKA.DurationTime'}}">
+                    {{selectOptions config.scalarTimePeriods}}
+                </optgroup>
+                <optgroup label="{{localize 'MKA.DurationPermanent'}}">
+                    {{selectOptions config.permanentTimePeriods}}
+                </optgroup>
+                {{selectOptions config.specialTimePeriods}}
             {{/select}}
         </select>
     </div>
@@ -117,42 +121,41 @@
 <div class="form-group uses-per">
     <label>{{ localize "MKA.LimitedUses" }}</label>
     <div class="form-fields">
-        <input type="number" step="any" name="system.uses.value" value="{{system.uses.value}}">
-        <span class="sep">{{ localize "MKA.of" }}</span>
-        <input type="text" name="system.uses.max" value="{{source.uses.max}}">
-        <span class="sep">{{ localize "MKA.per" }}</span>
-        <select name="system.uses.per">
-            {{#select system.uses.per}}
-            <option value=""></option>
-            {{#each config.limitedUsePeriods as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+        <input type="number" step="any" name="system.uses.value"
+               value="{{system.uses.value}}" data-tooltip="MKA.UsesAvailable">
+        <span class="sep">{{localize "MKA.of"}}</span>
+        <input type="text" name="system.uses.max" value="{{source.uses.max}}"
+               data-tooltip="MKA.UsesMax" data-formula-editor>
+        <span class="sep">{{localize "MKA.per"}}</span>
+        <select name="system.uses.per" data-tooltip="MKA.UsesPeriod">
+            {{selectOptions config.limitedUsePeriods selected=system.uses.per blank=""}}
         </select>
     </div>
 </div>
 
+{{#if (eq system.uses.per "charges")}}
+<div class="form-group">
+    <label>{{localize "MKA.RecoveryFormula"}}</label>
+    <div class="form-fields">
+        <input type="text" name="system.uses.recovery" value="{{system.uses.recovery}}" data-formula-editor>
+    </div>
+</div>
+{{/if}}
+
 {{!-- Consumption --}}
-<div class="form-group uses-per">
+<div class="form-group consumption">
     <label>{{ localize "MKA.ConsumeTitle" }}</label>
     <div class="form-fields">
-        <select name="system.consume.type">
-            {{#select system.consume.type}}
-            <option value=""></option>
-            {{#each config.abilityConsumptionTypes as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+        {{#if system.consume.type}}
+            <input type="number" step="any" name="system.consume.amount"
+                   value="{{system.consume.amount}}" data-tooltip="MKA.ConsumeQuanity">
+            <select name="system.consume.target" data-tooltip="MKA.ConsumeTarget">
+                {{selectOptions abilityConsumptionTargets selected=system.consume.target blank=""}}
+            </select>
+        {{/if}}
+        <select name="system.consume.type" data-tooltip="MKA.ConsumeType">
+            {{selectOptions config.abilityConsumptionTypes selected=system.consume.type blank=(localize "MKA.None")}}
         </select>
-        <select name="system.consume.target">
-            {{#select system.consume.target}}
-            <option value=""></option>
-            {{#each abilityConsumptionTargets as |name key|}}
-            <option value="{{key}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <input type="number" step="any" name="system.consume.amount" value="{{system.consume.amount}}">
     </div>
 </div>
 {{/if}}
