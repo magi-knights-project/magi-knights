@@ -2,7 +2,7 @@
   "id": "mka",
   "title": "Magi-Knights Awakening - A 5E Compatible System",
   "description": "TEMPORARY TEXT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "compatibility": {
     "minimum": "10.303",
     "verified": "11"
